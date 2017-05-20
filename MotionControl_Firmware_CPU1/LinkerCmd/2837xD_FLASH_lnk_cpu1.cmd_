@@ -107,7 +107,7 @@ SECTIONS
                          RUN_START(_RamfuncsRunStart),
                          RUN_SIZE(_RamfuncsRunSize),
                          RUN_END(_RamfuncsRunEnd),
-                         PAGE = 0, ALIGN(4)    
+                         PAGE = 0, ALIGN(4)
     #endif
 #endif
 

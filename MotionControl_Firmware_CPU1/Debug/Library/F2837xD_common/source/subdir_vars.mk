@@ -4,7 +4,6 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 ASM_SRCS += \
-../Library/F2837xD_common/source/F2837xD_CodeStartBranch.asm \
 ../Library/F2837xD_common/source/F2837xD_DBGIER.asm \
 ../Library/F2837xD_common/source/F2837xD_usDelay.asm 
 
@@ -31,7 +30,6 @@ C_SRCS += \
 
 OBJS += \
 ./Library/F2837xD_common/source/F2837xD_Adc.obj \
-./Library/F2837xD_common/source/F2837xD_CodeStartBranch.obj \
 ./Library/F2837xD_common/source/F2837xD_CpuTimers.obj \
 ./Library/F2837xD_common/source/F2837xD_DBGIER.obj \
 ./Library/F2837xD_common/source/F2837xD_DefaultISR.obj \
@@ -54,7 +52,6 @@ OBJS += \
 ./Library/F2837xD_common/source/F2837xD_usDelay.obj 
 
 ASM_DEPS += \
-./Library/F2837xD_common/source/F2837xD_CodeStartBranch.d \
 ./Library/F2837xD_common/source/F2837xD_DBGIER.d \
 ./Library/F2837xD_common/source/F2837xD_usDelay.d 
 
@@ -102,7 +99,6 @@ C_DEPS__QUOTED += \
 
 OBJS__QUOTED += \
 "Library/F2837xD_common/source/F2837xD_Adc.obj" \
-"Library/F2837xD_common/source/F2837xD_CodeStartBranch.obj" \
 "Library/F2837xD_common/source/F2837xD_CpuTimers.obj" \
 "Library/F2837xD_common/source/F2837xD_DBGIER.obj" \
 "Library/F2837xD_common/source/F2837xD_DefaultISR.obj" \
@@ -125,7 +121,6 @@ OBJS__QUOTED += \
 "Library/F2837xD_common/source/F2837xD_usDelay.obj" 
 
 ASM_DEPS__QUOTED += \
-"Library/F2837xD_common/source/F2837xD_CodeStartBranch.d" \
 "Library/F2837xD_common/source/F2837xD_DBGIER.d" \
 "Library/F2837xD_common/source/F2837xD_usDelay.d" 
 
@@ -151,7 +146,6 @@ C_SRCS__QUOTED += \
 "../Library/F2837xD_common/source/F2837xD_struct.c" 
 
 ASM_SRCS__QUOTED += \
-"../Library/F2837xD_common/source/F2837xD_CodeStartBranch.asm" \
 "../Library/F2837xD_common/source/F2837xD_DBGIER.asm" \
 "../Library/F2837xD_common/source/F2837xD_usDelay.asm" 
 
