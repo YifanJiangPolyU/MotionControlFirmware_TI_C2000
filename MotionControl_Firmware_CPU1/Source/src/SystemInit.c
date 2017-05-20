@@ -18,8 +18,21 @@
 
 void SystemFullInit(void){
 
-  // TI specific system initialization
-  InitSysCtrl();
+  // temporarily disable watch dog
+  DisableDog();
+
+  // initialize memory
+  SystemMemoryInit();
+
+#ifdef CPU1
+  // set state of unused GPIOs
+  // only CPI1 need to do this
+  GPIO_EnableUnbondedIOPullups();
+
+  // re-init system clock, overriding SYS/BIOS setting
+  // only CPI1 need to do this
+  InitSysPll(XTAL_OSC,IMULT_40,FMULT_0,PLLCLK_BY_2);
+#endif
 
   DINT;
 
@@ -44,6 +57,70 @@ void SystemFullInit(void){
   ERTM;  // Enable Global realtime interrupt DBGM
 
 }
+
+/**
+ *  Memory related initialization
+*/
+void SystemMemoryInit(void){
+
+  #ifdef _FLASH
+      // copy time critical functions from FLASH to RAM
+      memcpy(&RamfuncsRunStart, &RamfuncsLoadStart, (size_t)&RamfuncsLoadSize);
+      InitFlash();
+  #endif
+
+#ifdef CPU1
+  // configure memory ownership
+  EALLOW;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS0 = 0; // RAMGS0~7 belongs to CPU1
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS1 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS2 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS3 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS4 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS5 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS6 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS7 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS8 = 1; // RAMGS8~15 belongs to CPU2
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS9 = 1;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS10 = 1;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS11 = 1;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS12 = 1;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS13 = 1;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS14 = 1;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS15 = 1;
+  EDIS;
+#endif
+}
+
+/**
+ *  Check if analog subsystem trim registers are properly set
+ *  CPU1 does this
+*/
+#ifdef CPU1
+void SystemCheckTriming(void){
+  EALLOW;
+  // enable ADC power to do this
+  CpuSysRegs.PCLKCR13.bit.ADC_A = 1;
+  CpuSysRegs.PCLKCR13.bit.ADC_B = 1;
+  CpuSysRegs.PCLKCR13.bit.ADC_C = 1;
+  CpuSysRegs.PCLKCR13.bit.ADC_D = 1;
+
+  // Check if device is trimmed
+  if(*((Uint16 *)0x5D1B6) == 0x0000){
+      // Device is not trimmed--apply static calibration values
+      AnalogSubsysRegs.ANAREFTRIMA.all = 31709;
+      AnalogSubsysRegs.ANAREFTRIMB.all = 31709;
+      AnalogSubsysRegs.ANAREFTRIMC.all = 31709;
+      AnalogSubsysRegs.ANAREFTRIMD.all = 31709;
+  }
+
+  CpuSysRegs.PCLKCR13.bit.ADC_A = 0;
+  CpuSysRegs.PCLKCR13.bit.ADC_B = 0;
+  CpuSysRegs.PCLKCR13.bit.ADC_C = 0;
+  CpuSysRegs.PCLKCR13.bit.ADC_D = 0;
+  EDIS;
+}
+#endif
 
 /**
  *  initialize all GPIOs in this function
@@ -91,17 +168,23 @@ void ADC_GroupInit(void){
   AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
   // conversion time and trigger
-  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A0
+  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A4
   AdcaRegs.ADCSOC0CTL.bit.ACQPS = 19; //sample window is 20 SYSCLK cycles
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 1; //end of SOC1 will set INT1 flag
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
+  AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
 
-  AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;
+  AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4
   AdcbRegs.ADCSOC0CTL.bit.ACQPS = 19;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 1;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
+  AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5;
+
+  // if interrupt is used, flag rises when conversion completes
+  AdcaRegs.ADCCTL1.bit.INTPULSEPOS = 1;
+  AdcbRegs.ADCCTL1.bit.INTPULSEPOS = 1;
 
   EDIS;
 }
@@ -125,12 +208,36 @@ void EPWM_GroupInit(void){
   CpuSysRegs.PCLKCR2.bit.EPWM6 = 1;
 
   // EPWM1, up-counting, 720 kHz, trigger ADC
+  EPwm1Regs.CMPA.bit.CMPA = 0x0800;     // Set compare A value to 2048 counts
+  EPwm1Regs.TBPRD = 0x1000;             // Set period to 4096 counts
+  EPwm1Regs.TBCTL.bit.CTRMODE = 3;      // freeze counter
 
   // EPWM4, up-down, 24 kHz
+  EPwm4Regs.CMPA.bit.CMPA = 0x0800;
+  EPwm4Regs.TBPRD = 0x1000;
+  EPwm4Regs.TBCTL.bit.CTRMODE = 3;
 
   // EPWM5, up-down, 24 kHz
+  EPwm5Regs.CMPA.bit.CMPA = 0x0800;
+  EPwm5Regs.TBPRD = 0x1000;
+  EPwm5Regs.TBCTL.bit.CTRMODE = 3;
 
   // EPWM6, up-down, 24 kHz
+  EPwm6Regs.CMPA.bit.CMPA = 0x0800;
+  EPwm6Regs.TBPRD = 0x1000;
+  EPwm6Regs.TBCTL.bit.CTRMODE = 3;
+
+  // EPWM1: event trigger for ADC conversion
+  EPwm1Regs.ETSEL.bit.SOCAEN    = 0;    // Disable SOC on A group
+  EPwm1Regs.ETSEL.bit.SOCASEL    = 4;   // Select SOC on up-count
+  EPwm1Regs.ETPS.bit.SOCAPRD = 1;       // Generate pulse on every event
+
+  // EPWM4: trigger control process master
+  //        and position loop
+  EPwm1Regs.ETSEL.bit.INTEN    = 1;   // enable interrupt
+  EPwm1Regs.ETSEL.bit.INTSEL   = 4;
+  EPwm1Regs.ETPS.bit.INTPRD = 1;
+
 
   EDIS;
 }

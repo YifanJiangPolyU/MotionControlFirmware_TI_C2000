@@ -18,6 +18,8 @@
 #define SYSTEM_INIT_H
 
 void SystemFullInit(void);
+void SystemMemoryInit(void);
+void SystemCheckTriming(void);
 
 void GPIO_GroupInit(void);
 void PIE_Init(void);

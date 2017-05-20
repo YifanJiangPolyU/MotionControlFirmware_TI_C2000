@@ -89,12 +89,6 @@ digraph configuration {
         xdc_runtime_Main [style=filled,fillcolor=lightgray, label="Main"];
         xdc_runtime__top -> xdc_runtime_Main[style=invis];
         xdc_runtime_Main -> xdc_runtime__bot[style=invis];
-        xdc_runtime_Memory [style=filled,fillcolor=lightgray, label="Memory"];
-        xdc_runtime__top -> xdc_runtime_Memory[style=invis];
-        xdc_runtime_Memory -> xdc_runtime__bot[style=invis];
-        xdc_runtime_HeapStd [style=filled,fillcolor=lightgray, label="HeapStd"];
-        xdc_runtime__top -> xdc_runtime_HeapStd[style=invis];
-        xdc_runtime_HeapStd -> xdc_runtime__bot[style=invis];
         xdc_runtime_Registry [style=filled,fillcolor=lightgray, label="Registry"];
         xdc_runtime__top -> xdc_runtime_Registry[style=invis];
         xdc_runtime_Registry -> xdc_runtime__bot[style=invis];
@@ -122,9 +116,6 @@ digraph configuration {
         xdc_runtime_Main_Module_GateProxy [style=filled,fillcolor=lightgray, label="Main_Module_GateProxy"];
         xdc_runtime__top -> xdc_runtime_Main_Module_GateProxy[style=invis];
         xdc_runtime_Main_Module_GateProxy -> xdc_runtime__bot[style=invis];
-        xdc_runtime_Memory_HeapProxy [style=filled,fillcolor=lightgray, label="Memory_HeapProxy"];
-        xdc_runtime__top -> xdc_runtime_Memory_HeapProxy[style=invis];
-        xdc_runtime_Memory_HeapProxy -> xdc_runtime__bot[style=invis];
         xdc_runtime_System_SupportProxy [style=filled,fillcolor=lightgray, label="System_SupportProxy"];
         xdc_runtime__top -> xdc_runtime_System_SupportProxy[style=invis];
         xdc_runtime_System_SupportProxy -> xdc_runtime__bot[style=invis];

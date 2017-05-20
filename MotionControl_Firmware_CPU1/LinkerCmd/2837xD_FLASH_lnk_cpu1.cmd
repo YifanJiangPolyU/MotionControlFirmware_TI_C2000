@@ -67,6 +67,7 @@ SECTIONS
    .cinit              : > FLASHB      PAGE = 1, ALIGN(4)
    .pinit              : > FLASHB,     PAGE = 1, ALIGN(4)
    .text               : >> FLASHB | FLASHC | FLASHE      PAGE = 1, ALIGN(4)
+   .reset              : > RESET,     PAGE = 0, TYPE = DSECT /* not used, */
 
    /* Allocate uninitalized data sections: */
    .stack              : > RAMD0        PAGE = 0
@@ -79,7 +80,17 @@ SECTIONS
    .econst             : >> FLASHE | FLASHF | FLASHG      PAGE = 1, ALIGN(4)
    .switch             : > FLASHB      PAGE = 1, ALIGN(4)
 
-   .reset              : > RESET,     PAGE = 0, TYPE = DSECT /* not used, */
+   /* CLA program */
+   Cla1Prog:  LOAD = FLASHD,
+              RUN = RAMLS0,
+              LOAD_START(_Cla1funcsLoadStart),
+              LOAD_SIZE(_Cla1funcsLoadSize),
+              LOAD_END(_Cla1funcsLoadEnd),
+              RUN_START(_Cla1funcsRunStart),
+              RUN_SIZE(_Cla1funcsRunSize),
+              RUN_END(_Cla1funcsRunEnd),
+              PAGE = 0, ALIGN(4)
+
 
 #ifdef __TI_COMPILER_VERSION__
 	#if __TI_COMPILER_VERSION__ >= 15009000

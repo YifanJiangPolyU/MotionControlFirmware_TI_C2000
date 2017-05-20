@@ -1,11 +1,11 @@
-/*
- *  ======== main.c ========
- */
-#include "F28x_Project.h"
+
 #include <xdc/std.h>
 #include <xdc/runtime/System.h>
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
+
+#include "F28x_Project.h"
+#include "SystemInit.h"
 
 /*
  *  ======== taskFxn ========
@@ -39,27 +39,12 @@ Void taskFxn(UArg a0, UArg a1)
 Int main()
 {
 
-  InitSysCtrl();
+  SystemFullInit();
 
-  // configure memory ownership
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS0 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS1 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS2 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS3 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS4 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS5 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS6 = 0;
-  MemCfgRegs.GSxMSEL.bit.MSEL_GS7 = 0;
+  // use ROV->SysMin to view the characters in the circular buffer
+  System_printf("enter main()\n");
 
-  InitGpio();
-	GPIO_SetupPinMux(31, GPIO_MUX_CPU1, 0);
-  GPIO_SetupPinOptions(31, GPIO_OUTPUT, GPIO_PUSHPULL);
-
-    /*
-     * use ROV->SysMin to view the characters in the circular buffer
-     */
-    System_printf("enter main()\n");
-
-    BIOS_start();    /* does not return */
-    return(0);
+  // start scheduler, does not return
+  BIOS_start();
+  return(0);
 }
