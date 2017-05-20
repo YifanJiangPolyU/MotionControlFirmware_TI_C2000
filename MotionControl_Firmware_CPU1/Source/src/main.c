@@ -44,7 +44,12 @@ Int main()
   // configure memory ownership
   MemCfgRegs.GSxMSEL.bit.MSEL_GS0 = 0;
   MemCfgRegs.GSxMSEL.bit.MSEL_GS1 = 0;
-
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS2 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS3 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS4 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS5 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS6 = 0;
+  MemCfgRegs.GSxMSEL.bit.MSEL_GS7 = 0;
 
   InitGpio();
 	GPIO_SetupPinMux(31, GPIO_MUX_CPU1, 0);
