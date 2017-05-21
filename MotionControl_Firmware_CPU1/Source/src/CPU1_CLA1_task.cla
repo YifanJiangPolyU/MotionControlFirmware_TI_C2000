@@ -1,9 +1,11 @@
 
 #include "CPU1_CLA1_common.h"
+#include "F28x_Project.h"
 
 __interrupt void Cla1Task1 ( void )
 {
-
+//  __mdebugstop();
+  result = init + 5;
 }
 
 __interrupt void Cla1Task2 ( void )

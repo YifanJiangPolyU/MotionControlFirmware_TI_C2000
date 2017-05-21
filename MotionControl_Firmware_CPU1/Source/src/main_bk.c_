@@ -35,12 +35,10 @@
  #endif
 Void taskFxn(UArg a0, UArg a1)
 {
-  uint16_t adcres = 0;
   for(;;){
 	  static uint16_t i = 0;
-    adcres = AdcaResultRegs.ADCRESULT0;
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    System_printf("ADC res: %d\n", (int16_t)adcres);
+    System_printf("CLA res: %d\n", (int16_t)result);
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
     Task_sleep(500);
@@ -73,6 +71,17 @@ Int main()
   EPwm1Regs.ETSEL.bit.SOCAEN  = 1;
   EPwm1Regs.TBCTL.bit.CTRMODE = 0;
   EDIS;
+
+  for(;;){
+    static uint16_t i = 0;
+    GpioDataRegs.GPADAT.bit.GPIO31 = 1;
+    System_printf("CLA res: %d\n", (int16_t)result);
+    Task_sleep(500);
+    GpioDataRegs.GPADAT.bit.GPIO31 = 0;
+    Task_sleep(500);
+    System_printf("exit taskFxn(): %d\n", i);
+    i += 1;
+  }
 
   // start scheduler, does not return
   BIOS_start();

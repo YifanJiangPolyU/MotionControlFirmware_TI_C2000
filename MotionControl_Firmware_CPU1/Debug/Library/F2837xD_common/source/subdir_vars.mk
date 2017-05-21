@@ -24,6 +24,7 @@ C_SRCS += \
 ../Library/F2837xD_common/source/F2837xD_PieVect.c \
 ../Library/F2837xD_common/source/F2837xD_Sci.c \
 ../Library/F2837xD_common/source/F2837xD_SysCtrl.c \
+../Library/F2837xD_common/source/F2837xD_TempSensorConv.c \
 ../Library/F2837xD_common/source/F2837xD_sci_io.c \
 ../Library/F2837xD_common/source/F2837xD_sdfm_drivers.c \
 ../Library/F2837xD_common/source/F2837xD_struct.c 
@@ -46,6 +47,7 @@ OBJS += \
 ./Library/F2837xD_common/source/F2837xD_PieVect.obj \
 ./Library/F2837xD_common/source/F2837xD_Sci.obj \
 ./Library/F2837xD_common/source/F2837xD_SysCtrl.obj \
+./Library/F2837xD_common/source/F2837xD_TempSensorConv.obj \
 ./Library/F2837xD_common/source/F2837xD_sci_io.obj \
 ./Library/F2837xD_common/source/F2837xD_sdfm_drivers.obj \
 ./Library/F2837xD_common/source/F2837xD_struct.obj \
@@ -72,6 +74,7 @@ C_DEPS += \
 ./Library/F2837xD_common/source/F2837xD_PieVect.d \
 ./Library/F2837xD_common/source/F2837xD_Sci.d \
 ./Library/F2837xD_common/source/F2837xD_SysCtrl.d \
+./Library/F2837xD_common/source/F2837xD_TempSensorConv.d \
 ./Library/F2837xD_common/source/F2837xD_sci_io.d \
 ./Library/F2837xD_common/source/F2837xD_sdfm_drivers.d \
 ./Library/F2837xD_common/source/F2837xD_struct.d 
@@ -93,6 +96,7 @@ C_DEPS__QUOTED += \
 "Library/F2837xD_common/source/F2837xD_PieVect.d" \
 "Library/F2837xD_common/source/F2837xD_Sci.d" \
 "Library/F2837xD_common/source/F2837xD_SysCtrl.d" \
+"Library/F2837xD_common/source/F2837xD_TempSensorConv.d" \
 "Library/F2837xD_common/source/F2837xD_sci_io.d" \
 "Library/F2837xD_common/source/F2837xD_sdfm_drivers.d" \
 "Library/F2837xD_common/source/F2837xD_struct.d" 
@@ -115,6 +119,7 @@ OBJS__QUOTED += \
 "Library/F2837xD_common/source/F2837xD_PieVect.obj" \
 "Library/F2837xD_common/source/F2837xD_Sci.obj" \
 "Library/F2837xD_common/source/F2837xD_SysCtrl.obj" \
+"Library/F2837xD_common/source/F2837xD_TempSensorConv.obj" \
 "Library/F2837xD_common/source/F2837xD_sci_io.obj" \
 "Library/F2837xD_common/source/F2837xD_sdfm_drivers.obj" \
 "Library/F2837xD_common/source/F2837xD_struct.obj" \
@@ -141,6 +146,7 @@ C_SRCS__QUOTED += \
 "../Library/F2837xD_common/source/F2837xD_PieVect.c" \
 "../Library/F2837xD_common/source/F2837xD_Sci.c" \
 "../Library/F2837xD_common/source/F2837xD_SysCtrl.c" \
+"../Library/F2837xD_common/source/F2837xD_TempSensorConv.c" \
 "../Library/F2837xD_common/source/F2837xD_sci_io.c" \
 "../Library/F2837xD_common/source/F2837xD_sdfm_drivers.c" \
 "../Library/F2837xD_common/source/F2837xD_struct.c" 

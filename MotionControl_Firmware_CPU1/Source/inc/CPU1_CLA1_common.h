@@ -23,7 +23,8 @@ extern "C" {
 #include "F28x_Project.h"
 
 // shared variables between CPU and CLA
-
+extern float init;
+extern float result;
 
 // CLA C Tasks
 __interrupt void Cla1Task1();

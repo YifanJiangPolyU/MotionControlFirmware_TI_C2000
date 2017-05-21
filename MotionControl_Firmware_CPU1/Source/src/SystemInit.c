@@ -169,14 +169,14 @@ void ADC_GroupInit(void){
 
   // conversion time and trigger
   AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A4
-  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 19; //sample window is 20 SYSCLK cycles
-  AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 1; //end of SOC1 will set INT1 flag
+  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 24; //sample window is 25 SYSCLK cycles
+  AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of SOC1 will set INT1 flag
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
   AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
 
-  AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4
-  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 19;
+  AdcbRegs.ADCSOC1CTL.bit.CHSEL = 4;  //SOC1 will convert pin B4
+  AdcbRegs.ADCSOC1CTL.bit.ACQPS = 24;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 1;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -185,6 +185,8 @@ void ADC_GroupInit(void){
   // if interrupt is used, flag rises when conversion completes
   AdcaRegs.ADCCTL1.bit.INTPULSEPOS = 1;
   AdcbRegs.ADCCTL1.bit.INTPULSEPOS = 1;
+
+  DELAY_US(1000);
 
   EDIS;
 }
@@ -228,15 +230,15 @@ void EPWM_GroupInit(void){
   EPwm6Regs.TBCTL.bit.CTRMODE = 3;
 
   // EPWM1: event trigger for ADC conversion
-  EPwm1Regs.ETSEL.bit.SOCAEN    = 0;    // Disable SOC on A group
-  EPwm1Regs.ETSEL.bit.SOCASEL    = 4;   // Select SOC on up-count
+  EPwm1Regs.ETSEL.bit.SOCAEN = 0;    // Disable SOC on A group
+  EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = TBPRD
   EPwm1Regs.ETPS.bit.SOCAPRD = 1;       // Generate pulse on every event
 
   // EPWM4: trigger control process master
   //        and position loop
-  EPwm1Regs.ETSEL.bit.INTEN    = 1;   // enable interrupt
-  EPwm1Regs.ETSEL.bit.INTSEL   = 4;
-  EPwm1Regs.ETPS.bit.INTPRD = 1;
+  EPwm4Regs.ETSEL.bit.INTEN = 1;   // enable interrupt
+  EPwm4Regs.ETSEL.bit.INTSEL = 4;
+  EPwm4Regs.ETPS.bit.INTPRD = 1;
 
 
   EDIS;
@@ -269,12 +271,12 @@ void CLA_ConfigClaMemory(void){
   while(MemCfgRegs.MSGxINITDONE.bit.INITDONE_CPUTOCLA1 != 1){};
 
   // LS0 as CLA program memory
-  MemCfgRegs.LSxMSEL.bit.MSEL_LS5 = 1;
-  MemCfgRegs.LSxCLAPGM.bit.CLAPGM_LS5 = 1;
+  MemCfgRegs.LSxMSEL.bit.MSEL_LS0 = 1;
+  MemCfgRegs.LSxCLAPGM.bit.CLAPGM_LS0 = 1;
 
   // LS1 as CLA data memory
-  MemCfgRegs.LSxMSEL.bit.MSEL_LS0 = 1;
-  MemCfgRegs.LSxCLAPGM.bit.CLAPGM_LS0 = 0;
+  MemCfgRegs.LSxMSEL.bit.MSEL_LS1 = 1;
+  MemCfgRegs.LSxCLAPGM.bit.CLAPGM_LS1 = 0;
 
   EDIS;
 }
@@ -313,6 +315,9 @@ void CLA_InitCpu1Cla1(void){
   PieVectTable.CLA1_6_INT = &cla1Isr6;
   PieVectTable.CLA1_7_INT = &cla1Isr7;
   PieVectTable.CLA1_8_INT = &cla1Isr8;
+
+  // trigger source
+  DmaClaSrcSelRegs.CLA1TASKSRCSEL1.bit.TASK1 = 1;
 
   // Enable CLA interrupts at the group and subgroup levels
   PieCtrlRegs.PIEIER11.all = 0xFFFF;

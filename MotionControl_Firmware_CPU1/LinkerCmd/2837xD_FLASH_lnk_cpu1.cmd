@@ -40,6 +40,9 @@ PAGE 0 :  /* Program Memory */
    CPU2TOCPU1RAM   : origin = 0x03F800, length = 0x000400
    CPU1TOCPU2RAM   : origin = 0x03FC00, length = 0x000400
 
+   CLA1_MSGRAMLOW   : origin = 0x001480, length = 0x000080
+   CLA1_MSGRAMHIGH  : origin = 0x001500, length = 0x000080
+
    FLASHD           : origin = 0x086000, length = 0x002000	/* on-chip Flash */
 
 PAGE 1 :
@@ -90,6 +93,9 @@ SECTIONS
               RUN_SIZE(_Cla1funcsRunSize),
               RUN_END(_Cla1funcsRunEnd),
               PAGE = 0, ALIGN(4)
+   CLADataLS1		: > RAMLS1, PAGE=0
+   Cla1ToCpuMsgRAM  : > CLA1_MSGRAMLOW,   PAGE = 0
+   CpuToCla1MsgRAM  : > CLA1_MSGRAMHIGH,  PAGE = 0
 
 
 #ifdef __TI_COMPILER_VERSION__
