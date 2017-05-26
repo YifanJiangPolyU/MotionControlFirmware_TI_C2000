@@ -10,8 +10,8 @@
 
 
 // Globals
-volatile Uint16 sensorSample;
-volatile int16 sensorTemp;
+volatile Uint16 sensorSampleA;
+volatile Uint16 sensorSampleB;
 
 #ifdef __cplusplus
     #pragma DATA_SECTION("Cla1ToCpuMsgRAM")
@@ -42,7 +42,7 @@ Void taskFxn(UArg a0, UArg a1)
   for(;;){
 	  static uint16_t i = 0;
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    System_printf("ADC res: %d\n", (int16_t) sensorSample);
+    System_printf("ADCA res: %d\n", sensorSampleA);
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
     Task_sleep(500);
@@ -59,71 +59,47 @@ interrupt void adca1_isr(void);
 
 void main(void)
 {
-//
-// Step 1. Initialize System Control:
-// PLL, WatchDog, enable Peripheral Clocks
-// This example function is found in the F2837xD_SysCtrl.c file.
-//
-    InitSysCtrl();
 
-//
-// Step 2. Initialize GPIO:
-// This example function is found in the F2837xD_Gpio.c file and
-// illustrates how to set the GPIO to it's default state.
-//
-    GPIO_GroupInit();
+  // Initialize System Control:
+  InitSysCtrl();
 
-//
-// Step 3. Clear all interrupts and initialize PIE vector table:
-// Disable CPU interrupts
-//
-    DINT;
+  // Initialize GPIO
+  GPIO_GroupInit();
 
+  // temporarily disable interrupt
+  DINT;
 
-//
-// Map ISR functions
-//
-    EALLOW;
-    PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
-    EDIS;
+  // Map ISR functions
+  EALLOW;
+  PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
+  EDIS;
 
-//
-// Configure the ePWM
-//
-ADC_GroupInit();
-EPWM_GroupInit();
+  // Configure other peripherals
+  ADC_GroupInit();
+  EPWM_GroupInit();
 
-Interrupt_Init();
+  // configure interrupt
+  Interrupt_Init();
 
+  EALLOW;
+  // sync ePWM
+  CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
 
+  // start ePWM
+  EPwm1Regs.ETSEL.bit.SOCAEN = 1;  //enable SOCA
+  EPwm1Regs.TBCTL.bit.CTRMODE = 0; //unfreeze, and enter up count mode
+  EDIS;
 
-
-
-//
-// sync ePWM
-//
-    EALLOW;
-    CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
-
-//
-// start ePWM
-//
-    EPwm1Regs.ETSEL.bit.SOCAEN = 1;  //enable SOCA
-    EPwm1Regs.TBCTL.bit.CTRMODE = 0; //unfreeze, and enter up count mode
-    EDIS;
-//
-// take conversions indefinitely in loop
-//
-    BIOS_start();
+  //  start sys/bios
+  BIOS_start();
 }
 
-//
-// adca1_isr - Read Temperature ISR
-//
+
+// adca1_isr
 interrupt void adca1_isr(void)
 {
-    sensorSample = AdcaResultRegs.ADCRESULT0;
-    sensorTemp = GetTemperatureC(sensorSample);
+    sensorSampleA = AdcaResultRegs.ADCRESULT0;
+    sensorSampleB = AdcbResultRegs.ADCRESULT0;
 
     AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear INT1 flag
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
