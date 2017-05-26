@@ -15,12 +15,12 @@ volatile Uint16 sensorSampleB;
 
 #ifdef __cplusplus
     #pragma DATA_SECTION("Cla1ToCpuMsgRAM")
-    float result;
+    uint16_t result;
     #pragma DATA_SECTION(A,"CpuToCla1MsgRAM");
     float init;
 #else
     #pragma DATA_SECTION(result,"Cla1ToCpuMsgRAM")
-    float result;
+    uint16_t result;
     #pragma DATA_SECTION(init,"CpuToCla1MsgRAM")
     float init;
 #endif
@@ -42,6 +42,7 @@ Void taskFxn(UArg a0, UArg a1)
   for(;;){
 	  static uint16_t i = 0;
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
+    sensorSampleA = result;
     System_printf("ADCA res: %d\n", sensorSampleA);
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
@@ -62,21 +63,25 @@ void main(void)
 
   // Initialize System Control:
   InitSysCtrl();
-
-  // Initialize GPIO
-  GPIO_GroupInit();
+  SystemMemoryInit();
 
   // temporarily disable interrupt
+  // re-enabled inside Interrupt_init()
   DINT;
 
   // Map ISR functions
-  EALLOW;
-  PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
-  EDIS;
+  // EALLOW;
+  // PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
+  // EDIS;
 
   // Configure other peripherals
+  GPIO_GroupInit();
   ADC_GroupInit();
   EPWM_GroupInit();
+
+  // configure CLA
+  CLA_ConfigClaMemory();
+  CLA_InitCpu1Cla1();
 
   // configure interrupt
   Interrupt_Init();

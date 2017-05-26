@@ -4,8 +4,8 @@
 
 __interrupt void Cla1Task1 ( void )
 {
-//  __mdebugstop();
-  result = init + 5;
+  AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
+  result = AdcaResultRegs.ADCRESULT0;
 }
 
 __interrupt void Cla1Task2 ( void )

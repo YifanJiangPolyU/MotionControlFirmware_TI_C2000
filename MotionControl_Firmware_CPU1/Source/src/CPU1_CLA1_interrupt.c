@@ -22,10 +22,9 @@
 //
 __interrupt void cla1Isr1 ()
 {
-  //
   // Acknowledge the end-of-task interrupt for task 1
-  //
-  PieCtrlRegs.PIEACK.all = M_INT11;
+  PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
+
   //asm(" ESTOP0");
 }
 

@@ -62,13 +62,13 @@ void SystemFullInit(void){
  *  Memory related initialization
 */
 void SystemMemoryInit(void){
-
+/*
   #ifdef _FLASH
       // copy time critical functions from FLASH to RAM
       memcpy(&RamfuncsRunStart, &RamfuncsLoadStart, (size_t)&RamfuncsLoadSize);
       InitFlash();
   #endif
-
+*/
 #ifdef CPU1
   // configure memory ownership
   EALLOW;
@@ -127,10 +127,18 @@ void SystemCheckTriming(void){
 */
 void GPIO_GroupInit(void){
   InitGpio();
+  // GPIOs to control LEDs
   GPIO_SetupPinMux(31, GPIO_MUX_CPU1, 0);
   GPIO_SetupPinOptions(31, GPIO_OUTPUT, GPIO_PUSHPULL);
   GPIO_SetupPinMux(34, GPIO_MUX_CPU1, 0);
   GPIO_SetupPinOptions(34, GPIO_OUTPUT, GPIO_PUSHPULL);
+
+  // UART Rx Tx pins
+  GPIO_SetupPinMux(28, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(28, GPIO_INPUT, GPIO_PUSHPULL); // Rx
+  GPIO_SetupPinMux(29, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(29, GPIO_OUTPUT, GPIO_ASYNC); // Tx
+
 }
 
 /**
@@ -143,15 +151,25 @@ void Interrupt_Init(void){
   IFR = 0x0000;
 
   // enable interrupts on PIE side
-  PieCtrlRegs.PIEIER1.bit.INTx1 = 1;  // INT1.1, ADCA1
+  // PieCtrlRegs.PIEIER1.bit.INTx1 = 1;  // INT1.1, ADCA1
+  PieCtrlRegs.PIEIER11.all = 0xFFFF;
+
 
   // enable interrupts on CPU side
-  IER |= M_INT1; //Enable group 1 interrupts
+  //IER |= M_INT1; //Enable group 1 interrupts
+  IER |= (M_INT11 ); // CLA end-of-task interrupt
 
   EINT;  // Enable Global interrupt INTM
   ERTM;  // Enable Global realtime interrupt DBGM
 
   EDIS;
+}
+
+/**
+ * initialize UART interface for debug purpose
+ */
+void UART_Init(void){
+
 }
 
 /**
@@ -242,7 +260,7 @@ void EPWM_GroupInit(void){
 
   // EPWM1: event trigger for ADC conversion
   EPwm1Regs.ETSEL.bit.SOCAEN = 0;    // Disable SOC on A group
-  EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = TBPRD
+  EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = CMPA
   EPwm1Regs.ETPS.bit.SOCAPRD = 1;       // Generate pulse on every event
 
   // EPWM4: trigger control process master
@@ -314,7 +332,7 @@ void CLA_InitCpu1Cla1(void){
   // Enable the IACK instruction to start a task on CLA in software
   // for all  8 CLA tasks.
   Cla1Regs.MCTL.bit.IACKE = 1;
-  Cla1Regs.MIER.all = 0x00FF;
+  Cla1Regs.MIER.all = M_INT1;
 
   // Configure the vectors for the end-of-task interrupt for all
   // 8 tasks

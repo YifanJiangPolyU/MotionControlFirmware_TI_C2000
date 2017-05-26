@@ -21,8 +21,9 @@ void SystemFullInit(void);
 void SystemMemoryInit(void);
 void SystemCheckTriming(void);
 
-void GPIO_GroupInit(void);
 void Interrupt_Init(void);
+void UART_Init(void);
+void GPIO_GroupInit(void);
 void ADC_GroupInit(void);
 void EPWM_GroupInit(void);
 void CLA_ConfigClaMemory(void);
