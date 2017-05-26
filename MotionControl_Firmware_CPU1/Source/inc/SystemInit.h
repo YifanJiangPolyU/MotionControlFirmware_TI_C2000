@@ -22,7 +22,7 @@ void SystemMemoryInit(void);
 void SystemCheckTriming(void);
 
 void GPIO_GroupInit(void);
-void PIE_Init(void);
+void Interrupt_Init(void);
 void ADC_GroupInit(void);
 void EPWM_GroupInit(void);
 void CLA_ConfigClaMemory(void);

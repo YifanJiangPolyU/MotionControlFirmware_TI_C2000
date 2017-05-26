@@ -51,7 +51,7 @@ void SystemFullInit(void){
   EPWM_GroupInit();
 
   // initialize all interrupt settings here
-  PIE_Init();
+  Interrupt_Init();
 
   EINT;  // Enable Global interrupt INTM
   ERTM;  // Enable Global realtime interrupt DBGM
@@ -136,11 +136,22 @@ void GPIO_GroupInit(void){
 /**
  *  initialize all interrupt (PIE) settings here
 */
-void PIE_Init(void){
-  InitPieCtrl();
-  IER = 0x0000;
+void Interrupt_Init(void){
+  EALLOW;
+
+  // clear cpu side interrupt flags
   IFR = 0x0000;
-  InitPieVectTable();
+
+  // enable interrupts on PIE side
+  PieCtrlRegs.PIEIER1.bit.INTx1 = 1;  // INT1.1, ADCA1
+
+  // enable interrupts on CPU side
+  IER |= M_INT1; //Enable group 1 interrupts
+
+  EINT;  // Enable Global interrupt INTM
+  ERTM;  // Enable Global realtime interrupt DBGM
+
+  EDIS;
 }
 
 /**
@@ -168,7 +179,7 @@ void ADC_GroupInit(void){
   AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
   // conversion time and trigger
-  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 13;  //SOC0 will convert pin A4
+  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A4
   AdcaRegs.ADCSOC0CTL.bit.ACQPS = 139; //sample window is 25 SYSCLK cycles
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of SOC1 will set INT1 flag
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
@@ -176,7 +187,7 @@ void ADC_GroupInit(void){
   AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
 
   AdcbRegs.ADCSOC1CTL.bit.CHSEL = 4;  //SOC1 will convert pin B4
-  AdcbRegs.ADCSOC1CTL.bit.ACQPS = 24;
+  AdcbRegs.ADCSOC1CTL.bit.ACQPS = 139;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 1;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -209,9 +220,9 @@ void EPWM_GroupInit(void){
   CpuSysRegs.PCLKCR2.bit.EPWM5 = 1;
   CpuSysRegs.PCLKCR2.bit.EPWM6 = 1;
 
-  // EPWM1, up-counting, 720 kHz, trigger ADC
-  EPwm1Regs.CMPA.bit.CMPA = 0x0800;     // Set compare A value to 2048 counts
-  EPwm1Regs.TBPRD = 0x1000;             // Set period to 4096 counts
+  // EPWM1, up-counting, trigger ADC
+  EPwm1Regs.CMPA.bit.CMPA = 0x3FFE;     // Set compare A value to 3FFE counts
+  EPwm1Regs.TBPRD = 0x4000;             // Set period to 4096x4 counts
   EPwm1Regs.TBCTL.bit.CTRMODE = 3;      // freeze counter
 
   // EPWM4, up-down, 24 kHz
