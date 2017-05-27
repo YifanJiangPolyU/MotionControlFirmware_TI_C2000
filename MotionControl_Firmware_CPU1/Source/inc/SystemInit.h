@@ -17,6 +17,8 @@
 #ifndef SYSTEM_INIT_H
 #define SYSTEM_INIT_H
 
+#include "F28x_Project.h"
+
 void SystemFullInit(void);
 void SystemMemoryInit(void);
 void SystemCheckTriming(void);
@@ -28,5 +30,7 @@ void ADC_GroupInit(void);
 void EPWM_GroupInit(void);
 void CLA_ConfigClaMemory(void);
 void CLA_InitCpu1Cla1(void);
+
+extern volatile Uint16 sensorSampleA;
 
 #endif

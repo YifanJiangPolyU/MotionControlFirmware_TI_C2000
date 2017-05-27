@@ -9,9 +9,7 @@
 #include "SystemInit.h"
 
 
-// Globals
-volatile Uint16 sensorSampleA;
-volatile Uint16 sensorSampleB;
+
 
 #ifdef __cplusplus
     #pragma DATA_SECTION("Cla1ToCpuMsgRAM")
@@ -42,7 +40,6 @@ Void taskFxn(UArg a0, UArg a1)
   for(;;){
 	  static uint16_t i = 0;
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    sensorSampleA = result;
     System_printf("ADCA res: %d\n", sensorSampleA);
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
@@ -104,7 +101,6 @@ void main(void)
 interrupt void adca1_isr(void)
 {
     sensorSampleA = AdcaResultRegs.ADCRESULT0;
-    sensorSampleB = AdcbResultRegs.ADCRESULT0;
 
     AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear INT1 flag
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;

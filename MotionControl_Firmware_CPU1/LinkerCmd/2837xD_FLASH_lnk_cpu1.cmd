@@ -84,19 +84,34 @@ SECTIONS
    .switch             : > FLASHB      PAGE = 1, ALIGN(4)
 
    /* CLA program */
-   Cla1Prog:  LOAD = FLASHD,
-              RUN = RAMLS0,
-              LOAD_START(_Cla1funcsLoadStart),
-              LOAD_SIZE(_Cla1funcsLoadSize),
-              LOAD_END(_Cla1funcsLoadEnd),
-              RUN_START(_Cla1funcsRunStart),
-              RUN_SIZE(_Cla1funcsRunSize),
-              RUN_END(_Cla1funcsRunEnd),
-              PAGE = 0, ALIGN(4)
+   Cla1Prog         : LOAD = FLASHD,
+                      RUN = RAMLS0,
+                      LOAD_START(_Cla1funcsLoadStart),
+                      LOAD_END(_Cla1funcsLoadEnd),
+                      RUN_START(_Cla1funcsRunStart),
+                      LOAD_SIZE(_Cla1funcsLoadSize),
+                      PAGE = 0, ALIGN(4)
    CLADataLS1		: > RAMLS1, PAGE=0
    Cla1ToCpuMsgRAM  : > CLA1_MSGRAMLOW,   PAGE = 0
    CpuToCla1MsgRAM  : > CLA1_MSGRAMHIGH,  PAGE = 0
 
+#ifdef CLA_C
+   /* CLA C compiler sections */
+   // Must be allocated to memory the CLA has write access to
+   CLAscratch       :
+                     { *.obj(CLAscratch)
+                     . += CLA_SCRATCHPAD_SIZE;
+                     *.obj(CLAscratch_end) } >  RAMLS1,  PAGE = 0
+
+   .scratchpad      : > RAMLS1,       PAGE = 0
+   .bss_cla		    : > RAMLS1,       PAGE = 0
+   .const_cla	    :  LOAD = FLASHD,
+                       RUN = RAMLS1,
+                       RUN_START(_Cla1ConstRunStart),
+                       LOAD_START(_Cla1ConstLoadStart),
+                       LOAD_SIZE(_Cla1ConstLoadSize),
+                       PAGE = 0
+#endif //CLA_C
 
 #ifdef __TI_COMPILER_VERSION__
 	#if __TI_COMPILER_VERSION__ >= 15009000

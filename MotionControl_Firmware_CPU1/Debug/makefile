@@ -176,7 +176,7 @@ all: MotionControl_Firmware_CPU1.out
 MotionControl_Firmware_CPU1.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: C2000 Linker'
-	"/home/yifan/TI_CCS/V6.2.0/ccsv6/tools/compiler/c2000_15.12.3.LTS/bin/cl2000" -v28 -mt -ml --tmu_support=tmu0 --cla_support=cla1 --vcu_support=vcu2 --float_support=fpu32 -g --define=CPU1 --define=_FLASH --display_error_number --diag_wrap=off --diag_warning=225 -z -m"MotionControl_Firmware_CPU1.map" --stack_size=0x200 --warn_sections -i"/home/yifan/TI_CCS/V6.2.0/ccsv6/tools/compiler/c2000_15.12.3.LTS/lib" -i"/home/yifan/TI_CCS/V6.2.0/ccsv6/tools/compiler/c2000_15.12.3.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="MotionControl_Firmware_CPU1_linkInfo.xml" --rom_model -o "MotionControl_Firmware_CPU1.out" $(ORDERED_OBJS)
+	"/home/yifan/TI_CCS/V6.2.0/ccsv6/tools/compiler/c2000_15.12.3.LTS/bin/cl2000" -v28 -mt -ml --tmu_support=tmu0 --cla_support=cla1 --vcu_support=vcu2 --float_support=fpu32 -g --define=CPU1 --define=_FLASH --define=CLA_C --display_error_number --diag_wrap=off --diag_warning=225 -z -m"MotionControl_Firmware_CPU1.map" --stack_size=0x200 --warn_sections -i"/home/yifan/TI_CCS/V6.2.0/ccsv6/tools/compiler/c2000_15.12.3.LTS/lib" -i"/home/yifan/TI_CCS/V6.2.0/ccsv6/tools/compiler/c2000_15.12.3.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="MotionControl_Firmware_CPU1_linkInfo.xml" --rom_model -o "MotionControl_Firmware_CPU1.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

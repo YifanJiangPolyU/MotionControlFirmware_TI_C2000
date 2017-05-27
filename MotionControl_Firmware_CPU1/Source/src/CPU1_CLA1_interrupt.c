@@ -16,7 +16,7 @@
 #include "CPU1_CLA1_common.h"
 #include "F28x_Project.h"
 
-
+volatile Uint16 sensorSampleA;
 //
 // cla1Isr1 - CLA1 ISR 1
 //
@@ -24,7 +24,7 @@ __interrupt void cla1Isr1 ()
 {
   // Acknowledge the end-of-task interrupt for task 1
   PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
-
+  sensorSampleA = result;
   //asm(" ESTOP0");
 }
 
