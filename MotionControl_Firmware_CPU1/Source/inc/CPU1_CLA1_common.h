@@ -24,7 +24,8 @@ extern "C" {
 
 // shared variables between CPU and CLA
 extern float init;
-extern float result;
+extern uint16_t result;
+extern Uint16 sensorSampleA;
 
 // CLA C Tasks
 __interrupt void Cla1Task1();

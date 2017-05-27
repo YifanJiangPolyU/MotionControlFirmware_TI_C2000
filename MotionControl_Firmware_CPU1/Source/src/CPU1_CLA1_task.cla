@@ -5,7 +5,7 @@
 __interrupt void Cla1Task1 ( void )
 {
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
-  result = AdcaResultRegs.ADCRESULT0;
+  sensorSampleA = AdcaResultRegs.ADCRESULT0;
 }
 
 __interrupt void Cla1Task2 ( void )

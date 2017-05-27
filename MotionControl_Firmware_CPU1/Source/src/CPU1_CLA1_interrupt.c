@@ -15,8 +15,33 @@
 #include "stdint.h"
 #include "CPU1_CLA1_common.h"
 #include "F28x_Project.h"
+#include <xdc/runtime/System.h>
+#include <ti/sysbios/BIOS.h>
+#include <ti/sysbios/knl/Mailbox.h>
 
-volatile Uint16 sensorSampleA;
+#ifdef __cplusplus
+    #pragma DATA_SECTION("CLADataLS1")
+    Uint16 sensorSampleA;
+#else
+    #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
+    Uint16 sensorSampleA;
+#endif
+
+#ifdef __cplusplus
+    #pragma DATA_SECTION("Cla1ToCpuMsgRAM")
+    uint16_t result;
+    #pragma DATA_SECTION("CpuToCla1MsgRAM");
+    float init;
+#else
+    #pragma DATA_SECTION(result,"Cla1ToCpuMsgRAM")
+    uint16_t result;
+    #pragma DATA_SECTION(init,"CpuToCla1MsgRAM")
+    float init;
+#endif
+
+
+extern Mailbox_Handle ADC_fifo;
+
 //
 // cla1Isr1 - CLA1 ISR 1
 //
@@ -24,8 +49,7 @@ __interrupt void cla1Isr1 ()
 {
   // Acknowledge the end-of-task interrupt for task 1
   PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
-  sensorSampleA = result;
-  //asm(" ESTOP0");
+  Mailbox_post(ADC_fifo, &sensorSampleA, BIOS_NO_WAIT);
 }
 
 //

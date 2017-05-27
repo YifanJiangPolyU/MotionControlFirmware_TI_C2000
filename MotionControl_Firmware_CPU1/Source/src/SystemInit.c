@@ -198,14 +198,14 @@ void ADC_GroupInit(void){
 
   // conversion time and trigger
   AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A4
-  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 139; //sample window is 25 SYSCLK cycles
+  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 63; //sample window is 64 SYSCLK cycles
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of EOC0 will set INT1 flag
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
   AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
 
   AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4
-  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 139;
+  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 63;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -238,24 +238,24 @@ void EPWM_GroupInit(void){
   CpuSysRegs.PCLKCR2.bit.EPWM5 = 1;
   CpuSysRegs.PCLKCR2.bit.EPWM6 = 1;
 
-  // EPWM1, up-counting, trigger ADC
-  EPwm1Regs.CMPA.bit.CMPA = 0x3FFE;     // Set compare A value to 3FFE counts
-  EPwm1Regs.TBPRD = 0x4000;             // Set period to 4096x4 counts
+  // EPWM1, up-counting, 320kHz, trigger ADC
+  EPwm1Regs.CMPA.bit.CMPA = 624;     // Set compare A value to 624 counts
+  EPwm1Regs.TBPRD = 625;             // Set period to 4096x4 counts
   EPwm1Regs.TBCTL.bit.CTRMODE = 3;      // freeze counter
 
-  // EPWM4, up-down, 24 kHz
-  EPwm4Regs.CMPA.bit.CMPA = 0x0800;
-  EPwm4Regs.TBPRD = 0x1000;
+  // EPWM4, up-down, 32 kHz
+  EPwm4Regs.CMPA.bit.CMPA = 100;
+  EPwm4Regs.TBPRD = 3125;
   EPwm4Regs.TBCTL.bit.CTRMODE = 3;
 
-  // EPWM5, up-down, 24 kHz
-  EPwm5Regs.CMPA.bit.CMPA = 0x0800;
-  EPwm5Regs.TBPRD = 0x1000;
+  // EPWM5, up-down, 32 kHz
+  EPwm5Regs.CMPA.bit.CMPA = 100;
+  EPwm5Regs.TBPRD = 3125;
   EPwm5Regs.TBCTL.bit.CTRMODE = 3;
 
-  // EPWM6, up-down, 24 kHz
-  EPwm6Regs.CMPA.bit.CMPA = 0x0800;
-  EPwm6Regs.TBPRD = 0x1000;
+  // EPWM6, up-down, 32 kHz
+  EPwm6Regs.CMPA.bit.CMPA = 100;
+  EPwm6Regs.TBPRD = 3125;
   EPwm6Regs.TBCTL.bit.CTRMODE = 3;
 
   // EPWM1: event trigger for ADC conversion

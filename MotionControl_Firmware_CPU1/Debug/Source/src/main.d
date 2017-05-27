@@ -156,6 +156,36 @@ Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages
 Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/interfaces/ITaskSupport.h
 Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Task__epilogue.h
 Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/package/Task_SupportProxy.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Mailbox.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Types.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IInstance.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IHeap.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IModule.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Queue.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Assert.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Types.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IInstance.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event__prologue.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Assert.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Diags.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Log.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Queue.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Clock.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Task.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IModule.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event__epilogue.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Semaphore.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Types.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IInstance.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Diags.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Log.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Assert.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Queue.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Task.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Clock.h
+Source/src/main.obj: /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IModule.h
+Source/src/main.obj: /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event.h
 Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F28x_Project.h
 Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F2837xD_Cla_typedefs.h
 Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_headers/include/F2837xD_device.h
@@ -210,6 +240,7 @@ Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Fi
 Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F2837xD_Upp_defines.h
 Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F2837xD_defaultisr.h
 Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Source/inc/SystemInit.h
+Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Source/inc/CPU1_CLA1_common.h
 
 ../Source/src/main.c: 
 /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/std.h: 
@@ -367,6 +398,36 @@ Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Fi
 /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/interfaces/ITaskSupport.h: 
 /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Task__epilogue.h: 
 /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/package/Task_SupportProxy.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Mailbox.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Types.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IInstance.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IHeap.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IModule.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Queue.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Assert.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Types.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IInstance.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event__prologue.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Assert.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Diags.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Log.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Queue.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Clock.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Task.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IModule.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event__epilogue.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Semaphore.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Types.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IInstance.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Diags.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Log.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/Assert.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Queue.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Task.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Clock.h: 
+/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/xdc/runtime/IModule.h: 
+/home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/knl/Event.h: 
 /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F28x_Project.h: 
 /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F2837xD_Cla_typedefs.h: 
 /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_headers/include/F2837xD_device.h: 
@@ -421,3 +482,4 @@ Source/src/main.obj: /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Fi
 /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F2837xD_Upp_defines.h: 
 /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Library/F2837xD_common/include/F2837xD_defaultisr.h: 
 /home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Source/inc/SystemInit.h: 
+/home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/Source/inc/CPU1_CLA1_common.h: 

@@ -31,6 +31,4 @@ void EPWM_GroupInit(void);
 void CLA_ConfigClaMemory(void);
 void CLA_InitCpu1Cla1(void);
 
-extern volatile Uint16 sensorSampleA;
-
 #endif

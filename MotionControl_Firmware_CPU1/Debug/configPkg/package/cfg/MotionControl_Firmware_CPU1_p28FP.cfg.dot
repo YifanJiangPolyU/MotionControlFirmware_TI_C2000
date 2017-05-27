@@ -268,6 +268,12 @@ digraph configuration {
         ti_sysbios_knl_Intrinsics [style=filled,fillcolor=lightgray, label="Intrinsics"];
         ti_sysbios_knl__top -> ti_sysbios_knl_Intrinsics[style=invis];
         ti_sysbios_knl_Intrinsics -> ti_sysbios_knl__bot[style=invis];
+        ti_sysbios_knl_Event [style=filled,fillcolor=lightgray, label="Event"];
+        ti_sysbios_knl__top -> ti_sysbios_knl_Event[style=invis];
+        ti_sysbios_knl_Event -> ti_sysbios_knl__bot[style=invis];
+        ti_sysbios_knl_Mailbox [style=filled,fillcolor=lightgray, label="Mailbox"];
+        ti_sysbios_knl__top -> ti_sysbios_knl_Mailbox[style=invis];
+        ti_sysbios_knl_Mailbox -> ti_sysbios_knl__bot[style=invis];
         ti_sysbios_knl_Queue [style=filled,fillcolor=lightgray, label="Queue"];
         ti_sysbios_knl__top -> ti_sysbios_knl_Queue[style=invis];
         ti_sysbios_knl_Queue -> ti_sysbios_knl__bot[style=invis];

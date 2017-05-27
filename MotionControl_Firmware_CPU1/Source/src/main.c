@@ -3,25 +3,14 @@
 #include <xdc/runtime/System.h>
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
+#include <ti/sysbios/knl/Mailbox.h>
 
 #include "stdint.h"
 #include "F28x_Project.h"
 #include "SystemInit.h"
+#include "CPU1_CLA1_common.h"
 
-
-
-
-#ifdef __cplusplus
-    #pragma DATA_SECTION("Cla1ToCpuMsgRAM")
-    uint16_t result;
-    #pragma DATA_SECTION(A,"CpuToCla1MsgRAM");
-    float init;
-#else
-    #pragma DATA_SECTION(result,"Cla1ToCpuMsgRAM")
-    uint16_t result;
-    #pragma DATA_SECTION(init,"CpuToCla1MsgRAM")
-    float init;
-#endif
+extern Mailbox_Handle ADC_fifo;
 
 /*
  *  ======== taskFxn ========
@@ -37,10 +26,14 @@
  #endif
 Void taskFxn(UArg a0, UArg a1)
 {
+
   for(;;){
-	  static uint16_t i = 0;
+    static uint16_t i = 0;
+    static uint16_t sss = 0;
+
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    System_printf("ADCA res: %d\n", sensorSampleA);
+    Mailbox_pend(ADC_fifo, &sss, BIOS_NO_WAIT);
+    System_printf("ADCA res: %d\n", sss);
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
     Task_sleep(500);
