@@ -5,7 +5,27 @@
 __interrupt void Cla1Task1 ( void )
 {
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
-  sensorSampleA = AdcaResultRegs.ADCRESULT0;
+  CLA_SampleBufferA[CLA_SampleCounter++] = AdcaResultRegs.ADCRESULT0;
+
+  if(CLA_SampleCounter==20){
+    CLA_SampleCounter = 0;
+  }
+
+  if(CLA_CycleCounter==9){
+    CLA_CycleCounter = 0;
+    CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
+  } else {
+    CLA_CycleCounter += 1;
+  }
+
+  switch(CLA_CycleCounter){
+    case 0:
+      break;
+    case 1:
+      break;
+    default:
+      break;
+  }
 }
 
 __interrupt void Cla1Task2 ( void )
@@ -38,6 +58,9 @@ __interrupt void Cla1Task7 ( void )
 
 }
 
+/**
+ *  task 8 is used to initialize CLA variables
+ */
 __interrupt void Cla1Task8 ( void )
 {
 

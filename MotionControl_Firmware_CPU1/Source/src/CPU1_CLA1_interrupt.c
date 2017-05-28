@@ -19,12 +19,33 @@
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Mailbox.h>
 
+
 #ifdef __cplusplus
     #pragma DATA_SECTION("CLADataLS1")
-    Uint16 sensorSampleA;
+    uint16_t sensorSampleA;
+    #pragma DATA_SECTION("CLADataLS1")  // count from 0~19
+    uint16_t CLA_SampleCounter;
+    #pragma DATA_SECTION("CLADataLS1")  // count from 0~9
+    uint16_t CLA_CycleCounter;
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2]; // ADC data buffer, phase A
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2]; // ADC data buffer, phase B
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CLA_SampleBufferActiveHalf;  // which half of the CLA_SampleBuffer can be read?
 #else
     #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
-    Uint16 sensorSampleA;
+    uint16_t sensorSampleA;
+    #pragma DATA_SECTION(CLA_SampleCounter,"CLADataLS1")
+    uint16_t CLA_SampleCounter;
+    #pragma DATA_SECTION(CLA_CycleCounter,"CLADataLS1")
+    uint16_t CLA_CycleCounter;
+    #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1") // ADC data buffer, phase A
+    uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
+    #pragma DATA_SECTION(CLA_SampleBufferB,"CLADataLS1") // ADC data buffer, phase B
+    uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
+    #pragma DATA_SECTION(CLA_SampleBufferActiveHalf,"CLADataLS1")
+    uint16_t CLA_SampleBufferActiveHalf;
 #endif
 
 #ifdef __cplusplus
@@ -49,7 +70,7 @@ __interrupt void cla1Isr1 ()
 {
   // Acknowledge the end-of-task interrupt for task 1
   PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
-  Mailbox_post(ADC_fifo, &sensorSampleA, BIOS_NO_WAIT);
+  Mailbox_post(ADC_fifo, &(CLA_SampleBufferA[CLA_SampleCounter]), BIOS_NO_WAIT);
 }
 
 //

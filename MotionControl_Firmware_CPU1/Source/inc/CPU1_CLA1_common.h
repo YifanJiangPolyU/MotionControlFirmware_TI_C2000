@@ -22,10 +22,20 @@ extern "C" {
 
 #include "F28x_Project.h"
 
+#define CLA_SAMPLE_BUFFER_LEN_X2 20
+
+
 // shared variables between CPU and CLA
 extern float init;
 extern uint16_t result;
 extern Uint16 sensorSampleA;
+
+extern uint16_t CLA_SampleCounter;
+extern uint16_t CLA_CycleCounter;
+extern uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
+extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
+extern uint16_t CLA_SampleBufferActiveHalf;
+
 
 // CLA C Tasks
 __interrupt void Cla1Task1();

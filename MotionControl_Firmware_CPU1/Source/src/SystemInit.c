@@ -225,6 +225,7 @@ void ADC_GroupInit(void){
 */
 void EPWM_GroupInit(void){
   EALLOW;
+  CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 0;
 
   // EPWM modules assigned to CPU1
   DevCfgRegs.CPUSEL0.bit.EPWM1 = 0;
@@ -241,27 +242,46 @@ void EPWM_GroupInit(void){
   // EPWM1, up-counting, 320kHz, trigger ADC
   EPwm1Regs.CMPA.bit.CMPA = 624;     // Set compare A value to 624 counts
   EPwm1Regs.TBPRD = 625;             // Set period to 4096x4 counts
-  EPwm1Regs.TBCTL.bit.CTRMODE = 3;      // freeze counter
+  EPwm1Regs.TBPHS.all = 0;
+  EPwm1Regs.TBCTL.bit.PHSEN = 1;     // enable synchronization
+  EPwm1Regs.TBCTL.bit.SYNCOSEL = 0;  // enable software forced sync
+  EPwm1Regs.TBCTL.bit.CTRMODE = 3;   // freeze counter
 
   // EPWM4, up-down, 32 kHz
   EPwm4Regs.CMPA.bit.CMPA = 100;
   EPwm4Regs.TBPRD = 3125;
+  EPwm4Regs.TBPHS.all = 3124;
+  EPwm4Regs.TBCTL.bit.PHSEN = 1;
+  EPwm4Regs.TBCTL.bit.SYNCOSEL = 0;
   EPwm4Regs.TBCTL.bit.CTRMODE = 3;
+  EPwm4Regs.TBCTL.bit.PHSDIR = 1;    // count up after synchronization
+
+  // set up EPWM4 sync source to EPWM1SYNCOUT
+  // EPWM 5~6 sync signals are connected to EPWM4 internally
+  SyncSocRegs.SYNCSELECT.bit.EPWM4SYNCIN = 0;
 
   // EPWM5, up-down, 32 kHz
   EPwm5Regs.CMPA.bit.CMPA = 100;
   EPwm5Regs.TBPRD = 3125;
+  EPwm5Regs.TBPHS.all = 3124;
+  EPwm5Regs.TBCTL.bit.PHSEN = 1;
+  EPwm5Regs.TBCTL.bit.SYNCOSEL = 0;
   EPwm5Regs.TBCTL.bit.CTRMODE = 3;
+  EPwm5Regs.TBCTL.bit.PHSDIR = 1;
 
   // EPWM6, up-down, 32 kHz
   EPwm6Regs.CMPA.bit.CMPA = 100;
   EPwm6Regs.TBPRD = 3125;
+  EPwm6Regs.TBPHS.all = 3124;
+  EPwm6Regs.TBCTL.bit.PHSEN = 1;
+  EPwm6Regs.TBCTL.bit.SYNCOSEL = 0;
   EPwm6Regs.TBCTL.bit.CTRMODE = 3;
+  EPwm6Regs.TBCTL.bit.PHSDIR = 1;
 
   // EPWM1: event trigger for ADC conversion
   EPwm1Regs.ETSEL.bit.SOCAEN = 0;    // Disable SOC on A group
   EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = CMPA
-  EPwm1Regs.ETPS.bit.SOCAPRD = 1;       // Generate pulse on every event
+  EPwm1Regs.ETPS.bit.SOCAPRD = 1;    // Generate pulse on every event
 
   // EPWM4: trigger control process master
   //        and position loop
@@ -269,7 +289,7 @@ void EPWM_GroupInit(void){
   EPwm4Regs.ETSEL.bit.INTSEL = 4;
   EPwm4Regs.ETPS.bit.INTPRD = 1;
 
-
+  CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
   EDIS;
 }
 

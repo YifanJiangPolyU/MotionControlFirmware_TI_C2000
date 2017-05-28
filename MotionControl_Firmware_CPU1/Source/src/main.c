@@ -72,17 +72,29 @@ void main(void)
   // configure CLA
   CLA_ConfigClaMemory();
   CLA_InitCpu1Cla1();
-
+  
   // configure interrupt
   Interrupt_Init();
 
   EALLOW;
-  // sync ePWM
+  // sync ePWM clock
   CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
 
   // start ePWM
-  EPwm1Regs.ETSEL.bit.SOCAEN = 1;  //enable SOCA
+  EPwm1Regs.ETSEL.bit.SOCAEN = 1;  //enable SOCA to trigger ADC
   EPwm1Regs.TBCTL.bit.CTRMODE = 0; //unfreeze, and enter up count mode
+
+  EPwm4Regs.TBCTL.bit.CTRMODE = 2;  //unfreeze, and enter up-down mode
+  EPwm5Regs.TBCTL.bit.CTRMODE = 2;
+  EPwm6Regs.TBCTL.bit.CTRMODE = 2;
+
+
+  // sync ePWM counter value
+  CLA_SampleBufferActiveHalf = 0;
+  CLA_CycleCounter = 0;
+  CLA_SampleCounter = 0;
+  EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
+
   EDIS;
 
   //  start sys/bios
