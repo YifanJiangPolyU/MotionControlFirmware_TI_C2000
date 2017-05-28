@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker Unix v15.12.3                  
 ******************************************************************************
->> Linked Sun May 28 15:32:02 2017
+>> Linked Sun May 28 19:01:01 2017
 
 OUTPUT FILE NAME:   <MotionControl_Firmware_CPU1.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 0008468b
@@ -17,7 +17,7 @@ PAGE 0:
   RAMM1                 00000400   00000400  00000000  00000400  RWIX
   CLA1_MSGRAMLOW        00001480   00000080  00000001  0000007f  RWIX
   CLA1_MSGRAMHIGH       00001500   00000080  00000002  0000007e  RWIX
-  RAMLS0                00008000   00000800  00000122  000006de  RWIX
+  RAMLS0                00008000   00000800  00000134  000006cc  RWIX
   RAMLS1                00008800   00000800  0000002c  000007d4  RWIX
   RAMLS2                00009000   00000800  00000000  00000800  RWIX
   RAMLS3                00009800   00000800  00000000  00000800  RWIX
@@ -44,7 +44,7 @@ PAGE 0:
   CPU2TOCPU1RAM         0003f800   00000400  00000000  00000400  RWIX
   CPU1TOCPU2RAM         0003fc00   00000400  00000088  00000378  RWIX
   BEGIN                 00080000   00000002  00000002  00000000  RWIX
-  FLASHD                00086000   00002000  0000018f  00001e71  RWIX
+  FLASHD                00086000   00002000  000001a1  00001e5f  RWIX
   RESET                 003fffc0   00000002  00000000  00000002  RWIX
 
 PAGE 1:
@@ -223,21 +223,21 @@ GETREADIDX
 *          0    0003fc84    00000004     UNINITIALIZED
                   0003fc84    00000004     F2837xD_Ipc_Driver.obj (GETREADIDX)
 
-Cla1Prog   0    00086000    00000122     RUN ADDR = 00008000
-                  00086000    000000ea     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task1)
-                  000860ea    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task2)
-                  000860f2    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task3)
-                  000860fa    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task4)
-                  00086102    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task5)
-                  0008610a    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task6)
-                  00086112    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task7)
-                  0008611a    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task8)
+Cla1Prog   0    00086000    00000134     RUN ADDR = 00008000
+                  00086000    000000fc     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task1)
+                  000860fc    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task2)
+                  00086104    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task3)
+                  0008610c    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task4)
+                  00086114    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task5)
+                  0008611c    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task6)
+                  00086124    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task7)
+                  0008612c    00000008     CPU1_CLA1_task.obj (Cla1Prog:_Cla1Task8)
 
 .TI.ramfunc 
-*          0    00086124    0000006d     RUN ADDR = 00000124
-                  00086124    00000037     F2837xD_SysCtrl.obj (.TI.ramfunc)
-                  0008615b    00000032     main.obj (.TI.ramfunc)
-                  0008618d    00000004     F2837xD_usDelay.obj (.TI.ramfunc)
+*          0    00086134    0000006d     RUN ADDR = 00000124
+                  00086134    00000037     F2837xD_SysCtrl.obj (.TI.ramfunc)
+                  0008616b    00000032     main.obj (.TI.ramfunc)
+                  0008619d    00000004     F2837xD_usDelay.obj (.TI.ramfunc)
 
 CpuTimer0RegsFile 
 *          1    00000c00    00000008     UNINITIALIZED
@@ -1036,12 +1036,12 @@ MODULE SUMMARY
        Total:                                    0       0         7597   
                                                                           
     ./Source/src/
-       CPU1_CLA1_task.obj                        580     0         0      
+       CPU1_CLA1_task.obj                        616     0         0      
        SystemInit.obj                            526     0         0      
        main.obj                                  194     0         44     
        CPU1_CLA1_interrupt.obj                   179     0         47     
     +--+-----------------------------------------+-------+---------+---------+
-       Total:                                    1479    0         91     
+       Total:                                    1515    0         91     
                                                                           
     /home/yifan/git/MotionControlFirmware_TI_C2000/MotionControl_Firmware_CPU1/Debug/configPkg/package/cfg/
        MotionControl_Firmware_CPU1_p28FP.o28FP   904     0         3968   
@@ -1103,7 +1103,7 @@ MODULE SUMMARY
                                                                           
        Stack:                                    0       0         1024   
     +--+-----------------------------------------+-------+---------+---------+
-       Grand Total:                              13727   0         13770  
+       Grand Total:                              13763   0         13770  
 
 
 GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
@@ -1584,15 +1584,15 @@ abs   ffffffff  .text
 1     00001400  _Cla1Regs                                                 
 0     00000ce0  _Cla1SoftIntRegs                                          
 0     00008000  _Cla1Task1                                                
-0     000080ea  _Cla1Task2                                                
-0     000080f2  _Cla1Task3                                                
-0     000080fa  _Cla1Task4                                                
-0     00008102  _Cla1Task5                                                
-0     0000810a  _Cla1Task6                                                
-0     00008112  _Cla1Task7                                                
-0     0000811a  _Cla1Task8                                                
-0     00086122  _Cla1funcsLoadEnd                                         
-abs   00000122  _Cla1funcsLoadSize                                        
+0     000080fc  _Cla1Task2                                                
+0     00008104  _Cla1Task3                                                
+0     0000810c  _Cla1Task4                                                
+0     00008114  _Cla1Task5                                                
+0     0000811c  _Cla1Task6                                                
+0     00008124  _Cla1Task7                                                
+0     0000812c  _Cla1Task8                                                
+0     00086134  _Cla1funcsLoadEnd                                         
+abs   00000134  _Cla1funcsLoadSize                                        
 0     00086000  _Cla1funcsLoadStart                                       
 0     00008000  _Cla1funcsRunStart                                        
 1     0005d200  _ClkCfgRegs                                               
@@ -1779,9 +1779,9 @@ abs   00000122  _Cla1funcsLoadSize
 1     000829ee  _RAM_ACCESS_VIOLATION_ISR                                 
 1     000829da  _RAM_CORRECTABLE_ERROR_ISR                                
 1     000824da  _RTOS_ISR                                                 
-0     00086191  _RamfuncsLoadEnd                                          
+0     000861a1  _RamfuncsLoadEnd                                          
 abs   0000006d  _RamfuncsLoadSize                                         
-0     00086124  _RamfuncsLoadStart                                        
+0     00086134  _RamfuncsLoadStart                                        
 0     00000191  _RamfuncsRunEnd                                           
 abs   0000006d  _RamfuncsRunSize                                          
 0     00000124  _RamfuncsRunStart                                         
@@ -2302,13 +2302,13 @@ page  address   name
 0     00001500  _init                                                     
 0     00008000  _Cla1Task1                                                
 0     00008000  _Cla1funcsRunStart                                        
-0     000080ea  _Cla1Task2                                                
-0     000080f2  _Cla1Task3                                                
-0     000080fa  _Cla1Task4                                                
-0     00008102  _Cla1Task5                                                
-0     0000810a  _Cla1Task6                                                
-0     00008112  _Cla1Task7                                                
-0     0000811a  _Cla1Task8                                                
+0     000080fc  _Cla1Task2                                                
+0     00008104  _Cla1Task3                                                
+0     0000810c  _Cla1Task4                                                
+0     00008114  _Cla1Task5                                                
+0     0000811c  _Cla1Task6                                                
+0     00008124  _Cla1Task7                                                
+0     0000812c  _Cla1Task8                                                
 0     00008800  _CLA_CycleCounter                                         
 0     00008801  _CLA_SampleCounter                                        
 0     00008802  _CLA_SampleBufferActiveHalf                               
@@ -2380,9 +2380,9 @@ page  address   name
 0     0003fc84  _g_usGetReadIndexes                                       
 0     00080000  _ti_catalog_c2800_initF2837x_Boot_entry                   
 0     00086000  _Cla1funcsLoadStart                                       
-0     00086122  _Cla1funcsLoadEnd                                         
-0     00086124  _RamfuncsLoadStart                                        
-0     00086191  _RamfuncsLoadEnd                                          
+0     00086134  _Cla1funcsLoadEnd                                         
+0     00086134  _RamfuncsLoadStart                                        
+0     000861a1  _RamfuncsLoadEnd                                          
 1     00000b00  _AdcaResultRegs                                           
 1     00000b20  _AdcbResultRegs                                           
 1     00000b40  _AdccResultRegs                                           
@@ -3036,7 +3036,7 @@ abs   00000001  _xdc_runtime_Startup__EXECFXN__C
 abs   00000001  _xdc_runtime_Startup__RESETFXN__C                         
 abs   0000006d  _RamfuncsLoadSize                                         
 abs   0000006d  _RamfuncsRunSize                                          
-abs   00000122  _Cla1funcsLoadSize                                        
+abs   00000134  _Cla1funcsLoadSize                                        
 abs   00000400  __STACK_SIZE                                              
 abs   ffffffff  .text                                                     
 abs   ffffffff  ___TI_pprof_out_hndl                                      
