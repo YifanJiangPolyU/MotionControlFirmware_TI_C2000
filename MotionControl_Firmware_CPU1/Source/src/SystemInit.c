@@ -240,8 +240,8 @@ void EPWM_GroupInit(void){
   CpuSysRegs.PCLKCR2.bit.EPWM6 = 1;
 
   // EPWM1, up-counting, 320kHz, trigger ADC
-  EPwm1Regs.CMPA.bit.CMPA = 624;     // Set compare A value to 624 counts
-  EPwm1Regs.TBPRD = 625;             // Set period to 4096x4 counts
+  EPwm1Regs.CMPA.bit.CMPA = 4095;     // Set compare A value to 624 counts
+  EPwm1Regs.TBPRD = 4096;             // Set period to 4096x4 counts
   EPwm1Regs.TBPHS.all = 0;
   EPwm1Regs.TBCTL.bit.PHSEN = 1;     // enable synchronization
   EPwm1Regs.TBCTL.bit.SYNCOSEL = 0;  // enable software forced sync

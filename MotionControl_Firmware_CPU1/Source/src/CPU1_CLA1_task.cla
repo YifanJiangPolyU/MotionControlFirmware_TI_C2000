@@ -4,6 +4,8 @@
 
 __interrupt void Cla1Task1 ( void )
 {
+  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 1;
+
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
   CLA_SampleBufferA[CLA_SampleCounter] = AdcaResultRegs.ADCRESULT0;
   CLA_SampleBufferB[CLA_SampleCounter++] = AdcaResultRegs.ADCRESULT0;
@@ -15,6 +17,7 @@ __interrupt void Cla1Task1 ( void )
   if(CLA_CycleCounter==9){
     CLA_CycleCounter = 0;
     CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
+    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
   } else {
     CLA_CycleCounter += 1;
   }
