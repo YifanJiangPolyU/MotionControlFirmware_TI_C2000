@@ -64,6 +64,8 @@ void main(void)
   // PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
   // EDIS;
 
+  InitTempSensor(3.0);
+  
   // Configure other peripherals
   GPIO_GroupInit();
   ADC_GroupInit();
@@ -72,7 +74,7 @@ void main(void)
   // configure CLA
   CLA_ConfigClaMemory();
   CLA_InitCpu1Cla1();
-  
+
   // configure interrupt
   Interrupt_Init();
 

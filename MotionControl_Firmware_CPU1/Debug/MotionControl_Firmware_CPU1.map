@@ -1,10 +1,10 @@
 ******************************************************************************
              TMS320C2000 Linker Unix v15.12.3                  
 ******************************************************************************
->> Linked Sun May 28 19:55:03 2017
+>> Linked Sun May 28 22:58:50 2017
 
 OUTPUT FILE NAME:   <MotionControl_Firmware_CPU1.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 0008468b
+ENTRY POINT SYMBOL: "_c_int00"  address: 00084758
 
 
 MEMORY CONFIGURATION
@@ -148,7 +148,7 @@ PAGE 1:
   DCSM_Z2_OTP           00078200   00000020  00000020  00000000  RWIX
   FLASHA                00080002   00001ffe  00000000  00001ffe  RWIX
   FLASHB                00082000   00002000  00001ffd  00000003  RWIX
-  FLASHC                00084000   00002000  0000173b  000008c5  RWIX
+  FLASHC                00084000   00002000  0000180c  000007f4  RWIX
   FLASHE                00088000   00008000  000004e4  00007b1c  RWIX
   FLASHF                00090000   00008000  00000000  00008000  RWIX
   FLASHG                00098000   00008000  00000000  00008000  RWIX
@@ -664,227 +664,228 @@ xdc.noload
                   00082d88    0000027c     rts2800_fpu32.lib : trgdrv.obj (.text)
                   00083004    0000025f     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_doPrint__I)
                   00083263    00000244     F2837xD_Gpio.obj (.text)
-                  000834a7    0000020e     SystemInit.obj (.text)
-                  000836b5    000001a7     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Semaphore_pend__E)
-                  0008385c    0000010a     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_printfExtend__I)
-                  00083966    00000107     rts2800_fpu32.lib : ll_div.obj (.text)
-                  00083a6d    00000100     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_sleep__E)
-                  00083b6d    000000e2                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_clearInterrupt__E)
-                  00083c4f    000000df     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write8__E)
-                  00083d2e    000000dd     F2837xD_Adc.obj (.text)
-                  00083e0b    000000b3     CPU1_CLA1_interrupt.obj (.text:retain)
-                  00083ebe    000000a5     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_policyDefault__E)
-                  00083f63    0000009b     sysbios.a28FP : c28_Hwi_disp_asm.obj (.text:_ti_sysbios_family_c28_Hwi_dispatch)
+                  000834a7    00000219     SystemInit.obj (.text)
+                  000836c0    000001a7     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Semaphore_pend__E)
+                  00083867    0000010a     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_printfExtend__I)
+                  00083971    00000107     rts2800_fpu32.lib : ll_div.obj (.text)
+                  00083a78    00000100     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_sleep__E)
+                  00083b78    000000e2                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_clearInterrupt__E)
+                  00083c5a    000000df     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write8__E)
+                  00083d39    000000dd     F2837xD_Adc.obj (.text)
+                  00083e16    000000c2     F2837xD_TempSensorConv.obj (.text)
+                  00083ed8    000000b3     CPU1_CLA1_interrupt.obj (.text:retain)
+                  00083f8b    00000073     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_checkStacks__E)
                   00083ffe    00000002     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_TaskSupport_Module__startupDone__S)
 
-.text.2    1    00084000    0000173b     
-                  00084000    00000095     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write4__E)
-                  00084095    00000001     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_initStartup)
-                  00084096    00000094     rts2800_fpu32.lib : trgmsg.obj (.text)
-                  0008412a    00000090     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_enableInterrupt__E)
-                  000841ba    00000088     rts2800_fpu32.lib : fs_div.obj (.text)
-                  00084242    00000084     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Semaphore_post__E)
-                  000842c6    00000083                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_disableInterrupt__E)
-                  00084349    00000080                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_disablePIEIER__E)
-                  000843c9    0000007f                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_enablePIEIER__E)
-                  00084448    0000007d     ti.targets.rts2800.a28FP : Startup.o28FP (.text:_xdc_runtime_Startup_startMods__I)
-                  000844c5    0000007b                              : Text.o28FP (.text:_xdc_runtime_Text_putSite__E)
-                  00084540    00000073     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_checkStacks__E)
-                  000845b3    00000072                   : BIOS.obj (.text:_ti_sysbios_gates_GateMutex_enter__E)
-                  00084625    00000066                   : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_stopAndClear__I)
-                  0008468b    00000063     boot.a28FP : boot_cg.o28FP (.text)
-                  000846ee    0000004c     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_dispatchCore__I)
-                  0008473a    0000004c     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_putLab__E)
-                  00084786    0000004b     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Clock_workFunc__E)
-                  000847d1    0000004b                   : BIOS.obj (.text:_ti_sysbios_knl_Task_postInit__I)
-                  0008481c    00000049     Boot.a28FP : Boot.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_configurePllDivs)
-                  00084865    00000049     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_post__E)
-                  000848ae    00000047                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_Module_startup__E)
-                  000848f5    00000046                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_run__I)
-                  0008493b    00000046     rts2800_fpu32.lib : cpy_tbl.obj (.text)
-                  00084981    00000043     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_postInit__I)
-                  000849c4    00000043     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_setX__E)
-                  00084a07    00000043     main.obj (.text)
-                  00084a4a    00000042     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_unPluggedInterrupt__I)
-                  00084a8c    00000040     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_formatNum__I)
-                  00084acc    0000003f                              : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_setFilterLevel__E)
-                  00084b0b    0000003e     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_pend__E)
-                  00084b49    0000003e                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_restoreHwi__E)
-                  00084b87    0000003c     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_getFilterLevel__E)
-                  00084bc3    0000003a     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_TaskSupport_start__E)
-                  00084bfd    0000003a     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_putMod__E)
-                  00084c37    00000036                              : Error.o28FP (.text:_xdc_runtime_Error_print__E)
-                  00084c6d    00000035     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_startCore__E)
-                  00084ca2    00000035     ti.targets.rts2800.a28FP : Startup.o28FP (.text:_xdc_runtime_Startup_exec__E)
-                  00084cd7    00000034     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_rtsUnlock__I)
-                  00084d0b    00000032     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_Module_startup__E)
-                  00084d3d    00000032     ti.targets.rts2800.a28FP : Assert.o28FP (.text:_xdc_runtime_Assert_raise__I)
-                  00084d6f    0000002e     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_runLoop__I)
-                  00084d9d    0000002e                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_schedule__I)
-                  00084dcb    0000002e                   : BIOS.obj (.text:_ti_sysbios_knl_Task_schedule__I)
-                  00084df9    0000002c                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_getStackInfo__E)
-                  00084e25    0000002c                   : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_start__E)
-                  00084e51    0000002b                   : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_Module_startup__E)
-                  00084e7c    0000002a     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_xprintf__I)
-                  00084ea6    00000029     rts2800_fpu32.lib : exit.obj (.text)
-                  00084ecf    00000028     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_flush__E)
-                  00084ef7    00000025     sysbios.a28FP : c28_TaskSupport_asm.obj (.text:_ti_sysbios_family_c28_TaskSupport_buildTaskStack)
-                  00084f1c    00000024                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_post__E)
-                  00084f40    00000023     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_processAtExit__E)
-                  00084f63    00000021     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_allBlockedFunction__I)
-                  00084f84    00000021     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_atexit__E)
-                  00084fa5    00000020     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_setPrescale__E)
-                  00084fc5    0000001f                   : BIOS.obj (.text:_ti_sysbios_knl_Task_exit__E)
-                  00084fe4    0000001e                   : BIOS.obj (.text:_ti_sysbios_knl_Task_blockI__E)
-                  00085002    0000001e     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_putch__E)
-                  00085020    0000001e     rts2800_fpu32.lib : memcpy.obj (.text)
-                  0008503e    0000001d     sysbios.a28FP : c28_TaskSupport_asm.obj (.text:_ti_sysbios_family_c28_TaskSupport_swap__E)
-                  0008505b    0000001d     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_filterOutEvent__I)
-                  00085078    0000001c     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_hal_Hwi_checkStack)
-                  00085094    0000001b                   : c28_Hwi_asm.obj (.text:_ti_sysbios_family_c28_Hwi_switchAndDispatch__I)
-                  000850af    0000001b                   : BIOS.obj (.text:_ti_sysbios_hal_Hwi_initStack)
-                  000850ca    0000001b                   : BIOS.obj (.text:_ti_sysbios_knl_Task_processVitalTaskFlag__I)
-                  000850e5    0000001b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_SysMin_output__I)
-                  00085100    0000001b     main.obj (.text:retain)
-                  0008511b    0000001a     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Clock_addI__E)
-                  00085135    0000001a     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_Module_startup__E)
-                  0008514f    0000001a     rts2800_fpu32.lib : cpy_utils.obj (.text)
-                  00085169    00000019     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_Object__get__S)
-                  00085182    00000019     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_postInit__I)
-                  0008519b    00000019     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Queue_Object__get__S)
-                  000851b4    00000019     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_restore__E)
-                  000851cd    00000019     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_avprintf__E)
-                  000851e6    00000019                              : System.o28FP (.text:_xdc_runtime_System_putchar__I)
-                  000851ff    00000019     rts2800_fpu32.lib : args_main.obj (.text)
-                  00085218    00000018     sysbios.a28FP : c28_Hwi_asm.obj (.text:_ti_sysbios_family_xxx_Hwi_switchAndRunFunc)
-                  00085230    00000018     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_reset__E)
-                  00085248    00000018                              : System.o28FP (.text:_xdc_runtime_System_vprintf__E)
-                  00085260    00000018                              : Text.o28FP (.text:_xdc_runtime_Text_printVisFxn__I)
-                  00085278    00000018     rts2800_fpu32.lib : ll_aox.obj (.text)
-                  00085290    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_atExitFunc__I)
-                  000852a7    00000017     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_startup__E)
-                  000852be    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_doTick__I)
-                  000852d5    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Mailbox_Object__get__S)
-                  000852ec    00000017     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Semaphore_pendTimeout__I)
-                  00085303    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Swi_Object__get__S)
-                  0008531a    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_Object__get__S)
-                  00085331    00000017     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_unblockI__E)
-                  00085348    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_Object__get__S)
-                  0008535f    00000017     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_abort__E)
-                  00085376    00000016     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_Module_startup__E)
-                  0008538c    00000016                   : BIOS.obj (.text:_ti_sysbios_knl_Task_restore__E)
-                  000853a2    00000015     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_startFunc__I)
-                  000853b7    00000015     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_Module_startup__E)
-                  000853cc    00000014                   : BIOS.obj (.text:_ti_sysbios_knl_Idle_run__E)
-                  000853e0    00000013     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_errorRaiseHook__I)
-                  000853f3    00000012     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_disableIER__E)
-                  00085405    00000012     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Clock_Module_startup__E)
-                  00085417    00000011     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_raiseX__E)
-                  00085428    00000010     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_rtsLock__I)
-                  00085438    00000010     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_enableIER__E)
-                  00085448    00000010     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_stop__E)
-                  00085458    00000010                   : BIOS.obj (.text:_ti_sysbios_knl_Task_restoreHwi__E)
-                  00085468    0000000f     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write2__E)
-                  00085477    0000000e     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_f2837x_TimestampProvider_get64__E)
-                  00085485    0000000e     ti.targets.rts2800.a28FP : Registry.o28FP (.text:_xdc_runtime_Registry_findById__E)
-                  00085493    0000000e                              : SysMin.o28FP (.text:_xdc_runtime_SysMin_Module_startup__E)
-                  000854a1    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_registerRTSLock__I)
-                  000854ae    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_removeRTSLock__I)
-                  000854bb    0000000d     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_dispatchC__I)
-                  000854c8    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_restoreIER__E)
-                  000854d5    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_start__E)
-                  000854e2    0000000d     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_enter__I)
-                  000854ef    0000000d     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_check__E)
-                  000854fc    0000000d                              : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write1__E)
-                  00085509    0000000d                              : System.o28FP (.text:_xdc_runtime_System_abort__E)
-                  00085516    0000000c     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_exitFunc__I)
-                  00085522    0000000c     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_gates_GateMutex_leave__E)
-                  0008552e    0000000c                   : BIOS.obj (.text:_ti_sysbios_knl_Queue_get__E)
-                  0008553a    0000000c                   : BIOS.obj (.text:_ti_sysbios_knl_Queue_put__E)
-                  00085546    0000000c                   : BIOS.obj (.text:_ti_sysbios_knl_Task_enabled__E)
-                  00085552    0000000c     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_aprintf__E)
-                  0008555e    0000000c     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_printf__E)
-                  0008556a    0000000c     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_ropeText__E)
-                  00085576    0000000c     rts2800_fpu32.lib : memset.obj (.text)
-                  00085582    0000000b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_Module__startupDone__F)
-                  0008558d    0000000b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Timer_Module__startupDone__F)
-                  00085598    0000000b     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_sleepTimeout__I)
-                  000855a3    0000000b     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write0__E)
-                  000855ae    0000000b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_Startup_exec__I)
-                  000855b9    0000000b     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_exit__E)
-                  000855c4    0000000b                              : System.o28FP (.text:_xdc_runtime_System_exit__E)
-                  000855cf    0000000a     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_init)
-                  000855d9    00000009     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_TaskSupport_checkStack__E)
-                  000855e2    00000009                   : c28_TaskSupport_asm.obj (.text:_ti_sysbios_family_c28_TaskSupport_glue)
-                  000855eb    00000009                   : BIOS.obj (.text:_ti_sysbios_hal_Hwi_Module_startup__E)
-                  000855f4    00000009                   : BIOS.obj (.text:_ti_sysbios_knl_Task_unblock__E)
-                  000855fd    00000009     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_vsnprintf__E)
-                  00085606    00000009     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_Text_visitRope__I)
-                  0008560f    00000009     rts2800_fpu32.lib : _lock.obj (.text)
-                  00085618    00000008     Boot.a28FP : Boot.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_initSharedRAMs)
-                  00085620    00000008     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_BIOS_setThreadType__E)
-                  00085628    00000008     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_Module_State_clockQ)
-                  00085630    00000008     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_ready__E)
-                  00085638    00000008     rts2800_fpu32.lib : strlen.obj (.text)
-                  00085640    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_RtsGateProxy_leave__E)
-                  00085647    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E)
-                  0008564e    00000007     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Queue_empty__E)
-                  00085655    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_checkStack__E)
-                  0008565c    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_swap__E)
-                  00085663    00000007     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_init__E)
-                  0008566a    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_Module_GateProxy_leave__E)
-                  00085671    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_Module_GateProxy_leave__E)
-                  00085678    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_RtsGateProxy_enter__E)
-                  0008567e    00000006     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_BIOS_start__E)
-                  00085684    00000006                   : c28_IntrinsicsSupport_asm.obj (.text:_ti_sysbios_family_c28_IntrinsicsSupport_maxbit__E)
-                  0008568a    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_TimerProxy_getMaxTicks__E)
-                  00085690    00000006     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_disable__E)
-                  00085696    00000006                   : BIOS.obj (.text:_ti_sysbios_knl_Task_disable__E)
-                  0008569c    00000006     ti.targets.rts2800.a28FP : Gate.o28FP (.text:_xdc_runtime_Gate_enterSystem__E)
-                  000856a2    00000006                              : Gate.o28FP (.text:_xdc_runtime_Gate_leaveSystem__E)
-                  000856a8    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_Module_GateProxy_enter__E)
-                  000856ae    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_TimestampProxy_get64__E)
-                  000856b4    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_Module_GateProxy_enter__E)
-                  000856ba    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_abort__E)
-                  000856c0    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_exit__E)
-                  000856c6    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_putch__E)
-                  000856cc    00000005     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_switchFromBootStack__E)
-                  000856d1    00000005                   : BIOS.obj (.text:_ti_sysbios_gates_GateHwi_enter__E)
-                  000856d6    00000005     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_iargToPtr)
-                  000856db    00000005     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_enable__E)
-                  000856e0    00000005     rts2800_fpu32.lib : strcpy.obj (.text)
-                  000856e5    00000004     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_startup__E)
-                  000856e9    00000004     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_startup__E)
-                  000856ed    00000004     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_disable__E)
-                  000856f1    00000004                              : Startup.o28FP (.text:_xdc_runtime_Startup_rtsDone__E)
-                  000856f5    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_limpAbort)
-                  000856f8    00000003     F2837xD_DBGIER.obj (.text)
-                  000856fb    00000003     ti.targets.rts2800.a28FP : xdc_noinit.o28FP (.text:___xdc__init)
-                  000856fe    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_Module__startupDone__S)
-                  00085701    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Timer_Module__startupDone__S)
-                  00085704    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_gates_GateHwi_leave__E)
-                  00085707    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S)
-                  0008570a    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_startup__E)
-                  0008570d    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E)
-                  00085710    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_hal_Hwi_startup__E)
-                  00085713    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_TimerProxy_Module__startupDone__S)
-                  00085716    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Idle_loop__E)
-                  00085719    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S)
-                  0008571c    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_startup__E)
-                  0008571f    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_Startup_reset__I)
-                  00085722    00000003     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_Module_startup__E)
-                  00085725    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_ready__E)
-                  00085728    00000003     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_abortStd__E)
-                  0008572b    00000003                              : System.o28FP (.text:_xdc_runtime_System_exitStd__E)
-                  0008572e    00000002     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_getMaxTicks__E)
-                  00085730    00000002                   : BIOS.obj (.text:_ti_sysbios_gates_GateHwi_query__E)
-                  00085732    00000002                   : BIOS.obj (.text:_ti_sysbios_gates_GateMutex_query__E)
-                  00085734    00000002     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_getSite__E)
-                  00085736    00000001     Boot.a28FP : Boot.o28FP (.text:_ti_catalog_c2800_initF2837x_Boot_defaultLimpAbortFunction)
-                  00085737    00000001     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_BIOS_linkedWithIncorrectBootLibrary__E)
-                  00085738    00000001     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_nullFunc__I)
-                  00085739    00000001     sysbios.a28FP : c28_Hwi_asm.obj (.text:_ti_sysbios_family_c28_Hwi_interruptReturn__I)
-                  0008573a    00000001                   : BIOS.obj (.text:_ti_sysbios_knl_Clock_logTick__E)
+.text.2    1    00084000    0000180c     
+                  00084000    000000a5     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_policyDefault__E)
+                  000840a5    0000009b     sysbios.a28FP : c28_Hwi_disp_asm.obj (.text:_ti_sysbios_family_c28_Hwi_dispatch)
+                  00084140    00000095     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write4__E)
+                  000841d5    00000001     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_initStartup)
+                  000841d6    00000094     rts2800_fpu32.lib : trgmsg.obj (.text)
+                  0008426a    00000090     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_enableInterrupt__E)
+                  000842fa    00000088     rts2800_fpu32.lib : fs_div.obj (.text)
+                  00084382    00000084     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Semaphore_post__E)
+                  00084406    00000083                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_disableInterrupt__E)
+                  00084489    00000080                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_disablePIEIER__E)
+                  00084509    0000007f                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_enablePIEIER__E)
+                  00084588    0000007d     ti.targets.rts2800.a28FP : Startup.o28FP (.text:_xdc_runtime_Startup_startMods__I)
+                  00084605    0000007b                              : Text.o28FP (.text:_xdc_runtime_Text_putSite__E)
+                  00084680    00000072     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_gates_GateMutex_enter__E)
+                  000846f2    00000066                   : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_stopAndClear__I)
+                  00084758    00000063     boot.a28FP : boot_cg.o28FP (.text)
+                  000847bb    0000004c     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_dispatchCore__I)
+                  00084807    0000004c     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_putLab__E)
+                  00084853    0000004b     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Clock_workFunc__E)
+                  0008489e    0000004b                   : BIOS.obj (.text:_ti_sysbios_knl_Task_postInit__I)
+                  000848e9    00000049     Boot.a28FP : Boot.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_configurePllDivs)
+                  00084932    00000049     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_post__E)
+                  0008497b    00000047                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_Module_startup__E)
+                  000849c2    00000047     main.obj (.text)
+                  00084a09    00000046     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_run__I)
+                  00084a4f    00000046     rts2800_fpu32.lib : cpy_tbl.obj (.text)
+                  00084a95    00000043     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_postInit__I)
+                  00084ad8    00000043     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_setX__E)
+                  00084b1b    00000042     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_unPluggedInterrupt__I)
+                  00084b5d    00000040     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_formatNum__I)
+                  00084b9d    0000003f                              : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_setFilterLevel__E)
+                  00084bdc    0000003e     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_pend__E)
+                  00084c1a    0000003e                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_restoreHwi__E)
+                  00084c58    0000003c     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_getFilterLevel__E)
+                  00084c94    0000003a     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_TaskSupport_start__E)
+                  00084cce    0000003a     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_putMod__E)
+                  00084d08    00000036                              : Error.o28FP (.text:_xdc_runtime_Error_print__E)
+                  00084d3e    00000035     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_startCore__E)
+                  00084d73    00000035     ti.targets.rts2800.a28FP : Startup.o28FP (.text:_xdc_runtime_Startup_exec__E)
+                  00084da8    00000034     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_rtsUnlock__I)
+                  00084ddc    00000032     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_Module_startup__E)
+                  00084e0e    00000032     ti.targets.rts2800.a28FP : Assert.o28FP (.text:_xdc_runtime_Assert_raise__I)
+                  00084e40    0000002e     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_runLoop__I)
+                  00084e6e    0000002e                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_schedule__I)
+                  00084e9c    0000002e                   : BIOS.obj (.text:_ti_sysbios_knl_Task_schedule__I)
+                  00084eca    0000002c                   : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_getStackInfo__E)
+                  00084ef6    0000002c                   : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_start__E)
+                  00084f22    0000002b                   : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_Module_startup__E)
+                  00084f4d    0000002a     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_xprintf__I)
+                  00084f77    00000029     rts2800_fpu32.lib : exit.obj (.text)
+                  00084fa0    00000028     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_flush__E)
+                  00084fc8    00000025     sysbios.a28FP : c28_TaskSupport_asm.obj (.text:_ti_sysbios_family_c28_TaskSupport_buildTaskStack)
+                  00084fed    00000024                   : BIOS.obj (.text:_ti_sysbios_knl_Swi_post__E)
+                  00085011    00000023     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_processAtExit__E)
+                  00085034    00000021     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_allBlockedFunction__I)
+                  00085055    00000021     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_atexit__E)
+                  00085076    00000020     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_setPrescale__E)
+                  00085096    0000001f                   : BIOS.obj (.text:_ti_sysbios_knl_Task_exit__E)
+                  000850b5    0000001e                   : BIOS.obj (.text:_ti_sysbios_knl_Task_blockI__E)
+                  000850d3    0000001e     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_putch__E)
+                  000850f1    0000001e     rts2800_fpu32.lib : memcpy.obj (.text)
+                  0008510f    0000001d     sysbios.a28FP : c28_TaskSupport_asm.obj (.text:_ti_sysbios_family_c28_TaskSupport_swap__E)
+                  0008512c    0000001d     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_filterOutEvent__I)
+                  00085149    0000001c     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_hal_Hwi_checkStack)
+                  00085165    0000001b                   : c28_Hwi_asm.obj (.text:_ti_sysbios_family_c28_Hwi_switchAndDispatch__I)
+                  00085180    0000001b                   : BIOS.obj (.text:_ti_sysbios_hal_Hwi_initStack)
+                  0008519b    0000001b                   : BIOS.obj (.text:_ti_sysbios_knl_Task_processVitalTaskFlag__I)
+                  000851b6    0000001b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_SysMin_output__I)
+                  000851d1    0000001b     main.obj (.text:retain)
+                  000851ec    0000001a     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Clock_addI__E)
+                  00085206    0000001a     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_Module_startup__E)
+                  00085220    0000001a     rts2800_fpu32.lib : cpy_utils.obj (.text)
+                  0008523a    00000019     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_Object__get__S)
+                  00085253    00000019     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Mailbox_postInit__I)
+                  0008526c    00000019     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Queue_Object__get__S)
+                  00085285    00000019     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_restore__E)
+                  0008529e    00000019     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_avprintf__E)
+                  000852b7    00000019                              : System.o28FP (.text:_xdc_runtime_System_putchar__I)
+                  000852d0    00000019     rts2800_fpu32.lib : args_main.obj (.text)
+                  000852e9    00000018     sysbios.a28FP : c28_Hwi_asm.obj (.text:_ti_sysbios_family_xxx_Hwi_switchAndRunFunc)
+                  00085301    00000018     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_reset__E)
+                  00085319    00000018                              : System.o28FP (.text:_xdc_runtime_System_vprintf__E)
+                  00085331    00000018                              : Text.o28FP (.text:_xdc_runtime_Text_printVisFxn__I)
+                  00085349    00000018     rts2800_fpu32.lib : ll_aox.obj (.text)
+                  00085361    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_atExitFunc__I)
+                  00085378    00000017     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_startup__E)
+                  0008538f    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_doTick__I)
+                  000853a6    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Mailbox_Object__get__S)
+                  000853bd    00000017     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Semaphore_pendTimeout__I)
+                  000853d4    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Swi_Object__get__S)
+                  000853eb    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_Object__get__S)
+                  00085402    00000017     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_unblockI__E)
+                  00085419    00000017     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_Object__get__S)
+                  00085430    00000017     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_abort__E)
+                  00085447    00000016     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_Module_startup__E)
+                  0008545d    00000016                   : BIOS.obj (.text:_ti_sysbios_knl_Task_restore__E)
+                  00085473    00000015     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_startFunc__I)
+                  00085488    00000015     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_Module_startup__E)
+                  0008549d    00000014                   : BIOS.obj (.text:_ti_sysbios_knl_Idle_run__E)
+                  000854b1    00000013     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_errorRaiseHook__I)
+                  000854c4    00000012     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_disableIER__E)
+                  000854d6    00000012     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Clock_Module_startup__E)
+                  000854e8    00000011     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_raiseX__E)
+                  000854f9    00000010     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_rtsLock__I)
+                  00085509    00000010     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_enableIER__E)
+                  00085519    00000010     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_stop__E)
+                  00085529    00000010                   : BIOS.obj (.text:_ti_sysbios_knl_Task_restoreHwi__E)
+                  00085539    0000000f     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write2__E)
+                  00085548    0000000e     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_f2837x_TimestampProvider_get64__E)
+                  00085556    0000000e     ti.targets.rts2800.a28FP : Registry.o28FP (.text:_xdc_runtime_Registry_findById__E)
+                  00085564    0000000e                              : SysMin.o28FP (.text:_xdc_runtime_SysMin_Module_startup__E)
+                  00085572    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_registerRTSLock__I)
+                  0008557f    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_removeRTSLock__I)
+                  0008558c    0000000d     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_dispatchC__I)
+                  00085599    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_restoreIER__E)
+                  000855a6    0000000d     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_start__E)
+                  000855b3    0000000d     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_enter__I)
+                  000855c0    0000000d     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_check__E)
+                  000855cd    0000000d                              : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write1__E)
+                  000855da    0000000d                              : System.o28FP (.text:_xdc_runtime_System_abort__E)
+                  000855e7    0000000c     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_exitFunc__I)
+                  000855f3    0000000c     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_gates_GateMutex_leave__E)
+                  000855ff    0000000c                   : BIOS.obj (.text:_ti_sysbios_knl_Queue_get__E)
+                  0008560b    0000000c                   : BIOS.obj (.text:_ti_sysbios_knl_Queue_put__E)
+                  00085617    0000000c                   : BIOS.obj (.text:_ti_sysbios_knl_Task_enabled__E)
+                  00085623    0000000c     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_aprintf__E)
+                  0008562f    0000000c     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_printf__E)
+                  0008563b    0000000c     ti.targets.rts2800.a28FP : Text.o28FP (.text:_xdc_runtime_Text_ropeText__E)
+                  00085647    0000000c     rts2800_fpu32.lib : memset.obj (.text)
+                  00085653    0000000b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_Module__startupDone__F)
+                  0008565e    0000000b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Timer_Module__startupDone__F)
+                  00085669    0000000b     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_sleepTimeout__I)
+                  00085674    0000000b     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_write0__E)
+                  0008567f    0000000b     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_Startup_exec__I)
+                  0008568a    0000000b     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_exit__E)
+                  00085695    0000000b                              : System.o28FP (.text:_xdc_runtime_System_exit__E)
+                  000856a0    0000000a     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_init)
+                  000856aa    00000009     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_TaskSupport_checkStack__E)
+                  000856b3    00000009                   : c28_TaskSupport_asm.obj (.text:_ti_sysbios_family_c28_TaskSupport_glue)
+                  000856bc    00000009                   : BIOS.obj (.text:_ti_sysbios_hal_Hwi_Module_startup__E)
+                  000856c5    00000009                   : BIOS.obj (.text:_ti_sysbios_knl_Task_unblock__E)
+                  000856ce    00000009     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_vsnprintf__E)
+                  000856d7    00000009     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_Text_visitRope__I)
+                  000856e0    00000009     rts2800_fpu32.lib : _lock.obj (.text)
+                  000856e9    00000008     Boot.a28FP : Boot.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_initSharedRAMs)
+                  000856f1    00000008     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_BIOS_setThreadType__E)
+                  000856f9    00000008     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_Module_State_clockQ)
+                  00085701    00000008     ti.targets.rts2800.a28FP : SysMin.o28FP (.text:_xdc_runtime_SysMin_ready__E)
+                  00085709    00000008     rts2800_fpu32.lib : strlen.obj (.text)
+                  00085711    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_RtsGateProxy_leave__E)
+                  00085718    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E)
+                  0008571f    00000007     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Queue_empty__E)
+                  00085726    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_checkStack__E)
+                  0008572d    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_swap__E)
+                  00085734    00000007     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_init__E)
+                  0008573b    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_Module_GateProxy_leave__E)
+                  00085742    00000007     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_Module_GateProxy_leave__E)
+                  00085749    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_RtsGateProxy_enter__E)
+                  0008574f    00000006     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_BIOS_start__E)
+                  00085755    00000006                   : c28_IntrinsicsSupport_asm.obj (.text:_ti_sysbios_family_c28_IntrinsicsSupport_maxbit__E)
+                  0008575b    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_TimerProxy_getMaxTicks__E)
+                  00085761    00000006     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_disable__E)
+                  00085767    00000006                   : BIOS.obj (.text:_ti_sysbios_knl_Task_disable__E)
+                  0008576d    00000006     ti.targets.rts2800.a28FP : Gate.o28FP (.text:_xdc_runtime_Gate_enterSystem__E)
+                  00085773    00000006                              : Gate.o28FP (.text:_xdc_runtime_Gate_leaveSystem__E)
+                  00085779    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_Module_GateProxy_enter__E)
+                  0008577f    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_LoggerBuf_TimestampProxy_get64__E)
+                  00085785    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_Module_GateProxy_enter__E)
+                  0008578b    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_abort__E)
+                  00085791    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_exit__E)
+                  00085797    00000006     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_putch__E)
+                  0008579d    00000005     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Hwi_switchFromBootStack__E)
+                  000857a2    00000005                   : BIOS.obj (.text:_ti_sysbios_gates_GateHwi_enter__E)
+                  000857a7    00000005     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_iargToPtr)
+                  000857ac    00000005     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_enable__E)
+                  000857b1    00000005     rts2800_fpu32.lib : strcpy.obj (.text)
+                  000857b6    00000004     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_startup__E)
+                  000857ba    00000004     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Swi_startup__E)
+                  000857be    00000004     ti.targets.rts2800.a28FP : LoggerBuf.o28FP (.text:_xdc_runtime_LoggerBuf_disable__E)
+                  000857c2    00000004                              : Startup.o28FP (.text:_xdc_runtime_Startup_rtsDone__E)
+                  000857c6    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:.bootCodeSection:_ti_catalog_c2800_initF2837x_Boot_limpAbort)
+                  000857c9    00000003     F2837xD_DBGIER.obj (.text)
+                  000857cc    00000003     ti.targets.rts2800.a28FP : xdc_noinit.o28FP (.text:___xdc__init)
+                  000857cf    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Hwi_Module__startupDone__S)
+                  000857d2    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_family_c28_Timer_Module__startupDone__S)
+                  000857d5    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_gates_GateHwi_leave__E)
+                  000857d8    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S)
+                  000857db    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_startup__E)
+                  000857de    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E)
+                  000857e1    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_hal_Hwi_startup__E)
+                  000857e4    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Clock_TimerProxy_Module__startupDone__S)
+                  000857e7    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Idle_loop__E)
+                  000857ea    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S)
+                  000857ed    00000003     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_knl_Task_startup__E)
+                  000857f0    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_Startup_reset__I)
+                  000857f3    00000003     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_Module_startup__E)
+                  000857f6    00000003     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_xdc_runtime_System_SupportProxy_ready__E)
+                  000857f9    00000003     ti.targets.rts2800.a28FP : System.o28FP (.text:_xdc_runtime_System_abortStd__E)
+                  000857fc    00000003                              : System.o28FP (.text:_xdc_runtime_System_exitStd__E)
+                  000857ff    00000002     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_family_c28_Timer_getMaxTicks__E)
+                  00085801    00000002                   : BIOS.obj (.text:_ti_sysbios_gates_GateHwi_query__E)
+                  00085803    00000002                   : BIOS.obj (.text:_ti_sysbios_gates_GateMutex_query__E)
+                  00085805    00000002     ti.targets.rts2800.a28FP : Error.o28FP (.text:_xdc_runtime_Error_getSite__E)
+                  00085807    00000001     Boot.a28FP : Boot.o28FP (.text:_ti_catalog_c2800_initF2837x_Boot_defaultLimpAbortFunction)
+                  00085808    00000001     sysbios.a28FP : BIOS.obj (.text:_ti_sysbios_BIOS_linkedWithIncorrectBootLibrary__E)
+                  00085809    00000001     MotionControl_Firmware_CPU1_p28FP.o28FP (.text:_ti_sysbios_BIOS_nullFunc__I)
+                  0008580a    00000001     sysbios.a28FP : c28_Hwi_asm.obj (.text:_ti_sysbios_family_c28_Hwi_interruptReturn__I)
+                  0008580b    00000001                   : BIOS.obj (.text:_ti_sysbios_knl_Clock_logTick__E)
 
 .econst    1    00088000    000004e4     
                   00088000    000001c0     MotionControl_Firmware_CPU1_p28FP.o28FP (.econst:_ti_sysbios_family_c28_Hwi_vectors)
@@ -1021,14 +1022,14 @@ MODULE SUMMARY
        F2837xD_Gpio.obj                          580     0         0      
        F2837xD_struct.obj                        0       0         264    
        F2837xD_Adc.obj                           221     0         0      
+       F2837xD_TempSensorConv.obj                194     0         6      
        F2837xD_Ipc_Driver.obj                    0       0         136    
        F2837xD_CpuTimers.obj                     0       0         24     
        F2837xD_usDelay.obj                       8       0         0      
-       F2837xD_TempSensorConv.obj                0       0         6      
        F2837xD_sci_io.obj                        0       0         5      
        F2837xD_DBGIER.obj                        3       0         0      
     +--+-----------------------------------------+-------+---------+---------+
-       Total:                                    3174    0         435    
+       Total:                                    3368    0         435    
                                                                           
     ./Library/F2837xD_headers/source/
        F2837xD_GlobalVariableDefs.obj            0       0         7597   
@@ -1037,11 +1038,11 @@ MODULE SUMMARY
                                                                           
     ./Source/src/
        CPU1_CLA1_task.obj                        656     0         0      
-       SystemInit.obj                            526     0         0      
-       main.obj                                  194     0         44     
+       SystemInit.obj                            537     0         0      
+       main.obj                                  198     0         44     
        CPU1_CLA1_interrupt.obj                   179     0         47     
     +--+-----------------------------------------+-------+---------+---------+
-       Total:                                    1555    0         91     
+       Total:                                    1570    0         91     
                                                                           
     /home/yifan/git/MotionControlFirmware_TI_C2000/MotionControl_Firmware_CPU1/Debug/configPkg/package/cfg/
        MotionControl_Firmware_CPU1_p28FP.o28FP   904     0         3968   
@@ -1103,7 +1104,7 @@ MODULE SUMMARY
                                                                           
        Stack:                                    0       0         1024   
     +--+-----------------------------------------+-------+---------+---------+
-       Grand Total:                              13803   0         13770  
+       Grand Total:                              14012   0         13770  
 
 
 GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
@@ -1511,16 +1512,16 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 page  address   name                                                      
 ----  -------   ----                                                      
 abs   ffffffff  .text                                                     
-1     00084ea6  C$$EXIT                                                   
-1     000840e9  C$$IO$$                                                   
-1     000841ba  FS$$DIV                                                   
-1     00085278  LL$$AND                                                   
-1     00083966  LL$$DIV                                                   
-1     000839a2  LL$$MOD                                                   
-1     00085280  LL$$OR                                                    
-1     00085288  LL$$XOR                                                   
-1     000839dc  ULL$$DIV                                                  
-1     00083a0b  ULL$$MOD                                                  
+1     00084f77  C$$EXIT                                                   
+1     00084229  C$$IO$$                                                   
+1     000842fa  FS$$DIV                                                   
+1     00085349  LL$$AND                                                   
+1     00083971  LL$$DIV                                                   
+1     000839ad  LL$$MOD                                                   
+1     00085351  LL$$OR                                                    
+1     00085359  LL$$XOR                                                   
+1     000839e7  ULL$$DIV                                                  
+1     00083a16  ULL$$MOD                                                  
 0     0000c822  _ADC                                                      
 1     0008257a  _ADCA1_ISR                                                
 1     000827fa  _ADCA2_ISR                                                
@@ -1546,7 +1547,7 @@ abs   ffffffff  .text
 1     00088436  _ADC_fifo                                                 
 1     00082a02  _AUX_PLL_SLIP_ISR                                         
 1     0005f4c0  _AccessProtectionRegs                                     
-1     00083d2e  _AdcSetMode                                               
+1     00083d39  _AdcSetMode                                               
 1     00007400  _AdcaRegs                                                 
 1     00000b00  _AdcaResultRegs                                           
 1     00007480  _AdcbRegs                                                 
@@ -1571,16 +1572,16 @@ abs   ffffffff  .text
 1     00082872  _CLA1_6_ISR                                               
 1     0008287c  _CLA1_7_ISR                                               
 1     00082886  _CLA1_8_ISR                                               
-1     00083638  _CLA_ConfigClaMemory                                      
+1     00083643  _CLA_ConfigClaMemory                                      
 0     00008800  _CLA_CycleCounter                                         
-1     00083669  _CLA_InitCpu1Cla1                                         
+1     00083674  _CLA_InitCpu1Cla1                                         
 1     00082a0c  _CLA_OVERFLOW_ISR                                         
 0     00008818  _CLA_SampleBufferA                                        
 0     00008802  _CLA_SampleBufferActiveHalf                               
 0     00008804  _CLA_SampleBufferB                                        
 0     00008801  _CLA_SampleCounter                                        
 1     00082a16  _CLA_UNDERFLOW_ISR                                        
-1     00083dd1  _CalAdcINL                                                
+1     00083ddc  _CalAdcINL                                                
 1     00001400  _Cla1Regs                                                 
 0     00000ce0  _Cla1SoftIntRegs                                          
 0     00008000  _Cla1Task1                                                
@@ -1673,7 +1674,7 @@ abs   00000148  _Cla1funcsLoadSize
 1     00082610  _EPWM8_TZ_ISR                                             
 1     0008291c  _EPWM9_ISR                                                
 1     000828f4  _EPWM9_TZ_ISR                                             
-1     000835b5  _EPWM_GroupInit                                           
+1     000835c0  _EPWM_GroupInit                                           
 1     00004900  _EPwm10Regs                                               
 1     00004a00  _EPwm11Regs                                               
 1     00004b00  _EPwm12Regs                                               
@@ -1722,6 +1723,8 @@ abs   00000148  _Cla1funcsLoadSize
 1     0008340a  _GPIO_SetupXINT4Gpio                                      
 1     00083414  _GPIO_SetupXINT5Gpio                                      
 1     00083489  _GPIO_WritePin                                            
+1     00083e63  _GetTemperatureC                                          
+1     00083ea1  _GetTemperatureK                                          
 1     00007c00  _GpioCtrlRegs                                             
 1     00007f00  _GpioDataRegs                                             
 1     00082d52  _HALT                                                     
@@ -1756,10 +1759,11 @@ abs   00000148  _Cla1funcsLoadSize
 1     00082a7e  _InitPeripheralClocks                                     
 1     00082a41  _InitSysCtrl                                              
 1     00082b4f  _InitSysPll                                               
+1     00083e16  _InitTempSensor                                           
 1     00007900  _InputXbarRegs                                            
 1     00083540  _Interrupt_Init                                           
 1     00050000  _IpcRegs                                                  
-1     00085230  _LoggerBuf_instanceStartup                                
+1     00085301  _LoggerBuf_instanceStartup                                
 0     0000c804  _MCBSP                                                    
 1     000826ec  _MCBSPA_RX_ISR                                            
 1     000826f6  _MCBSPA_TX_ISR                                            
@@ -1817,7 +1821,7 @@ abs   0000006d  _RamfuncsRunSize
 1     00005e80  _Sdfm2Regs                                                
 1     00082b1a  _SeizeFlashPump                                           
 1     00082b33  _ServiceDog                                               
-1     000856f8  _SetDBGIER                                                
+1     000857c9  _SetDBGIER                                                
 1     00006100  _SpiaRegs                                                 
 1     00006110  _SpibRegs                                                 
 1     00006120  _SpicRegs                                                 
@@ -1871,8 +1875,8 @@ abs   00000400  __STACK_SIZE
 abs   ffffffff  ___TI_pprof_out_hndl                                      
 abs   ffffffff  ___TI_prof_data_size                                      
 abs   ffffffff  ___TI_prof_data_start                                     
-1     000840ee  ___TI_readmsg                                             
-1     00084096  ___TI_writemsg                                            
+1     0008422e  ___TI_readmsg                                             
+1     000841d6  ___TI_writemsg                                            
 0     0000005d  ___TRDR__                                                 
 abs   ffffffff  ___binit__                                                
 abs   ffffffff  ___c_args__                                               
@@ -1880,31 +1884,31 @@ abs   ffffffff  ___c_args__
 abs   ffffffff  ___etext__                                                
 abs   ffffffff  ___pinit__                                                
 abs   ffffffff  ___text__                                                 
-1     000856fb  ___xdc__init                                              
+1     000857cc  ___xdc__init                                              
 0     0000c004  ___xdc__init__addr                                        
-1     000851ff  __args_main                                               
+1     000852d0  __args_main                                               
 0     0000c8a4  __lock                                                    
-1     00085617  __nop                                                     
-1     00085613  __register_lock                                           
-1     0008560f  __register_unlock                                         
+1     000856e8  __nop                                                     
+1     000856e4  __register_lock                                           
+1     000856e0  __register_unlock                                         
 0     0000b000  __stack                                                   
 0     0000c8a6  __unlock                                                  
-1     00084ea6  _abort                                                    
-1     00085100  _adca1_isr                                                
-1     0008468b  _c_int00                                                  
-1     00083e0b  _cla1Isr1                                                 
-1     00083e47  _cla1Isr2                                                 
-1     00083e58  _cla1Isr3                                                 
-1     00083e69  _cla1Isr4                                                 
-1     00083e7a  _cla1Isr5                                                 
-1     00083e8b  _cla1Isr6                                                 
-1     00083e9c  _cla1Isr7                                                 
-1     00083ead  _cla1Isr8                                                 
-1     0008493b  _copy_in                                                  
-1     0008514f  _ddcopy                                                   
+1     00084f77  _abort                                                    
+1     000851d1  _adca1_isr                                                
+1     00084758  _c_int00                                                  
+1     00083ed8  _cla1Isr1                                                 
+1     00083f14  _cla1Isr2                                                 
+1     00083f25  _cla1Isr3                                                 
+1     00083f36  _cla1Isr4                                                 
+1     00083f47  _cla1Isr5                                                 
+1     00083f58  _cla1Isr6                                                 
+1     00083f69  _cla1Isr7                                                 
+1     00083f7a  _cla1Isr8                                                 
+1     00084a4f  _copy_in                                                  
+1     00085220  _ddcopy                                                   
 0     0000c8aa  _deviceOpen                                               
-1     0008514f  _dpcopy                                                   
-1     00084ea8  _exit                                                     
+1     00085220  _dpcopy                                                   
+1     00084f79  _exit                                                     
 0     0003fc00  _g_asIPCCPU1toCPU2Buffers                                 
 0     0003f800  _g_asIPCCPU2toCPU1Buffers                                 
 0     0003fc84  _g_usGetReadIndexes                                       
@@ -1912,42 +1916,42 @@ abs   ffffffff  ___text__
 0     0003f884  _g_usPutReadIndexes                                       
 0     0003fc80  _g_usPutWriteIndexes                                      
 0     00001500  _init                                                     
-1     00084a07  _main                                                     
-1     00085020  _memcpy                                                   
-1     00085576  _memset                                                   
-1     0008514f  _pdcopy                                                   
-1     0008514f  _ppcopy                                                   
+1     000849c2  _main                                                     
+1     000850f1  _memcpy                                                   
+1     00085647  _memset                                                   
+1     00085220  _pdcopy                                                   
+1     00085220  _ppcopy                                                   
 0     00001480  _result                                                   
 0     00008803  _sensorSampleA                                            
-1     000856e0  _strcpy                                                   
-1     00085638  _strlen                                                   
+1     000857b1  _strcpy                                                   
+1     00085709  _strlen                                                   
 0     0000015b  _taskFxn                                                  
 0     0000c89a  _tempSensor_scaleFactor                                   
 0     0000c898  _tempSensor_tempOffset                                    
 0     0000c89c  _tempSensor_tempSlope                                     
-1     0008481c  _ti_catalog_c2800_initF2837x_Boot_configurePllDivs        
-1     00085736  _ti_catalog_c2800_initF2837x_Boot_defaultLimpAbortFunction
+1     000848e9  _ti_catalog_c2800_initF2837x_Boot_configurePllDivs        
+1     00085807  _ti_catalog_c2800_initF2837x_Boot_defaultLimpAbortFunction
 0     00080000  _ti_catalog_c2800_initF2837x_Boot_entry                   
-1     000855cf  _ti_catalog_c2800_initF2837x_Boot_init                    
-1     00085618  _ti_catalog_c2800_initF2837x_Boot_initSharedRAMs          
-1     00084095  _ti_catalog_c2800_initF2837x_Boot_initStartup             
-1     000856f5  _ti_catalog_c2800_initF2837x_Boot_limpAbort               
+1     000856a0  _ti_catalog_c2800_initF2837x_Boot_init                    
+1     000856e9  _ti_catalog_c2800_initF2837x_Boot_initSharedRAMs          
+1     000841d5  _ti_catalog_c2800_initF2837x_Boot_initStartup             
+1     000857c6  _ti_catalog_c2800_initF2837x_Boot_limpAbort               
 0     0000c092  _ti_sysbios_BIOS_Module__state__V                         
-1     00085678  _ti_sysbios_BIOS_RtsGateProxy_enter__E                    
-1     00085640  _ti_sysbios_BIOS_RtsGateProxy_leave__E                    
-1     00085290  _ti_sysbios_BIOS_atExitFunc__I                            
-1     000853e0  _ti_sysbios_BIOS_errorRaiseHook__I                        
-1     00085516  _ti_sysbios_BIOS_exitFunc__I                              
+1     00085749  _ti_sysbios_BIOS_RtsGateProxy_enter__E                    
+1     00085711  _ti_sysbios_BIOS_RtsGateProxy_leave__E                    
+1     00085361  _ti_sysbios_BIOS_atExitFunc__I                            
+1     000854b1  _ti_sysbios_BIOS_errorRaiseHook__I                        
+1     000855e7  _ti_sysbios_BIOS_exitFunc__I                              
 1     00088438  _ti_sysbios_BIOS_installedErrorHook__C                    
-1     00085737  _ti_sysbios_BIOS_linkedWithIncorrectBootLibrary__E        
-1     00085738  _ti_sysbios_BIOS_nullFunc__I                              
-1     000854a1  _ti_sysbios_BIOS_registerRTSLock__I                       
-1     000854ae  _ti_sysbios_BIOS_removeRTSLock__I                         
-1     00085428  _ti_sysbios_BIOS_rtsLock__I                               
-1     00084cd7  _ti_sysbios_BIOS_rtsUnlock__I                             
-1     00085620  _ti_sysbios_BIOS_setThreadType__E                         
-1     000853a2  _ti_sysbios_BIOS_startFunc__I                             
-1     0008567e  _ti_sysbios_BIOS_start__E                                 
+1     00085808  _ti_sysbios_BIOS_linkedWithIncorrectBootLibrary__E        
+1     00085809  _ti_sysbios_BIOS_nullFunc__I                              
+1     00085572  _ti_sysbios_BIOS_registerRTSLock__I                       
+1     0008557f  _ti_sysbios_BIOS_removeRTSLock__I                         
+1     000854f9  _ti_sysbios_BIOS_rtsLock__I                               
+1     00084da8  _ti_sysbios_BIOS_rtsUnlock__I                             
+1     000856f1  _ti_sysbios_BIOS_setThreadType__E                         
+1     00085473  _ti_sysbios_BIOS_startFunc__I                             
+1     0008574f  _ti_sysbios_BIOS_start__E                                 
 1     0008843a  _ti_sysbios_family_c28_Hwi_A_badIntNum__C                 
 1     0008843c  _ti_sysbios_family_c28_Hwi_A_invalidArg__C                
 1     0008843e  _ti_sysbios_family_c28_Hwi_E_unpluggedInterrupt__C        
@@ -1956,63 +1960,63 @@ abs   ffffffff  ___text__
 1     00088442  _ti_sysbios_family_c28_Hwi_Module__diagsIncluded__C       
 1     00088444  _ti_sysbios_family_c28_Hwi_Module__diagsMask__C           
 1     00088315  _ti_sysbios_family_c28_Hwi_Module__id__C                  
-1     00085582  _ti_sysbios_family_c28_Hwi_Module__startupDone__F         
-1     000856fe  _ti_sysbios_family_c28_Hwi_Module__startupDone__S         
+1     00085653  _ti_sysbios_family_c28_Hwi_Module__startupDone__F         
+1     000857cf  _ti_sysbios_family_c28_Hwi_Module__startupDone__S         
 0     0000c05e  _ti_sysbios_family_c28_Hwi_Module__state__V               
-1     000848ae  _ti_sysbios_family_c28_Hwi_Module_startup__E              
+1     0008497b  _ti_sysbios_family_c28_Hwi_Module_startup__E              
 1     00088359  _ti_sysbios_family_c28_Hwi_NUM_INTERRUPTS_ALL__C          
 1     00088417  _ti_sysbios_family_c28_Hwi_Object__count__C               
-1     00085169  _ti_sysbios_family_c28_Hwi_Object__get__S                 
+1     0008523a  _ti_sysbios_family_c28_Hwi_Object__get__S                 
 1     00088446  _ti_sysbios_family_c28_Hwi_Object__table__C               
 0     0000c04e  _ti_sysbios_family_c28_Hwi_Object__table__V               
-1     00083b6d  _ti_sysbios_family_c28_Hwi_clearInterrupt__E              
-1     000853f3  _ti_sysbios_family_c28_Hwi_disableIER__E                  
-1     000842c6  _ti_sysbios_family_c28_Hwi_disableInterrupt__E            
-1     00084349  _ti_sysbios_family_c28_Hwi_disablePIEIER__E               
-1     000854bb  _ti_sysbios_family_c28_Hwi_dispatchC__I                   
-1     000846ee  _ti_sysbios_family_c28_Hwi_dispatchCore__I                
-1     00083fc0  _ti_sysbios_family_c28_Hwi_dispatchPie                    
-1     00083f63  _ti_sysbios_family_c28_Hwi_dispatchTable                  
-1     00085438  _ti_sysbios_family_c28_Hwi_enableIER__E                   
-1     0008412a  _ti_sysbios_family_c28_Hwi_enableInterrupt__E             
-1     000843c9  _ti_sysbios_family_c28_Hwi_enablePIEIER__E                
-1     00084df9  _ti_sysbios_family_c28_Hwi_getStackInfo__E                
-1     00085739  _ti_sysbios_family_c28_Hwi_interruptReturn__I             
-1     000854c8  _ti_sysbios_family_c28_Hwi_restoreIER__E                  
-1     000856e5  _ti_sysbios_family_c28_Hwi_startup__E                     
-1     00085094  _ti_sysbios_family_c28_Hwi_switchAndDispatch__I           
-1     000856cc  _ti_sysbios_family_c28_Hwi_switchFromBootStack__E         
-1     00084a4a  _ti_sysbios_family_c28_Hwi_unPluggedInterrupt__I          
+1     00083b78  _ti_sysbios_family_c28_Hwi_clearInterrupt__E              
+1     000854c4  _ti_sysbios_family_c28_Hwi_disableIER__E                  
+1     00084406  _ti_sysbios_family_c28_Hwi_disableInterrupt__E            
+1     00084489  _ti_sysbios_family_c28_Hwi_disablePIEIER__E               
+1     0008558c  _ti_sysbios_family_c28_Hwi_dispatchC__I                   
+1     000847bb  _ti_sysbios_family_c28_Hwi_dispatchCore__I                
+1     00084102  _ti_sysbios_family_c28_Hwi_dispatchPie                    
+1     000840a5  _ti_sysbios_family_c28_Hwi_dispatchTable                  
+1     00085509  _ti_sysbios_family_c28_Hwi_enableIER__E                   
+1     0008426a  _ti_sysbios_family_c28_Hwi_enableInterrupt__E             
+1     00084509  _ti_sysbios_family_c28_Hwi_enablePIEIER__E                
+1     00084eca  _ti_sysbios_family_c28_Hwi_getStackInfo__E                
+1     0008580a  _ti_sysbios_family_c28_Hwi_interruptReturn__I             
+1     00085599  _ti_sysbios_family_c28_Hwi_restoreIER__E                  
+1     000857b6  _ti_sysbios_family_c28_Hwi_startup__E                     
+1     00085165  _ti_sysbios_family_c28_Hwi_switchAndDispatch__I           
+1     0008579d  _ti_sysbios_family_c28_Hwi_switchFromBootStack__E         
+1     00084b1b  _ti_sysbios_family_c28_Hwi_unPluggedInterrupt__I          
 1     00088000  _ti_sysbios_family_c28_Hwi_vectors                        
-1     00085684  _ti_sysbios_family_c28_IntrinsicsSupport_maxbit__E        
+1     00085755  _ti_sysbios_family_c28_IntrinsicsSupport_maxbit__E        
 1     00088448  _ti_sysbios_family_c28_TaskSupport_E_invalidStack__C      
 1     0008841f  _ti_sysbios_family_c28_TaskSupport_Module__id__C          
 1     00083ffe  _ti_sysbios_family_c28_TaskSupport_Module__startupDone__S 
-1     00084ef7  _ti_sysbios_family_c28_TaskSupport_buildTaskStack         
-1     000855d9  _ti_sysbios_family_c28_TaskSupport_checkStack__E          
-1     000855e2  _ti_sysbios_family_c28_TaskSupport_glue                   
-1     00084bc3  _ti_sysbios_family_c28_TaskSupport_start__E               
-1     0008503e  _ti_sysbios_family_c28_TaskSupport_swap__E                
-1     0008558d  _ti_sysbios_family_c28_Timer_Module__startupDone__F       
-1     00085701  _ti_sysbios_family_c28_Timer_Module__startupDone__S       
+1     00084fc8  _ti_sysbios_family_c28_TaskSupport_buildTaskStack         
+1     000856aa  _ti_sysbios_family_c28_TaskSupport_checkStack__E          
+1     000856b3  _ti_sysbios_family_c28_TaskSupport_glue                   
+1     00084c94  _ti_sysbios_family_c28_TaskSupport_start__E               
+1     0008510f  _ti_sysbios_family_c28_TaskSupport_swap__E                
+1     0008565e  _ti_sysbios_family_c28_Timer_Module__startupDone__F       
+1     000857d2  _ti_sysbios_family_c28_Timer_Module__startupDone__S       
 0     0000c020  _ti_sysbios_family_c28_Timer_Module__state__V             
-1     00085376  _ti_sysbios_family_c28_Timer_Module_startup__E            
+1     00085447  _ti_sysbios_family_c28_Timer_Module_startup__E            
 0     0000c0d6  _ti_sysbios_family_c28_Timer_Object__table__V             
-1     0008572e  _ti_sysbios_family_c28_Timer_getMaxTicks__E               
-1     00084981  _ti_sysbios_family_c28_Timer_postInit__I                  
-1     00084fa5  _ti_sysbios_family_c28_Timer_setPrescale__E               
-1     00084e25  _ti_sysbios_family_c28_Timer_start__E                     
+1     000857ff  _ti_sysbios_family_c28_Timer_getMaxTicks__E               
+1     00084a95  _ti_sysbios_family_c28_Timer_postInit__I                  
+1     00085076  _ti_sysbios_family_c28_Timer_setPrescale__E               
+1     00084ef6  _ti_sysbios_family_c28_Timer_start__E                     
 1     00088425  _ti_sysbios_family_c28_Timer_startupNeeded__C             
-1     000852a7  _ti_sysbios_family_c28_Timer_startup__E                   
-1     00084625  _ti_sysbios_family_c28_Timer_stopAndClear__I              
-1     00085448  _ti_sysbios_family_c28_Timer_stop__E                      
-1     00085477  _ti_sysbios_family_c28_f2837x_TimestampProvider_get64__E  
-1     00085218  _ti_sysbios_family_xxx_Hwi_switchAndRunFunc               
+1     00085378  _ti_sysbios_family_c28_Timer_startup__E                   
+1     000846f2  _ti_sysbios_family_c28_Timer_stopAndClear__I              
+1     00085519  _ti_sysbios_family_c28_Timer_stop__E                      
+1     00085548  _ti_sysbios_family_c28_f2837x_TimestampProvider_get64__E  
+1     000852e9  _ti_sysbios_family_xxx_Hwi_switchAndRunFunc               
 1     000883d8  _ti_sysbios_gates_GateHwi_Module__FXNS__C                 
 0     0000c006  _ti_sysbios_gates_GateHwi_Object__table__V                
-1     000856d1  _ti_sysbios_gates_GateHwi_enter__E                        
-1     00085704  _ti_sysbios_gates_GateHwi_leave__E                        
-1     00085730  _ti_sysbios_gates_GateHwi_query__E                        
+1     000857a2  _ti_sysbios_gates_GateHwi_enter__E                        
+1     000857d5  _ti_sysbios_gates_GateHwi_leave__E                        
+1     00085801  _ti_sysbios_gates_GateHwi_query__E                        
 1     0008844a  _ti_sysbios_gates_GateMutex_A_badContext__C               
 1     0008844c  _ti_sysbios_gates_GateMutex_Instance_State_sem__O         
 1     000883ea  _ti_sysbios_gates_GateMutex_Module__FXNS__C               
@@ -2021,52 +2025,52 @@ abs   ffffffff  ___text__
 1     00088452  _ti_sysbios_gates_GateMutex_Module__diagsMask__C          
 1     000884cc  _ti_sysbios_gates_GateMutex_Module__id__C                 
 0     0000c040  _ti_sysbios_gates_GateMutex_Object__table__V              
-1     000845b3  _ti_sysbios_gates_GateMutex_enter__E                      
-1     00085522  _ti_sysbios_gates_GateMutex_leave__E                      
-1     00085732  _ti_sysbios_gates_GateMutex_query__E                      
+1     00084680  _ti_sysbios_gates_GateMutex_enter__E                      
+1     000855f3  _ti_sysbios_gates_GateMutex_leave__E                      
+1     00085803  _ti_sysbios_gates_GateMutex_query__E                      
 1     00088454  _ti_sysbios_hal_Hwi_E_stackOverflow__C                    
-1     00085707  _ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S       
-1     00085647  _ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E              
-1     0008570a  _ti_sysbios_hal_Hwi_HwiProxy_startup__E                   
-1     0008570d  _ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E       
+1     000857d8  _ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S       
+1     00085718  _ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E              
+1     000857db  _ti_sysbios_hal_Hwi_HwiProxy_startup__E                   
+1     000857de  _ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E       
 1     000884cd  _ti_sysbios_hal_Hwi_Module__id__C                         
-1     000855eb  _ti_sysbios_hal_Hwi_Module_startup__E                     
-1     00085078  _ti_sysbios_hal_Hwi_checkStack                            
-1     000850af  _ti_sysbios_hal_Hwi_initStack                             
-1     00085710  _ti_sysbios_hal_Hwi_startup__E                            
+1     000856bc  _ti_sysbios_hal_Hwi_Module_startup__E                     
+1     00085149  _ti_sysbios_hal_Hwi_checkStack                            
+1     00085180  _ti_sysbios_hal_Hwi_initStack                             
+1     000857e1  _ti_sysbios_hal_Hwi_startup__E                            
 1     00088456  _ti_sysbios_knl_Clock_Module_State_clockQ__O              
 0     0000c0c0  _ti_sysbios_knl_Clock_Module__state__V                    
-1     00085405  _ti_sysbios_knl_Clock_Module_startup__E                   
-1     00085713  _ti_sysbios_knl_Clock_TimerProxy_Module__startupDone__S   
-1     0008568a  _ti_sysbios_knl_Clock_TimerProxy_getMaxTicks__E           
-1     0008511b  _ti_sysbios_knl_Clock_addI__E                             
-1     000852be  _ti_sysbios_knl_Clock_doTick__I                           
-1     0008573a  _ti_sysbios_knl_Clock_logTick__E                          
-1     00084786  _ti_sysbios_knl_Clock_workFunc__E                         
+1     000854d6  _ti_sysbios_knl_Clock_Module_startup__E                   
+1     000857e4  _ti_sysbios_knl_Clock_TimerProxy_Module__startupDone__S   
+1     0008575b  _ti_sysbios_knl_Clock_TimerProxy_getMaxTicks__E           
+1     000851ec  _ti_sysbios_knl_Clock_addI__E                             
+1     0008538f  _ti_sysbios_knl_Clock_doTick__I                           
+1     0008580b  _ti_sysbios_knl_Clock_logTick__E                          
+1     00084853  _ti_sysbios_knl_Clock_workFunc__E                         
 1     00088458  _ti_sysbios_knl_Idle_funcList__A                          
 1     00088426  _ti_sysbios_knl_Idle_funcList__C                          
-1     00085716  _ti_sysbios_knl_Idle_loop__E                              
-1     000853cc  _ti_sysbios_knl_Idle_run__E                               
+1     000857e7  _ti_sysbios_knl_Idle_loop__E                              
+1     0008549d  _ti_sysbios_knl_Idle_run__E                               
 0     0000c080  _ti_sysbios_knl_Mailbox_Instance_State_0_allocBuf__A      
 1     0008845a  _ti_sysbios_knl_Mailbox_Instance_State_dataQue__O         
 1     0008845c  _ti_sysbios_knl_Mailbox_Instance_State_dataSem__O         
 1     0008845e  _ti_sysbios_knl_Mailbox_Instance_State_freeQue__O         
 1     00088460  _ti_sysbios_knl_Mailbox_Instance_State_freeSem__O         
-1     00084e51  _ti_sysbios_knl_Mailbox_Module_startup__E                 
+1     00084f22  _ti_sysbios_knl_Mailbox_Module_startup__E                 
 1     000884ce  _ti_sysbios_knl_Mailbox_Object__count__C                  
-1     000852d5  _ti_sysbios_knl_Mailbox_Object__get__S                    
+1     000853a6  _ti_sysbios_knl_Mailbox_Object__get__S                    
 1     00088462  _ti_sysbios_knl_Mailbox_Object__table__C                  
 0     0000c140  _ti_sysbios_knl_Mailbox_Object__table__V                  
 1     000884cf  _ti_sysbios_knl_Mailbox_maxTypeAlign__C                   
-1     00084b0b  _ti_sysbios_knl_Mailbox_pend__E                           
-1     00085182  _ti_sysbios_knl_Mailbox_postInit__I                       
-1     00084865  _ti_sysbios_knl_Mailbox_post__E                           
+1     00084bdc  _ti_sysbios_knl_Mailbox_pend__E                           
+1     00085253  _ti_sysbios_knl_Mailbox_postInit__I                       
+1     00084932  _ti_sysbios_knl_Mailbox_post__E                           
 1     000884d0  _ti_sysbios_knl_Queue_Object__count__C                    
-1     0008519b  _ti_sysbios_knl_Queue_Object__get__S                      
+1     0008526c  _ti_sysbios_knl_Queue_Object__get__S                      
 1     00088464  _ti_sysbios_knl_Queue_Object__table__C                    
-1     0008564e  _ti_sysbios_knl_Queue_empty__E                            
-1     0008552e  _ti_sysbios_knl_Queue_get__E                              
-1     0008553a  _ti_sysbios_knl_Queue_put__E                              
+1     0008571f  _ti_sysbios_knl_Queue_empty__E                            
+1     000855ff  _ti_sysbios_knl_Queue_get__E                              
+1     0008560b  _ti_sysbios_knl_Queue_put__E                              
 1     00088466  _ti_sysbios_knl_Semaphore_A_badContext__C                 
 1     00088468  _ti_sysbios_knl_Semaphore_A_overflow__C                   
 1     0008846a  _ti_sysbios_knl_Semaphore_A_pendTaskDisabled__C           
@@ -2075,24 +2079,24 @@ abs   ffffffff  ___text__
 1     00088470  _ti_sysbios_knl_Semaphore_Module__diagsIncluded__C        
 1     00088472  _ti_sysbios_knl_Semaphore_Module__diagsMask__C            
 1     000884d1  _ti_sysbios_knl_Semaphore_Module__id__C                   
-1     000852ec  _ti_sysbios_knl_Semaphore_pendTimeout__I                  
-1     000836b5  _ti_sysbios_knl_Semaphore_pend__E                         
-1     00084242  _ti_sysbios_knl_Semaphore_post__E                         
+1     000853bd  _ti_sysbios_knl_Semaphore_pendTimeout__I                  
+1     000836c0  _ti_sysbios_knl_Semaphore_pend__E                         
+1     00084382  _ti_sysbios_knl_Semaphore_post__E                         
 0     0000c180  _ti_sysbios_knl_Swi_Module_State_0_readyQ__A              
 0     0000c030  _ti_sysbios_knl_Swi_Module__state__V                      
-1     000853b7  _ti_sysbios_knl_Swi_Module_startup__E                     
+1     00085488  _ti_sysbios_knl_Swi_Module_startup__E                     
 1     000884d2  _ti_sysbios_knl_Swi_Object__count__C                      
-1     00085303  _ti_sysbios_knl_Swi_Object__get__S                        
+1     000853d4  _ti_sysbios_knl_Swi_Object__get__S                        
 1     00088474  _ti_sysbios_knl_Swi_Object__table__C                      
 0     0000c0a4  _ti_sysbios_knl_Swi_Object__table__V                      
-1     00085690  _ti_sysbios_knl_Swi_disable__E                            
-1     00084f1c  _ti_sysbios_knl_Swi_post__E                               
-1     00084b49  _ti_sysbios_knl_Swi_restoreHwi__E                         
-1     000851b4  _ti_sysbios_knl_Swi_restore__E                            
-1     00084d6f  _ti_sysbios_knl_Swi_runLoop__I                            
-1     000848f5  _ti_sysbios_knl_Swi_run__I                                
-1     00084d9d  _ti_sysbios_knl_Swi_schedule__I                           
-1     000856e9  _ti_sysbios_knl_Swi_startup__E                            
+1     00085761  _ti_sysbios_knl_Swi_disable__E                            
+1     00084fed  _ti_sysbios_knl_Swi_post__E                               
+1     00084c1a  _ti_sysbios_knl_Swi_restoreHwi__E                         
+1     00085285  _ti_sysbios_knl_Swi_restore__E                            
+1     00084e40  _ti_sysbios_knl_Swi_runLoop__I                            
+1     00084a09  _ti_sysbios_knl_Swi_run__I                                
+1     00084e6e  _ti_sysbios_knl_Swi_schedule__I                           
+1     000857ba  _ti_sysbios_knl_Swi_startup__E                            
 1     00088476  _ti_sysbios_knl_Task_A_badTimeout__C                      
 1     00088478  _ti_sysbios_knl_Task_A_sleepTaskDisabled__C               
 1     0008847a  _ti_sysbios_knl_Task_E_spOutOfBounds__C                   
@@ -2107,37 +2111,37 @@ abs   ffffffff  ___text__
 1     00088484  _ti_sysbios_knl_Task_Module__diagsMask__C                 
 1     000884d3  _ti_sysbios_knl_Task_Module__id__C                        
 0     0000c100  _ti_sysbios_knl_Task_Module__state__V                     
-1     00084d0b  _ti_sysbios_knl_Task_Module_startup__E                    
+1     00084ddc  _ti_sysbios_knl_Task_Module_startup__E                    
 1     000884d4  _ti_sysbios_knl_Task_Object__count__C                     
-1     0008531a  _ti_sysbios_knl_Task_Object__get__S                       
+1     000853eb  _ti_sysbios_knl_Task_Object__get__S                       
 1     00088486  _ti_sysbios_knl_Task_Object__table__C                     
 0     0000c240  _ti_sysbios_knl_Task_Object__table__V                     
-1     00085719  _ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S  
-1     00085655  _ti_sysbios_knl_Task_SupportProxy_checkStack__E           
-1     000854d5  _ti_sysbios_knl_Task_SupportProxy_start__E                
-1     0008565c  _ti_sysbios_knl_Task_SupportProxy_swap__E                 
+1     000857ea  _ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S  
+1     00085726  _ti_sysbios_knl_Task_SupportProxy_checkStack__E           
+1     000855a6  _ti_sysbios_knl_Task_SupportProxy_start__E                
+1     0008572d  _ti_sysbios_knl_Task_SupportProxy_swap__E                 
 1     00088488  _ti_sysbios_knl_Task_allBlockedFunc__C                    
-1     00084f63  _ti_sysbios_knl_Task_allBlockedFunction__I                
-1     00084fe4  _ti_sysbios_knl_Task_blockI__E                            
-1     00084540  _ti_sysbios_knl_Task_checkStacks__E                       
-1     00085696  _ti_sysbios_knl_Task_disable__E                           
-1     00085546  _ti_sysbios_knl_Task_enabled__E                           
-1     000854e2  _ti_sysbios_knl_Task_enter__I                             
-1     00084fc5  _ti_sysbios_knl_Task_exit__E                              
+1     00085034  _ti_sysbios_knl_Task_allBlockedFunction__I                
+1     000850b5  _ti_sysbios_knl_Task_blockI__E                            
+1     00083f8b  _ti_sysbios_knl_Task_checkStacks__E                       
+1     00085767  _ti_sysbios_knl_Task_disable__E                           
+1     00085617  _ti_sysbios_knl_Task_enabled__E                           
+1     000855b3  _ti_sysbios_knl_Task_enter__I                             
+1     00085096  _ti_sysbios_knl_Task_exit__E                              
 1     000884d5  _ti_sysbios_knl_Task_numConstructedTasks__C               
-1     000847d1  _ti_sysbios_knl_Task_postInit__I                          
-1     000850ca  _ti_sysbios_knl_Task_processVitalTaskFlag__I              
-1     00085458  _ti_sysbios_knl_Task_restoreHwi__E                        
-1     0008538c  _ti_sysbios_knl_Task_restore__E                           
-1     00084dcb  _ti_sysbios_knl_Task_schedule__I                          
-1     00085598  _ti_sysbios_knl_Task_sleepTimeout__I                      
-1     00083a6d  _ti_sysbios_knl_Task_sleep__E                             
-1     00084c6d  _ti_sysbios_knl_Task_startCore__E                         
-1     0008571c  _ti_sysbios_knl_Task_startup__E                           
-1     00085331  _ti_sysbios_knl_Task_unblockI__E                          
-1     000855f4  _ti_sysbios_knl_Task_unblock__E                           
+1     0008489e  _ti_sysbios_knl_Task_postInit__I                          
+1     0008519b  _ti_sysbios_knl_Task_processVitalTaskFlag__I              
+1     00085529  _ti_sysbios_knl_Task_restoreHwi__E                        
+1     0008545d  _ti_sysbios_knl_Task_restore__E                           
+1     00084e9c  _ti_sysbios_knl_Task_schedule__I                          
+1     00085669  _ti_sysbios_knl_Task_sleepTimeout__I                      
+1     00083a78  _ti_sysbios_knl_Task_sleep__E                             
+1     00084d3e  _ti_sysbios_knl_Task_startCore__E                         
+1     000857ed  _ti_sysbios_knl_Task_startup__E                           
+1     00085402  _ti_sysbios_knl_Task_unblockI__E                          
+1     000856c5  _ti_sysbios_knl_Task_unblock__E                           
 1     0008848a  _xdc_runtime_Assert_E_assertFailed__C                     
-1     00084d3d  _xdc_runtime_Assert_raise__I                              
+1     00084e0e  _xdc_runtime_Assert_raise__I                              
 1     0008848c  _xdc_runtime_Error_Module__diagsEnabled__C                
 1     0008848e  _xdc_runtime_Error_Module__diagsIncluded__C               
 1     00088490  _xdc_runtime_Error_Module__diagsMask__C                   
@@ -2145,19 +2149,19 @@ abs   ffffffff  ___text__
 1     00088492  _xdc_runtime_Error_Module__loggerFxn8__C                  
 1     00088494  _xdc_runtime_Error_Module__loggerObj__C                   
 0     0000c000  _xdc_runtime_Error_Module__state__V                       
-1     000854ef  _xdc_runtime_Error_check__E                               
-1     00085734  _xdc_runtime_Error_getSite__E                             
-1     00085663  _xdc_runtime_Error_init__E                                
+1     000855c0  _xdc_runtime_Error_check__E                               
+1     00085805  _xdc_runtime_Error_getSite__E                             
+1     00085734  _xdc_runtime_Error_init__E                                
 1     000884d7  _xdc_runtime_Error_maxDepth__C                            
-1     00083ebe  _xdc_runtime_Error_policyDefault__E                       
+1     00084000  _xdc_runtime_Error_policyDefault__E                       
 1     00088496  _xdc_runtime_Error_policyFxn__C                           
 1     000884d8  _xdc_runtime_Error_policy__C                              
-1     00084c37  _xdc_runtime_Error_print__E                               
+1     00084d08  _xdc_runtime_Error_print__E                               
 1     00088498  _xdc_runtime_Error_raiseHook__C                           
-1     00085417  _xdc_runtime_Error_raiseX__E                              
-1     000849c4  _xdc_runtime_Error_setX__E                                
-1     0008569c  _xdc_runtime_Gate_enterSystem__E                          
-1     000856a2  _xdc_runtime_Gate_leaveSystem__E                          
+1     000854e8  _xdc_runtime_Error_raiseX__E                              
+1     00084ad8  _xdc_runtime_Error_setX__E                                
+1     0008576d  _xdc_runtime_Gate_enterSystem__E                          
+1     00085773  _xdc_runtime_Gate_leaveSystem__E                          
 1     0008849a  _xdc_runtime_IFilterLogger_Interface__BASE__C             
 1     0008849c  _xdc_runtime_IGateProvider_Interface__BASE__C             
 1     0008849e  _xdc_runtime_ILogger_Interface__BASE__C                   
@@ -2165,114 +2169,114 @@ abs   ffffffff  ___text__
 1     000884a2  _xdc_runtime_Log_L_error__C                               
 1     000884a4  _xdc_runtime_LoggerBuf_E_badLevel__C                      
 0     0000c200  _xdc_runtime_LoggerBuf_Instance_State_0_entryArr__A       
-1     000856a8  _xdc_runtime_LoggerBuf_Module_GateProxy_enter__E          
-1     0008566a  _xdc_runtime_LoggerBuf_Module_GateProxy_leave__E          
+1     00085779  _xdc_runtime_LoggerBuf_Module_GateProxy_enter__E          
+1     0008573b  _xdc_runtime_LoggerBuf_Module_GateProxy_leave__E          
 1     000883a6  _xdc_runtime_LoggerBuf_Module__FXNS__C                    
 1     000884a6  _xdc_runtime_LoggerBuf_Module__gateObj__C                 
 1     000884d9  _xdc_runtime_LoggerBuf_Module__id__C                      
 0     0000c008  _xdc_runtime_LoggerBuf_Module__state__V                   
-1     00085135  _xdc_runtime_LoggerBuf_Module_startup__E                  
+1     00085206  _xdc_runtime_LoggerBuf_Module_startup__E                  
 1     000884da  _xdc_runtime_LoggerBuf_Object__count__C                   
-1     00085348  _xdc_runtime_LoggerBuf_Object__get__S                     
+1     00085419  _xdc_runtime_LoggerBuf_Object__get__S                     
 1     000884a8  _xdc_runtime_LoggerBuf_Object__table__C                   
 0     0000c06e  _xdc_runtime_LoggerBuf_Object__table__V                   
-1     000856ae  _xdc_runtime_LoggerBuf_TimestampProxy_get64__E            
-1     000856ed  _xdc_runtime_LoggerBuf_disable__E                         
-1     000856db  _xdc_runtime_LoggerBuf_enable__E                          
+1     0008577f  _xdc_runtime_LoggerBuf_TimestampProxy_get64__E            
+1     000857be  _xdc_runtime_LoggerBuf_disable__E                         
+1     000857ac  _xdc_runtime_LoggerBuf_enable__E                          
 1     000884db  _xdc_runtime_LoggerBuf_filterByLevel__C                   
-1     0008505b  _xdc_runtime_LoggerBuf_filterOutEvent__I                  
-1     00084b87  _xdc_runtime_LoggerBuf_getFilterLevel__E                  
-1     00085230  _xdc_runtime_LoggerBuf_reset__E                           
-1     00084acc  _xdc_runtime_LoggerBuf_setFilterLevel__E                  
+1     0008512c  _xdc_runtime_LoggerBuf_filterOutEvent__I                  
+1     00084c58  _xdc_runtime_LoggerBuf_getFilterLevel__E                  
+1     00085301  _xdc_runtime_LoggerBuf_reset__E                           
+1     00084b9d  _xdc_runtime_LoggerBuf_setFilterLevel__E                  
 1     000884aa  _xdc_runtime_LoggerBuf_statusLogger__C                    
-1     000855a3  _xdc_runtime_LoggerBuf_write0__E                          
-1     000854fc  _xdc_runtime_LoggerBuf_write1__E                          
-1     00085468  _xdc_runtime_LoggerBuf_write2__E                          
-1     00084000  _xdc_runtime_LoggerBuf_write4__E                          
-1     00083c4f  _xdc_runtime_LoggerBuf_write8__E                          
+1     00085674  _xdc_runtime_LoggerBuf_write0__E                          
+1     000855cd  _xdc_runtime_LoggerBuf_write1__E                          
+1     00085539  _xdc_runtime_LoggerBuf_write2__E                          
+1     00084140  _xdc_runtime_LoggerBuf_write4__E                          
+1     00083c5a  _xdc_runtime_LoggerBuf_write8__E                          
 1     000884ac  _xdc_runtime_Main_Module__diagsEnabled__C                 
 1     000884ae  _xdc_runtime_Main_Module__diagsIncluded__C                
 1     000884b0  _xdc_runtime_Main_Module__diagsMask__C                    
 1     000884dc  _xdc_runtime_Main_Module__id__C                           
 0     0000c014  _xdc_runtime_Registry_Module__state__V                    
-1     00085485  _xdc_runtime_Registry_findById__E                         
+1     00085556  _xdc_runtime_Registry_findById__E                         
 0     0000c010  _xdc_runtime_Startup_Module__state__V                     
 abs   00000001  _xdc_runtime_Startup__EXECFXN__C                          
 abs   00000001  _xdc_runtime_Startup__RESETFXN__C                         
 1     000884b2  _xdc_runtime_Startup_execImpl__C                          
-1     00084ca2  _xdc_runtime_Startup_exec__E                              
-1     000855ae  _xdc_runtime_Startup_exec__I                              
+1     00084d73  _xdc_runtime_Startup_exec__E                              
+1     0008567f  _xdc_runtime_Startup_exec__I                              
 1     0008842a  _xdc_runtime_Startup_firstFxns__A                         
 1     0008842e  _xdc_runtime_Startup_firstFxns__C                         
 1     00088432  _xdc_runtime_Startup_lastFxns__C                          
 1     000884dd  _xdc_runtime_Startup_maxPasses__C                         
-1     0008571f  _xdc_runtime_Startup_reset__I                             
-1     000856f1  _xdc_runtime_Startup_rtsDone__E                           
+1     000857f0  _xdc_runtime_Startup_reset__I                             
+1     000857c2  _xdc_runtime_Startup_rtsDone__E                           
 1     0008840d  _xdc_runtime_Startup_sfxnRts__A                           
 1     000884b4  _xdc_runtime_Startup_sfxnRts__C                           
 1     000883c4  _xdc_runtime_Startup_sfxnTab__A                           
 1     000884b6  _xdc_runtime_Startup_sfxnTab__C                           
 1     000884b8  _xdc_runtime_Startup_startModsFxn__C                      
-1     00084448  _xdc_runtime_Startup_startMods__I                         
+1     00084588  _xdc_runtime_Startup_startMods__I                         
 0     0000c2c0  _xdc_runtime_SysMin_Module_State_0_outbuf__A              
 0     0000c01c  _xdc_runtime_SysMin_Module__state__V                      
-1     00085493  _xdc_runtime_SysMin_Module_startup__E                     
-1     0008535f  _xdc_runtime_SysMin_abort__E                              
+1     00085564  _xdc_runtime_SysMin_Module_startup__E                     
+1     00085430  _xdc_runtime_SysMin_abort__E                              
 1     000884ba  _xdc_runtime_SysMin_bufSize__C                            
-1     000855b9  _xdc_runtime_SysMin_exit__E                               
+1     0008568a  _xdc_runtime_SysMin_exit__E                               
 1     000884de  _xdc_runtime_SysMin_flushAtExit__C                        
-1     00084ecf  _xdc_runtime_SysMin_flush__E                              
+1     00084fa0  _xdc_runtime_SysMin_flush__E                              
 1     000884bc  _xdc_runtime_SysMin_outputFunc__C                         
-1     000850e5  _xdc_runtime_SysMin_output__I                             
-1     00085002  _xdc_runtime_SysMin_putch__E                              
-1     00085630  _xdc_runtime_SysMin_ready__E                              
-1     000856b4  _xdc_runtime_System_Module_GateProxy_enter__E             
-1     00085671  _xdc_runtime_System_Module_GateProxy_leave__E             
+1     000851b6  _xdc_runtime_SysMin_output__I                             
+1     000850d3  _xdc_runtime_SysMin_putch__E                              
+1     00085701  _xdc_runtime_SysMin_ready__E                              
+1     00085785  _xdc_runtime_System_Module_GateProxy_enter__E             
+1     00085742  _xdc_runtime_System_Module_GateProxy_leave__E             
 0     0000c028  _xdc_runtime_System_Module_State_0_atexitHandlers__A      
 1     000884be  _xdc_runtime_System_Module__gateObj__C                    
 0     0000c00c  _xdc_runtime_System_Module__state__V                      
-1     00085722  _xdc_runtime_System_Module_startup__E                     
-1     000856ba  _xdc_runtime_System_SupportProxy_abort__E                 
-1     000856c0  _xdc_runtime_System_SupportProxy_exit__E                  
-1     000856c6  _xdc_runtime_System_SupportProxy_putch__E                 
-1     00085725  _xdc_runtime_System_SupportProxy_ready__E                 
+1     000857f3  _xdc_runtime_System_Module_startup__E                     
+1     0008578b  _xdc_runtime_System_SupportProxy_abort__E                 
+1     00085791  _xdc_runtime_System_SupportProxy_exit__E                  
+1     00085797  _xdc_runtime_System_SupportProxy_putch__E                 
+1     000857f6  _xdc_runtime_System_SupportProxy_ready__E                 
 1     000884c0  _xdc_runtime_System_abortFxn__C                           
-1     00085728  _xdc_runtime_System_abortStd__E                           
-1     00085509  _xdc_runtime_System_abort__E                              
-1     00085552  _xdc_runtime_System_aprintf__E                            
-1     000851cd  _xdc_runtime_System_aprintf_va__F                         
-1     00084f84  _xdc_runtime_System_atexit__E                             
-1     000851cd  _xdc_runtime_System_avprintf__E                           
+1     000857f9  _xdc_runtime_System_abortStd__E                           
+1     000855da  _xdc_runtime_System_abort__E                              
+1     00085623  _xdc_runtime_System_aprintf__E                            
+1     0008529e  _xdc_runtime_System_aprintf_va__F                         
+1     00085055  _xdc_runtime_System_atexit__E                             
+1     0008529e  _xdc_runtime_System_avprintf__E                           
 1     00083004  _xdc_runtime_System_doPrint__I                            
 1     000884c2  _xdc_runtime_System_exitFxn__C                            
-1     0008572b  _xdc_runtime_System_exitStd__E                            
-1     000855c4  _xdc_runtime_System_exit__E                               
+1     000857fc  _xdc_runtime_System_exitStd__E                            
+1     00085695  _xdc_runtime_System_exit__E                               
 1     000884c4  _xdc_runtime_System_extendFxn__C                          
-1     00084a8c  _xdc_runtime_System_formatNum__I                          
+1     00084b5d  _xdc_runtime_System_formatNum__I                          
 1     000884df  _xdc_runtime_System_maxAtexitHandlers__C                  
-1     0008385c  _xdc_runtime_System_printfExtend__I                       
-1     0008555e  _xdc_runtime_System_printf__E                             
-1     00085248  _xdc_runtime_System_printf_va__F                          
-1     00084f40  _xdc_runtime_System_processAtExit__E                      
-1     000851e6  _xdc_runtime_System_putchar__I                            
-1     000855fd  _xdc_runtime_System_snprintf_va__F                        
-1     00085248  _xdc_runtime_System_vprintf__E                            
-1     000855fd  _xdc_runtime_System_vsnprintf__E                          
+1     00083867  _xdc_runtime_System_printfExtend__I                       
+1     0008562f  _xdc_runtime_System_printf__E                             
+1     00085319  _xdc_runtime_System_printf_va__F                          
+1     00085011  _xdc_runtime_System_processAtExit__E                      
+1     000852b7  _xdc_runtime_System_putchar__I                            
+1     000856ce  _xdc_runtime_System_snprintf_va__F                        
+1     00085319  _xdc_runtime_System_vprintf__E                            
+1     000856ce  _xdc_runtime_System_vsnprintf__E                          
 0     0000c018  _xdc_runtime_Text_Module__state__V                        
 1     000884e0  _xdc_runtime_Text_charTab__A                              
 1     000884c6  _xdc_runtime_Text_charTab__C                              
 1     000884e1  _xdc_runtime_Text_isLoaded__C                             
 1     000884c8  _xdc_runtime_Text_nodeTab__A                              
-1     00085260  _xdc_runtime_Text_printVisFxn__I                          
-1     0008473a  _xdc_runtime_Text_putLab__E                               
-1     00084bfd  _xdc_runtime_Text_putMod__E                               
-1     000844c5  _xdc_runtime_Text_putSite__E                              
+1     00085331  _xdc_runtime_Text_printVisFxn__I                          
+1     00084807  _xdc_runtime_Text_putLab__E                               
+1     00084cce  _xdc_runtime_Text_putMod__E                               
+1     00084605  _xdc_runtime_Text_putSite__E                              
 1     000884e2  _xdc_runtime_Text_registryModsLastId__C                   
-1     0008556a  _xdc_runtime_Text_ropeText__E                             
+1     0008563b  _xdc_runtime_Text_ropeText__E                             
 1     000884e3  _xdc_runtime_Text_unnamedModsLastId__C                    
 1     000884ca  _xdc_runtime_Text_visitRopeFxn__C                         
-1     00085606  _xdc_runtime_Text_visitRope__I                            
-1     00084e7c  _xdc_runtime_Text_xprintf__I                              
+1     000856d7  _xdc_runtime_Text_visitRope__I                            
+1     00084f4d  _xdc_runtime_Text_xprintf__I                              
 abs   ffffffff  binit                                                     
 1     00082000  cinit                                                     
 abs   ffffffff  etext                                                     
@@ -2672,252 +2676,255 @@ page  address   name
 1     00083540  _Interrupt_Init                                           
 1     0008354e  _UART_Init                                                
 1     0008354f  _ADC_GroupInit                                            
-1     000835b5  _EPWM_GroupInit                                           
-1     00083638  _CLA_ConfigClaMemory                                      
-1     00083669  _CLA_InitCpu1Cla1                                         
-1     000836b5  _ti_sysbios_knl_Semaphore_pend__E                         
-1     0008385c  _xdc_runtime_System_printfExtend__I                       
-1     00083966  LL$$DIV                                                   
-1     000839a2  LL$$MOD                                                   
-1     000839dc  ULL$$DIV                                                  
-1     00083a0b  ULL$$MOD                                                  
-1     00083a6d  _ti_sysbios_knl_Task_sleep__E                             
-1     00083b6d  _ti_sysbios_family_c28_Hwi_clearInterrupt__E              
-1     00083c4f  _xdc_runtime_LoggerBuf_write8__E                          
-1     00083d2e  _AdcSetMode                                               
-1     00083dd1  _CalAdcINL                                                
-1     00083e0b  _cla1Isr1                                                 
-1     00083e47  _cla1Isr2                                                 
-1     00083e58  _cla1Isr3                                                 
-1     00083e69  _cla1Isr4                                                 
-1     00083e7a  _cla1Isr5                                                 
-1     00083e8b  _cla1Isr6                                                 
-1     00083e9c  _cla1Isr7                                                 
-1     00083ead  _cla1Isr8                                                 
-1     00083ebe  _xdc_runtime_Error_policyDefault__E                       
-1     00083f63  _ti_sysbios_family_c28_Hwi_dispatchTable                  
-1     00083fc0  _ti_sysbios_family_c28_Hwi_dispatchPie                    
+1     000835c0  _EPWM_GroupInit                                           
+1     00083643  _CLA_ConfigClaMemory                                      
+1     00083674  _CLA_InitCpu1Cla1                                         
+1     000836c0  _ti_sysbios_knl_Semaphore_pend__E                         
+1     00083867  _xdc_runtime_System_printfExtend__I                       
+1     00083971  LL$$DIV                                                   
+1     000839ad  LL$$MOD                                                   
+1     000839e7  ULL$$DIV                                                  
+1     00083a16  ULL$$MOD                                                  
+1     00083a78  _ti_sysbios_knl_Task_sleep__E                             
+1     00083b78  _ti_sysbios_family_c28_Hwi_clearInterrupt__E              
+1     00083c5a  _xdc_runtime_LoggerBuf_write8__E                          
+1     00083d39  _AdcSetMode                                               
+1     00083ddc  _CalAdcINL                                                
+1     00083e16  _InitTempSensor                                           
+1     00083e63  _GetTemperatureC                                          
+1     00083ea1  _GetTemperatureK                                          
+1     00083ed8  _cla1Isr1                                                 
+1     00083f14  _cla1Isr2                                                 
+1     00083f25  _cla1Isr3                                                 
+1     00083f36  _cla1Isr4                                                 
+1     00083f47  _cla1Isr5                                                 
+1     00083f58  _cla1Isr6                                                 
+1     00083f69  _cla1Isr7                                                 
+1     00083f7a  _cla1Isr8                                                 
+1     00083f8b  _ti_sysbios_knl_Task_checkStacks__E                       
 1     00083ffe  _ti_sysbios_family_c28_TaskSupport_Module__startupDone__S 
-1     00084000  _xdc_runtime_LoggerBuf_write4__E                          
-1     00084095  _ti_catalog_c2800_initF2837x_Boot_initStartup             
-1     00084096  ___TI_writemsg                                            
-1     000840e9  C$$IO$$                                                   
-1     000840ee  ___TI_readmsg                                             
-1     0008412a  _ti_sysbios_family_c28_Hwi_enableInterrupt__E             
-1     000841ba  FS$$DIV                                                   
-1     00084242  _ti_sysbios_knl_Semaphore_post__E                         
-1     000842c6  _ti_sysbios_family_c28_Hwi_disableInterrupt__E            
-1     00084349  _ti_sysbios_family_c28_Hwi_disablePIEIER__E               
-1     000843c9  _ti_sysbios_family_c28_Hwi_enablePIEIER__E                
-1     00084448  _xdc_runtime_Startup_startMods__I                         
-1     000844c5  _xdc_runtime_Text_putSite__E                              
-1     00084540  _ti_sysbios_knl_Task_checkStacks__E                       
-1     000845b3  _ti_sysbios_gates_GateMutex_enter__E                      
-1     00084625  _ti_sysbios_family_c28_Timer_stopAndClear__I              
-1     0008468b  _c_int00                                                  
-1     000846ee  _ti_sysbios_family_c28_Hwi_dispatchCore__I                
-1     0008473a  _xdc_runtime_Text_putLab__E                               
-1     00084786  _ti_sysbios_knl_Clock_workFunc__E                         
-1     000847d1  _ti_sysbios_knl_Task_postInit__I                          
-1     0008481c  _ti_catalog_c2800_initF2837x_Boot_configurePllDivs        
-1     00084865  _ti_sysbios_knl_Mailbox_post__E                           
-1     000848ae  _ti_sysbios_family_c28_Hwi_Module_startup__E              
-1     000848f5  _ti_sysbios_knl_Swi_run__I                                
-1     0008493b  _copy_in                                                  
-1     00084981  _ti_sysbios_family_c28_Timer_postInit__I                  
-1     000849c4  _xdc_runtime_Error_setX__E                                
-1     00084a07  _main                                                     
-1     00084a4a  _ti_sysbios_family_c28_Hwi_unPluggedInterrupt__I          
-1     00084a8c  _xdc_runtime_System_formatNum__I                          
-1     00084acc  _xdc_runtime_LoggerBuf_setFilterLevel__E                  
-1     00084b0b  _ti_sysbios_knl_Mailbox_pend__E                           
-1     00084b49  _ti_sysbios_knl_Swi_restoreHwi__E                         
-1     00084b87  _xdc_runtime_LoggerBuf_getFilterLevel__E                  
-1     00084bc3  _ti_sysbios_family_c28_TaskSupport_start__E               
-1     00084bfd  _xdc_runtime_Text_putMod__E                               
-1     00084c37  _xdc_runtime_Error_print__E                               
-1     00084c6d  _ti_sysbios_knl_Task_startCore__E                         
-1     00084ca2  _xdc_runtime_Startup_exec__E                              
-1     00084cd7  _ti_sysbios_BIOS_rtsUnlock__I                             
-1     00084d0b  _ti_sysbios_knl_Task_Module_startup__E                    
-1     00084d3d  _xdc_runtime_Assert_raise__I                              
-1     00084d6f  _ti_sysbios_knl_Swi_runLoop__I                            
-1     00084d9d  _ti_sysbios_knl_Swi_schedule__I                           
-1     00084dcb  _ti_sysbios_knl_Task_schedule__I                          
-1     00084df9  _ti_sysbios_family_c28_Hwi_getStackInfo__E                
-1     00084e25  _ti_sysbios_family_c28_Timer_start__E                     
-1     00084e51  _ti_sysbios_knl_Mailbox_Module_startup__E                 
-1     00084e7c  _xdc_runtime_Text_xprintf__I                              
-1     00084ea6  C$$EXIT                                                   
-1     00084ea6  _abort                                                    
-1     00084ea8  _exit                                                     
-1     00084ecf  _xdc_runtime_SysMin_flush__E                              
-1     00084ef7  _ti_sysbios_family_c28_TaskSupport_buildTaskStack         
-1     00084f1c  _ti_sysbios_knl_Swi_post__E                               
-1     00084f40  _xdc_runtime_System_processAtExit__E                      
-1     00084f63  _ti_sysbios_knl_Task_allBlockedFunction__I                
-1     00084f84  _xdc_runtime_System_atexit__E                             
-1     00084fa5  _ti_sysbios_family_c28_Timer_setPrescale__E               
-1     00084fc5  _ti_sysbios_knl_Task_exit__E                              
-1     00084fe4  _ti_sysbios_knl_Task_blockI__E                            
-1     00085002  _xdc_runtime_SysMin_putch__E                              
-1     00085020  _memcpy                                                   
-1     0008503e  _ti_sysbios_family_c28_TaskSupport_swap__E                
-1     0008505b  _xdc_runtime_LoggerBuf_filterOutEvent__I                  
-1     00085078  _ti_sysbios_hal_Hwi_checkStack                            
-1     00085094  _ti_sysbios_family_c28_Hwi_switchAndDispatch__I           
-1     000850af  _ti_sysbios_hal_Hwi_initStack                             
-1     000850ca  _ti_sysbios_knl_Task_processVitalTaskFlag__I              
-1     000850e5  _xdc_runtime_SysMin_output__I                             
-1     00085100  _adca1_isr                                                
-1     0008511b  _ti_sysbios_knl_Clock_addI__E                             
-1     00085135  _xdc_runtime_LoggerBuf_Module_startup__E                  
-1     0008514f  _ddcopy                                                   
-1     0008514f  _dpcopy                                                   
-1     0008514f  _pdcopy                                                   
-1     0008514f  _ppcopy                                                   
-1     00085169  _ti_sysbios_family_c28_Hwi_Object__get__S                 
-1     00085182  _ti_sysbios_knl_Mailbox_postInit__I                       
-1     0008519b  _ti_sysbios_knl_Queue_Object__get__S                      
-1     000851b4  _ti_sysbios_knl_Swi_restore__E                            
-1     000851cd  _xdc_runtime_System_aprintf_va__F                         
-1     000851cd  _xdc_runtime_System_avprintf__E                           
-1     000851e6  _xdc_runtime_System_putchar__I                            
-1     000851ff  __args_main                                               
-1     00085218  _ti_sysbios_family_xxx_Hwi_switchAndRunFunc               
-1     00085230  _LoggerBuf_instanceStartup                                
-1     00085230  _xdc_runtime_LoggerBuf_reset__E                           
-1     00085248  _xdc_runtime_System_printf_va__F                          
-1     00085248  _xdc_runtime_System_vprintf__E                            
-1     00085260  _xdc_runtime_Text_printVisFxn__I                          
-1     00085278  LL$$AND                                                   
-1     00085280  LL$$OR                                                    
-1     00085288  LL$$XOR                                                   
-1     00085290  _ti_sysbios_BIOS_atExitFunc__I                            
-1     000852a7  _ti_sysbios_family_c28_Timer_startup__E                   
-1     000852be  _ti_sysbios_knl_Clock_doTick__I                           
-1     000852d5  _ti_sysbios_knl_Mailbox_Object__get__S                    
-1     000852ec  _ti_sysbios_knl_Semaphore_pendTimeout__I                  
-1     00085303  _ti_sysbios_knl_Swi_Object__get__S                        
-1     0008531a  _ti_sysbios_knl_Task_Object__get__S                       
-1     00085331  _ti_sysbios_knl_Task_unblockI__E                          
-1     00085348  _xdc_runtime_LoggerBuf_Object__get__S                     
-1     0008535f  _xdc_runtime_SysMin_abort__E                              
-1     00085376  _ti_sysbios_family_c28_Timer_Module_startup__E            
-1     0008538c  _ti_sysbios_knl_Task_restore__E                           
-1     000853a2  _ti_sysbios_BIOS_startFunc__I                             
-1     000853b7  _ti_sysbios_knl_Swi_Module_startup__E                     
-1     000853cc  _ti_sysbios_knl_Idle_run__E                               
-1     000853e0  _ti_sysbios_BIOS_errorRaiseHook__I                        
-1     000853f3  _ti_sysbios_family_c28_Hwi_disableIER__E                  
-1     00085405  _ti_sysbios_knl_Clock_Module_startup__E                   
-1     00085417  _xdc_runtime_Error_raiseX__E                              
-1     00085428  _ti_sysbios_BIOS_rtsLock__I                               
-1     00085438  _ti_sysbios_family_c28_Hwi_enableIER__E                   
-1     00085448  _ti_sysbios_family_c28_Timer_stop__E                      
-1     00085458  _ti_sysbios_knl_Task_restoreHwi__E                        
-1     00085468  _xdc_runtime_LoggerBuf_write2__E                          
-1     00085477  _ti_sysbios_family_c28_f2837x_TimestampProvider_get64__E  
-1     00085485  _xdc_runtime_Registry_findById__E                         
-1     00085493  _xdc_runtime_SysMin_Module_startup__E                     
-1     000854a1  _ti_sysbios_BIOS_registerRTSLock__I                       
-1     000854ae  _ti_sysbios_BIOS_removeRTSLock__I                         
-1     000854bb  _ti_sysbios_family_c28_Hwi_dispatchC__I                   
-1     000854c8  _ti_sysbios_family_c28_Hwi_restoreIER__E                  
-1     000854d5  _ti_sysbios_knl_Task_SupportProxy_start__E                
-1     000854e2  _ti_sysbios_knl_Task_enter__I                             
-1     000854ef  _xdc_runtime_Error_check__E                               
-1     000854fc  _xdc_runtime_LoggerBuf_write1__E                          
-1     00085509  _xdc_runtime_System_abort__E                              
-1     00085516  _ti_sysbios_BIOS_exitFunc__I                              
-1     00085522  _ti_sysbios_gates_GateMutex_leave__E                      
-1     0008552e  _ti_sysbios_knl_Queue_get__E                              
-1     0008553a  _ti_sysbios_knl_Queue_put__E                              
-1     00085546  _ti_sysbios_knl_Task_enabled__E                           
-1     00085552  _xdc_runtime_System_aprintf__E                            
-1     0008555e  _xdc_runtime_System_printf__E                             
-1     0008556a  _xdc_runtime_Text_ropeText__E                             
-1     00085576  _memset                                                   
-1     00085582  _ti_sysbios_family_c28_Hwi_Module__startupDone__F         
-1     0008558d  _ti_sysbios_family_c28_Timer_Module__startupDone__F       
-1     00085598  _ti_sysbios_knl_Task_sleepTimeout__I                      
-1     000855a3  _xdc_runtime_LoggerBuf_write0__E                          
-1     000855ae  _xdc_runtime_Startup_exec__I                              
-1     000855b9  _xdc_runtime_SysMin_exit__E                               
-1     000855c4  _xdc_runtime_System_exit__E                               
-1     000855cf  _ti_catalog_c2800_initF2837x_Boot_init                    
-1     000855d9  _ti_sysbios_family_c28_TaskSupport_checkStack__E          
-1     000855e2  _ti_sysbios_family_c28_TaskSupport_glue                   
-1     000855eb  _ti_sysbios_hal_Hwi_Module_startup__E                     
-1     000855f4  _ti_sysbios_knl_Task_unblock__E                           
-1     000855fd  _xdc_runtime_System_snprintf_va__F                        
-1     000855fd  _xdc_runtime_System_vsnprintf__E                          
-1     00085606  _xdc_runtime_Text_visitRope__I                            
-1     0008560f  __register_unlock                                         
-1     00085613  __register_lock                                           
-1     00085617  __nop                                                     
-1     00085618  _ti_catalog_c2800_initF2837x_Boot_initSharedRAMs          
-1     00085620  _ti_sysbios_BIOS_setThreadType__E                         
-1     00085630  _xdc_runtime_SysMin_ready__E                              
-1     00085638  _strlen                                                   
-1     00085640  _ti_sysbios_BIOS_RtsGateProxy_leave__E                    
-1     00085647  _ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E              
-1     0008564e  _ti_sysbios_knl_Queue_empty__E                            
-1     00085655  _ti_sysbios_knl_Task_SupportProxy_checkStack__E           
-1     0008565c  _ti_sysbios_knl_Task_SupportProxy_swap__E                 
-1     00085663  _xdc_runtime_Error_init__E                                
-1     0008566a  _xdc_runtime_LoggerBuf_Module_GateProxy_leave__E          
-1     00085671  _xdc_runtime_System_Module_GateProxy_leave__E             
-1     00085678  _ti_sysbios_BIOS_RtsGateProxy_enter__E                    
-1     0008567e  _ti_sysbios_BIOS_start__E                                 
-1     00085684  _ti_sysbios_family_c28_IntrinsicsSupport_maxbit__E        
-1     0008568a  _ti_sysbios_knl_Clock_TimerProxy_getMaxTicks__E           
-1     00085690  _ti_sysbios_knl_Swi_disable__E                            
-1     00085696  _ti_sysbios_knl_Task_disable__E                           
-1     0008569c  _xdc_runtime_Gate_enterSystem__E                          
-1     000856a2  _xdc_runtime_Gate_leaveSystem__E                          
-1     000856a8  _xdc_runtime_LoggerBuf_Module_GateProxy_enter__E          
-1     000856ae  _xdc_runtime_LoggerBuf_TimestampProxy_get64__E            
-1     000856b4  _xdc_runtime_System_Module_GateProxy_enter__E             
-1     000856ba  _xdc_runtime_System_SupportProxy_abort__E                 
-1     000856c0  _xdc_runtime_System_SupportProxy_exit__E                  
-1     000856c6  _xdc_runtime_System_SupportProxy_putch__E                 
-1     000856cc  _ti_sysbios_family_c28_Hwi_switchFromBootStack__E         
-1     000856d1  _ti_sysbios_gates_GateHwi_enter__E                        
-1     000856db  _xdc_runtime_LoggerBuf_enable__E                          
-1     000856e0  _strcpy                                                   
-1     000856e5  _ti_sysbios_family_c28_Hwi_startup__E                     
-1     000856e9  _ti_sysbios_knl_Swi_startup__E                            
-1     000856ed  _xdc_runtime_LoggerBuf_disable__E                         
-1     000856f1  _xdc_runtime_Startup_rtsDone__E                           
-1     000856f5  _ti_catalog_c2800_initF2837x_Boot_limpAbort               
-1     000856f8  _SetDBGIER                                                
-1     000856fb  ___xdc__init                                              
-1     000856fe  _ti_sysbios_family_c28_Hwi_Module__startupDone__S         
-1     00085701  _ti_sysbios_family_c28_Timer_Module__startupDone__S       
-1     00085704  _ti_sysbios_gates_GateHwi_leave__E                        
-1     00085707  _ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S       
-1     0008570a  _ti_sysbios_hal_Hwi_HwiProxy_startup__E                   
-1     0008570d  _ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E       
-1     00085710  _ti_sysbios_hal_Hwi_startup__E                            
-1     00085713  _ti_sysbios_knl_Clock_TimerProxy_Module__startupDone__S   
-1     00085716  _ti_sysbios_knl_Idle_loop__E                              
-1     00085719  _ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S  
-1     0008571c  _ti_sysbios_knl_Task_startup__E                           
-1     0008571f  _xdc_runtime_Startup_reset__I                             
-1     00085722  _xdc_runtime_System_Module_startup__E                     
-1     00085725  _xdc_runtime_System_SupportProxy_ready__E                 
-1     00085728  _xdc_runtime_System_abortStd__E                           
-1     0008572b  _xdc_runtime_System_exitStd__E                            
-1     0008572e  _ti_sysbios_family_c28_Timer_getMaxTicks__E               
-1     00085730  _ti_sysbios_gates_GateHwi_query__E                        
-1     00085732  _ti_sysbios_gates_GateMutex_query__E                      
-1     00085734  _xdc_runtime_Error_getSite__E                             
-1     00085736  _ti_catalog_c2800_initF2837x_Boot_defaultLimpAbortFunction
-1     00085737  _ti_sysbios_BIOS_linkedWithIncorrectBootLibrary__E        
-1     00085738  _ti_sysbios_BIOS_nullFunc__I                              
-1     00085739  _ti_sysbios_family_c28_Hwi_interruptReturn__I             
-1     0008573a  _ti_sysbios_knl_Clock_logTick__E                          
+1     00084000  _xdc_runtime_Error_policyDefault__E                       
+1     000840a5  _ti_sysbios_family_c28_Hwi_dispatchTable                  
+1     00084102  _ti_sysbios_family_c28_Hwi_dispatchPie                    
+1     00084140  _xdc_runtime_LoggerBuf_write4__E                          
+1     000841d5  _ti_catalog_c2800_initF2837x_Boot_initStartup             
+1     000841d6  ___TI_writemsg                                            
+1     00084229  C$$IO$$                                                   
+1     0008422e  ___TI_readmsg                                             
+1     0008426a  _ti_sysbios_family_c28_Hwi_enableInterrupt__E             
+1     000842fa  FS$$DIV                                                   
+1     00084382  _ti_sysbios_knl_Semaphore_post__E                         
+1     00084406  _ti_sysbios_family_c28_Hwi_disableInterrupt__E            
+1     00084489  _ti_sysbios_family_c28_Hwi_disablePIEIER__E               
+1     00084509  _ti_sysbios_family_c28_Hwi_enablePIEIER__E                
+1     00084588  _xdc_runtime_Startup_startMods__I                         
+1     00084605  _xdc_runtime_Text_putSite__E                              
+1     00084680  _ti_sysbios_gates_GateMutex_enter__E                      
+1     000846f2  _ti_sysbios_family_c28_Timer_stopAndClear__I              
+1     00084758  _c_int00                                                  
+1     000847bb  _ti_sysbios_family_c28_Hwi_dispatchCore__I                
+1     00084807  _xdc_runtime_Text_putLab__E                               
+1     00084853  _ti_sysbios_knl_Clock_workFunc__E                         
+1     0008489e  _ti_sysbios_knl_Task_postInit__I                          
+1     000848e9  _ti_catalog_c2800_initF2837x_Boot_configurePllDivs        
+1     00084932  _ti_sysbios_knl_Mailbox_post__E                           
+1     0008497b  _ti_sysbios_family_c28_Hwi_Module_startup__E              
+1     000849c2  _main                                                     
+1     00084a09  _ti_sysbios_knl_Swi_run__I                                
+1     00084a4f  _copy_in                                                  
+1     00084a95  _ti_sysbios_family_c28_Timer_postInit__I                  
+1     00084ad8  _xdc_runtime_Error_setX__E                                
+1     00084b1b  _ti_sysbios_family_c28_Hwi_unPluggedInterrupt__I          
+1     00084b5d  _xdc_runtime_System_formatNum__I                          
+1     00084b9d  _xdc_runtime_LoggerBuf_setFilterLevel__E                  
+1     00084bdc  _ti_sysbios_knl_Mailbox_pend__E                           
+1     00084c1a  _ti_sysbios_knl_Swi_restoreHwi__E                         
+1     00084c58  _xdc_runtime_LoggerBuf_getFilterLevel__E                  
+1     00084c94  _ti_sysbios_family_c28_TaskSupport_start__E               
+1     00084cce  _xdc_runtime_Text_putMod__E                               
+1     00084d08  _xdc_runtime_Error_print__E                               
+1     00084d3e  _ti_sysbios_knl_Task_startCore__E                         
+1     00084d73  _xdc_runtime_Startup_exec__E                              
+1     00084da8  _ti_sysbios_BIOS_rtsUnlock__I                             
+1     00084ddc  _ti_sysbios_knl_Task_Module_startup__E                    
+1     00084e0e  _xdc_runtime_Assert_raise__I                              
+1     00084e40  _ti_sysbios_knl_Swi_runLoop__I                            
+1     00084e6e  _ti_sysbios_knl_Swi_schedule__I                           
+1     00084e9c  _ti_sysbios_knl_Task_schedule__I                          
+1     00084eca  _ti_sysbios_family_c28_Hwi_getStackInfo__E                
+1     00084ef6  _ti_sysbios_family_c28_Timer_start__E                     
+1     00084f22  _ti_sysbios_knl_Mailbox_Module_startup__E                 
+1     00084f4d  _xdc_runtime_Text_xprintf__I                              
+1     00084f77  C$$EXIT                                                   
+1     00084f77  _abort                                                    
+1     00084f79  _exit                                                     
+1     00084fa0  _xdc_runtime_SysMin_flush__E                              
+1     00084fc8  _ti_sysbios_family_c28_TaskSupport_buildTaskStack         
+1     00084fed  _ti_sysbios_knl_Swi_post__E                               
+1     00085011  _xdc_runtime_System_processAtExit__E                      
+1     00085034  _ti_sysbios_knl_Task_allBlockedFunction__I                
+1     00085055  _xdc_runtime_System_atexit__E                             
+1     00085076  _ti_sysbios_family_c28_Timer_setPrescale__E               
+1     00085096  _ti_sysbios_knl_Task_exit__E                              
+1     000850b5  _ti_sysbios_knl_Task_blockI__E                            
+1     000850d3  _xdc_runtime_SysMin_putch__E                              
+1     000850f1  _memcpy                                                   
+1     0008510f  _ti_sysbios_family_c28_TaskSupport_swap__E                
+1     0008512c  _xdc_runtime_LoggerBuf_filterOutEvent__I                  
+1     00085149  _ti_sysbios_hal_Hwi_checkStack                            
+1     00085165  _ti_sysbios_family_c28_Hwi_switchAndDispatch__I           
+1     00085180  _ti_sysbios_hal_Hwi_initStack                             
+1     0008519b  _ti_sysbios_knl_Task_processVitalTaskFlag__I              
+1     000851b6  _xdc_runtime_SysMin_output__I                             
+1     000851d1  _adca1_isr                                                
+1     000851ec  _ti_sysbios_knl_Clock_addI__E                             
+1     00085206  _xdc_runtime_LoggerBuf_Module_startup__E                  
+1     00085220  _ddcopy                                                   
+1     00085220  _dpcopy                                                   
+1     00085220  _pdcopy                                                   
+1     00085220  _ppcopy                                                   
+1     0008523a  _ti_sysbios_family_c28_Hwi_Object__get__S                 
+1     00085253  _ti_sysbios_knl_Mailbox_postInit__I                       
+1     0008526c  _ti_sysbios_knl_Queue_Object__get__S                      
+1     00085285  _ti_sysbios_knl_Swi_restore__E                            
+1     0008529e  _xdc_runtime_System_aprintf_va__F                         
+1     0008529e  _xdc_runtime_System_avprintf__E                           
+1     000852b7  _xdc_runtime_System_putchar__I                            
+1     000852d0  __args_main                                               
+1     000852e9  _ti_sysbios_family_xxx_Hwi_switchAndRunFunc               
+1     00085301  _LoggerBuf_instanceStartup                                
+1     00085301  _xdc_runtime_LoggerBuf_reset__E                           
+1     00085319  _xdc_runtime_System_printf_va__F                          
+1     00085319  _xdc_runtime_System_vprintf__E                            
+1     00085331  _xdc_runtime_Text_printVisFxn__I                          
+1     00085349  LL$$AND                                                   
+1     00085351  LL$$OR                                                    
+1     00085359  LL$$XOR                                                   
+1     00085361  _ti_sysbios_BIOS_atExitFunc__I                            
+1     00085378  _ti_sysbios_family_c28_Timer_startup__E                   
+1     0008538f  _ti_sysbios_knl_Clock_doTick__I                           
+1     000853a6  _ti_sysbios_knl_Mailbox_Object__get__S                    
+1     000853bd  _ti_sysbios_knl_Semaphore_pendTimeout__I                  
+1     000853d4  _ti_sysbios_knl_Swi_Object__get__S                        
+1     000853eb  _ti_sysbios_knl_Task_Object__get__S                       
+1     00085402  _ti_sysbios_knl_Task_unblockI__E                          
+1     00085419  _xdc_runtime_LoggerBuf_Object__get__S                     
+1     00085430  _xdc_runtime_SysMin_abort__E                              
+1     00085447  _ti_sysbios_family_c28_Timer_Module_startup__E            
+1     0008545d  _ti_sysbios_knl_Task_restore__E                           
+1     00085473  _ti_sysbios_BIOS_startFunc__I                             
+1     00085488  _ti_sysbios_knl_Swi_Module_startup__E                     
+1     0008549d  _ti_sysbios_knl_Idle_run__E                               
+1     000854b1  _ti_sysbios_BIOS_errorRaiseHook__I                        
+1     000854c4  _ti_sysbios_family_c28_Hwi_disableIER__E                  
+1     000854d6  _ti_sysbios_knl_Clock_Module_startup__E                   
+1     000854e8  _xdc_runtime_Error_raiseX__E                              
+1     000854f9  _ti_sysbios_BIOS_rtsLock__I                               
+1     00085509  _ti_sysbios_family_c28_Hwi_enableIER__E                   
+1     00085519  _ti_sysbios_family_c28_Timer_stop__E                      
+1     00085529  _ti_sysbios_knl_Task_restoreHwi__E                        
+1     00085539  _xdc_runtime_LoggerBuf_write2__E                          
+1     00085548  _ti_sysbios_family_c28_f2837x_TimestampProvider_get64__E  
+1     00085556  _xdc_runtime_Registry_findById__E                         
+1     00085564  _xdc_runtime_SysMin_Module_startup__E                     
+1     00085572  _ti_sysbios_BIOS_registerRTSLock__I                       
+1     0008557f  _ti_sysbios_BIOS_removeRTSLock__I                         
+1     0008558c  _ti_sysbios_family_c28_Hwi_dispatchC__I                   
+1     00085599  _ti_sysbios_family_c28_Hwi_restoreIER__E                  
+1     000855a6  _ti_sysbios_knl_Task_SupportProxy_start__E                
+1     000855b3  _ti_sysbios_knl_Task_enter__I                             
+1     000855c0  _xdc_runtime_Error_check__E                               
+1     000855cd  _xdc_runtime_LoggerBuf_write1__E                          
+1     000855da  _xdc_runtime_System_abort__E                              
+1     000855e7  _ti_sysbios_BIOS_exitFunc__I                              
+1     000855f3  _ti_sysbios_gates_GateMutex_leave__E                      
+1     000855ff  _ti_sysbios_knl_Queue_get__E                              
+1     0008560b  _ti_sysbios_knl_Queue_put__E                              
+1     00085617  _ti_sysbios_knl_Task_enabled__E                           
+1     00085623  _xdc_runtime_System_aprintf__E                            
+1     0008562f  _xdc_runtime_System_printf__E                             
+1     0008563b  _xdc_runtime_Text_ropeText__E                             
+1     00085647  _memset                                                   
+1     00085653  _ti_sysbios_family_c28_Hwi_Module__startupDone__F         
+1     0008565e  _ti_sysbios_family_c28_Timer_Module__startupDone__F       
+1     00085669  _ti_sysbios_knl_Task_sleepTimeout__I                      
+1     00085674  _xdc_runtime_LoggerBuf_write0__E                          
+1     0008567f  _xdc_runtime_Startup_exec__I                              
+1     0008568a  _xdc_runtime_SysMin_exit__E                               
+1     00085695  _xdc_runtime_System_exit__E                               
+1     000856a0  _ti_catalog_c2800_initF2837x_Boot_init                    
+1     000856aa  _ti_sysbios_family_c28_TaskSupport_checkStack__E          
+1     000856b3  _ti_sysbios_family_c28_TaskSupport_glue                   
+1     000856bc  _ti_sysbios_hal_Hwi_Module_startup__E                     
+1     000856c5  _ti_sysbios_knl_Task_unblock__E                           
+1     000856ce  _xdc_runtime_System_snprintf_va__F                        
+1     000856ce  _xdc_runtime_System_vsnprintf__E                          
+1     000856d7  _xdc_runtime_Text_visitRope__I                            
+1     000856e0  __register_unlock                                         
+1     000856e4  __register_lock                                           
+1     000856e8  __nop                                                     
+1     000856e9  _ti_catalog_c2800_initF2837x_Boot_initSharedRAMs          
+1     000856f1  _ti_sysbios_BIOS_setThreadType__E                         
+1     00085701  _xdc_runtime_SysMin_ready__E                              
+1     00085709  _strlen                                                   
+1     00085711  _ti_sysbios_BIOS_RtsGateProxy_leave__E                    
+1     00085718  _ti_sysbios_hal_Hwi_HwiProxy_getStackInfo__E              
+1     0008571f  _ti_sysbios_knl_Queue_empty__E                            
+1     00085726  _ti_sysbios_knl_Task_SupportProxy_checkStack__E           
+1     0008572d  _ti_sysbios_knl_Task_SupportProxy_swap__E                 
+1     00085734  _xdc_runtime_Error_init__E                                
+1     0008573b  _xdc_runtime_LoggerBuf_Module_GateProxy_leave__E          
+1     00085742  _xdc_runtime_System_Module_GateProxy_leave__E             
+1     00085749  _ti_sysbios_BIOS_RtsGateProxy_enter__E                    
+1     0008574f  _ti_sysbios_BIOS_start__E                                 
+1     00085755  _ti_sysbios_family_c28_IntrinsicsSupport_maxbit__E        
+1     0008575b  _ti_sysbios_knl_Clock_TimerProxy_getMaxTicks__E           
+1     00085761  _ti_sysbios_knl_Swi_disable__E                            
+1     00085767  _ti_sysbios_knl_Task_disable__E                           
+1     0008576d  _xdc_runtime_Gate_enterSystem__E                          
+1     00085773  _xdc_runtime_Gate_leaveSystem__E                          
+1     00085779  _xdc_runtime_LoggerBuf_Module_GateProxy_enter__E          
+1     0008577f  _xdc_runtime_LoggerBuf_TimestampProxy_get64__E            
+1     00085785  _xdc_runtime_System_Module_GateProxy_enter__E             
+1     0008578b  _xdc_runtime_System_SupportProxy_abort__E                 
+1     00085791  _xdc_runtime_System_SupportProxy_exit__E                  
+1     00085797  _xdc_runtime_System_SupportProxy_putch__E                 
+1     0008579d  _ti_sysbios_family_c28_Hwi_switchFromBootStack__E         
+1     000857a2  _ti_sysbios_gates_GateHwi_enter__E                        
+1     000857ac  _xdc_runtime_LoggerBuf_enable__E                          
+1     000857b1  _strcpy                                                   
+1     000857b6  _ti_sysbios_family_c28_Hwi_startup__E                     
+1     000857ba  _ti_sysbios_knl_Swi_startup__E                            
+1     000857be  _xdc_runtime_LoggerBuf_disable__E                         
+1     000857c2  _xdc_runtime_Startup_rtsDone__E                           
+1     000857c6  _ti_catalog_c2800_initF2837x_Boot_limpAbort               
+1     000857c9  _SetDBGIER                                                
+1     000857cc  ___xdc__init                                              
+1     000857cf  _ti_sysbios_family_c28_Hwi_Module__startupDone__S         
+1     000857d2  _ti_sysbios_family_c28_Timer_Module__startupDone__S       
+1     000857d5  _ti_sysbios_gates_GateHwi_leave__E                        
+1     000857d8  _ti_sysbios_hal_Hwi_HwiProxy_Module__startupDone__S       
+1     000857db  _ti_sysbios_hal_Hwi_HwiProxy_startup__E                   
+1     000857de  _ti_sysbios_hal_Hwi_HwiProxy_switchFromBootStack__E       
+1     000857e1  _ti_sysbios_hal_Hwi_startup__E                            
+1     000857e4  _ti_sysbios_knl_Clock_TimerProxy_Module__startupDone__S   
+1     000857e7  _ti_sysbios_knl_Idle_loop__E                              
+1     000857ea  _ti_sysbios_knl_Task_SupportProxy_Module__startupDone__S  
+1     000857ed  _ti_sysbios_knl_Task_startup__E                           
+1     000857f0  _xdc_runtime_Startup_reset__I                             
+1     000857f3  _xdc_runtime_System_Module_startup__E                     
+1     000857f6  _xdc_runtime_System_SupportProxy_ready__E                 
+1     000857f9  _xdc_runtime_System_abortStd__E                           
+1     000857fc  _xdc_runtime_System_exitStd__E                            
+1     000857ff  _ti_sysbios_family_c28_Timer_getMaxTicks__E               
+1     00085801  _ti_sysbios_gates_GateHwi_query__E                        
+1     00085803  _ti_sysbios_gates_GateMutex_query__E                      
+1     00085805  _xdc_runtime_Error_getSite__E                             
+1     00085807  _ti_catalog_c2800_initF2837x_Boot_defaultLimpAbortFunction
+1     00085808  _ti_sysbios_BIOS_linkedWithIncorrectBootLibrary__E        
+1     00085809  _ti_sysbios_BIOS_nullFunc__I                              
+1     0008580a  _ti_sysbios_family_c28_Hwi_interruptReturn__I             
+1     0008580b  _ti_sysbios_knl_Clock_logTick__E                          
 1     00088000  _ti_sysbios_family_c28_Hwi_vectors                        
 1     00088315  _ti_sysbios_family_c28_Hwi_Module__id__C                  
 1     00088359  _ti_sysbios_family_c28_Hwi_NUM_INTERRUPTS_ALL__C          
@@ -3051,4 +3058,4 @@ abs   ffffffff  binit
 abs   ffffffff  etext                                                     
 abs   ffffffff  pinit                                                     
 
-[767 symbols]
+[770 symbols]
