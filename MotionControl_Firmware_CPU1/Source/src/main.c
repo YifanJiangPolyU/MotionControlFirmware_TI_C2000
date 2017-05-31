@@ -12,6 +12,14 @@
 
 extern Mailbox_Handle ADC_fifo;
 
+void scia_xmit(int a)
+{
+    while (SciaRegs.SCIFFTX.bit.TXFFST != 0) {}
+    SciaRegs.SCITXBUF.all =a;
+}
+
+
+
 /*
  *  ======== taskFxn ========
  */
@@ -32,12 +40,14 @@ Void taskFxn(UArg a0, UArg a1)
     static uint16_t sss = 0;
 
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    Mailbox_pend(ADC_fifo, &sss, BIOS_NO_WAIT);
-    System_printf("ADCA res: %d\n", sss);
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
     Task_sleep(500);
-    System_printf("exit taskFxn(): %d\n", i);
+
+    for(sss=0; sss<16; sss++){
+      SciaRegs.SCITXBUF.all ='h';
+    }
+
     i += 1;
   }
 }
@@ -65,11 +75,13 @@ void main(void)
   // EDIS;
 
   InitTempSensor(3.0);
-  
+
   // Configure other peripherals
   GPIO_GroupInit();
   ADC_GroupInit();
   EPWM_GroupInit();
+
+  UART_Init();
 
   // configure CLA
   CLA_ConfigClaMemory();

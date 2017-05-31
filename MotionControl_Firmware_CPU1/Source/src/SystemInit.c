@@ -134,10 +134,10 @@ void GPIO_GroupInit(void){
   GPIO_SetupPinOptions(34, GPIO_OUTPUT, GPIO_PUSHPULL);
 
   // UART Rx Tx pins
-  GPIO_SetupPinMux(28, GPIO_MUX_CPU1, 1);
-  GPIO_SetupPinOptions(28, GPIO_INPUT, GPIO_PUSHPULL); // Rx
-  GPIO_SetupPinMux(29, GPIO_MUX_CPU1, 1);
-  GPIO_SetupPinOptions(29, GPIO_OUTPUT, GPIO_ASYNC); // Tx
+  GPIO_SetupPinMux(43, GPIO_MUX_CPU1, 15);
+  GPIO_SetupPinOptions(43, GPIO_INPUT, GPIO_PUSHPULL); // Rx
+  GPIO_SetupPinMux(42, GPIO_MUX_CPU1, 15);
+  GPIO_SetupPinOptions(42, GPIO_OUTPUT, GPIO_ASYNC); // Tx
 
 }
 
@@ -170,6 +170,38 @@ void Interrupt_Init(void){
  */
 void UART_Init(void){
 
+  // set SCI clock (LSPCLK) to 100 MHz (sysclk/2)
+  ClkCfgRegs.LOSPCP.bit.LSPCLKDIV = 1;
+
+  // enable SCIA clock
+  CpuSysRegs.PCLKCR7.bit.SCI_A = 1;
+
+  SciaRegs.SCICCR.all = 0x0000;
+  SciaRegs.SCICCR.bit.PARITYENA = 0;  // disable parity
+  SciaRegs.SCICCR.bit.STOPBITS = 0;   // 1 stop bit
+  SciaRegs.SCICCR.bit.LOOPBKENA = 0;  // disable loop back
+  SciaRegs.SCICCR.bit.SCICHAR = 7;    // 8-bit data
+  SciaRegs.SCICCR.bit.ADDRIDLE_MODE = 0;  // idle-line mode (normal UART)
+
+  SciaRegs.SCICTL1.all = 0x0000;
+  SciaRegs.SCICTL1.bit.RXERRINTENA = 0;   // disable Rx error interrupt
+  SciaRegs.SCICTL1.bit.TXENA = 1;         // enable Tx
+  SciaRegs.SCICTL1.bit.RXENA = 1;         // enable Rx
+
+  SciaRegs.SCICTL2.all = 0x0000;
+  SciaRegs.SCICTL2.bit.TXINTENA = 1;      // enable Tx buffer empty interrupt
+  SciaRegs.SCICTL2.bit.RXBKINTENA = 1;    // enable Rx buffer full interrupt
+
+  // baud rate: 2Mbps (2.0833Mpbs)
+  // baud rate = LSPCLK/8/(SCIBAUD＋１)
+  SciaRegs.SCIHBAUD.all = 0x0000;
+  SciaRegs.SCILBAUD.all = 0x0005;
+
+  SciaRegs.SCICTL1.bit.SWRESET = 1;
+
+  SciaRegs.SCIFFTX.all = 0xE040;
+  SciaRegs.SCIFFRX.all = 0x2044;
+  SciaRegs.SCIFFCT.all = 0x0;
 }
 
 /**
