@@ -24,6 +24,21 @@ extern "C" {
 
 #define CLA_SAMPLE_BUFFER_LEN_X2 20
 
+#define DEBUG_CODE_PROFILING
+
+#ifdef DEBUG_CODE_PROFILING
+    #define READ_CLOCK(X) __meallow();\
+                      EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE;\
+                      X = EPwm1Regs.TBCTR;\
+                      __medis();
+    #define RESTART_CLOCK __meallow();\
+                      EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE;\
+                      EPwm2Regs.TBCTR = 0;\
+                      EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP;\
+                      __medis();
+#endif
+
+
 
 // shared variables between CPU and CLA
 extern float init;
@@ -35,7 +50,7 @@ extern uint16_t CLA_CycleCounter;
 extern uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
 extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
 extern uint16_t CLA_SampleBufferActiveHalf;
-
+extern uint16_t timeCounter;
 
 // CLA C Tasks
 __interrupt void Cla1Task1();

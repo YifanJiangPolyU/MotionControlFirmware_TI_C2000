@@ -4,6 +4,9 @@
 
 __interrupt void Cla1Task1 ( void )
 {
+  // count CLA execution time
+  RESTART_CLOCK;
+
   Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 1;
 
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -27,9 +30,25 @@ __interrupt void Cla1Task1 ( void )
       break;
     case 1:
       break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    case 7:
+      break;
+    case 8:
+      break;
+    case 9:
+      break;
     default:
       break;
   }
+
+  READ_CLOCK(timeCounter);
 }
 
 __interrupt void Cla1Task2 ( void )

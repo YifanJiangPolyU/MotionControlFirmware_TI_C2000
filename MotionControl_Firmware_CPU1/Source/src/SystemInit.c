@@ -321,6 +321,17 @@ void EPWM_GroupInit(void){
   EPwm4Regs.ETSEL.bit.INTSEL = 4;
   EPwm4Regs.ETPS.bit.INTPRD = 1;
 
+#ifdef DEBUG_CODE_PROFILING
+  // initialize EPWM2 for profiling
+  EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP; // Count up
+  EPwm2Regs.TBPRD = 0xFFFF; // Set timer period
+  EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE; // Disable phase loading
+  EPwm2Regs.TBPHS.all = 0x0000; // Phase is 0
+  EPwm2Regs.TBCTR = 0x0000; // Clear counter
+  EPwm2Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1; // Clock ratio to SYSCLKOUT
+  EPwm2Regs.TBCTL.bit.CLKDIV = TB_DIV1;
+#endif
+
   CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
   EDIS;
 }

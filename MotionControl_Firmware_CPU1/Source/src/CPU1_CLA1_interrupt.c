@@ -33,6 +33,8 @@
     uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2]; // ADC data buffer, phase B
     #pragma DATA_SECTION("CLADataLS1")
     uint16_t CLA_SampleBufferActiveHalf;  // which half of the CLA_SampleBuffer can be read?
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t timeCounter;
 #else
     #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
     uint16_t sensorSampleA;
@@ -46,6 +48,9 @@
     uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
     #pragma DATA_SECTION(CLA_SampleBufferActiveHalf,"CLADataLS1")
     uint16_t CLA_SampleBufferActiveHalf;
+    #pragma DATA_SECTION(timeCounter,"CLADataLS1")
+    uint16_t timeCounter;
+
 #endif
 
 #ifdef __cplusplus
