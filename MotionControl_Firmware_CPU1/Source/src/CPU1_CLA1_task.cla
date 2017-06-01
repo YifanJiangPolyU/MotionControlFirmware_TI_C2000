@@ -25,6 +25,7 @@ __interrupt void Cla1Task1 ( void )
     CLA_CycleCounter += 1;
   }
 
+  // switch case structure for static multi-tasking
   switch(CLA_CycleCounter){
     case 0:
       break;

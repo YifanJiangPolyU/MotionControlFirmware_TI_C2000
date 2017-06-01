@@ -170,11 +170,13 @@ void Interrupt_Init(void){
  */
 void UART_Init(void){
 
+EALLOW;
   // set SCI clock (LSPCLK) to 100 MHz (sysclk/2)
-  ClkCfgRegs.LOSPCP.bit.LSPCLKDIV = 1;
+  ClkCfgRegs.LOSPCP.bit.LSPCLKDIV = 0b001;
 
   // enable SCIA clock
   CpuSysRegs.PCLKCR7.bit.SCI_A = 1;
+EDIS;
 
   SciaRegs.SCICCR.all = 0x0000;
   SciaRegs.SCICCR.bit.PARITYENA = 0;  // disable parity
@@ -264,6 +266,9 @@ void EPWM_GroupInit(void){
   DevCfgRegs.CPUSEL0.bit.EPWM4 = 0;
   DevCfgRegs.CPUSEL0.bit.EPWM5 = 0;
   DevCfgRegs.CPUSEL0.bit.EPWM6 = 0;
+
+  // EPWM runs at PLLCLK (200MHz)
+  ClkCfgRegs.PERCLKDIVSEL.bit.EPWMCLKDIV = 0;
 
   // enable EPWM clock
   CpuSysRegs.PCLKCR2.bit.EPWM1 = 1;
