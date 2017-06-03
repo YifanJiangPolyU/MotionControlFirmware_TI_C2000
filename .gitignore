@@ -4,3 +4,4 @@ MotionControl_Firmware_CPU1/Debug
 
 # ignore file types
 *~
+*.obj
