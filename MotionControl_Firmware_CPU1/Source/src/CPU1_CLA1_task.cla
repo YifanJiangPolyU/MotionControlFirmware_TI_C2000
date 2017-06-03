@@ -7,11 +7,13 @@ __interrupt void Cla1Task1 ( void )
   // count CLA execution time
   RESTART_CLOCK;
 
-  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 1;
+  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 0;
 
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
-  CLA_SampleBufferA[CLA_SampleCounter] = AdcaResultRegs.ADCRESULT0;
-  CLA_SampleBufferB[CLA_SampleCounter++] = AdcaResultRegs.ADCRESULT0;
+  sensorSampleA = AdcaResultRegs.ADCRESULT0;
+  sensorSampleB = AdcbResultRegs.ADCRESULT0;
+  CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
+  CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleA;
 
   if(CLA_SampleCounter==20){
     CLA_SampleCounter = 0;
@@ -20,7 +22,7 @@ __interrupt void Cla1Task1 ( void )
   if(CLA_CycleCounter==9){
     CLA_CycleCounter = 0;
     CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
-    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
+    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
   } else {
     CLA_CycleCounter += 1;
   }
@@ -28,22 +30,60 @@ __interrupt void Cla1Task1 ( void )
   // switch case structure for static multi-tasking
   switch(CLA_CycleCounter){
     case 0:
+      // execute current controller
+      CL_Error_Ia = CL_Setpoint_Ia - sensorSampleA;
+      CL_Error_Ib = CL_Setpoint_Ib - sensorSampleB;
+      CL_Integral_Ia += CL_Ki * CL_Error_Ia;
+      CL_Integral_Ib += CL_Ki * CL_Error_Ib;
+      CL_Output_Ua = CL_Kp*CL_Error_Ia + CL_Integral_Ia;
+      CL_Output_Ub = CL_Kp*CL_Error_Ib + CL_Integral_Ib;
+
+      // output level limiting
+      if(CL_Output_Ua > CL_OutputLimit){
+        CL_Output_Ua = CL_OutputLimit;
+      } else if(CL_Output_Ua < -CL_OutputLimit) {
+        CL_Output_Ua = -CL_OutputLimit;
+      }
+
+      if(CL_Output_Ub > CL_OutputLimit){
+        CL_Output_Ub = CL_OutputLimit;
+      } else if(CL_Output_Ub < -CL_OutputLimit) {
+        CL_Output_Ub = -CL_OutputLimit;
+      }
+
+      // execute anti-windup
+      CL_Integral_Ia -= CL_Output_Ua - CL_OutputLimit;
+      CL_Integral_Ib -= CL_Output_Ub - CL_OutputLimit;
+
+      CL_Output_Uc = -CL_Output_Ua -CL_Output_Ub;
+
       break;
     case 1:
+      sensorSampleA += 2;
+      break;
+    case 2:
+      sensorSampleA += 10;
       break;
     case 3:
+      sensorSampleA += 3;
       break;
     case 4:
+      sensorSampleA += 4;
       break;
     case 5:
+      sensorSampleA += 5;
       break;
     case 6:
+      sensorSampleA += 6;
       break;
     case 7:
+      sensorSampleA += 7;
       break;
     case 8:
+      sensorSampleA += 8;
       break;
     case 9:
+      sensorSampleA += 9;
       break;
     default:
       break;
@@ -77,9 +117,13 @@ __interrupt void Cla1Task6 ( void )
 
 }
 
+/**
+ *  task 7 is used to reset current controller
+ */
 __interrupt void Cla1Task7 ( void )
 {
-
+  CL_Integral_Ia = 0;
+  CL_Integral_Ib = 0;
 }
 
 /**
@@ -87,5 +131,10 @@ __interrupt void Cla1Task7 ( void )
  */
 __interrupt void Cla1Task8 ( void )
 {
+  CLA_SampleBufferActiveHalf = 1;
+  CLA_SampleCounter = 0;
+  CLA_CycleCounter = 0;
 
+  CL_Kp = 0;
+  CL_Ki = 0;
 }

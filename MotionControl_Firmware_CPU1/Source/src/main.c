@@ -45,7 +45,7 @@ Void taskFxn(UArg a0, UArg a1)
     Task_sleep(500);
 
     for(sss=0; sss<16; sss++){
-      SciaRegs.SCITXBUF.all ='h';
+      SciaRegs.SCITXBUF.all ='k';
     }
 
     i += 1;
@@ -102,11 +102,8 @@ void main(void)
   EPwm5Regs.TBCTL.bit.CTRMODE = 2;
   EPwm6Regs.TBCTL.bit.CTRMODE = 2;
 
-
   // sync ePWM counter value
-  CLA_SampleBufferActiveHalf = 0;
-  CLA_CycleCounter = 0;
-  CLA_SampleCounter = 0;
+  Cla1ForceTask8andWait();
   EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 
   EDIS;

@@ -21,6 +21,8 @@
 #include "F2837xD_device.h"        // F2837xD Headerfile Include File
 #include "F2837xD_Examples.h"      // F2837xD Examples Include File
 
+// define some convenience types
+typedef float				float32_t;
 
 #endif  // end of F28X_PROJECT_H definition
 

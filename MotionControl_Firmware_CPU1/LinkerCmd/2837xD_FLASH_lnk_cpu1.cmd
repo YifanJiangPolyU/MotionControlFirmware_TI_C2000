@@ -95,23 +95,7 @@ SECTIONS
    Cla1ToCpuMsgRAM  : > CLA1_MSGRAMLOW,   PAGE = 0
    CpuToCla1MsgRAM  : > CLA1_MSGRAMHIGH,  PAGE = 0
 
-#ifdef CLA_C
-   /* CLA C compiler sections */
-   // Must be allocated to memory the CLA has write access to
-   CLAscratch       :
-                     { *.obj(CLAscratch)
-                     . += CLA_SCRATCHPAD_SIZE;
-                     *.obj(CLAscratch_end) } >  RAMLS1,  PAGE = 0
-
    .scratchpad      : > RAMLS1,       PAGE = 0
-   .bss_cla		    : > RAMLS1,       PAGE = 0
-   .const_cla	    :  LOAD = FLASHD,
-                       RUN = RAMLS1,
-                       RUN_START(_Cla1ConstRunStart),
-                       LOAD_START(_Cla1ConstLoadStart),
-                       LOAD_SIZE(_Cla1ConstLoadSize),
-                       PAGE = 0
-#endif //CLA_C
 
 #ifdef __TI_COMPILER_VERSION__
 	#if __TI_COMPILER_VERSION__ >= 15009000

@@ -20,34 +20,116 @@
 #include <ti/sysbios/knl/Mailbox.h>
 
 
+/**
+ *  Parameters and data shared between CPU and CLA
+ */
 #ifdef __cplusplus
-    #pragma DATA_SECTION("CLADataLS1")
-    uint16_t sensorSampleA;
+
+    // process control
     #pragma DATA_SECTION("CLADataLS1")  // count from 0~19
     uint16_t CLA_SampleCounter;
     #pragma DATA_SECTION("CLADataLS1")  // count from 0~9
     uint16_t CLA_CycleCounter;
+
     #pragma DATA_SECTION("CLADataLS1")
-    uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2]; // ADC data buffer, phase A
+    uint16_t sensorSampleA;
     #pragma DATA_SECTION("CLADataLS1")
-    uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2]; // ADC data buffer, phase B
+    uint16_t sensorSampleB;
+
+    // ADC data buffer
     #pragma DATA_SECTION("CLADataLS1")
-    uint16_t CLA_SampleBufferActiveHalf;  // which half of the CLA_SampleBuffer can be read?
+    uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CLA_SampleBufferActiveHalf;
+
+    // Current controller parameters
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Kp;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Ki;
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CL_Setpoint_Ia;
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CL_Setpoint_Ib;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Error_Ia;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Error_Ib;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Integral_Ia;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Integral_Ib;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_OutputLimit;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Output_Ua;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Output_Ub;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_Output_Uc;
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CL_OutputPWM_Ua;
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CL_OutputPWM_Ub;
+    #pragma DATA_SECTION("CLADataLS1")
+    uint16_t CL_OutputPWM_Uc;
+
     #pragma DATA_SECTION("CLADataLS1")
     uint16_t timeCounter;
 #else
-    #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
-    uint16_t sensorSampleA;
+    // process control
     #pragma DATA_SECTION(CLA_SampleCounter,"CLADataLS1")
     uint16_t CLA_SampleCounter;
     #pragma DATA_SECTION(CLA_CycleCounter,"CLADataLS1")
     uint16_t CLA_CycleCounter;
-    #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1") // ADC data buffer, phase A
+
+    #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
+    uint16_t sensorSampleA;
+    #pragma DATA_SECTION(sensorSampleB,"CLADataLS1")
+    uint16_t sensorSampleB;
+
+    // ADC data buffer
+    #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")
     uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
-    #pragma DATA_SECTION(CLA_SampleBufferB,"CLADataLS1") // ADC data buffer, phase B
+    #pragma DATA_SECTION(CLA_SampleBufferB,"CLADataLS1")
     uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
     #pragma DATA_SECTION(CLA_SampleBufferActiveHalf,"CLADataLS1")
     uint16_t CLA_SampleBufferActiveHalf;
+
+    // Current controller parameters
+    #pragma DATA_SECTION(CL_Kp,"CLADataLS1")
+    float32_t CL_Kp;
+    #pragma DATA_SECTION(CL_Ki,"CLADataLS1")
+    float32_t CL_Ki;
+    #pragma DATA_SECTION(CL_Setpoint_Ia,"CLADataLS1")
+    uint16_t CL_Setpoint_Ia;
+    #pragma DATA_SECTION(CL_Setpoint_Ib,"CLADataLS1")
+    uint16_t CL_Setpoint_Ib;
+    #pragma DATA_SECTION(CL_Error_Ia,"CLADataLS1")
+    float32_t CL_Error_Ia;
+    #pragma DATA_SECTION(CL_Error_Ib,"CLADataLS1")
+    float32_t CL_Error_Ib;
+    #pragma DATA_SECTION(CL_Integral_Ia,"CLADataLS1")
+    float32_t CL_Integral_Ia;
+    #pragma DATA_SECTION(CL_Integral_Ib,"CLADataLS1")
+    float32_t CL_Integral_Ib;
+    #pragma DATA_SECTION(CL_OutputLimit,"CLADataLS1")
+    float32_t CL_OutputLimit;
+    #pragma DATA_SECTION(CL_Output_Ua,"CLADataLS1")
+    float32_t CL_Output_Ua;
+    #pragma DATA_SECTION(CL_Output_Ub,"CLADataLS1")
+    float32_t CL_Output_Ub;
+    #pragma DATA_SECTION(CL_Output_Uc,"CLADataLS1")
+    float32_t CL_Output_Uc;
+    #pragma DATA_SECTION(CL_OutputPWM_Ua,"CLADataLS1")
+    uint16_t CL_OutputPWM_Ua;
+    #pragma DATA_SECTION(CL_OutputPWM_Ub,"CLADataLS1")
+    uint16_t CL_OutputPWM_Ub;
+    #pragma DATA_SECTION(CL_OutputPWM_Uc,"CLADataLS1")
+    uint16_t CL_OutputPWM_Uc;
+
     #pragma DATA_SECTION(timeCounter,"CLADataLS1")
     uint16_t timeCounter;
 
