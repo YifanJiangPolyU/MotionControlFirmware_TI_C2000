@@ -54,21 +54,25 @@ extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buff
 extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffering active half
 
 // current loop parameters
-extern float32_t CL_Kp;           // P gain
-extern float32_t CL_Ki;           // I gain
-extern uint16_t CL_Setpoint_Ia;   // current requirement, phase A
-extern uint16_t CL_Setpoint_Ib;   // current requirement, phase B
-extern float32_t CL_Error_Ia;     // current error, phase A
-extern float32_t CL_Error_Ib;     // current error, phase B
-extern float32_t CL_Integral_Ia;  // integral term, phase A
-extern float32_t CL_Integral_Ib;  // integral term, phase B
-extern float32_t CL_OutputLimit;  // limit the output 
-extern float32_t CL_Output_Ua;     // output, phase A
-extern float32_t CL_Output_Ub;     // output, phase B
-extern float32_t CL_Output_Uc;     // output, phase C
-extern uint16_t CL_OutputPWM_Ua;   // output PWM duty, phase A
-extern uint16_t CL_OutputPWM_Ub;   // output PWM duty, phase B
-extern uint16_t CL_OutputPWM_Uc;   // output PWM duty, phase C
+extern float32_t CL_Kp;                     // P gain
+extern float32_t CL_Ki;                     // I gain
+extern uint16_t CL_Setpoint_Ia;             // current requirement, phase A
+extern uint16_t CL_Setpoint_Ib;             // current requirement, phase B
+extern float32_t CL_OutputLimit;            // limit the output
+extern float32_t CL_AdcScalingFactor;   // convert from ADC cnt to mA
+
+extern float32_t CL_Error_Ia;               // current error, phase A
+extern float32_t CL_Error_Ib;               // current error, phase B
+extern float32_t CL_Integral_Ia;            // integral term, phase A
+extern float32_t CL_Integral_Ib;            // integral term, phase B
+extern float32_t CL_Output_Ua;               // output, phase A
+extern float32_t CL_Output_Ub;               // output, phase B
+extern float32_t CL_Output_Uc;               // output, phase C
+extern float32_t CL_OutputOffset;            // offset required to give positive PWM duty
+extern uint16_t CL_OutputPWM_Ua;             // output PWM duty, phase A
+extern uint16_t CL_OutputPWM_Ub;             // output PWM duty, phase B
+extern uint16_t CL_OutputPWM_Uc;             // output PWM duty, phase C
+
 
 extern uint16_t timeCounter;
 

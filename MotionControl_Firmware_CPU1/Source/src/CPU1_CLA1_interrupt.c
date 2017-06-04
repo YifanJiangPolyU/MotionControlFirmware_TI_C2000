@@ -54,6 +54,10 @@
     #pragma DATA_SECTION("CLADataLS1")
     uint16_t CL_Setpoint_Ib;
     #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_OutputLimit;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_AdcScalingFactor;
+    #pragma DATA_SECTION("CLADataLS1")
     float32_t CL_Error_Ia;
     #pragma DATA_SECTION("CLADataLS1")
     float32_t CL_Error_Ib;
@@ -62,13 +66,13 @@
     #pragma DATA_SECTION("CLADataLS1")
     float32_t CL_Integral_Ib;
     #pragma DATA_SECTION("CLADataLS1")
-    float32_t CL_OutputLimit;
-    #pragma DATA_SECTION("CLADataLS1")
     float32_t CL_Output_Ua;
     #pragma DATA_SECTION("CLADataLS1")
     float32_t CL_Output_Ub;
     #pragma DATA_SECTION("CLADataLS1")
     float32_t CL_Output_Uc;
+    #pragma DATA_SECTION("CLADataLS1")
+    float32_t CL_OutputOffset;
     #pragma DATA_SECTION("CLADataLS1")
     uint16_t CL_OutputPWM_Ua;
     #pragma DATA_SECTION("CLADataLS1")
@@ -107,6 +111,8 @@
     uint16_t CL_Setpoint_Ia;
     #pragma DATA_SECTION(CL_Setpoint_Ib,"CLADataLS1")
     uint16_t CL_Setpoint_Ib;
+    #pragma DATA_SECTION(CL_AdcScalingFactor, "CLADataLS1")
+    float32_t CL_AdcScalingFactor;
     #pragma DATA_SECTION(CL_Error_Ia,"CLADataLS1")
     float32_t CL_Error_Ia;
     #pragma DATA_SECTION(CL_Error_Ib,"CLADataLS1")
@@ -123,6 +129,8 @@
     float32_t CL_Output_Ub;
     #pragma DATA_SECTION(CL_Output_Uc,"CLADataLS1")
     float32_t CL_Output_Uc;
+    #pragma DATA_SECTION(CL_OutputOffset, "CLADataLS1")
+    float32_t CL_OutputOffset;
     #pragma DATA_SECTION(CL_OutputPWM_Ua,"CLADataLS1")
     uint16_t CL_OutputPWM_Ua;
     #pragma DATA_SECTION(CL_OutputPWM_Ub,"CLADataLS1")

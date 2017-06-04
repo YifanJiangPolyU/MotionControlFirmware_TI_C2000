@@ -103,6 +103,10 @@ void main(void)
   EPwm6Regs.TBCTL.bit.CTRMODE = 2;
 
   // sync ePWM counter value
+  CL_Kp = 1;
+  CL_Ki = 1;
+  CL_OutputLimit = 3000;
+  CL_AdcScalingFactor = 1;
   Cla1ForceTask8andWait();
   EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 

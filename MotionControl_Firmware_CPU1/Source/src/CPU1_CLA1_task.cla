@@ -13,49 +13,53 @@ __interrupt void Cla1Task1 ( void )
   sensorSampleA = AdcaResultRegs.ADCRESULT0;
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
   CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
-  CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleA;
-
-  if(CLA_SampleCounter==20){
-    CLA_SampleCounter = 0;
-  }
-
-  if(CLA_CycleCounter==9){
-    CLA_CycleCounter = 0;
-    CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
-    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
-  } else {
-    CLA_CycleCounter += 1;
-  }
+  CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
 
   // switch case structure for static multi-tasking
   switch(CLA_CycleCounter){
     case 0:
       // execute current controller
-      CL_Error_Ia = CL_Setpoint_Ia - sensorSampleA;
-      CL_Error_Ib = CL_Setpoint_Ib - sensorSampleB;
+      CL_Error_Ia = (float32_t)(CL_Setpoint_Ia - sensorSampleA);
+      CL_Error_Ib = (float32_t)(CL_Setpoint_Ib - sensorSampleB);
       CL_Integral_Ia += CL_Ki * CL_Error_Ia;
       CL_Integral_Ib += CL_Ki * CL_Error_Ib;
       CL_Output_Ua = CL_Kp*CL_Error_Ia + CL_Integral_Ia;
       CL_Output_Ub = CL_Kp*CL_Error_Ib + CL_Integral_Ib;
 
-      // output level limiting
+      // output level limiting and anti-windup
       if(CL_Output_Ua > CL_OutputLimit){
+        CL_Integral_Ia -= CL_Output_Ua - CL_OutputLimit;
         CL_Output_Ua = CL_OutputLimit;
       } else if(CL_Output_Ua < -CL_OutputLimit) {
+        CL_Integral_Ia -= CL_Output_Ua + CL_OutputLimit;
         CL_Output_Ua = -CL_OutputLimit;
       }
 
       if(CL_Output_Ub > CL_OutputLimit){
+        CL_Integral_Ib -= CL_Output_Ub - CL_OutputLimit;
         CL_Output_Ub = CL_OutputLimit;
       } else if(CL_Output_Ub < -CL_OutputLimit) {
+        CL_Integral_Ib -= CL_Output_Ub + CL_OutputLimit;
         CL_Output_Ub = -CL_OutputLimit;
       }
 
-      // execute anti-windup
-      CL_Integral_Ia -= CL_Output_Ua - CL_OutputLimit;
-      CL_Integral_Ib -= CL_Output_Ub - CL_OutputLimit;
-
+      // output phase C chosen to make neutro point voltage zero
       CL_Output_Uc = -CL_Output_Ua -CL_Output_Ub;
+
+      // PWM modulation
+      if(CL_Output_Ua<CL_Output_Ub){
+        if(CL_Output_Ua<CL_Output_Uc){
+          CL_OutputOffset = -CL_Output_Ua;
+        }
+      }else if(CL_Output_Ub<CL_Output_Uc){
+        CL_OutputOffset = -CL_Output_Ub;
+      }else{
+        CL_OutputOffset = -CL_Output_Uc;
+      }
+
+      CL_Output_Ua += CL_OutputOffset;
+      CL_Output_Ub += CL_OutputOffset;
+      CL_Output_Uc += CL_OutputOffset;
 
       break;
     case 1:
@@ -89,7 +93,24 @@ __interrupt void Cla1Task1 ( void )
       break;
   }
 
+  if(CLA_SampleCounter==20){
+    CLA_SampleCounter = 0;
+  }
+
+  if(CLA_CycleCounter==9){
+    CLA_CycleCounter = 0;
+    CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
+    //Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
+  } else {
+    CLA_CycleCounter += 1;
+  }
+
   READ_CLOCK(timeCounter);
+
+  // put it here for debug purpose
+  if(CLA_CycleCounter==0){
+    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
+  }
 }
 
 __interrupt void Cla1Task2 ( void )
@@ -135,6 +156,5 @@ __interrupt void Cla1Task8 ( void )
   CLA_SampleCounter = 0;
   CLA_CycleCounter = 0;
 
-  CL_Kp = 0;
-  CL_Ki = 0;
+
 }
