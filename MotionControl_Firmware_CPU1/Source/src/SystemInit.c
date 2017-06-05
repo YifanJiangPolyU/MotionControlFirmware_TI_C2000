@@ -348,12 +348,18 @@ void EPWM_GroupInit(void){
 */
 void CLA_ConfigClaMemory(void){
   extern uint32_t Cla1funcsRunStart, Cla1funcsLoadStart, Cla1funcsLoadSize;
+  extern uint32_t Cla1ConstRunStart, Cla1ConstLoadStart, Cla1ConstLoadSize;
   EALLOW;
 
 #ifdef _FLASH
   // copy CLA code from flash to RAM
   memcpy((uint32_t *)&Cla1funcsRunStart, (uint32_t *)&Cla1funcsLoadStart,
   (uint32_t)&Cla1funcsLoadSize);
+
+  // copy CLA const from flash to RAM
+  memcpy((uint32_t *)&Cla1ConstRunStart, (uint32_t *)&Cla1ConstLoadStart,
+  (uint32_t)&Cla1ConstLoadSize);
+
 #endif //_FLASH
 
   // enable CLA clock

@@ -14,6 +14,10 @@
 #include "CPU1_CLA1_common.h"
 #include "F28x_Project.h"
 
+// inverse clark transformation matrix coefficients
+// only required ones are declared
+const float32_t INV_CLARK_A21 = -0.50000000000000000000f;
+const float32_t INV_CLARK_A22 = 0.86602540378443859659f; // sqrt(3)/2
 
 void CLA_PositionLoop(){
 
@@ -38,8 +42,19 @@ void CLA_PositionLoop(){
 
   // output filtering
 
-  // inv-park and inv-clark transform
-  // to obtain A&B phase current setpoints
+  // inv-park
+  PL_OutputCurrent_Q = PL_OutputRaw;
+  PL_OutputCurrent_D = 0;
+  PL_OutputCurrent_Alpha = PL_OutputCurrent_D * CommutationAngle_Cos -
+                           PL_OutputCurrent_Q * CommutationAngle_Sin;
+  PL_OutputCurrent_Beta = PL_OutputCurrent_Q * CommutationAngle_Cos +
+                           PL_OutputCurrent_D * CommutationAngle_Sin;
 
+
+  // inv-clark, obtain phase current setpoint
+  // (A and B only, C = -A-B implied)
+  CL_Setpoint_Ia = PL_OutputCurrent_Alpha;
+  CL_Setpoint_Ib = INV_CLARK_A21*PL_OutputCurrent_Alpha +
+                    INV_CLARK_A22*PL_OutputCurrent_Beta;
 
 }

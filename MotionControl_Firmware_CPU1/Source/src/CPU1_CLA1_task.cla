@@ -36,11 +36,13 @@ __interrupt void Cla1Task1 ( void )
       }
       break;
     case 1:
-      if(CLA_PositionLoopEnable==1){
-        if(CLA_PosLoopCounter == 0){
+      if(CLA_PosLoopCounter==4){
+        CLA_PosLoopCounter = 0;
+        if(CLA_PosLoopCounter == 1){
           CLA_PositionLoop();
         }
       }
+      CLA_PosLoopCounter += 1;
       break;
     case 2:
       sensorSampleA += 10;
@@ -76,15 +78,10 @@ __interrupt void Cla1Task1 ( void )
 
   if(CLA_CycleCounter==9){
     CLA_CycleCounter = 0;
-    CLA_PosLoopCounter += 1;
     CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
     //Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
   } else {
     CLA_CycleCounter += 1;
-  }
-
-  if(CLA_PosLoopCounter==4){
-    CLA_PosLoopCounter = 0;
   }
 
   READ_CLOCK(timeCounter);

@@ -99,7 +99,11 @@ extern float32_t PL_Kd3;
 extern float32_t PL_FF_Vel;                   // velocity feed-forward gain
 extern float32_t PL_FF_Accel;                 // acceleration feed-forward gain
 extern float32_t PL_OutputRaw;                // position control raw output
-extern float32_t PL_OutputLimit;                // position control upper bound
+extern float32_t PL_OutputLimit;              // position control upper bound
+extern float32_t PL_OutputCurrent_D;          // cmd Id
+extern float32_t PL_OutputCurrent_Q;          // cmd Iq
+extern float32_t PL_OutputCurrent_Alpha;      // cmd I alpha
+extern float32_t PL_OutputCurrent_Beta;       // cmd I beta
 
 extern uint16_t timeCounter;
 

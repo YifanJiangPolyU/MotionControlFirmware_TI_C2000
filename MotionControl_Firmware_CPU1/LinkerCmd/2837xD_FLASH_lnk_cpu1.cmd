@@ -95,6 +95,14 @@ SECTIONS
    Cla1ToCpuMsgRAM  : > CLA1_MSGRAMLOW,   PAGE = 0
    CpuToCla1MsgRAM  : > CLA1_MSGRAMHIGH,  PAGE = 0
 
+   .const_cla       : LOAD = FLASHD,
+                      RUN = RAMLS1,
+                      LOAD_START(_Cla1ConstLoadStart),
+                      LOAD_END(_Cla1ConstLoadEnd),
+                      RUN_START(_Cla1ConstRunStart),
+                      LOAD_SIZE(_Cla1ConstLoadSize),
+                      PAGE = 0, ALIGN(4)
+
    .scratchpad      : > RAMLS1,       PAGE = 0
 
 #ifdef __TI_COMPILER_VERSION__

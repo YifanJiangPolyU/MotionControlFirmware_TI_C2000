@@ -127,6 +127,14 @@
     float32_t PL_OutputRaw;
     #pragma DATA_SECTION(PL_OutputLimit,"CLADataLS1")
     float32_t PL_OutputLimit;
+    #pragma DATA_SECTION(PL_OutputCurrent_D,"CLADataLS1")
+    float32_t PL_OutputCurrent_D;
+    #pragma DATA_SECTION(PL_OutputCurrent_Q,"CLADataLS1")
+    float32_t PL_OutputCurrent_Q;
+    #pragma DATA_SECTION(PL_OutputCurrent_Alpha,"CLADataLS1")
+    float32_t PL_OutputCurrent_Alpha;
+    #pragma DATA_SECTION(PL_OutputCurrent_Beta,"CLADataLS1")
+    float32_t PL_OutputCurrent_Beta;
 
     #pragma DATA_SECTION(timeCounter,"CLADataLS1")
     uint16_t timeCounter;
@@ -142,9 +150,6 @@
     #pragma DATA_SECTION(init,"CpuToCla1MsgRAM")
     float init;
 #endif
-
-
-extern Mailbox_Handle ADC_fifo;
 
 void CLA_Reset(){
   CLA_SampleCounter = 0;
@@ -165,7 +170,6 @@ __interrupt void cla1Isr1 ()
 {
   // Acknowledge the end-of-task interrupt for task 1
   PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
-  Mailbox_post(ADC_fifo, &(CLA_SampleBufferA[CLA_SampleCounter]), BIOS_NO_WAIT);
 }
 
 // cla1Isr2 - CLA1 ISR 2
