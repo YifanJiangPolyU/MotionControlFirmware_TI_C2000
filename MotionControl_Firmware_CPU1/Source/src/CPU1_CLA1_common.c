@@ -28,6 +28,12 @@
     uint16_t CLA_SampleCounter;
     #pragma DATA_SECTION(CLA_CycleCounter,"CLADataLS1")
     uint16_t CLA_CycleCounter;
+    #pragma DATA_SECTION(CLA_PosLoopCounter,"CLADataLS1")
+    uint16_t CLA_PosLoopCounter;
+    #pragma DATA_SECTION(CLA_CurrentLoopEnable,"CLADataLS1")
+    uint16_t CLA_CurrentLoopEnable;
+    #pragma DATA_SECTION(CLA_PositionLoopEnable,"CLADataLS1")
+    uint16_t CLA_PositionLoopEnable;
 
     #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
     uint16_t sensorSampleA;
@@ -48,9 +54,9 @@
     #pragma DATA_SECTION(CL_Ki,"CLADataLS1")
     float32_t CL_Ki;
     #pragma DATA_SECTION(CL_Setpoint_Ia,"CLADataLS1")
-    uint16_t CL_Setpoint_Ia;
+    float32_t CL_Setpoint_Ia;
     #pragma DATA_SECTION(CL_Setpoint_Ib,"CLADataLS1")
-    uint16_t CL_Setpoint_Ib;
+    float32_t CL_Setpoint_Ib;
     #pragma DATA_SECTION(CL_AdcScalingFactor, "CLADataLS1")
     float32_t CL_AdcScalingFactor;
     #pragma DATA_SECTION(CL_Error_Ia,"CLADataLS1")
@@ -83,8 +89,10 @@
     #pragma DATA_SECTION(CommutationAngle_Sin,"CLADataLS1")
     float32_t CommutationAngle_Sin;
 
+    #pragma DATA_SECTION(PL_ActualPosition,"CLADataLS1")
+    int32_t PL_ActualPosition;
     #pragma DATA_SECTION(PL_Setpoint_Pos,"CLADataLS1")
-    float32_t PL_Setpoint_Pos;
+    int32_t PL_Setpoint_Pos;
     #pragma DATA_SECTION(PL_Setpoint_Vel,"CLADataLS1")
     float32_t PL_Setpoint_Vel;
     #pragma DATA_SECTION(PL_Setpoint_Accel,"CLADataLS1")
@@ -115,8 +123,10 @@
     float32_t PL_FF_Vel;
     #pragma DATA_SECTION(PL_FF_Accel,"CLADataLS1")
     float32_t PL_FF_Accel;
-    #pragma DATA_SECTION(PL_OutputTorque,"CLADataLS1")
-    float32_t PL_OutputTorque;
+    #pragma DATA_SECTION(PL_OutputRaw,"CLADataLS1")
+    float32_t PL_OutputRaw;
+    #pragma DATA_SECTION(PL_OutputLimit,"CLADataLS1")
+    float32_t PL_OutputLimit;
 
     #pragma DATA_SECTION(timeCounter,"CLADataLS1")
     uint16_t timeCounter;
@@ -136,9 +146,21 @@
 
 extern Mailbox_Handle ADC_fifo;
 
-//
+void CLA_Reset(){
+  CLA_SampleCounter = 0;
+  CLA_CycleCounter = 0;
+  CLA_PosLoopCounter = 0;
+
+  CLA_CurrentLoopEnable = 0;
+  CLA_PositionLoopEnable = 0;
+
+  CL_Integral_Ia = 0;
+  CL_Integral_Ib = 0;
+  PL_PosIntegral = 0;
+}
+
+
 // cla1Isr1 - CLA1 ISR 1
-//
 __interrupt void cla1Isr1 ()
 {
   // Acknowledge the end-of-task interrupt for task 1
@@ -146,68 +168,51 @@ __interrupt void cla1Isr1 ()
   Mailbox_post(ADC_fifo, &(CLA_SampleBufferA[CLA_SampleCounter]), BIOS_NO_WAIT);
 }
 
-//
 // cla1Isr2 - CLA1 ISR 2
-//
 __interrupt void cla1Isr2 ()
 {
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }
 
-//
 // cla1Isr3 - CLA1 ISR 3
-//
 __interrupt void cla1Isr3 ()
 {
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }
 
-//
 // cla1Isr4 - CLA1 ISR 4
-//
 __interrupt void cla1Isr4 ()
 {
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }
 
-//
 // cla1Isr5 - CLA1 ISR 5
-//
 __interrupt void cla1Isr5 ()
 {
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }
 
-//
 // cla1Isr6 - CLA1 ISR 6
-//
 __interrupt void cla1Isr6 ()
 {
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }
 
-//
 // cla1Isr7 - CLA1 ISR 7
-//
 __interrupt void cla1Isr7 ()
 {
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }
 
-//
 // cla1Isr8 - CLA1 ISR 8
-//
 __interrupt void cla1Isr8 ()
 {
-  //
-  // Acknowledge the end-of-task interrupt for task 8
-  //
   PieCtrlRegs.PIEACK.all = M_INT11;
   //asm(" ESTOP0");
 }

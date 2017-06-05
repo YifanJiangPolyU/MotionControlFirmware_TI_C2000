@@ -103,6 +103,8 @@ void main(void)
   EPwm6Regs.TBCTL.bit.CTRMODE = 2;
 
   // sync ePWM counter value
+  CLA_Reset();
+  CLA_CurrentLoopEnable = 1;
   CL_Kp = 1;
   CL_Ki = 1;
   CL_OutputLimit = 3000;

@@ -1,0 +1,45 @@
+/******************************************************************************
+ * Copyright (C) 2017 by Yifan Jiang                                          *
+ * jiangyi@student.ethz.com                                                   *
+ *                                                                            *
+ * This program is distributed in the hope that it will be useful,            *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ ******************************************************************************/
+
+/*
+* implement CPU1_CLA1 position controller
+*/
+
+#include "CPU1_CLA1_common.h"
+#include "F28x_Project.h"
+
+
+void CLA_PositionLoop(){
+
+  // setpoint filtering
+
+  // implement PID controller
+  PL_PosError = (float32_t)(PL_Setpoint_Pos-PL_ActualPosition);
+  PL_PosIntegral += PL_Ki1 * PL_PosError;
+
+  PL_OutputRaw = PL_Kp1*PL_PosError + PL_PosIntegral;
+  PL_OutputRaw += PL_FF_Vel * PL_Setpoint_Vel;
+  PL_OutputRaw += PL_FF_Accel * PL_Setpoint_Accel;
+
+  // output level limiting and anti-windup
+  if(PL_OutputRaw > PL_OutputLimit){
+    PL_PosIntegral -= PL_OutputRaw - PL_OutputLimit;
+    PL_OutputRaw = PL_OutputLimit;
+  } else if(PL_OutputRaw < -PL_OutputLimit) {
+    PL_PosIntegral -= PL_OutputRaw + PL_OutputLimit;
+    PL_OutputRaw = -PL_OutputLimit;
+  }
+
+  // output filtering
+
+  // inv-park and inv-clark transform
+  // to obtain A&B phase current setpoints
+
+
+}

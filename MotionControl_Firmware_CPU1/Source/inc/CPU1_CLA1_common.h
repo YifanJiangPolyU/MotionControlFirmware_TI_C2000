@@ -46,6 +46,9 @@ extern uint16_t result;
 
 extern uint16_t CLA_SampleCounter;
 extern uint16_t CLA_CycleCounter;
+extern uint16_t CLA_PosLoopCounter;
+extern uint16_t CLA_CurrentLoopEnable;               // enable current loop
+extern uint16_t CLA_PositionLoopEnable;              // enable position loop
 
 extern uint16_t sensorSampleA;
 extern uint16_t sensorSampleB;
@@ -56,10 +59,10 @@ extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffer
 // current loop parameters
 extern float32_t CL_Kp;                     // P gain
 extern float32_t CL_Ki;                     // I gain
-extern uint16_t CL_Setpoint_Ia;             // current requirement, phase A
-extern uint16_t CL_Setpoint_Ib;             // current requirement, phase B
+extern float32_t CL_Setpoint_Ia;            // current requirement (ADC raw), phase A
+extern float32_t CL_Setpoint_Ib;            // current requirement (ADC raw), phase B
 extern float32_t CL_OutputLimit;            // limit the output
-extern float32_t CL_AdcScalingFactor;   // convert from ADC cnt to mA
+extern float32_t CL_AdcScalingFactor;       // convert from ADC cnt to mA
 
 extern float32_t CL_Error_Ia;               // current error, phase A
 extern float32_t CL_Error_Ib;               // current error, phase B
@@ -78,9 +81,10 @@ extern float32_t CommutationAngle_Cos;        // commutation angle cosine
 extern float32_t CommutationAngle_Sin;        // commutation angle sine
 
 // position loop parameters
-extern float32_t PL_Setpoint_Pos;             // target position
-extern float32_t PL_Setpoint_Vel;             // profile velocity, for feed-forward only
-extern float32_t PL_Setpoint_Accel;           // profile acceleration, for feed-forward only
+extern int32_t   PL_ActualPosition;           // actual encoder position (cnt)
+extern int32_t   PL_Setpoint_Pos;             // target position (cnt)
+extern float32_t PL_Setpoint_Vel;             // profile velocity (cnt/sp), for feed-forward only
+extern float32_t PL_Setpoint_Accel;           // profile acceleration (cnt/sp^2), for feed-forward only
 extern float32_t PL_PosError;                 // position error
 extern float32_t PL_PosIntegral;              // position error integral term
 extern float32_t PL_Kp1;                      // position loop PID gains group 1
@@ -94,8 +98,8 @@ extern float32_t PL_Ki3;
 extern float32_t PL_Kd3;
 extern float32_t PL_FF_Vel;                   // velocity feed-forward gain
 extern float32_t PL_FF_Accel;                 // acceleration feed-forward gain
-extern float32_t PL_OutputTorque;             // required torque
-
+extern float32_t PL_OutputRaw;                // position control raw output
+extern float32_t PL_OutputLimit;                // position control upper bound
 
 extern uint16_t timeCounter;
 
@@ -108,6 +112,10 @@ __interrupt void Cla1Task5();
 __interrupt void Cla1Task6();
 __interrupt void Cla1Task7();
 __interrupt void Cla1Task8();
+
+void CLA_CurrentLoop();
+void CLA_PositionLoop();
+void CLA_Reset();
 
 // CLA interrupt handlers
 __interrupt void cla1Isr1();

@@ -1,0 +1,62 @@
+/******************************************************************************
+ * Copyright (C) 2017 by Yifan Jiang                                          *
+ * jiangyi@student.ethz.com                                                   *
+ *                                                                            *
+ * This program is distributed in the hope that it will be useful,            *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
+ ******************************************************************************/
+
+/*
+* implement CPU1_CLA1 current controller,
+*/
+
+#include "CPU1_CLA1_common.h"
+#include "F28x_Project.h"
+
+void CLA_CurrentLoop(){
+
+  // execute current controller
+  CL_Error_Ia = CL_Setpoint_Ia - (float32_t)sensorSampleA;
+  CL_Error_Ib = CL_Setpoint_Ib - (float32_t)sensorSampleB;
+  CL_Integral_Ia += CL_Ki * CL_Error_Ia;
+  CL_Integral_Ib += CL_Ki * CL_Error_Ib;
+  CL_Output_Ua = CL_Kp*CL_Error_Ia + CL_Integral_Ia;
+  CL_Output_Ub = CL_Kp*CL_Error_Ib + CL_Integral_Ib;
+
+  // output level limiting and anti-windup
+  if(CL_Output_Ua > CL_OutputLimit){
+    CL_Integral_Ia -= CL_Output_Ua - CL_OutputLimit;
+    CL_Output_Ua = CL_OutputLimit;
+  } else if(CL_Output_Ua < -CL_OutputLimit) {
+    CL_Integral_Ia -= CL_Output_Ua + CL_OutputLimit;
+    CL_Output_Ua = -CL_OutputLimit;
+  }
+
+  if(CL_Output_Ub > CL_OutputLimit){
+    CL_Integral_Ib -= CL_Output_Ub - CL_OutputLimit;
+    CL_Output_Ub = CL_OutputLimit;
+  } else if(CL_Output_Ub < -CL_OutputLimit) {
+    CL_Integral_Ib -= CL_Output_Ub + CL_OutputLimit;
+    CL_Output_Ub = -CL_OutputLimit;
+  }
+
+  // output phase C chosen to make neutro point voltage zero
+  CL_Output_Uc = -CL_Output_Ua -CL_Output_Ub;
+
+  // PWM modulation
+  if(CL_Output_Ua<CL_Output_Ub){
+    if(CL_Output_Ua<CL_Output_Uc){
+      CL_OutputOffset = -CL_Output_Ua;
+    }
+  }else if(CL_Output_Ub<CL_Output_Uc){
+    CL_OutputOffset = -CL_Output_Ub;
+  }else{
+    CL_OutputOffset = -CL_Output_Uc;
+  }
+
+  CL_Output_Ua += CL_OutputOffset;
+  CL_Output_Ub += CL_OutputOffset;
+  CL_Output_Uc += CL_OutputOffset;
+
+}
