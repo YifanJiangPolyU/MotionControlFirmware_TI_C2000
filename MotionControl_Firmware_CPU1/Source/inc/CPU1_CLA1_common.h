@@ -73,6 +73,29 @@ extern uint16_t CL_OutputPWM_Ua;             // output PWM duty, phase A
 extern uint16_t CL_OutputPWM_Ub;             // output PWM duty, phase B
 extern uint16_t CL_OutputPWM_Uc;             // output PWM duty, phase C
 
+// commutation parameters
+extern float32_t CommutationAngle_Cos;        // commutation angle cosine
+extern float32_t CommutationAngle_Sin;        // commutation angle sine
+
+// position loop parameters
+extern float32_t PL_Setpoint_Pos;             // target position
+extern float32_t PL_Setpoint_Vel;             // profile velocity, for feed-forward only
+extern float32_t PL_Setpoint_Accel;           // profile acceleration, for feed-forward only
+extern float32_t PL_PosError;                 // position error
+extern float32_t PL_PosIntegral;              // position error integral term
+extern float32_t PL_Kp1;                      // position loop PID gains group 1
+extern float32_t PL_Ki1;
+extern float32_t PL_Kd1;
+extern float32_t PL_Kp2;                      // position loop PID gains group 2
+extern float32_t PL_Ki2;
+extern float32_t PL_Kd2;
+extern float32_t PL_Kp3;                      // position loop PID gains group 3
+extern float32_t PL_Ki3;
+extern float32_t PL_Kd3;
+extern float32_t PL_FF_Vel;                   // velocity feed-forward gain
+extern float32_t PL_FF_Accel;                 // acceleration feed-forward gain
+extern float32_t PL_OutputTorque;             // required torque
+
 
 extern uint16_t timeCounter;
 
