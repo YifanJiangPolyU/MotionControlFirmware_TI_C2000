@@ -45,7 +45,7 @@ Void taskFxn(UArg a0, UArg a1)
     Task_sleep(500);
 
     for(sss=0; sss<16; sss++){
-      SciaRegs.SCITXBUF.all ='k';
+      SciaRegs.SCITXBUF.all ='@';
     }
 
     i += 1;

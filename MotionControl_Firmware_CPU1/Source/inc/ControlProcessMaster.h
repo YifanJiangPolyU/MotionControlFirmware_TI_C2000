@@ -16,20 +16,4 @@
 #ifndef CONTROL_PROCESS_MASTER_H
 #define CONTROL_PROCESS_MASTER_H
 
-class ControlProcessMaster{
-
-  public:
-
-    enum ControlProcessMaster_STATES {
-      STATE_IDEL,
-      STATE_ENABLE,
-      STATE_CLSW,
-      STATE_PLSW,
-      STATE_POLARITY
-    };
-
-  private:
-    enum ControlProcessMaster_STATES m_state;
-};
-
 #endif

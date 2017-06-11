@@ -139,6 +139,25 @@ void GPIO_GroupInit(void){
   GPIO_SetupPinMux(42, GPIO_MUX_CPU1, 15);
   GPIO_SetupPinOptions(42, GPIO_OUTPUT, GPIO_ASYNC); // Tx
 
+  // PWM output pins
+  GPIO_SetupPinMux(6, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(6, GPIO_OUTPUT, GPIO_ASYNC);
+  GPIO_SetupPinMux(7, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(7, GPIO_OUTPUT, GPIO_ASYNC);
+  GPIO_SetupPinMux(8, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(8, GPIO_OUTPUT, GPIO_ASYNC);
+  GPIO_SetupPinMux(9, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(9, GPIO_OUTPUT, GPIO_ASYNC);
+  GPIO_SetupPinMux(10, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(10, GPIO_OUTPUT, GPIO_ASYNC);
+  GPIO_SetupPinMux(11, GPIO_MUX_CPU1, 1);
+  GPIO_SetupPinOptions(11, GPIO_OUTPUT, GPIO_ASYNC);
+  GpioCtrlRegs.GPAPUD.bit.GPIO6 = 1;
+  GpioCtrlRegs.GPAPUD.bit.GPIO7 = 1;
+  GpioCtrlRegs.GPAPUD.bit.GPIO8 = 1;
+  GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;
+  GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;
+  GpioCtrlRegs.GPAPUD.bit.GPIO11 = 1;
 }
 
 /**
@@ -283,6 +302,10 @@ void EPWM_GroupInit(void){
   EPwm1Regs.TBCTL.bit.PHSEN = 1;     // enable synchronization
   EPwm1Regs.TBCTL.bit.SYNCOSEL = 0;  // enable software forced sync
   EPwm1Regs.TBCTL.bit.CTRMODE = 3;   // freeze counter
+  // ADC triggering setting
+  EPwm1Regs.ETSEL.bit.SOCAEN = 0;    // Disable SOC on A group
+  EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = CMPA
+  EPwm1Regs.ETPS.bit.SOCAPRD = 1;    // Generate pulse on every event
 
   // EPWM4, up-down, 32 kHz
   EPwm4Regs.CMPA.bit.CMPA = 100;
@@ -292,6 +315,18 @@ void EPWM_GroupInit(void){
   EPwm4Regs.TBCTL.bit.SYNCOSEL = 0;
   EPwm4Regs.TBCTL.bit.CTRMODE = 3;
   EPwm4Regs.TBCTL.bit.PHSDIR = 1;    // count up after synchronization
+  // configure PWM output, so larger CMPA value correspondes to higher duty
+  // PWMA and PWMB are the inverse of one another
+  EPwm4Regs.AQCTLA.bit.CAU = AQ_CLEAR;  // clear PWMA on COMPA in up-count mode
+  EPwm4Regs.AQCTLA.bit.CAD = AQ_SET;    // set PWMA on COMPA in down-count mode
+  EPwm4Regs.AQCTLB.bit.CAU = AQ_CLEAR;  // inversion of PWMB takes place in DB module
+  EPwm4Regs.AQCTLB.bit.CAD = AQ_SET;
+  // PWM dead band
+  EPwm4Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;  // enable DB module output
+  EPwm4Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;       // active high complementary (invert PEMB)
+  EPwm4Regs.DBCTL.bit.IN_MODE = DBA_ALL;          // PWMA as delay source for both falling and rising edges
+  EPwm4Regs.DBRED.bit.DBRED = 12;                 // dead time 60ns (x12 sysclk)
+  EPwm4Regs.DBFED.bit.DBFED = 12;
 
   // set up EPWM4 sync source to EPWM1SYNCOUT
   // EPWM 5~6 sync signals are connected to EPWM4 internally
@@ -305,6 +340,15 @@ void EPWM_GroupInit(void){
   EPwm5Regs.TBCTL.bit.SYNCOSEL = 0;
   EPwm5Regs.TBCTL.bit.CTRMODE = 3;
   EPwm5Regs.TBCTL.bit.PHSDIR = 1;
+  EPwm5Regs.AQCTLA.bit.CAU = AQ_CLEAR;
+  EPwm5Regs.AQCTLA.bit.CAD = AQ_SET;
+  EPwm5Regs.AQCTLB.bit.CAU = AQ_CLEAR;
+  EPwm5Regs.AQCTLB.bit.CAD = AQ_SET;
+  EPwm5Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
+  EPwm5Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
+  EPwm5Regs.DBCTL.bit.IN_MODE = DBA_ALL;
+  EPwm5Regs.DBRED.bit.DBRED = 12;
+  EPwm5Regs.DBFED.bit.DBFED = 12;
 
   // EPWM6, up-down, 32 kHz
   EPwm6Regs.CMPA.bit.CMPA = 100;
@@ -314,20 +358,26 @@ void EPWM_GroupInit(void){
   EPwm6Regs.TBCTL.bit.SYNCOSEL = 0;
   EPwm6Regs.TBCTL.bit.CTRMODE = 3;
   EPwm6Regs.TBCTL.bit.PHSDIR = 1;
+  EPwm6Regs.AQCTLA.bit.CAU = AQ_CLEAR;
+  EPwm6Regs.AQCTLA.bit.CAD = AQ_SET;
+  EPwm6Regs.AQCTLB.bit.CAU = AQ_CLEAR;
+  EPwm6Regs.AQCTLB.bit.CAD = AQ_SET;
+  EPwm6Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;
+  EPwm6Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;
+  EPwm6Regs.DBCTL.bit.IN_MODE = DBA_ALL;
+  EPwm6Regs.DBRED.bit.DBRED = 12;
+  EPwm6Regs.DBFED.bit.DBFED = 12;
 
-  // EPWM1: event trigger for ADC conversion
-  EPwm1Regs.ETSEL.bit.SOCAEN = 0;    // Disable SOC on A group
-  EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = CMPA
-  EPwm1Regs.ETPS.bit.SOCAPRD = 1;    // Generate pulse on every event
-
+/*
   // EPWM4: trigger control process master
   //        and position loop
   EPwm4Regs.ETSEL.bit.INTEN = 1;   // enable interrupt
   EPwm4Regs.ETSEL.bit.INTSEL = 4;
   EPwm4Regs.ETPS.bit.INTPRD = 1;
+*/
 
 #ifdef DEBUG_CODE_PROFILING
-  // initialize EPWM2 for profiling
+  // initialize EPWM2 to measure code execution time
   EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP; // Count up
   EPwm2Regs.TBPRD = 0xFFFF; // Set timer period
   EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE; // Disable phase loading
