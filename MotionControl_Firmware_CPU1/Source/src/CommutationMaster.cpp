@@ -16,3 +16,8 @@
 */
 
 #include "CommutationMaster.h"
+
+__attribute__((ramfunc))
+void CommutationMaster::update(void){
+
+}
