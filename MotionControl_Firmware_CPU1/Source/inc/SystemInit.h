@@ -28,6 +28,7 @@ void UART_Init(void);
 void GPIO_GroupInit(void);
 void ADC_GroupInit(void);
 void EPWM_GroupInit(void);
+void EQEP_GroupInit(void);
 void CLA_ConfigClaMemory(void);
 void CLA_InitCpu1Cla1(void);
 

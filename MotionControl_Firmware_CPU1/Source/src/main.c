@@ -45,7 +45,7 @@ Void taskFxn(UArg a0, UArg a1)
     Task_sleep(500);
 
     for(sss=0; sss<16; sss++){
-      SciaRegs.SCITXBUF.all ='@';
+      SciaRegs.SCITXBUF.all ='q';
     }
 
     i += 1;
@@ -80,7 +80,7 @@ void main(void)
   GPIO_GroupInit();
   ADC_GroupInit();
   EPWM_GroupInit();
-
+  EQEP_GroupInit();
   UART_Init();
 
   // configure CLA

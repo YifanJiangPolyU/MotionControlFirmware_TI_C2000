@@ -158,6 +158,18 @@ void GPIO_GroupInit(void){
   GpioCtrlRegs.GPAPUD.bit.GPIO9 = 1;
   GpioCtrlRegs.GPAPUD.bit.GPIO10 = 1;
   GpioCtrlRegs.GPAPUD.bit.GPIO11 = 1;
+
+  // quadrature encoder interface pins (EQEP1)
+  GPIO_SetupPinMux(20, GPIO_MUX_CPU1, 1);               // A
+  GPIO_SetupPinOptions(20, GPIO_INPUT, GPIO_SYNC);
+  GPIO_SetupPinMux(21, GPIO_MUX_CPU1, 1);               // B
+  GPIO_SetupPinOptions(21, GPIO_INPUT, GPIO_SYNC);
+  GPIO_SetupPinMux(99, GPIO_MUX_CPU1, 5);               // index
+  GPIO_SetupPinOptions(99, GPIO_INPUT, GPIO_SYNC);
+  GpioCtrlRegs.GPAPUD.bit.GPIO20 = 1;
+  GpioCtrlRegs.GPAPUD.bit.GPIO21 = 1;
+  GpioCtrlRegs.GPDPUD.bit.GPIO99 = 1;
+
 }
 
 /**
@@ -389,6 +401,16 @@ void EPWM_GroupInit(void){
 
   CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
   EDIS;
+}
+
+/**
+ *  initialize EQEP, the quadrature encoder interface
+*/
+void EQEP_GroupInit(void){
+
+  EQep1Regs.QEPCTL.bit.FREE_SOFT=2;   // emulation does not effect counter
+  EQep1Regs.QEPCTL.bit.PCRM=0b01;     // counter reset at overflow or underflow
+  EQep1Regs.QEPCTL.bit.QPEN=1;        // EQEP enable
 }
 
 /**
