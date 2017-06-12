@@ -408,9 +408,11 @@ void EPWM_GroupInit(void){
 */
 void EQEP_GroupInit(void){
 
-  EQep1Regs.QEPCTL.bit.FREE_SOFT=2;   // emulation does not effect counter
-  EQep1Regs.QEPCTL.bit.PCRM=0b01;     // counter reset at overflow or underflow
-  EQep1Regs.QEPCTL.bit.QPEN=1;        // EQEP enable
+  EQep1Regs.QPOSMAX = 0xffffffff;       // max pos counter value
+  EQep1Regs.QPOSINIT = 0;               // pos counter initial value
+  EQep1Regs.QEPCTL.bit.FREE_SOFT = 2;   // emulation does not effect counter
+  EQep1Regs.QEPCTL.bit.PCRM = 0b01;     // counter reset at overflow or underflow
+  EQep1Regs.QEPCTL.bit.QPEN = 1;        // EQEP enable
 }
 
 /**
