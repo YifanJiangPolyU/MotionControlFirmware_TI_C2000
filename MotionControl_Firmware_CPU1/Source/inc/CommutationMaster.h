@@ -25,8 +25,8 @@ class CommutationMaster{
 
   public:
     CommutationMaster():
-      NPolePair(0),
-      CountPerRev(8000),
+      NPolePair(1),
+      CountPerRev(1024),
       HallSensorPattern(0b001),
       CommAnglePerCount(0.0f),
       CommAngle(0.0f),
@@ -36,7 +36,8 @@ class CommutationMaster{
 
     ~CommutationMaster(){};
 
-    void update(void);
+    void Update(int32_t PosCounter);
+    void UpdateCommResolution(void);
 
   private:
     int32_t PosCounter_new;           // position counter value

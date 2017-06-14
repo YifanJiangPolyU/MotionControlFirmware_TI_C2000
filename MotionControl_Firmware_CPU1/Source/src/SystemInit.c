@@ -339,6 +339,8 @@ void EPWM_GroupInit(void){
   EPwm4Regs.DBCTL.bit.IN_MODE = DBA_ALL;          // PWMA as delay source for both falling and rising edges
   EPwm4Regs.DBRED.bit.DBRED = 12;                 // dead time 60ns (x12 sysclk)
   EPwm4Regs.DBFED.bit.DBFED = 12;
+  EPwm4Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
+  EPwm4Regs.TBCTL.bit.CLKDIV = TB_DIV1;
 
   // set up EPWM4 sync source to EPWM1SYNCOUT
   // EPWM 5~6 sync signals are connected to EPWM4 internally
@@ -361,6 +363,8 @@ void EPWM_GroupInit(void){
   EPwm5Regs.DBCTL.bit.IN_MODE = DBA_ALL;
   EPwm5Regs.DBRED.bit.DBRED = 12;
   EPwm5Regs.DBFED.bit.DBFED = 12;
+  EPwm5Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
+  EPwm5Regs.TBCTL.bit.CLKDIV = TB_DIV1;
 
   // EPWM6, up-down, 32 kHz
   EPwm6Regs.CMPA.bit.CMPA = 100;
@@ -379,6 +383,8 @@ void EPWM_GroupInit(void){
   EPwm6Regs.DBCTL.bit.IN_MODE = DBA_ALL;
   EPwm6Regs.DBRED.bit.DBRED = 12;
   EPwm6Regs.DBFED.bit.DBFED = 12;
+  EPwm6Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
+  EPwm6Regs.TBCTL.bit.CLKDIV = TB_DIV1;
 
 /*
   // EPWM4: trigger control process master
