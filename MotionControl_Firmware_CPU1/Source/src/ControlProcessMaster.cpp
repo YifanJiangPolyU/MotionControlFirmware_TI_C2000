@@ -13,3 +13,23 @@
  */
 
 #include "ControlProcessMaster.h"
+
+#pragma DATA_SECTION("CPU1DataRAM")
+static ControlProcessMaster * This;
+
+void ControlProcessMaster::Update(void){
+  hehe += 1;
+}
+
+#pragma CODE_SECTION(".TI.ramfunc");
+extern "C" void CallControlProcessMaster(void){
+  This->Update();
+}
+
+void CreateControProcessMasterInstance(void){
+
+  #pragma DATA_SECTION("CPU1DataRAM")
+  static ControlProcessMaster ControProcessMasterInstance;
+
+  This = &ControProcessMasterInstance;
+}

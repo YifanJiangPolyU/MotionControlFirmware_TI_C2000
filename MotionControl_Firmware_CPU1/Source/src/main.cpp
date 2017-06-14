@@ -9,10 +9,9 @@
 #include "F28x_Project.h"
 #include "SystemInit.h"
 #include "CPU1_CLA1_common.h"
+#include "ControlProcessMaster.h"
 
-extern Mailbox_Handle ADC_fifo;
-
-void scia_xmit(int a)
+extern "C" void scia_xmit(int a)
 {
     while (SciaRegs.SCIFFTX.bit.TXFFST != 0) {}
     SciaRegs.SCITXBUF.all =a;
@@ -23,16 +22,8 @@ void scia_xmit(int a)
 /*
  *  ======== taskFxn ========
  */
- #ifndef __cplusplus
-     #ifdef __TI_COMPILER_VERSION__
-         #if __TI_COMPILER_VERSION__ >= 15009000
-             #pragma CODE_SECTION(taskFxn, ".TI.ramfunc");
-         #else
-             #pragma CODE_SECTION(taskFxn, "ramfuncs");
-         #endif
-     #endif
- #endif
-Void taskFxn(UArg a0, UArg a1)
+#pragma CODE_SECTION(".TI.ramfunc");
+extern "C" Void taskFxn(UArg a0, UArg a1)
 {
 
   for(;;){
@@ -51,12 +42,6 @@ Void taskFxn(UArg a0, UArg a1)
     i += 1;
   }
 }
-
-
-// Function Prototypes
-interrupt void adca1_isr(void);
-
-
 
 void main(void)
 {
@@ -90,6 +75,8 @@ void main(void)
   // configure interrupt
   Interrupt_Init();
 
+  CreateControProcessMasterInstance();
+
   EALLOW;
   // sync ePWM clock
   CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 1;
@@ -116,16 +103,6 @@ void main(void)
 
   //  start sys/bios
   BIOS_start();
-}
-
-
-// adca1_isr
-interrupt void adca1_isr(void)
-{
-    sensorSampleA = AdcaResultRegs.ADCRESULT0;
-
-    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //clear INT1 flag
-    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 }
 
 //

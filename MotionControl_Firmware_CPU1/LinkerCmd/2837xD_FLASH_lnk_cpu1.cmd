@@ -105,6 +105,8 @@ SECTIONS
 
    .scratchpad      : > RAMLS1,       PAGE = 0
 
+   CPU1DataRAM      : > RAMGS3,       PAGE = 0
+
 #ifdef __TI_COMPILER_VERSION__
 	#if __TI_COMPILER_VERSION__ >= 15009000
 	.TI.ramfunc : {} LOAD = FLASHD,

@@ -170,6 +170,8 @@ __interrupt void cla1Isr1 ()
 {
   // Acknowledge the end-of-task interrupt for task 1
   PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
+
+  CallControlProcessMaster();
 }
 
 // cla1Isr2 - CLA1 ISR 2

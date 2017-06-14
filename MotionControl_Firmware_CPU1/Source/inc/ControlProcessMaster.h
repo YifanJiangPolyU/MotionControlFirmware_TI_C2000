@@ -16,6 +16,8 @@
 #ifndef CONTROL_PROCESS_MASTER_H
 #define CONTROL_PROCESS_MASTER_H
 
+#include "stdint.h"
+
 class ControlProcessMaster{
 
   public:
@@ -28,8 +30,19 @@ class ControlProcessMaster{
       STATE_POLARITY
     };
 
+    ControlProcessMaster():
+      hehe(0)
+      {}
+
+    ~ControlProcessMaster(){}
+
+    void Update(void);
+
   private:
     enum ControlProcessMaster_STATES m_state;
+    uint16_t hehe;
 };
+
+void CreateControProcessMasterInstance(void);
 
 #endif
