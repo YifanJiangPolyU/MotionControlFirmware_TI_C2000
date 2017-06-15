@@ -23,15 +23,13 @@ static ControlProcessMaster * This;
 /**
  *  Constructor
  */
-ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
-                                           ObjectDictionary * ObjectDictionaryPtr ):
+ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr):
   _state(STATE_IDEL),
   hehe(0)
   {
     This = this;
 
     _CommutationMaster = CommutationMasterPtr;
-    _ObjectDictionary = ObjectDictionaryPtr;
   }
 
 /**

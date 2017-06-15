@@ -19,7 +19,6 @@
 #include "stdint.h"
 
 #include "CommutationMaster.h"
-#include "ObjectDictionary.h"
 
 class ControlProcessMaster{
 
@@ -33,8 +32,7 @@ class ControlProcessMaster{
       STATE_POLARITY
     };
 
-    ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
-                         ObjectDictionary * ObjectDictionaryPtr    );
+    ControlProcessMaster(CommutationMaster * CommutationMasterPtr);
 
     ~ControlProcessMaster(){}
 
@@ -44,7 +42,6 @@ class ControlProcessMaster{
     enum ControlProcessMaster_STATES _state;
 
     CommutationMaster * _CommutationMaster;
-    ObjectDictionary * _ObjectDictionary;
 
     uint16_t hehe;
 

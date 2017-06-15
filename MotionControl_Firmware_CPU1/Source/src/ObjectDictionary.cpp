@@ -15,16 +15,3 @@
 */
 
 #include "ObjectDictionary.h"
-
-/**
- *  initialize object dictionary
- */
-ObjectDictionary::ObjectDictionary()
-{
-  
-}
-
-
-ObjectDictionary::~ObjectDictionary(){
-
-}

@@ -14,13 +14,14 @@
 * but is also extendable to make use of higher-BW communication methods
 */
 
-#ifndef OBJECTDICTIONARY_H
-#define OBJECTDICTIONARY_H
+#ifndef OBJECT_DICTIONARY_H
+#define OBJECT_DICTIONARY_H
 
 #include "stdint.h"
 #include "F28x_Project.h"
 
-#define OBJDICTIONARY_SIZE 200
+#include "ControlProcessMaster.h"
+#include "CommutationMaster.h"
 
 typedef struct MessageType{
 
@@ -30,17 +31,27 @@ typedef struct MessageType{
   uint16_t Data0[2];
   uint16_t Data1[2];
 
-} msg;
+} haha;
 
 
 class ObjectDictionary{
 
 public:
-  ObjectDictionary();
-  ~ObjectDictionary();
+  ObjectDictionary(ControlProcessMaster * ControlProcessMasterPtr,
+                   CommutationMaster * CommutationMasterPtr)
+  {
+    _ControlProcessMaster = ControlProcessMasterPtr;
+    _CommutationMaster = CommutationMasterPtr;
+  }
+
+  ~ObjectDictionary(){}
+
+  void AccessEntry(void){};
 
 private:
 
+  ControlProcessMaster * _ControlProcessMaster;
+  CommutationMaster * _CommutationMaster;
 
 
 };

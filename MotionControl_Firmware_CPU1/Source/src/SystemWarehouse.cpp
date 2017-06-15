@@ -13,30 +13,14 @@
 * initialize statically and hold all objects
 */
 
-#ifndef SYSTEMWAREHOUSE_h
-#define SYSTEMWAREHOUSE_h
+#include "SystemWarehouse.h"
 
-#include "ControlProcessMaster.h"
-#include "CommutationMaster.h"
-#include "ObjectDictionary.h"
+/**
+ *  create globally unique object of CreateSystemWarehouseInstance
+ *    call this ONLY ONCE
+ */
+void CreateSystemWarehouseInstance(void){
 
-class SystemWarehouse{
-  public:
-    SystemWarehouse():
-      _ControlProcessMaster(&_CommutationMaster),
-      _CommutationMaster(),
-      _ObjectDictionary(&_ControlProcessMaster, &_CommutationMaster)
-      {}
-
-    ~SystemWarehouse(){}
-
-  private:
-    ControlProcessMaster _ControlProcessMaster;
-    CommutationMaster _CommutationMaster;
-    ObjectDictionary  _ObjectDictionary;
-};
-
-
-void CreateSystemWarehouseInstance(void);
-
-#endif
+  #pragma DATA_SECTION("CPU1DataRAM")
+  static SystemWarehouse SystemWarehouseInstance;
+}

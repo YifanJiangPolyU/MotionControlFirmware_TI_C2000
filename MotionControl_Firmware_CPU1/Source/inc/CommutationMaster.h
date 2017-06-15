@@ -20,7 +20,6 @@
 
 #include "stdint.h"
 #include "F28x_Project.h"
-#include "ObjectDictionary.h"
 
 class CommutationMaster{
 
