@@ -8,8 +8,23 @@
  ******************************************************************************/
 
 /*
-* class that controls the Inter Processor Communication (IPC), for CPU1
-* used to exchange information with CPU2 in a coordinated way
+* ObjectDictionary class
+*
+* implements object dictionary, which is compatible with CANOpen standard (CiA304)
+* but is also extendable to make use of higher-BW communication methods
 */
 
-#include "IPCMaster_CPU1.h"
+#include "ObjectDictionary.h"
+
+/**
+ *  initialize object dictionary
+ */
+ObjectDictionary::ObjectDictionary()
+{
+  
+}
+
+
+ObjectDictionary::~ObjectDictionary(){
+
+}

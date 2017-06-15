@@ -8,11 +8,42 @@
  ******************************************************************************/
 
 /*
-* class that controls the Inter Processor Communication (IPC), for CPU1
-* used to exchange information with CPU2 in a coordinated way
+* ObjectDictionary class
+*
+* implements object dictionary, which is compatible with CANOpen standard (CiA301)
+* but is also extendable to make use of higher-BW communication methods
 */
 
-#ifndef IPC_MASTER_CPU1_H
-#define IPC_MASTER_CPU1_H
+#ifndef OBJECTDICTIONARY_H
+#define OBJECTDICTIONARY_H
+
+#include "stdint.h"
+#include "F28x_Project.h"
+
+#define OBJDICTIONARY_SIZE 200
+
+typedef struct MessageType{
+
+  uint32_t Control       : 8;
+  uint32_t ObjIndex      : 16;
+  uint32_t ObjSubIndex   : 8;
+  uint16_t Data0[2];
+  uint16_t Data1[2];
+
+} msg;
+
+
+class ObjectDictionary{
+
+public:
+  ObjectDictionary();
+  ~ObjectDictionary();
+
+private:
+
+
+
+};
+
 
 #endif

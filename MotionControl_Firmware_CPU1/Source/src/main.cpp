@@ -10,6 +10,7 @@
 #include "SystemInit.h"
 #include "CPU1_CLA1_common.h"
 #include "ControlProcessMaster.h"
+#include "SystemWarehouse.h"
 
 extern "C" void scia_xmit(int a)
 {
@@ -58,7 +59,6 @@ void main(void)
   // EALLOW;
   // PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
   // EDIS;
-
   InitTempSensor(3.0);
 
   // Configure other peripherals
@@ -75,7 +75,7 @@ void main(void)
   // configure interrupt
   Interrupt_Init();
 
-  CreateControProcessMasterInstance();
+  CreateSystemWarehouseInstance();
 
   EALLOW;
   // sync ePWM clock
@@ -92,12 +92,9 @@ void main(void)
   // sync ePWM counter value
   CLA_Reset();
   CLA_CurrentLoopEnable = 1;
-  CL_Kp = 1;
-  CL_Ki = 1;
-  CL_OutputLimit = 3000;
-  CL_AdcScalingFactor = 1;
-  Cla1ForceTask8andWait();
   EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
+
+
 
   EDIS;
 

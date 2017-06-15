@@ -8,46 +8,42 @@
  ******************************************************************************/
 
 /*
-* Control process master class
+* system warehouse
 *
-* Contains the main state machine of CPU1, handling control processes
+* initialize statically and hold all objects
 */
 
-#ifndef CONTROL_PROCESS_MASTER_H
-#define CONTROL_PROCESS_MASTER_H
+#ifndef SYSTEMWAREHOUSE_h
+#define SYSTEMWAREHOUSE_h
 
-#include "stdint.h"
-
+#include "ControlProcessMaster.h"
 #include "CommutationMaster.h"
 #include "ObjectDictionary.h"
 
-class ControlProcessMaster{
-
+class SystemWarehouse{
   public:
+    SystemWarehouse():
+      _ControlProcessMaster(&_CommutationMaster, &_ObjectDictionary),
+      _CommutationMaster(),
+      _ObjectDictionary()
+      {}
 
-    enum ControlProcessMaster_STATES {
-      STATE_IDEL,
-      STATE_ENABLE,
-      STATE_CLSW,
-      STATE_PLSW,
-      STATE_POLARITY
-    };
-
-    ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
-                         ObjectDictionary * ObjectDictionaryPtr    );
-
-    ~ControlProcessMaster(){}
-
-    void Execute(void);
+    ~SystemWarehouse(){}
 
   private:
-    enum ControlProcessMaster_STATES _state;
-
-    CommutationMaster * _CommutationMaster;
-    ObjectDictionary * _ObjectDictionary;
-
-    uint16_t hehe;
-
+    ControlProcessMaster _ControlProcessMaster;
+    CommutationMaster _CommutationMaster;
+    ObjectDictionary  _ObjectDictionary;
 };
+
+/**
+ *  create globally unique object of CreateSystemWarehouseInstance
+ *    call this ONLY ONCE
+ */
+void CreateSystemWarehouseInstance(void){
+
+  #pragma DATA_SECTION("CPU1DataRAM")
+  static SystemWarehouse SystemWarehouseInstance;
+}
 
 #endif

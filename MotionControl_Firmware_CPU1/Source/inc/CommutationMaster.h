@@ -20,6 +20,7 @@
 
 #include "stdint.h"
 #include "F28x_Project.h"
+#include "ObjectDictionary.h"
 
 class CommutationMaster{
 
@@ -51,7 +52,6 @@ class CommutationMaster{
     float32_t CommAngle;              // electrical angle (rad)
     float32_t CommAngle_Cos;          // cosine of electrical angle
     float32_t CommAngle_Sin;          // sine of electrical angle
-
 
 };
 
