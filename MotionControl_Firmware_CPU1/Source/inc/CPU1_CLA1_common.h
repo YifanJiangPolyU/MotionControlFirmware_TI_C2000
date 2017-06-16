@@ -107,10 +107,7 @@ extern float32_t PL_OutputCurrent_Beta;       // cmd I beta
 
 extern uint16_t timeCounter;
 
-/**
- *   C API to call CallControlProcessMaster member function
- */
-void CallControlProcessMaster(void);
+
 
 // CLA C Tasks
 __interrupt void Cla1Task1();
@@ -125,16 +122,6 @@ __interrupt void Cla1Task8();
 void CLA_CurrentLoop();
 void CLA_PositionLoop();
 void CLA_Reset();
-
-// CLA interrupt handlers
-__interrupt void cla1Isr1();
-__interrupt void cla1Isr2();
-__interrupt void cla1Isr3();
-__interrupt void cla1Isr4();
-__interrupt void cla1Isr5();
-__interrupt void cla1Isr6();
-__interrupt void cla1Isr7();
-__interrupt void cla1Isr8();
 
 
 #ifdef __cplusplus

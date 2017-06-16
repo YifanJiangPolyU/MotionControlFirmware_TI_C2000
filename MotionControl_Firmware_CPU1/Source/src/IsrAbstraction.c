@@ -8,26 +8,21 @@
  ******************************************************************************/
 
 /**
- * handling traffic from UART
+ * implement all user-define ISR here
  */
 
-#ifndef UART_DRIVER_H
-#define UART_DRIVER_H
+ #include "IsrAbstraction.h"
 
-#include "stdint.h"
-#include "F28x_Project.h"
-#include "CiATypeDef.h"
+ __interrupt void ISR_SciaRx(){
+   CallUartDriverExecuteParsing();
+ }
 
-class UartDriver{
-  public:
-    UartDriver();
-    ~UartDriver();
 
-    void ExecuteParsing(void);
+ // cla1Isr1 - CLA1 ISR 1
+ __interrupt void cla1Isr1 ()
+ {
+   // Acknowledge the end-of-task interrupt for task 1
+   PieCtrlRegs.PIEACK.all = (PIEACK_GROUP1 | PIEACK_GROUP11);
 
-  private:
-    uint16_t RawDataBuffer[16];
-    CiA_Message MessageBuffer;
-};
-
-#endif
+   CallControlProcessMaster();
+ }

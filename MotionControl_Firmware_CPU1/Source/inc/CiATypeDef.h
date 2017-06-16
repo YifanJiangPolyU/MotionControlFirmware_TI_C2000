@@ -55,13 +55,13 @@ typedef struct CiA_NmtDataTypedef{
 
 } CiA_NmtData;
 
-typedef struct CiA_RawDataTypedef{
+typedef struct CiA_MessageTypedef{
 
   // Fits
   uint16_t CANID;
   uint16_t Data[8];
 
-} CiA_RawData;
+} CiA_Message;
 
 
 #endif

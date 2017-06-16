@@ -13,8 +13,7 @@
 */
 
 #include "SystemInit.h"
-#include "F28x_Project.h"
-#include "CPU1_CLA1_common.h"
+
 
 void SystemFullInit(void){
 
@@ -241,9 +240,9 @@ EDIS;
   SciaRegs.SCIFFRX.bit.RXFFIL = 0x10;    // generate fifo interrupt when it's full
 
   // interrupt settings
-  //PieVectTable.SCIA_RX_INT = &hehe;     // ISR
-  //PieCtrlRegs.PIEIER9.bit.INTx1 = 1;    // enable interrupt at PIE level
-  //IER |= (M_INT9 );                     // enable interrupt at IER level
+  PieVectTable.SCIA_RX_INT = &ISR_SciaRx;     // ISR
+  PieCtrlRegs.PIEIER9.bit.INTx1 = 1;          // enable interrupt at PIE level
+  IER |= (M_INT9 );                           // enable interrupt at IER level
 
 }
 
@@ -501,19 +500,12 @@ void CLA_InitCpu1Cla1(void){
   // Configure the vectors for the end-of-task interrupt for all
   // 8 tasks
   PieVectTable.CLA1_1_INT = &cla1Isr1;
-  PieVectTable.CLA1_2_INT = &cla1Isr2;
-  PieVectTable.CLA1_3_INT = &cla1Isr3;
-  PieVectTable.CLA1_4_INT = &cla1Isr4;
-  PieVectTable.CLA1_5_INT = &cla1Isr5;
-  PieVectTable.CLA1_6_INT = &cla1Isr6;
-  PieVectTable.CLA1_7_INT = &cla1Isr7;
-  PieVectTable.CLA1_8_INT = &cla1Isr8;
 
   // trigger source
   DmaClaSrcSelRegs.CLA1TASKSRCSEL1.bit.TASK1 = 1;
 
   // Enable CLA interrupts at the group and subgroup levels
-  PieCtrlRegs.PIEIER11.all = 0xFFFF;
+  PieCtrlRegs.PIEIER11.bit.INTx1 = 1;
   IER |= (M_INT11 );
 
   EDIS;

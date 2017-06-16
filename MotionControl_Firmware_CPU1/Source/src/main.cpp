@@ -12,12 +12,6 @@
 #include "ControlProcessMaster.h"
 #include "SystemWarehouse.h"
 
-extern "C" void scia_xmit(int a)
-{
-    while (SciaRegs.SCIFFTX.bit.TXFFST != 0) {}
-    SciaRegs.SCITXBUF.all =a;
-}
-
 
 
 /*
@@ -37,7 +31,7 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
     Task_sleep(500);
 
     for(sss=0; sss<16; sss++){
-      SciaRegs.SCITXBUF.all ='q';
+      SciaRegs.SCITXBUF.all ='k';
     }
 
     i += 1;
@@ -94,9 +88,10 @@ void main(void)
   CLA_CurrentLoopEnable = 1;
   EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 
-
-
   EDIS;
+
+  // turn off red LED
+  GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
 
   //  start sys/bios
   BIOS_start();

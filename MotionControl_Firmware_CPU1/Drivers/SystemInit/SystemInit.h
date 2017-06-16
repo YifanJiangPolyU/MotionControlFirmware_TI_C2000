@@ -18,6 +18,8 @@
 #define SYSTEM_INIT_H
 
 #include "F28x_Project.h"
+#include "IsrAbstraction.h"
+#include "CPU1_CLA1_common.h"
 
 #ifdef __cplusplus
   extern "C" {
