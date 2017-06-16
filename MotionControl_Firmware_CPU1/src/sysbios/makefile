@@ -4,7 +4,7 @@ XOPTS = -I"/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/" -Dxdc_t
 vpath % /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/
 vpath %.c /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/
 
-CCOPTS    = -v28 -DLARGE_MODEL=1 -ml --float_support=fpu32 -q -mo  --program_level_compile -o3 -g --optimize_with_debug  -Dti_sysbios_knl_Task_minimizeLatency__D=FALSE -Dti_sysbios_family_c28_Hwi_zeroLatencyIERMask__D=0U -Dti_sysbios_knl_Clock_stopCheckNext__D=FALSE
+CCOPTS    = -v28 -DLARGE_MODEL=1 -ml --float_support=fpu32 -q -mo  --program_level_compile -o3 -g --optimize_with_debug  -Dti_sysbios_family_c28_Hwi_zeroLatencyIERMask__D=0U -Dti_sysbios_knl_Task_minimizeLatency__D=FALSE -Dti_sysbios_knl_Clock_stopCheckNext__D=FALSE
 
 XDC_ROOT  = /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/
 
@@ -51,7 +51,7 @@ c28_TaskSupport_asm.obj: family/c28/TaskSupport_asm.s28 makefile
 	$(ASSEMBLE) --output_file=c28_TaskSupport_asm.obj
 
 
-BIOS.obj: BIOS.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c knl/Clock.c knl/Idle.c knl/Intrinsics.c knl/Event.c knl/Mailbox.c knl/Queue.c knl/Semaphore.c knl/Swi.c knl/Swi_andn.c knl/Task.c hal/Hwi.c hal/Hwi_stack.c hal/Hwi_startup.c gates/GateHwi.c gates/GateMutex.c family/c28/f2837x/TimestampProvider.c makefile
+BIOS.obj: BIOS.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c knl/Clock.c knl/Idle.c knl/Intrinsics.c knl/Queue.c knl/Semaphore.c knl/Swi.c knl/Swi_andn.c knl/Task.c hal/Hwi.c hal/Hwi_stack.c hal/Hwi_startup.c gates/GateHwi.c gates/GateMutex.c family/c28/f2837x/TimestampProvider.c makefile
 	@-$(call RM, $@)
 	@echo cl28FP $< ...
 	@$(CC) $(BIOS_DEFS) $(XOPTS) $(INCS) \
@@ -62,8 +62,6 @@ BIOS.obj: BIOS.c family/c28/Hwi.c family/c28/Timer.c family/c28/TaskSupport.c kn
 	$(BIOS_ROOT)knl/Clock.c \
 	$(BIOS_ROOT)knl/Idle.c \
 	$(BIOS_ROOT)knl/Intrinsics.c \
-	$(BIOS_ROOT)knl/Event.c \
-	$(BIOS_ROOT)knl/Mailbox.c \
 	$(BIOS_ROOT)knl/Queue.c \
 	$(BIOS_ROOT)knl/Semaphore.c \
 	$(BIOS_ROOT)knl/Swi.c \

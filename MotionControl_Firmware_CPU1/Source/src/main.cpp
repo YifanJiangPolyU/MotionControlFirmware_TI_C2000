@@ -7,7 +7,7 @@
 
 #include "stdint.h"
 #include "F28x_Project.h"
-#include "SystemInit.h"
+#include "Drivers/SystemInit/SystemInit.h"
 #include "CPU1_CLA1_common.h"
 #include "ControlProcessMaster.h"
 #include "SystemWarehouse.h"

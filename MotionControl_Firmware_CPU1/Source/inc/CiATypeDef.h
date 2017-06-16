@@ -8,12 +8,13 @@
  ******************************************************************************/
 
 /*
-* communication interface
-* collectively handle all communication traffic
+* define CANOpen CiA data types
 */
 
-#ifndef COMMUNICATION_INTERFACE_H
-#define COMMUNICATION_INTERFACE_H
+#ifndef CIA_TYPEDEF_H
+#define CIA_TYPEDEF_H
+
+#include "stdint.h"
 
 /**
  *  define CANOpen SDO data structure
@@ -43,13 +44,24 @@ typedef struct CiA_PdoDataTypedef{
 
 } CiA_PdoData;
 
+/**
+ *  define CANOpen NMT data structure
+ */
+typedef struct CiA_NmtDataTypedef{
 
-class CommunicationInterface{
+  // CANOpen NMT data
+  uint16_t State  : 8;
+  uint16_t NodeID : 8;
 
-  public:
+} CiA_NmtData;
 
-  private:
+typedef struct CiA_RawDataTypedef{
 
-}
+  // Fits
+  uint16_t CANID;
+  uint16_t Data[8];
+
+} CiA_RawData;
+
 
 #endif

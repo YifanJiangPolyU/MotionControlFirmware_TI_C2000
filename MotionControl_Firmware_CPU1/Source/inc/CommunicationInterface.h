@@ -8,38 +8,33 @@
  ******************************************************************************/
 
 /*
-* system warehouse
-*
-* initialize statically and hold all objects
+* communication interface
+* collectively handle all communication traffic
 */
 
-#ifndef SYSTEMWAREHOUSE_h
-#define SYSTEMWAREHOUSE_h
+#ifndef COMMUNICATION_INTERFACE_H
+#define COMMUNICATION_INTERFACE_H
 
+#include "CiATypeDef.h"
 #include "ControlProcessMaster.h"
-#include "CommutationMaster.h"
-#include "CommunicationInterface.h"
 #include "ObjectDictionary.h"
 
-class SystemWarehouse{
-  public:
-    SystemWarehouse():
-      _ControlProcessMaster(&_CommutationMaster),
-      _CommutationMaster(),
-      _CommunicationInterface(&_ControlProcessMaster, &_ObjectDictionary),
-      _ObjectDictionary(&_ControlProcessMaster, &_CommutationMaster)
-      {}
+class CommunicationInterface{
 
-    ~SystemWarehouse(){}
+  public:
+    CommunicationInterface(ControlProcessMaster * ControlProcessMasterPtr,
+                           ObjectDictionary * ObjectDictionaryPtr)
+    {
+      _ControlProcessMaster = ControlProcessMasterPtr;
+      _ObjectDictionary = ObjectDictionaryPtr;
+    }
+
+    ~CommunicationInterface(){}
 
   private:
-    ControlProcessMaster _ControlProcessMaster;
-    CommutationMaster _CommutationMaster;
-    CommunicationInterface _CommunicationInterface;
-    ObjectDictionary  _ObjectDictionary;
+    ObjectDictionary * _ObjectDictionary;
+    ControlProcessMaster * _ControlProcessMaster;
+
 };
-
-
-void CreateSystemWarehouseInstance(void);
 
 #endif

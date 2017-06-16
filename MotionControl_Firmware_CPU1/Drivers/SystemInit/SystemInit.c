@@ -182,12 +182,12 @@ void Interrupt_Init(void){
   IFR = 0x0000;
 
   // enable interrupts on PIE side
-  // PieCtrlRegs.PIEIER1.bit.INTx1 = 1;  // INT1.1, ADCA1
+  // PieCtrlRegs.PIEIER11 are CLA end-of-task interrupts
   PieCtrlRegs.PIEIER11.all = 0xFFFF;
 
 
   // enable interrupts on CPU side
-  //IER |= M_INT1; //Enable group 1 interrupts
+  //IER |= M_INT11; //Enable group 11 interrupts
   IER |= (M_INT11 ); // CLA end-of-task interrupt
 
   EINT;  // Enable Global interrupt INTM
@@ -222,8 +222,8 @@ EDIS;
   SciaRegs.SCICTL1.bit.RXENA = 1;         // enable Rx
 
   SciaRegs.SCICTL2.all = 0x0000;
-  SciaRegs.SCICTL2.bit.TXINTENA = 1;      // enable Tx buffer empty interrupt
-  SciaRegs.SCICTL2.bit.RXBKINTENA = 1;    // enable Rx buffer full interrupt
+  SciaRegs.SCICTL2.bit.TXINTENA = 0;      // disable Tx buffer empty interrupt
+  SciaRegs.SCICTL2.bit.RXBKINTENA = 0;    // disable Rx break interrupt
 
   // baud rate: 2Mbps (2.0833Mpbs)
   // baud rate = LSPCLK/8/(SCIBAUD＋１)
@@ -232,9 +232,19 @@ EDIS;
 
   SciaRegs.SCICTL1.bit.SWRESET = 1;
 
+  // initialize these registers
   SciaRegs.SCIFFTX.all = 0xE040;
   SciaRegs.SCIFFRX.all = 0x2044;
   SciaRegs.SCIFFCT.all = 0x0;
+
+  SciaRegs.SCIFFRX.bit.RXFFIENA = 1;    // enable SCI fifo interrupt
+  SciaRegs.SCIFFRX.bit.RXFFIL = 0x10;    // generate fifo interrupt when it's full
+
+  // interrupt settings
+  //PieVectTable.SCIA_RX_INT = &hehe;     // ISR
+  //PieCtrlRegs.PIEIER9.bit.INTx1 = 1;    // enable interrupt at PIE level
+  //IER |= (M_INT9 );                     // enable interrupt at IER level
+
 }
 
 /**
