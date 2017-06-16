@@ -23,17 +23,6 @@
 #include "ControlProcessMaster.h"
 #include "CommutationMaster.h"
 
-typedef struct MessageType{
-
-  uint32_t Control       : 8;
-  uint32_t ObjIndex      : 16;
-  uint32_t ObjSubIndex   : 8;
-  uint16_t Data0[2];
-  uint16_t Data1[2];
-
-} haha;
-
-
 class ObjectDictionary{
 
 public:
