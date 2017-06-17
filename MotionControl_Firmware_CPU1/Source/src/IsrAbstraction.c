@@ -14,6 +14,8 @@
  #include "IsrAbstraction.h"
 
  __interrupt void ISR_SciaRx(){
+   PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
+   SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;
    CallUartDriverExecuteParsing();
  }
 

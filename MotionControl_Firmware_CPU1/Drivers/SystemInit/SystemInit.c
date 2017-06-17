@@ -240,10 +240,11 @@ EDIS;
   SciaRegs.SCIFFRX.bit.RXFFIL = 0x10;    // generate fifo interrupt when it's full
 
   // interrupt settings
+  EALLOW;
   PieVectTable.SCIA_RX_INT = &ISR_SciaRx;     // ISR
   PieCtrlRegs.PIEIER9.bit.INTx1 = 1;          // enable interrupt at PIE level
   IER |= (M_INT9 );                           // enable interrupt at IER level
-
+  EDIS;
 }
 
 /**
