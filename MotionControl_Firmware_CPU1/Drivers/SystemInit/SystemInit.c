@@ -239,6 +239,9 @@ EDIS;
   SciaRegs.SCIFFRX.bit.RXFFIENA = 1;    // enable SCI fifo interrupt
   SciaRegs.SCIFFRX.bit.RXFFIL = 0x10;    // generate fifo interrupt when it's full
 
+  SciaRegs.SCIFFTX.bit.TXFIFORESET = 1;
+   SciaRegs.SCIFFRX.bit.RXFIFORESET = 1;
+
   // interrupt settings
   EALLOW;
   PieVectTable.SCIA_RX_INT = &ISR_SciaRx;     // ISR
