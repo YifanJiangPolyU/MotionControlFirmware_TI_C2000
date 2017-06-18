@@ -28,7 +28,7 @@ typedef struct CiA_SdoDataTypedef{
   // CANOpen SDO data + extended data
   // CAN PHY: use first 4 bytes only
   // EtherCAT and UART: use all bytes
-  uint32_t Data[3];
+  uint16_t Data[4];
 
 } CiA_SdoData;
 
@@ -40,7 +40,7 @@ typedef struct CiA_PdoDataTypedef{
   // CANOpen PDO data + extended data
   // CAN PHY: use first 8 bytes only
   // EtherCAT and UART: use all bytes
-  uint32_t Data[4];
+  uint16_t Data[8];
 
 } CiA_PdoData;
 
@@ -57,9 +57,9 @@ typedef struct CiA_NmtDataTypedef{
 
 typedef struct CiA_MessageTypedef{
 
-  // Fits
   uint16_t CANID;
-  uint16_t Data[8];
+  uint16_t RTR;
+  uint16_t Data[6];
 
 } CiA_Message;
 

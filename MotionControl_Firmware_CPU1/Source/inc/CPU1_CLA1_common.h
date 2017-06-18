@@ -27,15 +27,15 @@ extern "C" {
 #define DEBUG_CODE_PROFILING
 
 #ifdef DEBUG_CODE_PROFILING
-    #define READ_CLOCK(X) __meallow();\
+    #define READ_CLOCK(X) __eallow();\
                       EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE;\
                       X = EPwm1Regs.TBCTR;\
-                      __medis();
-    #define RESTART_CLOCK __meallow();\
+                      __edis();
+    #define RESTART_CLOCK __eallow();\
                       EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE;\
                       EPwm2Regs.TBCTR = 0;\
                       EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP;\
-                      __medis();
+                      __edis();
 #endif
 
 

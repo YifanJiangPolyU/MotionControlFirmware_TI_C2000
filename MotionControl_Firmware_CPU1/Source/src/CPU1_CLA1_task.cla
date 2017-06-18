@@ -16,8 +16,6 @@
 
 __interrupt void Cla1Task1 ( void )
 {
-  // count CLA execution time
-  RESTART_CLOCK;
 
   Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 0;
 
@@ -83,8 +81,6 @@ __interrupt void Cla1Task1 ( void )
   } else {
     CLA_CycleCounter += 1;
   }
-
-  READ_CLOCK(timeCounter);
 
   // put it here for debug purpose
   if(CLA_CycleCounter==1){
