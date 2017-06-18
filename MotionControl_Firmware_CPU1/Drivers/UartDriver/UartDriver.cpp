@@ -62,16 +62,37 @@ void UartDriver::ExecuteParsing(void){
     __byte_uint16_t(RawDataBuffer[0], 11) = SciaRegs.SCIRXBUF.bit.SAR;
     __byte_uint16_t(RawDataBuffer[0], 12) = SciaRegs.SCIRXBUF.bit.SAR;
     __byte_uint16_t(RawDataBuffer[0], 13) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 14) = SciaRegs.SCIRXBUF.bit.SAR;
     __byte_uint16_t(SOF_EOF, 1) = SciaRegs.SCIRXBUF.bit.SAR;
 
     // simple checking to ensure we've got a complete frame
     if( (__byte_uint16_t(SOF_EOF, 0) == SOF_PATTERN) &&
         (__byte_uint16_t(SOF_EOF, 1) == EOF_PATTERN) ){
 
+          MessageBuffer[MessageBuffer_WriteIdx].CANID = RawDataBuffer[0];
+          memcpy(&(MessageBuffer[MessageBuffer_WriteIdx].Data[0]),
+                 (uint16_t*)&(RawDataBuffer[1]), 6*sizeof(uint16_t));
+
+          if(MessageBuffer_WriteIdx==MSG_BUFFER_SIZE){
+            MessageBuffer_WriteIdx = 0;
+          } else {
+            MessageBuffer_WriteIdx += 1;
+          }
+
+          if(MessageBuffer_Level==MSG_BUFFER_SIZE){
+            if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE){
+              MessageBuffer_ReadIdx = 0;
+            } else {
+              MessageBuffer_ReadIdx += 1;
+            }
+          } else {
+            MessageBuffer_Level += 1;
+          }
+
         }
 
   }
+
+  SOF_EOF = 0;
 
 }
 
@@ -110,7 +131,20 @@ void UartDriver::SendMessage(CiA_Message * msg){
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 void UartDriver::GetMessage(CiA_Message * buffer){
+  DINT;
+    if(MessageBuffer_Level>0){
+      memcpy( buffer, &(MessageBuffer[MessageBuffer_ReadIdx]), sizeof(CiA_Message) );
+      MessageBuffer_Level -= 1;
+    }
 
+    if(MessageBuffer_Level>0){
+      if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE){
+        MessageBuffer_ReadIdx = 0;
+      } else {
+        MessageBuffer_ReadIdx += 1;
+      }
+    }
+  EINT;
 }
 
 /**

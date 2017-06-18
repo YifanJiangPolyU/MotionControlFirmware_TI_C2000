@@ -28,7 +28,6 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
   hehe(0)
   {
     This = this;
-
     _CommutationMaster = CommutationMasterPtr;
   }
 

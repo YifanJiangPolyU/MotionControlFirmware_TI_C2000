@@ -39,7 +39,7 @@ class UartDriver{
   private:
     uint16_t SOF_EOF;
     uint16_t RawDataBuffer[7];
-    CiA_Message MessageBuffer[MSG_BUFFER_SIZE+1];
+    CiA_Message MessageBuffer[MSG_BUFFER_SIZE];
 
     uint16_t MessageBuffer_ReadIdx;
     uint16_t MessageBuffer_WriteIdx;
