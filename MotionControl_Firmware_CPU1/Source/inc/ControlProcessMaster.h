@@ -19,6 +19,7 @@
 #include "stdint.h"
 
 #include "CommutationMaster.h"
+#include "CommunicationInterface.h"
 
 class ControlProcessMaster{
 
@@ -32,7 +33,8 @@ class ControlProcessMaster{
       STATE_POLARITY
     };
 
-    ControlProcessMaster(CommutationMaster * CommutationMasterPtr);
+    ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
+                         CommunicationInterface * CommunicationInterfacePtr);
 
     ~ControlProcessMaster(){}
 
@@ -42,6 +44,7 @@ class ControlProcessMaster{
     enum ControlProcessMaster_STATES _state;
 
     CommutationMaster * _CommutationMaster;
+    CommunicationInterface * _CommunicationInterface;
 
     uint16_t hehe;
 

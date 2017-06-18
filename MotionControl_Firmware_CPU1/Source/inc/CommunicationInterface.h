@@ -16,16 +16,13 @@
 #define COMMUNICATION_INTERFACE_H
 
 #include "CiATypeDef.h"
-#include "ControlProcessMaster.h"
 #include "ObjectDictionary.h"
 
 class CommunicationInterface{
 
   public:
-    CommunicationInterface(ControlProcessMaster * ControlProcessMasterPtr,
-                           ObjectDictionary * ObjectDictionaryPtr)
+    CommunicationInterface(ObjectDictionary * ObjectDictionaryPtr)
     {
-      _ControlProcessMaster = ControlProcessMasterPtr;
       _ObjectDictionary = ObjectDictionaryPtr;
     }
 
@@ -33,7 +30,6 @@ class CommunicationInterface{
 
   private:
     ObjectDictionary * _ObjectDictionary;
-    ControlProcessMaster * _ControlProcessMaster;
 
 };
 

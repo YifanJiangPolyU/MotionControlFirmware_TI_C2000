@@ -20,16 +20,13 @@
 #include "stdint.h"
 #include "F28x_Project.h"
 
-#include "ControlProcessMaster.h"
 #include "CommutationMaster.h"
 
 class ObjectDictionary{
 
 public:
-  ObjectDictionary(ControlProcessMaster * ControlProcessMasterPtr,
-                   CommutationMaster * CommutationMasterPtr)
+  ObjectDictionary(CommutationMaster * CommutationMasterPtr)
   {
-    _ControlProcessMaster = ControlProcessMasterPtr;
     _CommutationMaster = CommutationMasterPtr;
   }
 
@@ -39,7 +36,6 @@ public:
 
 private:
 
-  ControlProcessMaster * _ControlProcessMaster;
   CommutationMaster * _CommutationMaster;
 
 

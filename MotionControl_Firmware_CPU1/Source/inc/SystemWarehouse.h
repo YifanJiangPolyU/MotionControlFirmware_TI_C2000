@@ -24,10 +24,10 @@
 class SystemWarehouse{
   public:
     SystemWarehouse():
-      _ControlProcessMaster(&_CommutationMaster),
+      _ControlProcessMaster(&_CommutationMaster, &_CommunicationInterface),
       _CommutationMaster(),
-      _CommunicationInterface(&_ControlProcessMaster, &_ObjectDictionary),
-      _ObjectDictionary(&_ControlProcessMaster, &_CommutationMaster)
+      _CommunicationInterface(&_ObjectDictionary),
+      _ObjectDictionary(&_CommutationMaster)
       {}
 
     ~SystemWarehouse(){}

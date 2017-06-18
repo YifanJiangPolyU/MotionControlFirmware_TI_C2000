@@ -23,12 +23,14 @@ static ControlProcessMaster * This;
 /**
  *  Constructor
  */
-ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr):
+ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
+                                           CommunicationInterface * CommunicationInterfacePtr):
   _state(STATE_IDEL),
   hehe(0)
   {
     This = this;
     _CommutationMaster = CommutationMasterPtr;
+    _CommunicationInterface = CommunicationInterfacePtr;
   }
 
 /**
