@@ -12,34 +12,34 @@
 * collectively handle all communication traffic
 */
 
-#ifndef COMMUNICATION_INTERFACE_H
-#define COMMUNICATION_INTERFACE_H
+#include "CommunicationInterface.h"
 
-#include "CiATypeDef.h"
-#include "ObjectDictionary.h"
-#include "Drivers/UartDriver/UartDriver.h"
 
-class CommunicationInterface{
+/**
+ *  transmits message(s) over communication interface
+ */
+void CommunicationInterface::ExecuteTransmission(void){
 
-  public:
-    CommunicationInterface(UartDriver * UartDriverPtr,
-                           ObjectDictionary * ObjectDictionaryPtr)
-    {
-      _UartDriver = UartDriverPtr;
-      _ObjectDictionary = ObjectDictionaryPtr;
+}
+
+/**
+ *  check and process messages received over communication interface
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+void CommunicationInterface::ExecuteReception(void){
+
+  if((_UartDriver->GetBufferLevel()) > 0){
+    _UartDriver->GetMessage(&msg);
+
+    if(msg.CANID == CANID_NMT){
+      // handle CANOpen NMT protocol
+    } else if((msg.CANID-NODE_ID)==CANID_SDO_RX) {
+      // handle CANOpen SDO
+    } else if((msg.CANID-NODE_ID)==CANID_PDO_RX) {
+      // handle CANOpen PDO
+    } else {
+
     }
+  }
 
-    ~CommunicationInterface(){}
-
-    void ExecuteTransmission(void);
-    void ExecuteReception(void);
-
-  private:
-    UartDriver * _UartDriver;
-    ObjectDictionary * _ObjectDictionary;
-
-    CiA_Message msg;
-
-};
-
-#endif
+}

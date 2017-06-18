@@ -19,6 +19,7 @@ UartDriver::UartDriver(){
   This = this;
   MessageBuffer_ReadIdx = 0;
   MessageBuffer_WriteIdx = 0;
+  MessageBuffer_Level = 0;
 }
 
 UartDriver::~UartDriver(){
@@ -72,14 +73,14 @@ void UartDriver::ExecuteParsing(void){
           memcpy(&(MessageBuffer[MessageBuffer_WriteIdx].Data[0]),
                  (uint16_t*)&(RawDataBuffer[1]), 6*sizeof(uint16_t));
 
-          if(MessageBuffer_WriteIdx==MSG_BUFFER_SIZE){
+          if(MessageBuffer_WriteIdx==MSG_BUFFER_SIZE_MINUS_ONE){
             MessageBuffer_WriteIdx = 0;
           } else {
             MessageBuffer_WriteIdx += 1;
           }
 
           if(MessageBuffer_Level==MSG_BUFFER_SIZE){
-            if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE){
+            if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE_MINUS_ONE){
               MessageBuffer_ReadIdx = 0;
             } else {
               MessageBuffer_ReadIdx += 1;
@@ -138,7 +139,7 @@ void UartDriver::GetMessage(CiA_Message * buffer){
     }
 
     if(MessageBuffer_Level>0){
-      if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE){
+      if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE_MINUS_ONE){
         MessageBuffer_ReadIdx = 0;
       } else {
         MessageBuffer_ReadIdx += 1;

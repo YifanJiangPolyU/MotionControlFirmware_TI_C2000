@@ -24,7 +24,8 @@
 #define SOF_PATTERN 0xEF
 #define EOF_PATTERN 0xDB
 
-#define MSG_BUFFER_SIZE 5
+#define MSG_BUFFER_SIZE            5
+#define MSG_BUFFER_SIZE_MINUS_ONE  4
 
 class UartDriver{
   public:
@@ -34,7 +35,7 @@ class UartDriver{
     void ExecuteParsing(void);
     void SendMessage(CiA_Message * msg);
     void GetMessage(CiA_Message * msg);
-    inline uint16_t GetBufferLevel();
+    uint16_t GetBufferLevel();
 
   private:
     uint16_t SOF_EOF;

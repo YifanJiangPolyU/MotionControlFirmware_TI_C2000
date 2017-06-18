@@ -16,6 +16,14 @@
 
 #include "stdint.h"
 
+#define CANID_NMT       0x000
+#define CANID_SDO_TX    0x580
+#define CANID_SDO_RX    0x600
+#define CANID_PDO_TX    0x180
+#define CANID_PDO_RX    0x200
+
+#define NODE_ID         0x003
+
 /**
  *  define CANOpen SDO data structure
  */
