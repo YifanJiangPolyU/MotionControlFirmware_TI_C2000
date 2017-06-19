@@ -21,10 +21,6 @@
   *   C API to call C++ member functions
   */
 void CallControlProcessMaster(void);
-void CallUartDriverExecuteParsing(void);
-
-// SCIA Rx fifo full interrupt handler
- __interrupt void ISR_SciaRx();
 
 
  // CLA interrupt handlers

@@ -13,15 +13,6 @@
 
  #include "IsrAbstraction.h"
 
- __interrupt void ISR_SciaRx()
- {
-   CallUartDriverExecuteParsing();
-
-   SciaRegs.SCIFFRX.bit.RXFFINTCLR = 1;
-   PieCtrlRegs.PIEACK.all |= PIEACK_GROUP9;
- }
-
-
  // cla1Isr1 - CLA1 ISR 1
  __interrupt void cla1Isr1 ()
  {

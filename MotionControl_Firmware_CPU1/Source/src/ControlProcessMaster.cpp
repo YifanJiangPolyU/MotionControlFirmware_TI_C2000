@@ -47,4 +47,6 @@ extern "C" void CallControlProcessMaster(void){
  #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::Execute(void){
     hehe = 123;
+
+    _CommunicationInterface->ExecuteReception();
 }

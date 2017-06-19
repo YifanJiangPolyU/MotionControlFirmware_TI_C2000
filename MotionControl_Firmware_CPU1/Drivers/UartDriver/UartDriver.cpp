@@ -13,13 +13,11 @@
 
 #include "UartDriver.h"
 
-static UartDriver * This;
 
-UartDriver::UartDriver(){
-  This = this;
-  MessageBuffer_ReadIdx = 0;
-  MessageBuffer_WriteIdx = 0;
-  MessageBuffer_Level = 0;
+UartDriver::UartDriver():
+  _state(STATE_IDEL)
+{
+
 }
 
 UartDriver::~UartDriver(){
@@ -27,74 +25,68 @@ UartDriver::~UartDriver(){
 }
 
 /**
- *  C warper to call UartDriver from ISR
- */
-#pragma CODE_SECTION(".TI.ramfunc");
-extern "C" void CallUartDriverExecuteParsing(void){
-  This->ExecuteParsing();
-}
-
-/**
  *  extract CiA message from UART data
- *  data pkg has to be 16-byte long, and aligned to
- *  the 16-byte SCI Rx FIFO.
+ *  must be called periodically, at 32kHz
+ *
+ * @param msg   buffer to hold extracted message
+ * @retval      1 if new message is ready, 0 otherwise
  */
 #pragma CODE_SECTION(".TI.ramfunc");
-void UartDriver::ExecuteParsing(void){
+uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
 
-  // check for error
-  if(SciaRegs.SCIRXST.bit.RXERROR){
-    // turn on red LED to indicate error
-    GpioDataRegs.GPBDAT.bit.GPIO34 = 0;
+  uint16_t fifo_counter = SciaRegs.SCIFFRX.bit.RXFFST;
+  uint16_t data_counter = 0;
+  uint16_t data_length = 0;
+  uint16_t tmp = 0;
+  uint16_t retval = 0;
 
-  } else {
-    __byte_uint16_t(SOF_EOF, 0) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 0) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 1) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 2) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 3) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 4) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 5) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 6) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 7) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 8) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 9) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 10) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 11) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 12) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(RawDataBuffer[0], 13) = SciaRegs.SCIRXBUF.bit.SAR;
-    __byte_uint16_t(SOF_EOF, 1) = SciaRegs.SCIRXBUF.bit.SAR;
-
-    // simple checking to ensure we've got a complete frame
-    if( (__byte_uint16_t(SOF_EOF, 0) == SOF_PATTERN) &&
-        (__byte_uint16_t(SOF_EOF, 1) == EOF_PATTERN) ){
-
-          MessageBuffer[MessageBuffer_WriteIdx].CANID = RawDataBuffer[0];
-          memcpy(&(MessageBuffer[MessageBuffer_WriteIdx].Data[0]),
-                 (uint16_t*)&(RawDataBuffer[1]), 6*sizeof(uint16_t));
-
-          if(MessageBuffer_WriteIdx==MSG_BUFFER_SIZE_MINUS_ONE){
-            MessageBuffer_WriteIdx = 0;
-          } else {
-            MessageBuffer_WriteIdx += 1;
+  if(fifo_counter>0){
+    for( ; fifo_counter>0; fifo_counter--){
+      tmp = SciaRegs.SCIRXBUF.bit.SAR;
+      switch (_state) {
+        case STATE_IDEL:
+          if(tmp == SOF_PATTERN){
+            _state = STATE_CANIDH;
           }
-
-          if(MessageBuffer_Level==MSG_BUFFER_SIZE){
-            if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE_MINUS_ONE){
-              MessageBuffer_ReadIdx = 0;
-            } else {
-              MessageBuffer_ReadIdx += 1;
-            }
+          break;
+        case STATE_CANIDH:
+          __byte_uint16_t(msg->CANID, 1) = tmp;
+          _state = STATE_CANIDL;
+          break;
+        case STATE_CANIDL:
+          __byte_uint16_t(msg->CANID, 0) = tmp;
+          _state = STATE_LEN;
+          break;
+        case STATE_LEN:
+          if(tmp>0 && tmp<11){
+            data_length = tmp;
+            data_counter = 0;
+            msg->Length = tmp;
+            _state = STATE_DATA;
           } else {
-            MessageBuffer_Level += 1;
+            //data length error
+            _state = STATE_IDEL;
           }
-
-        }
-
+          break;
+        case STATE_DATA:
+          __byte_uint16_t(msg->Data, data_counter++) = tmp;
+          if(data_counter == data_length){
+            _state = STATE_EOF;
+          }
+          break;
+        case STATE_EOF:
+          if(tmp == EOF_PATTERN){
+            retval = 1;
+          } else {
+            // frame error
+          }
+          _state = STATE_IDEL;
+          break;
+      }
+    }
   }
 
-  SOF_EOF = 0;
-
+  return retval;
 }
 
 /**
@@ -123,35 +115,4 @@ void UartDriver::SendMessage(CiA_Message * msg){
   SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 11);
 
   SciaRegs.SCITXBUF.all = EOF_PATTERN;
-}
-
-/**
- *  get the next message
- *  @param buffer: buffer to hold message
- *                 doesn't change anything if no new message available
- */
-#pragma CODE_SECTION(".TI.ramfunc");
-void UartDriver::GetMessage(CiA_Message * buffer){
-  DINT;
-    if(MessageBuffer_Level>0){
-      memcpy( buffer, &(MessageBuffer[MessageBuffer_ReadIdx]), sizeof(CiA_Message) );
-      MessageBuffer_Level -= 1;
-    }
-
-    if(MessageBuffer_Level>0){
-      if(MessageBuffer_ReadIdx==MSG_BUFFER_SIZE_MINUS_ONE){
-        MessageBuffer_ReadIdx = 0;
-      } else {
-        MessageBuffer_ReadIdx += 1;
-      }
-    }
-  EINT;
-}
-
-/**
- *  get the number of messages in buffer
- *  @retval number of messages in buffer
- */
-inline uint16_t UartDriver::GetBufferLevel(){
-  return MessageBuffer_Level;
 }

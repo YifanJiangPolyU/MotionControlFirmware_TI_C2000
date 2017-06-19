@@ -28,8 +28,9 @@ void CommunicationInterface::ExecuteTransmission(void){
 #pragma CODE_SECTION(".TI.ramfunc");
 void CommunicationInterface::ExecuteReception(void){
 
-  if((_UartDriver->GetBufferLevel()) > 0){
-    _UartDriver->GetMessage(&msg);
+  CiA_Message msg;
+
+  if((_UartDriver->ExecuteParsing(&msg)) > 0 ){
 
     if(msg.CANID == CANID_NMT){
       // handle CANOpen NMT protocol

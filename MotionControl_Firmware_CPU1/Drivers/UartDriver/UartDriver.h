@@ -32,19 +32,22 @@ class UartDriver{
     UartDriver();
     ~UartDriver();
 
-    void ExecuteParsing(void);
+    uint16_t ExecuteParsing(CiA_Message * msg);
     void SendMessage(CiA_Message * msg);
-    void GetMessage(CiA_Message * msg);
-    uint16_t GetBufferLevel();
+
+    enum MessageParser_STATES {
+      STATE_IDEL,
+      STATE_LEN,
+      STATE_CANIDH,
+      STATE_CANIDL,
+      STATE_DATA,
+      STATE_EOF
+    };
 
   private:
-    uint16_t SOF_EOF;
-    uint16_t RawDataBuffer[7];
-    CiA_Message MessageBuffer[MSG_BUFFER_SIZE];
 
-    uint16_t MessageBuffer_ReadIdx;
-    uint16_t MessageBuffer_WriteIdx;
-    uint16_t MessageBuffer_Level;
+    enum MessageParser_STATES _state;
+
 };
 
 #endif

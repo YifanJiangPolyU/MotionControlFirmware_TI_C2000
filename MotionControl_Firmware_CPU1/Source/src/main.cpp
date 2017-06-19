@@ -31,7 +31,7 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
     Task_sleep(500);
 
     for(sss=0; sss<16; sss++){
-      SciaRegs.SCITXBUF.all ='x';
+      SciaRegs.SCITXBUF.all ='u';
     }
 
     i += 1;
