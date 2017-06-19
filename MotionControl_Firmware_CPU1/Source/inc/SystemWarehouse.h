@@ -28,7 +28,8 @@ class SystemWarehouse{
       _ControlProcessMaster(&_CommutationMaster, &_CommunicationInterface),
       _CommutationMaster(),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary),
-      _ObjectDictionary(&_CommutationMaster)
+      _ObjectDictionary(&_CommutationMaster),
+      _UartDriver()
       {}
 
     ~SystemWarehouse(){}
