@@ -32,6 +32,8 @@ void CommunicationInterface::ExecuteReception(void){
 
   if((_UartDriver->ExecuteParsing(&msg)) > 0 ){
 
+    msg.reserve = 0x0F;
+
     if(msg.CANID == CANID_NMT){
       // handle CANOpen NMT protocol
     } else if((msg.CANID-NODE_ID)==CANID_SDO_RX) {
@@ -39,7 +41,7 @@ void CommunicationInterface::ExecuteReception(void){
     } else if((msg.CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
     } else {
-
+      msg.reserve = 0x0A;
     }
   }
 

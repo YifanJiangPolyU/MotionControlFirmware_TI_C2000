@@ -34,12 +34,13 @@ UartDriver::~UartDriver(){
 #pragma CODE_SECTION(".TI.ramfunc");
 uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
 
-  uint16_t fifo_counter = SciaRegs.SCIFFRX.bit.RXFFST;
-  uint16_t data_counter = 0;
-  uint16_t data_length = 0;
+  uint16_t fifo_counter = 0;
+  static uint16_t data_counter = 0;
+  static uint16_t data_length = 0;
   uint16_t tmp = 0;
   uint16_t retval = 0;
 
+  fifo_counter = SciaRegs.SCIFFRX.bit.RXFFST;
   if(fifo_counter>0){
     for( ; fifo_counter>0; fifo_counter--){
       tmp = SciaRegs.SCIRXBUF.bit.SAR;
@@ -58,7 +59,7 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
           _state = STATE_LEN;
           break;
         case STATE_LEN:
-          if(tmp>0 && tmp<11){
+          if(tmp>0 && tmp<12){
             data_length = tmp;
             data_counter = 0;
             msg->Length = tmp;
