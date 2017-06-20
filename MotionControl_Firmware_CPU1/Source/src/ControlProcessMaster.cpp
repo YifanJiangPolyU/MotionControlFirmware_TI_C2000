@@ -26,7 +26,7 @@ static ControlProcessMaster * This;
 ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                                            CommunicationInterface * CommunicationInterfacePtr):
   _state(STATE_IDEL),
-  hehe(0)
+  CycleCounter(0)
   {
     This = this;
     _CommutationMaster = CommutationMasterPtr;
@@ -34,19 +34,26 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
   }
 
 /**
+ * execute ControlProcessMaster
+ */
+ #pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessMaster::Execute(void){
+
+    // poll coummunication interface
+    _CommunicationInterface->ExecuteReception();
+
+    // update cycle counter to synchronize activities
+    if(CycleCounter==3){
+      CycleCounter = 0;
+    } else {
+      CycleCounter++;
+    }
+}
+
+/**
  *  C warper to call ControlProcessMaster from ISR
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" void CallControlProcessMaster(void){
   This->Execute();
-}
-
-/**
- * execute ControlProcessMaster
- */
- #pragma CODE_SECTION(".TI.ramfunc");
-void ControlProcessMaster::Execute(void){
-    hehe = 123;
-
-    _CommunicationInterface->ExecuteReception();
 }

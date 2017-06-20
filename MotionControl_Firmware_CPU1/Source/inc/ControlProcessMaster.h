@@ -21,6 +21,7 @@
 #include "CommutationMaster.h"
 #include "CommunicationInterface.h"
 
+
 class ControlProcessMaster{
 
   public:
@@ -46,7 +47,7 @@ class ControlProcessMaster{
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;
 
-    uint16_t hehe;
+    uint16_t CycleCounter;
 
 };
 

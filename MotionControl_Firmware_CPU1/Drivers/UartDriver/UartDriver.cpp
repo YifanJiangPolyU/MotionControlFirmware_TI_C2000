@@ -34,7 +34,7 @@ UartDriver::~UartDriver(){
 #pragma CODE_SECTION(".TI.ramfunc");
 uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
 
-  uint16_t fifo_counter = 0;
+  static uint16_t fifo_counter = 0;
   static uint16_t data_counter = 0;
   static uint16_t data_length = 0;
   uint16_t tmp = 0;
@@ -51,18 +51,18 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
           }
           break;
         case STATE_CANIDH:
-          __byte_uint16_t(msg->CANID, 1) = tmp;
+          __byte_uint16_t(msg_buffer.CANID, 1) = tmp;
           _state = STATE_CANIDL;
           break;
         case STATE_CANIDL:
-          __byte_uint16_t(msg->CANID, 0) = tmp;
+          __byte_uint16_t(msg_buffer.CANID, 0) = tmp;
           _state = STATE_LEN;
           break;
         case STATE_LEN:
           if(tmp>0 && tmp<12){
             data_length = tmp;
             data_counter = 0;
-            msg->Length = tmp;
+            msg_buffer.Length = tmp;
             _state = STATE_DATA;
           } else {
             //data length error
@@ -70,7 +70,7 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
           }
           break;
         case STATE_DATA:
-          __byte_uint16_t(msg->Data, data_counter++) = tmp;
+          __byte_uint16_t(msg_buffer.Data, data_counter++) = tmp;
           if(data_counter == data_length){
             _state = STATE_EOF;
           }
@@ -78,8 +78,10 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
         case STATE_EOF:
           if(tmp == EOF_PATTERN){
             retval = 1;
+            memcpy(msg, &msg_buffer, sizeof(CiA_Message));
           } else {
             // frame error
+            GpioDataRegs.GPBDAT.bit.GPIO34 = 0;
           }
           _state = STATE_IDEL;
           break;
@@ -92,28 +94,39 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
 
 /**
  *  send CAN-compatible data frame over UART
+ * @param msg   ptr to message to be sent
+ * @retval      1 if sent successfully, 0 if tx buffer too full
  */
-void UartDriver::SendMessage(CiA_Message * msg){
+#pragma CODE_SECTION(".TI.ramfunc");
+uint16_t UartDriver::SendMessage(CiA_Message * msg){
 
-  SciaRegs.SCITXBUF.all = SOF_PATTERN;
+  uint16_t retval = 0;
+  uint16_t tx_length = msg->Length;
+  uint16_t tx_counter = 0;
 
-  // transmit CANID
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->CANID, 1); // CANID high
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->CANID, 0); // CANID low
+  if((11-SciaRegs.SCIFFTX.bit.TXFFST)>=tx_length){
 
-  // transmit CAN data
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 0);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 1);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 2);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 3);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 4);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 5);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 6);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 7);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 8);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 9);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 10);
-  SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, 11);
+    SciaRegs.SCITXBUF.all = SOF_PATTERN;
 
-  SciaRegs.SCITXBUF.all = EOF_PATTERN;
+    // transmit CANID
+    SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->CANID, 1); // CANID high
+    SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->CANID, 0); // CANID low
+
+    // transmit CAN data length
+    SciaRegs.SCITXBUF.all = tx_length;
+
+    // transmit CAN data
+    for(tx_counter=0; tx_counter<tx_length; tx_counter++){
+      SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, tx_counter);
+    }
+
+    SciaRegs.SCITXBUF.all = EOF_PATTERN;
+
+    retval = 1;
+  } else {
+    // TX buffer too full
+    GpioDataRegs.GPBDAT.bit.GPIO34 = 0;
+  }
+
+  return retval;
 }

@@ -33,7 +33,7 @@ class UartDriver{
     ~UartDriver();
 
     uint16_t ExecuteParsing(CiA_Message * msg);
-    void SendMessage(CiA_Message * msg);
+    uint16_t SendMessage(CiA_Message * msg);
 
     enum MessageParser_STATES {
       STATE_IDEL,
@@ -47,6 +47,7 @@ class UartDriver{
   private:
 
     enum MessageParser_STATES _state;
+    CiA_Message msg_buffer;
 
 };
 

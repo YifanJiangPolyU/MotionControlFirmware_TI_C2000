@@ -29,8 +29,8 @@ void CommunicationInterface::ExecuteTransmission(void){
 void CommunicationInterface::ExecuteReception(void){
 
   CiA_Message msg;
-
-  if((_UartDriver->ExecuteParsing(&msg)) > 0 ){
+  uint16_t msgcnt = _UartDriver->ExecuteParsing(&msg);
+  if(msgcnt > 0 ){
 
     msg.reserve = 0x0F;
 
