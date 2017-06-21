@@ -32,14 +32,18 @@ void CommunicationInterface::ExecuteReception(void){
   uint16_t msgcnt = _UartDriver->ExecuteParsing(&msg);
   if(msgcnt > 0 ){
 
-    msg.reserve = 0x0F;
-
     if(msg.CANID == CANID_NMT){
       // handle CANOpen NMT protocol
     } else if((msg.CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
+      CiA_SdoMessage sdomsg;
+      memcpy(&(sdomsg.Ctrl), &(msg.Data[0]), sizeof(uint32_t));
+      memcpy(&(sdomsg.Data[0]), &(msg.Data[2]), 4*sizeof(uint16_t));
+
     } else if((msg.CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
+      CiA_PdoMessage pdomsg;
+      memcpy(&(pdomsg.Data[0]), &(msg.Data[0]), 6*sizeof(uint16_t));
     } else {
       msg.reserve = 0x0A;
     }

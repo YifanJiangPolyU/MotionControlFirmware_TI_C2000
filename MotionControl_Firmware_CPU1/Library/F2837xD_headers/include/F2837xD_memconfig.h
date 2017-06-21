@@ -719,13 +719,13 @@ union NMAVSET_REG {
 };
 
 struct NMAVCLR_BITS {                   // bits description
-    Uint16 CPUREAD:1;                   // 0 Non Master CPU Read Access Violation Flag Clear 
-    Uint16 CPUWRITE:1;                  // 1 Non Master CPU Write Access Violation Flag Clear 
-    Uint16 CPUFETCH:1;                  // 2 Non Master CPU Fetch Access Violation Flag Clear 
-    Uint16 DMAWRITE:1;                  // 3 Non Master DMA Write Access Violation Flag Clear 
-    Uint16 CLA1READ:1;                  // 4 Non Master CLA1 Read Access Violation Flag Clear 
-    Uint16 CLA1WRITE:1;                 // 5 Non Master CLA1 Write Access Violation Flag Clear 
-    Uint16 CLA1FETCH:1;                 // 6 Non Master CLA1 Fetch Access Violation Flag Clear 
+    Uint16 CPUREAD:1;                   // 0 Non Master CPU Read Access Violation Flag Clear
+    Uint16 CPUWRITE:1;                  // 1 Non Master CPU Write Access Violation Flag Clear
+    Uint16 CPUFETCH:1;                  // 2 Non Master CPU Fetch Access Violation Flag Clear
+    Uint16 DMAWRITE:1;                  // 3 Non Master DMA Write Access Violation Flag Clear
+    Uint16 CLA1READ:1;                  // 4 Non Master CLA1 Read Access Violation Flag Clear
+    Uint16 CLA1WRITE:1;                 // 5 Non Master CLA1 Write Access Violation Flag Clear
+    Uint16 CLA1FETCH:1;                 // 6 Non Master CLA1 Fetch Access Violation Flag Clear
     Uint16 rsvd1:1;                     // 7 Reserved
     Uint16 rsvd2:1;                     // 8 Reserved
     Uint16 rsvd3:1;                     // 9 Reserved
@@ -739,13 +739,13 @@ union NMAVCLR_REG {
 };
 
 struct NMAVINTEN_BITS {                 // bits description
-    Uint16 CPUREAD:1;                   // 0 Non Master CPU Read Access Violation Interrupt Enable 
-    Uint16 CPUWRITE:1;                  // 1 Non Master CPU Write Access Violation Interrupt Enable 
-    Uint16 CPUFETCH:1;                  // 2 Non Master CPU Fetch Access Violation Interrupt Enable 
-    Uint16 DMAWRITE:1;                  // 3 Non Master DMA Write Access Violation Interrupt Enable 
-    Uint16 CLA1READ:1;                  // 4 Non Master CLA1 Read Access Violation Interrupt Enable 
-    Uint16 CLA1WRITE:1;                 // 5 Non Master CLA1 Write Access Violation Interrupt Enable 
-    Uint16 CLA1FETCH:1;                 // 6 Non Master CLA1 Fetch Access Violation Interrupt Enable 
+    Uint16 CPUREAD:1;                   // 0 Non Master CPU Read Access Violation Interrupt Enable
+    Uint16 CPUWRITE:1;                  // 1 Non Master CPU Write Access Violation Interrupt Enable
+    Uint16 CPUFETCH:1;                  // 2 Non Master CPU Fetch Access Violation Interrupt Enable
+    Uint16 DMAWRITE:1;                  // 3 Non Master DMA Write Access Violation Interrupt Enable
+    Uint16 CLA1READ:1;                  // 4 Non Master CLA1 Read Access Violation Interrupt Enable
+    Uint16 CLA1WRITE:1;                 // 5 Non Master CLA1 Write Access Violation Interrupt Enable
+    Uint16 CLA1FETCH:1;                 // 6 Non Master CLA1 Fetch Access Violation Interrupt Enable
     Uint16 rsvd1:1;                     // 7 Reserved
     Uint16 rsvd2:1;                     // 8 Reserved
     Uint16 rsvd3:1;                     // 9 Reserved
@@ -785,9 +785,9 @@ union MAVSET_REG {
 };
 
 struct MAVCLR_BITS {                    // bits description
-    Uint16 CPUFETCH:1;                  // 0 Master CPU Fetch Access Violation Flag Clear 
-    Uint16 CPUWRITE:1;                  // 1 Master CPU Write Access Violation Flag Clear 
-    Uint16 DMAWRITE:1;                  // 2 Master DMA Write Access Violation Flag Clear 
+    Uint16 CPUFETCH:1;                  // 0 Master CPU Fetch Access Violation Flag Clear
+    Uint16 CPUWRITE:1;                  // 1 Master CPU Write Access Violation Flag Clear
+    Uint16 DMAWRITE:1;                  // 2 Master DMA Write Access Violation Flag Clear
     Uint16 rsvd1:13;                    // 15:3 Reserved
     Uint16 rsvd2:16;                    // 31:16 Reserved
 };
@@ -798,9 +798,9 @@ union MAVCLR_REG {
 };
 
 struct MAVINTEN_BITS {                  // bits description
-    Uint16 CPUFETCH:1;                  // 0 Master CPU Fetch Access Violation Interrupt Enable 
-    Uint16 CPUWRITE:1;                  // 1 Master CPU Write Access Violation Interrupt Enable 
-    Uint16 DMAWRITE:1;                  // 2 Master DMA Write Access Violation Interrupt Enable 
+    Uint16 CPUFETCH:1;                  // 0 Master CPU Fetch Access Violation Interrupt Enable
+    Uint16 CPUWRITE:1;                  // 1 Master CPU Write Access Violation Interrupt Enable
+    Uint16 DMAWRITE:1;                  // 2 Master DMA Write Access Violation Interrupt Enable
     Uint16 rsvd1:13;                    // 15:3 Reserved
     Uint16 rsvd2:16;                    // 31:16 Reserved
 };
@@ -834,9 +834,9 @@ struct ACCESS_PROTECTION_REGS {
 };
 
 struct UCERRFLG_BITS {                  // bits description
-    Uint16 CPURDERR:1;                  // 0 CPU Uncorrectable Read Error Flag 
-    Uint16 DMARDERR:1;                  // 1 DMA Uncorrectable Read Error Flag 
-    Uint16 CLA1RDERR:1;                 // 2 CLA1 Uncorrectable Read Error Flag 
+    Uint16 CPURDERR:1;                  // 0 CPU Uncorrectable Read Error Flag
+    Uint16 DMARDERR:1;                  // 1 DMA Uncorrectable Read Error Flag
+    Uint16 CLA1RDERR:1;                 // 2 CLA1 Uncorrectable Read Error Flag
     Uint16 rsvd1:1;                     // 3 Reserved
     Uint16 rsvd2:12;                    // 15:4 Reserved
     Uint16 rsvd3:16;                    // 31:16 Reserved
@@ -876,9 +876,9 @@ union UCERRCLR_REG {
 };
 
 struct CERRFLG_BITS {                   // bits description
-    Uint16 CPURDERR:1;                  // 0 CPU Correctable Read Error Flag 
-    Uint16 DMARDERR:1;                  // 1 DMA Correctable Read Error Flag 
-    Uint16 CLA1RDERR:1;                 // 2 CLA1 Correctable Read Error Flag 
+    Uint16 CPURDERR:1;                  // 0 CPU Correctable Read Error Flag
+    Uint16 DMARDERR:1;                  // 1 DMA Correctable Read Error Flag
+    Uint16 CLA1RDERR:1;                 // 2 CLA1 Correctable Read Error Flag
     Uint16 rsvd1:1;                     // 3 Reserved
     Uint16 rsvd2:12;                    // 15:4 Reserved
     Uint16 rsvd3:16;                    // 31:16 Reserved

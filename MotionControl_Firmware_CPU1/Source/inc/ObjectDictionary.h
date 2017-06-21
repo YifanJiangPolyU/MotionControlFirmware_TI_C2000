@@ -21,6 +21,7 @@
 #include "F28x_Project.h"
 
 #include "CommutationMaster.h"
+#include "CiATypeDef.h"
 
 class ObjectDictionary{
 
@@ -32,7 +33,7 @@ public:
 
   ~ObjectDictionary(){}
 
-  void AccessEntry(void){};
+  void AccessEntry(CiA_SdoMessage * sdomsg){};
 
 private:
 

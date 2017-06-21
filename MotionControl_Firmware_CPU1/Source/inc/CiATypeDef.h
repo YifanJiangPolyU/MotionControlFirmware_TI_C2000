@@ -16,22 +16,44 @@
 
 #include "stdint.h"
 
+#define NODE_ID         0x003
+
 #define CANID_NMT       0x000
 #define CANID_SDO_TX    0x580
 #define CANID_SDO_RX    0x600
 #define CANID_PDO_TX    0x180
 #define CANID_PDO_RX    0x200
 
-#define NODE_ID         0x003
+// CSS values to control segmented read/write
+#define SDO_CSS_SEGWRITE        0
+#define SDO_CSS_SEGWRITE_INIT   1
+#define SDO_CSS_SEGREAD_INIT    2
+#define SDO_CSS_SEGREAD         3
+#define SDO_CSS_SEGABORT        4
+
+// CSS values to control block read/write
+#define SDO_CSS_BLKREAD            5
+#define SDO_CSS_BLKWRITE           6
+
+/**
+ *  define CANOpen SDO control data
+ */
+typedef struct CiA_SdoControlTypedef{
+  uint32_t SdoCtrl_ccs    : 4;      // cmd type
+  uint32_t SdoCtrl_n      : 2;      // data length
+  uint32_t SdoCtrl_e      : 1;      // whether it's a expedited transfer
+  uint32_t SdoCtrl_s      : 1;      // where to find data length for segmented access
+  uint32_t SdoIdx         : 16;     // obj index and subindex
+  uint32_t SdoSubIdx      : 8;
+} CiA_SdoControl;
+
 
 /**
  *  define CANOpen SDO data structure
  */
-typedef struct CiA_SdoDataTypedef{
+typedef struct CiA_SdoMessageTypedef{
 
-  uint32_t SdoCtrl    : 8;
-  uint32_t SdoIdx     : 16;
-  uint32_t SdoSubIdx  : 8;
+  CiA_SdoControl Ctrl;
 
   // CANOpen SDO data + extended data
   // CAN PHY: use first 4 bytes only
@@ -39,12 +61,13 @@ typedef struct CiA_SdoDataTypedef{
   // access using __byte()
   uint16_t Data[4];
 
-} CiA_SdoData;
+} CiA_SdoMessage;
+
 
 /**
  *  define CANOpen PDO data structure
  */
-typedef struct CiA_PdoDataTypedef{
+typedef struct CiA_PdoMessageTypedef{
 
   // CANOpen PDO data + extended data
   // CAN PHY: use first 8 bytes only
@@ -52,7 +75,7 @@ typedef struct CiA_PdoDataTypedef{
   // access using __byte()
   uint16_t Data[8];
 
-} CiA_PdoData;
+} CiA_PdoMessage;
 
 /**
  *  define CANOpen NMT data structure
