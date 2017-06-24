@@ -48,7 +48,7 @@ void CommunicationInterface::ExecuteReception(void){
 
     if(ciamsg->CANID == CANID_NMT){
       // handle CANOpen NMT protocol
-      _NmtNewState = __byte_uint16_t(ciamsg->Data, 1);
+      _NmtNewState = __byte_uint16_t(ciamsg->Data, 0);
       _NmtUpdated = true;
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
@@ -73,8 +73,9 @@ void CommunicationInterface::ExecuteReception(void){
  *  @param mnt_state  buffer to hold new state
  *  @retval true if new NMT message is received, false otherwise
  */
-bool CommunicationInterface::CheckNmtUpdate(void){
+bool CommunicationInterface::CheckNmtUpdate(uint16_t * mnt_state){
   if(_NmtUpdated == true){
+    *mnt_state = _NmtNewState;
     _NmtUpdated = false;
     return true;
   }

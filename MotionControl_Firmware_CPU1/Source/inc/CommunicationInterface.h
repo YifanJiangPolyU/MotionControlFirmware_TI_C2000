@@ -38,7 +38,7 @@ class CommunicationInterface{
     void ExecuteTransmission(void);
     void ExecuteReception(void);
 
-    bool CheckNmtUpdate(void);
+    bool CheckNmtUpdate(uint16_t * mnt_state);
 
   private:
     UartDriver * _UartDriver;

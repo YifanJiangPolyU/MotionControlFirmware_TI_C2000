@@ -62,6 +62,8 @@ class ControlProcessMaster{
     CommunicationInterface * _CommunicationInterface;
 
     uint16_t CycleCounter;
+    uint16_t _NmtNewState;
+    bool _NmtUpdated;
     ControlProcessMaster_Status _Status;
 
     CiA_Message _CiA_MsgBuffer;

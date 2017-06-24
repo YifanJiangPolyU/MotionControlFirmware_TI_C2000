@@ -27,6 +27,8 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
                                            CommunicationInterface * CommunicationInterfacePtr):
   _State(STATE_IDEL),
   _CiA_State(STATE_CIA_PREOP),
+  _NmtUpdated(false),
+  _NmtNewState(0),
   CycleCounter(0)
   {
     This = this;
@@ -41,13 +43,11 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
  #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::Execute(void){
 
-  bool NmtUpdated = false;
-
   _CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer, &_CiA_SdoBuffer,
                                            &_CiA_PdoBuffer);
   // poll coummunication interface
   _CommunicationInterface->ExecuteReception();
-  NmtUpdated = _CommunicationInterface->CheckNmtUpdate();
+  _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
 
   // execute commutation angle calculation
 
