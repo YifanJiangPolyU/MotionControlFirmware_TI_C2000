@@ -25,12 +25,14 @@ static ControlProcessMaster * This;
  */
 ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                                            CommunicationInterface * CommunicationInterfacePtr):
-  _state(STATE_IDEL),
+  _State(STATE_IDEL),
+  _CiA_State(STATE_CIA_PREOP),
   CycleCounter(0)
   {
     This = this;
     _CommutationMaster = CommutationMasterPtr;
     _CommunicationInterface = CommunicationInterfacePtr;
+
   }
 
 /**
@@ -39,15 +41,39 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
  #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::Execute(void){
 
-    // poll coummunication interface
-    _CommunicationInterface->ExecuteReception();
+  bool NmtUpdated = false;
 
-    // update cycle counter to synchronize activities
-    if(CycleCounter==3){
-      CycleCounter = 0;
-    } else {
-      CycleCounter++;
-    }
+  _CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer, &_CiA_SdoBuffer,
+                                           &_CiA_PdoBuffer);
+  // poll coummunication interface
+  _CommunicationInterface->ExecuteReception();
+  NmtUpdated = _CommunicationInterface->CheckNmtUpdate();
+
+  // execute commutation angle calculation
+
+  // update state machine
+  switch(_State){
+    case STATE_IDEL:
+      break;
+    case STATE_ENABLE:
+      break;
+    case STATE_ERROR:
+      break;
+    case STATE_CLSW:
+      break;
+    case STATE_PLSW:
+      break;
+    case STATE_POLARITY:
+      break;
+  }
+
+  // update cycle counter to synchronize activities
+  if(CycleCounter==3){
+    CycleCounter = 0;
+    _CommunicationInterface->ExecuteTransmission();
+  } else {
+    CycleCounter++;
+  }
 }
 
 /**

@@ -26,12 +26,19 @@ class ControlProcessMaster{
 
   public:
 
+    enum ControlProcessMaster_CIA_STATES {
+      STATE_CIA_STOP,
+      STATE_CIA_PREOP,
+      STATE_CIA_OP
+    };
+
     enum ControlProcessMaster_STATES {
       STATE_IDEL,
       STATE_ENABLE,
       STATE_CLSW,
       STATE_PLSW,
-      STATE_POLARITY
+      STATE_POLARITY,
+      STATE_ERROR
     };
 
     ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
@@ -41,13 +48,26 @@ class ControlProcessMaster{
 
     void Execute(void);
 
+    typedef struct ControlProcessMaster_Status_typedef{
+      uint16_t _InternalState:  3;
+      uint16_t _CiaState:       1;
+      uint16_t _Error:          12;
+    } ControlProcessMaster_Status;
+
   private:
-    enum ControlProcessMaster_STATES _state;
+    enum ControlProcessMaster_STATES _State;
+    enum ControlProcessMaster_CIA_STATES _CiA_State;
 
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;
 
     uint16_t CycleCounter;
+    ControlProcessMaster_Status _Status;
+
+    CiA_Message _CiA_MsgBuffer;
+    CiA_SdoMessage _CiA_SdoBuffer;
+    CiA_PdoMessage _CiA_PdoBuffer;
+
 
 };
 

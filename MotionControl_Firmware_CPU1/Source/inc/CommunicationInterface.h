@@ -27,18 +27,30 @@ class CommunicationInterface{
     {
       _UartDriver = UartDriverPtr;
       _ObjectDictionary = ObjectDictionaryPtr;
+      _NmtUpdated = false;
+      _PdoUpdated = false;
+      _NmtNewState = 0x00;
     }
 
     ~CommunicationInterface(){}
 
+    void SetCiaMsgBuffer(CiA_Message* msgptr, CiA_SdoMessage* sdoptr, CiA_PdoMessage* pdoptr);
     void ExecuteTransmission(void);
     void ExecuteReception(void);
+
+    bool CheckNmtUpdate(void);
 
   private:
     UartDriver * _UartDriver;
     ObjectDictionary * _ObjectDictionary;
 
-    CiA_Message msg;
+    bool _NmtUpdated;
+    bool _PdoUpdated;
+    uint16_t _NmtNewState;
+
+    CiA_Message * ciamsg;
+    CiA_SdoMessage * sdomsg;
+    CiA_PdoMessage * pdomsg;
 
 };
 

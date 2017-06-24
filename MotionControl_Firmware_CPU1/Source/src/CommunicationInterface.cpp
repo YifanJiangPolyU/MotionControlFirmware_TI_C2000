@@ -14,6 +14,21 @@
 
 #include "CommunicationInterface.h"
 
+/**
+ *  initialize the CiA message buffers
+ *  @param msgptr    pointer to CiA_Message
+ *  @param sdoptr
+ *  @param pdoptr
+ *  @retval None
+ */
+void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr,
+                                             CiA_SdoMessage * sdoptr,
+                                             CiA_PdoMessage * pdoptr)
+{
+  ciamsg = msgptr;
+  sdomsg = sdoptr;
+  pdomsg = pdoptr;
+}
 
 /**
  *  transmits message(s) over communication interface
@@ -28,25 +43,41 @@ void CommunicationInterface::ExecuteTransmission(void){
 #pragma CODE_SECTION(".TI.ramfunc");
 void CommunicationInterface::ExecuteReception(void){
 
-  CiA_Message msg;
-  uint16_t msgcnt = _UartDriver->ExecuteParsing(&msg);
+  uint16_t msgcnt = _UartDriver->ExecuteParsing(ciamsg);
   if(msgcnt > 0 ){
 
-    if(msg.CANID == CANID_NMT){
+    if(ciamsg->CANID == CANID_NMT){
       // handle CANOpen NMT protocol
-    } else if((msg.CANID-NODE_ID)==CANID_SDO_RX) {
-      // handle CANOpen SDO
-      CiA_SdoMessage sdomsg;
-      memcpy(&(sdomsg.Ctrl), &(msg.Data[0]), sizeof(uint32_t));
-      memcpy(&(sdomsg.Data[0]), &(msg.Data[2]), 4*sizeof(uint16_t));
+      _NmtNewState = __byte_uint16_t(ciamsg->Data, 1);
+      _NmtUpdated = true;
 
-    } else if((msg.CANID-NODE_ID)==CANID_PDO_RX) {
+    } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
+      // handle CANOpen SDO
+      memcpy(&(sdomsg->Ctrl), &(ciamsg->Data[0]), sizeof(uint32_t));
+      memcpy(&(sdomsg->Data[0]), &(ciamsg->Data[2]), 4*sizeof(uint16_t));
+
+    } else if((ciamsg->CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
-      CiA_PdoMessage pdomsg;
-      memcpy(&(pdomsg.Data[0]), &(msg.Data[0]), 6*sizeof(uint16_t));
+      memcpy(&(pdomsg->Data[0]), &(ciamsg->Data[0]), 6*sizeof(uint16_t));
+      _PdoUpdated = true;
     } else {
-      msg.reserve = 0x0A;
+
     }
   }
 
+  ciamsg->reserve = 0x0A;
+}
+
+/**
+ *  retrive state transition cmd from NMT message
+ *  @param mnt_state  buffer to hold new state
+ *  @retval true if new NMT message is received, false otherwise
+ */
+bool CommunicationInterface::CheckNmtUpdate(void){
+  if(_NmtUpdated == true){
+    _NmtUpdated = false;
+    return true;
+  }
+
+  return false;
 }
