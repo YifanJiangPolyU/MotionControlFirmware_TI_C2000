@@ -269,8 +269,8 @@ void ADC_GroupInit(void){
   AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
   // conversion time and trigger
-  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 13;  //SOC0 will convert pin A4
-  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 139; //sample window is 64 SYSCLK cycles
+  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A4
+  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 63; //sample window is 64 SYSCLK cycles
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of EOC0 will set INT1 flag
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
@@ -315,8 +315,8 @@ void EPWM_GroupInit(void){
   CpuSysRegs.PCLKCR2.bit.EPWM6 = 1;
 
   // EPWM1, up-counting, 320kHz, trigger ADC
-  EPwm1Regs.CMPA.bit.CMPA = 4095;     // Set compare A value to 624 counts
-  EPwm1Regs.TBPRD = 4096;             // Set period to 625 counts
+  EPwm1Regs.CMPA.bit.CMPA = 624;     // Set compare A value to 624 counts
+  EPwm1Regs.TBPRD = 625;             // Set period to 625 counts
   EPwm1Regs.TBPHS.all = 0;
   EPwm1Regs.TBCTL.bit.PHSEN = 1;     // enable synchronization
   EPwm1Regs.TBCTL.bit.SYNCOSEL = 0;  // enable software forced sync
@@ -325,6 +325,9 @@ void EPWM_GroupInit(void){
   EPwm1Regs.ETSEL.bit.SOCAEN = 0;    // Disable SOC on A group
   EPwm1Regs.ETSEL.bit.SOCASEL = 4;   // trigger when TBCTR = CMPA
   EPwm1Regs.ETPS.bit.SOCAPRD = 1;    // Generate pulse on every event
+  // set up period EPWM clock (same as sysclk)
+  EPwm1Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1; // Clock ratio to SYSCLKOUT
+  EPwm1Regs.TBCTL.bit.CLKDIV = TB_DIV1;
 
   // EPWM4, up-down, 32 kHz
   EPwm4Regs.CMPA.bit.CMPA = 100;

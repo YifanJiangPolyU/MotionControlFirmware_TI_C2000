@@ -40,7 +40,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
 void ControlProcessMaster::Execute(void){
 
     // poll coummunication interface
-    _CommunicationInterface->ExecuteReception();
+    //_CommunicationInterface->ExecuteReception();
 
     // update cycle counter to synchronize activities
     if(CycleCounter==3){

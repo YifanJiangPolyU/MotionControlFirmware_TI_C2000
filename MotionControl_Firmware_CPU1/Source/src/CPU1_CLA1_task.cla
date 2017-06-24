@@ -17,7 +17,7 @@
 __interrupt void Cla1Task1 ( void )
 {
 
-  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 0;
+  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 1;
 
   // reading ADC samples
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -25,6 +25,10 @@ __interrupt void Cla1Task1 ( void )
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
   CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
   CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
+
+  if(CLA_CycleCounter == 0){
+    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
+  }
 
   // switch case structure for static multi-tasking
   switch(CLA_CycleCounter){
@@ -83,9 +87,9 @@ __interrupt void Cla1Task1 ( void )
   }
 
   // put it here for debug purpose
-  if(CLA_CycleCounter==1){
-    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
-  }
+  // if(CLA_CycleCounter==1){
+  //  Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
+  // }
 }
 
 __interrupt void Cla1Task2 ( void ) {}
