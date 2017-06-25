@@ -36,30 +36,39 @@ CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcess
 #pragma CODE_SECTION(".TI.ramfunc");
 void CurrentLoopController::Execute(void){
 
+  PwmDutyVec Pwm;
+
+  float32_t VoltageDcLine = _ControlProcessData->_VoltageDcLine;
+  float32_t VoltToPwmScaleFactor = PWM_MAX_DUTY / VoltageDcLine;
+  float32_t OutputVoltageLimit = VoltageDcLine * 0.85;
+  float32_t OutputVoltageMinimum = VoltageDcLine * 0.05;
+
   // execute PI controller
-  _Error_Ia = _Setpoint_Ia;
-  _Error_Ib = _Setpoint_Ib;
+  _Error_Ia = _ControlProcessData->_CurrentSetpointA;
+  _Error_Ib = _ControlProcessData->_CurrentSetpointB;
+  _Error_Ia -= _ControlProcessData->_CurrentSenseGain*(_ControlProcessData->_CurrentValueA);
+  _Error_Ib -= _ControlProcessData->_CurrentSenseGain*(_ControlProcessData->_CurrentValueB);
   _Integral_Ia += _Ki * _Error_Ia;
   _Integral_Ib += _Ki * _Error_Ib;
   _Output_Ua = _Kp * _Error_Ia + _Integral_Ia;
   _Output_Ub = _Kp * _Error_Ib + _Integral_Ib;
 
-  // output voltage limiting
-  if(_Output_Ua > _OutputLimit){
-    _Integral_Ia -= _Output_Ua - _OutputLimit;
-    _Output_Ua = _OutputLimit;
-  } else if(_Output_Ua < -_OutputLimit) {
-    _Integral_Ia -= _Output_Ua + _OutputLimit;
-    _Output_Ua = -_OutputLimit;
+  // anti-windup and output voltage limiting, phase A
+  if(_Output_Ua > OutputVoltageLimit){
+    _Integral_Ia -= _Output_Ua - OutputVoltageLimit;
+    _Output_Ua = OutputVoltageLimit;
+  } else if(_Output_Ua < -OutputVoltageLimit) {
+    _Integral_Ia -= _Output_Ua + OutputVoltageLimit;
+    _Output_Ua = -OutputVoltageLimit;
   }
 
-  // anti-windup
-  if(_Output_Ub > _OutputLimit){
-    _Integral_Ib -= _Output_Ub - _OutputLimit;
-    _Output_Ub = _OutputLimit;
-  } else if(_Output_Ub < -_OutputLimit) {
-    _Integral_Ib -= _Output_Ub + _OutputLimit;
-    _Output_Ub = -_OutputLimit;
+  // anti-windup and output voltage limiting, phase B
+  if(_Output_Ub > OutputVoltageLimit){
+    _Integral_Ib -= _Output_Ub - OutputVoltageLimit;
+    _Output_Ub = OutputVoltageLimit;
+  } else if(_Output_Ub < -OutputVoltageLimit) {
+    _Integral_Ib -= _Output_Ub + OutputVoltageLimit;
+    _Output_Ub = -OutputVoltageLimit;
   }
 
   _Output_Uc = -_Output_Ua -_Output_Ub;
@@ -77,16 +86,15 @@ void CurrentLoopController::Execute(void){
 
   // offset voltage demand by neutral point voltage
   // ensure positive PWM duty
+  _OutputOffset += OutputVoltageMinimum;
   _Output_Ua += _OutputOffset;
   _Output_Ub += _OutputOffset;
   _Output_Uc += _OutputOffset;
 
   // calculate PWM duty
-  /*
-  _OutputPWM_Ua = (uint16_t)(3125 * _Output_Ua / (VoltageSenseGain*dcVoltageSense));
-  _OutputPWM_Ub = (uint16_t)(3125 * _Output_Ub / (VoltageSenseGain*dcVoltageSense));
-  _OutputPWM_Uc = (uint16_t)(3125 * _Output_Uc / (VoltageSenseGain*dcVoltageSense));
-  */
+  Pwm.A = (uint16_t)(_Output_Ua * VoltToPwmScaleFactor);
+  Pwm.B = (uint16_t)(_Output_Ub * VoltToPwmScaleFactor);
+  Pwm.C = (uint16_t)(_Output_Uc * VoltToPwmScaleFactor);
 
 }
 

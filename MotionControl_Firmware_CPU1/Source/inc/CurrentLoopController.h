@@ -16,7 +16,9 @@
 
 #include "stdint.h"
 #include "ControlProcessData.h"
+#include "ControlTypeDef.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
+#include "Drivers/GpioDriver/GpioDriver.h"
 
 class CurrentLoopController{
 
@@ -35,7 +37,6 @@ class CurrentLoopController{
     float32_t _Ki;                     // I gain
     float32_t _Setpoint_Ia;            // current requirement (ADC raw), phase A
     float32_t _Setpoint_Ib;            // current requirement (ADC raw), phase B
-    float32_t _OutputLimit;
 
     float32_t _Error_Ia;               // current error, phase A
     float32_t _Error_Ib;               // current error, phase B
@@ -45,6 +46,10 @@ class CurrentLoopController{
     float32_t _Output_Ub;               // output, phase B
     float32_t _Output_Uc;               // output, phase C
     float32_t _OutputOffset;            // offset required to give positive PWM duty
+
+    // current control limit values
+    float32_t _CurrentLimitPeakValue;   // unit: mA
+    float32_t _CurrentLimitRmsValue;
 
 };
 

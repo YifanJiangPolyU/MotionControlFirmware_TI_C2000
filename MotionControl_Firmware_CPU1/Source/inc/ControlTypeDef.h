@@ -8,22 +8,36 @@
  ******************************************************************************/
 
 /*
-* define power stage control functions
+* define some convenient types
 */
 
-#ifndef _PWR_STAGE_CTRL_H
-#define _PWR_STAGE_CTRL_H
+#ifndef _CONTROL_TYPEDEF_H
+#define _CONTROL_TYPEDEF_H
 
-#include "F28x_Project.h"
+#ifdef __cplusplus
+  extern "C" {
+#endif
 
-#define PWM_COUNTER_TOP      3125
-#define PWM_MAX_DUTY         3000
-#define PWM_MIN_DUTY         150    
+typedef struct PhaseCurrentTypedef{
+  float32_t A;
+  float32_t B;
+} PhaseCurrentVec;
 
-void SensorEnable(void);
-void PwmTimerEnable(void);
-void PwrEnable(void);
-void PwrDisable(void);
-void PwrReset(void);
+typedef struct PhaseCVoltageTypedef{
+  float32_t A;
+  float32_t B;
+  float32_t C;
+} PhaseVoltageVec;
+
+typedef struct PPwmDutyTypedef{
+  uint16_t A;
+  uint16_t B;
+  uint16_t C;
+} PwmDutyVec;
+
+
+#ifdef __cplusplus
+  }
+#endif
 
 #endif
