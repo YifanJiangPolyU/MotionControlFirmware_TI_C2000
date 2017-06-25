@@ -18,34 +18,32 @@
 
 #include "stdint.h"
 
+#include "CPU1_CLA1_common.h"
 #include "CommutationMaster.h"
 #include "CommunicationInterface.h"
+#include "ControlProcessData.h"
 
+#define MASTER_CYCLE_PRESCALE    4
 
 class ControlProcessMaster{
 
   public:
 
-    enum ControlProcessMaster_CIA_STATES {
-      STATE_CIA_STOP,
-      STATE_CIA_PREOP,
-      STATE_CIA_OP
-    };
-
     enum ControlProcessMaster_STATES {
-      STATE_IDEL,
-      STATE_ENABLE,
-      STATE_CLSW,
-      STATE_PLSW,
-      STATE_POLARITY,
-      STATE_ERROR
+      STATE_PREOP,    // enabled
+      STATE_OP,       // enabled and running
+      STATE_STOPPED,  // disabled
+      STATE_ERROR     // error
     };
 
     ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
-                         CommunicationInterface * CommunicationInterfacePtr);
+                         CommunicationInterface * CommunicationInterfacePtr,
+                         ControlProcessData * ControlProcessDataPtr);
 
     ~ControlProcessMaster(){}
 
+    void SetCurrentValueBuffer(uint16_t * bufA, uint16_t * bufB);
+    void GetData(void);
     void Execute(void);
 
     typedef struct ControlProcessMaster_Status_typedef{
@@ -56,10 +54,10 @@ class ControlProcessMaster{
 
   private:
     enum ControlProcessMaster_STATES _State;
-    enum ControlProcessMaster_CIA_STATES _CiA_State;
 
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;
+    ControlProcessData * _ControlProcessData;
 
     uint16_t CycleCounter;
     uint16_t _NmtNewState;

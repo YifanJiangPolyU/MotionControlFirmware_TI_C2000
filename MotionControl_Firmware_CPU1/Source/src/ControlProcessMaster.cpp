@@ -24,9 +24,9 @@ static ControlProcessMaster * This;
  *  Constructor
  */
 ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
-                                           CommunicationInterface * CommunicationInterfacePtr):
-  _State(STATE_IDEL),
-  _CiA_State(STATE_CIA_PREOP),
+                                           CommunicationInterface * CommunicationInterfacePtr,
+                                           ControlProcessData * ControlProcessDataPtr):
+  _State(STATE_STOPPED),
   _NmtUpdated(false),
   _NmtNewState(0),
   CycleCounter(0)
@@ -34,6 +34,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
     This = this;
     _CommutationMaster = CommutationMasterPtr;
     _CommunicationInterface = CommunicationInterfacePtr;
+    _ControlProcessData = ControlProcessDataPtr;
 
   }
 
@@ -43,6 +44,9 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
  #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::Execute(void){
 
+  // Get data from current controller and ADC
+  GetData();
+
   _CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer, &_CiA_SdoBuffer,
                                            &_CiA_PdoBuffer);
   // poll coummunication interface
@@ -51,24 +55,51 @@ void ControlProcessMaster::Execute(void){
 
   // execute commutation angle calculation
 
+  // check for errors
+
   // update state machine
   switch(_State){
-    case STATE_IDEL:
+    case STATE_PREOP:
+      // mode switch by NMT
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_TO_OP){
+          _State = STATE_OP;
+        } else if(_NmtNewState==NMT_TO_STOP){
+          _State = STATE_STOPPED;
+        }
+      }
       break;
-    case STATE_ENABLE:
+    case STATE_OP:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_TO_PREOP){
+          _State = STATE_PREOP;
+        } else if(_NmtNewState==NMT_TO_STOP){
+          _State = STATE_STOPPED;
+        }
+      }
+      break;
+    case STATE_STOPPED:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_TO_PREOP){
+          _State = STATE_PREOP;
+        }
+      }
       break;
     case STATE_ERROR:
-      break;
-    case STATE_CLSW:
-      break;
-    case STATE_PLSW:
-      break;
-    case STATE_POLARITY:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_TO_STOP){
+          _State = STATE_STOPPED;
+        }
+      }
       break;
   }
 
   // update cycle counter to synchronize activities
-  if(CycleCounter==3){
+  if(CycleCounter==MASTER_CYCLE_PRESCALE-1){
     CycleCounter = 0;
     _CommunicationInterface->ExecuteTransmission();
   } else {
@@ -77,9 +108,36 @@ void ControlProcessMaster::Execute(void){
 }
 
 /**
+ *  pass ptr to the correct current sample buffer to the control process
+ *  master.
+ *  @ param bufA   ptr to phase A current sample buffer
+ *  @ param bufB   ptr to phase B current sample buffer
+ */
+void ControlProcessMaster::SetCurrentValueBuffer(uint16_t * bufA, uint16_t * bufB){
+  _ControlProcessData->_CurrentValueBufferPhaseA = bufA;
+  _ControlProcessData->_CurrentValueBufferPhaseB = bufB;
+}
+
+/**
+ *  get data from ADC buffer
+ */
+void ControlProcessMaster::GetData(void){
+  _ControlProcessData->_CurrentValuePhaseA[CycleCounter] =
+                      *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
+  _ControlProcessData->_CurrentValuePhaseB[CycleCounter] =
+                      *(_ControlProcessData->_CurrentValueBufferPhaseB+2);
+}
+
+/**
  *  C warper to call ControlProcessMaster from ISR
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" void CallControlProcessMaster(void){
+  if(CLA_SampleBufferActiveHalf==0){
+    This->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
+  } else if(CLA_SampleBufferActiveHalf==1) {
+    This->SetCurrentValueBuffer(&(CLA_SampleBufferA[0]), &(CLA_SampleBufferB[0]));
+  }
+
   This->Execute();
 }

@@ -17,16 +17,19 @@
 
 #include "CiATypeDef.h"
 #include "ObjectDictionary.h"
+#include "ControlProcessData.h"
 #include "Drivers/UartDriver/UartDriver.h"
 
 class CommunicationInterface{
 
   public:
     CommunicationInterface(UartDriver * UartDriverPtr,
-                           ObjectDictionary * ObjectDictionaryPtr)
+                           ObjectDictionary * ObjectDictionaryPtr,
+                           ControlProcessData * ControlProcessDataPtr)
     {
       _UartDriver = UartDriverPtr;
       _ObjectDictionary = ObjectDictionaryPtr;
+      _ControlProcessData = ControlProcessDataPtr;
       _NmtUpdated = false;
       _PdoUpdated = false;
       _NmtNewState = 0x00;
@@ -43,6 +46,7 @@ class CommunicationInterface{
   private:
     UartDriver * _UartDriver;
     ObjectDictionary * _ObjectDictionary;
+    ControlProcessData * _ControlProcessData;
 
     bool _NmtUpdated;
     bool _PdoUpdated;

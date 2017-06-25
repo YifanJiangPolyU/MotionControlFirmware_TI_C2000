@@ -34,6 +34,12 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr,
  *  transmits message(s) over communication interface
  */
 void CommunicationInterface::ExecuteTransmission(void){
+  CiA_Message msg;
+  msg.CANID = 123;
+  msg.Length = 8;
+  memcpy(&(msg.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
+         4*sizeof(uint16_t));
+  _UartDriver->SendMessage(&msg);
 
 }
 

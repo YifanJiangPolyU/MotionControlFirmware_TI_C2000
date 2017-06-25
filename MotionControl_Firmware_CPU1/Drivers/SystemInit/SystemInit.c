@@ -269,15 +269,15 @@ void ADC_GroupInit(void){
   AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
   // conversion time and trigger
-  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin A4
-  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 63; //sample window is 64 SYSCLK cycles
+  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 13;  //SOC0 will convert pin A4
+  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 179; //sample window is 64 SYSCLK cycles
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of EOC0 will set INT1 flag
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
   AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
 
   AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4
-  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 139;
+  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 179;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;

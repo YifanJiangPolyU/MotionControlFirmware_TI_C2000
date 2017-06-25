@@ -22,19 +22,11 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
 {
 
   for(;;){
-    static uint16_t i = 0;
-    static uint16_t sss = 0;
 
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
     Task_sleep(500);
-
-    for(sss=0; sss<16; sss++){
-      SciaRegs.SCITXBUF.all ='u';
-    }
-
-    i += 1;
   }
 }
 

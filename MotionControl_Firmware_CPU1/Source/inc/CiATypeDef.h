@@ -35,6 +35,17 @@
 #define SDO_CSS_BLKREAD            5
 #define SDO_CSS_BLKWRITE           6
 
+// NMT mode transitions
+#define NMT_TO_OP          0x01
+#define NMT_TO_STOP        0x02
+#define NMT_TO_PREOP       0x80
+#define NMT_RESET          0x81
+#define NMT_RESET_COMM     0x82
+// NMT custom modes
+#define NMT_CLSW           0xA0
+#define NMT_PLSW           0xA1
+#define NMT_POLARITY       0xA2
+
 /**
  *  define CANOpen SDO control data
  */
