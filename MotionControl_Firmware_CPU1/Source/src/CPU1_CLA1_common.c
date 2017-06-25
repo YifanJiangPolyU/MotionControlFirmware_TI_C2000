@@ -42,6 +42,13 @@
     #pragma DATA_SECTION(dcVoltageSense,"CLADataLS1")
     uint16_t dcVoltageSense;
 
+
+    #pragma DATA_SECTION(VoltageSenseGain,"CLADataLS1")
+    float32_t VoltageSenseGain;
+    #pragma DATA_SECTION(CurrentSenseGain,"CLADataLS1")
+    float32_t CurrentSenseGain;
+
+
     // ADC data buffer
     #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")
     uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];

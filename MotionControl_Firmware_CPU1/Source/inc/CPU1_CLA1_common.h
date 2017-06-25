@@ -27,15 +27,15 @@ extern "C" {
 #define DEBUG_CODE_PROFILING
 
 #ifdef DEBUG_CODE_PROFILING
-    #define READ_CLOCK(X) __eallow();\
+#define READ_CLOCK(X) __meallow();\
                       EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE;\
                       X = EPwm1Regs.TBCTR;\
-                      __edis();
-    #define RESTART_CLOCK __eallow();\
+                      __medis();
+#define RESTART_CLOCK __meallow();\
                       EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE;\
                       EPwm2Regs.TBCTR = 0;\
                       EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP;\
-                      __edis();
+                      __medis();
 #endif
 
 
@@ -56,6 +56,9 @@ extern uint16_t dcVoltageSense;
 extern uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase A
 extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase B
 extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffering active half
+
+extern float32_t VoltageSenseGain;
+extern float32_t CurrentSenseGain;
 
 // current loop parameters
 extern float32_t CL_Kp;                     // P gain

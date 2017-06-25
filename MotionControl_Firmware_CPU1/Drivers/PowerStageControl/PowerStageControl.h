@@ -17,6 +17,7 @@
 #include "F28x_Project.h"
 
 void SensorEnable(void);
+void PwmTimerEnable(void);
 void PwrEnable(void);
 void PwrDisable(void);
 void PwrReset(void);

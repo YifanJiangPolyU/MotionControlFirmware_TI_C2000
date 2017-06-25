@@ -29,8 +29,13 @@ class ControlProcessBase{
       return _ProcessID;
     }
 
+    uint16_t GetStatus(void){
+      return _Status;
+    }
+
   protected:
     uint16_t _ProcessID;
+    uint16_t _Status;
 
   private:
 

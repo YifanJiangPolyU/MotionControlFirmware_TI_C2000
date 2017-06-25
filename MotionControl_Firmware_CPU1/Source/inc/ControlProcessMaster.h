@@ -22,6 +22,7 @@
 #include "CommutationMaster.h"
 #include "CommunicationInterface.h"
 #include "ControlProcessData.h"
+#include "CurrentLoopController.h"
 
 #define MASTER_CYCLE_PRESCALE    4
 
@@ -38,7 +39,8 @@ class ControlProcessMaster{
 
     ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                          CommunicationInterface * CommunicationInterfacePtr,
-                         ControlProcessData * ControlProcessDataPtr);
+                         ControlProcessData * ControlProcessDataPtr,
+                         CurrentLoopController * CurrentLoopControllerPtr);
 
     ~ControlProcessMaster(){}
 
@@ -58,6 +60,7 @@ class ControlProcessMaster{
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;
     ControlProcessData * _ControlProcessData;
+    CurrentLoopController * _CurrentLoopController;
 
     uint16_t CycleCounter;
     uint16_t _NmtNewState;

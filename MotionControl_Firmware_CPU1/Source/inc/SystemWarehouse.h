@@ -21,16 +21,18 @@
 #include "CommunicationInterface.h"
 #include "ObjectDictionary.h"
 #include "ControlProcessData.h"
+#include "CurrentLoopController.h"
 #include "Drivers/UartDriver/UartDriver.h"
 
 class SystemWarehouse{
   public:
     SystemWarehouse():
       _ControlProcessMaster(&_CommutationMaster, &_CommunicationInterface,
-                            &_ControlProcessData),
+                            &_ControlProcessData, &_CurrentLoopController),
       _CommutationMaster(),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData),
       _ObjectDictionary(&_CommutationMaster),
+      _CurrentLoopController(&_ControlProcessData),
       _ControlProcessData(),
       _UartDriver()
       {}
@@ -43,6 +45,7 @@ class SystemWarehouse{
     CommunicationInterface _CommunicationInterface;
     ObjectDictionary  _ObjectDictionary;
     ControlProcessData _ControlProcessData;
+    CurrentLoopController _CurrentLoopController;
 
     UartDriver _UartDriver;
 };

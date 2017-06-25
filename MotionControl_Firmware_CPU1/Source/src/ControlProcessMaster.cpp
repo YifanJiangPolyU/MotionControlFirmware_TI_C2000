@@ -25,7 +25,8 @@ static ControlProcessMaster * This;
  */
 ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                                            CommunicationInterface * CommunicationInterfacePtr,
-                                           ControlProcessData * ControlProcessDataPtr):
+                                           ControlProcessData * ControlProcessDataPtr,
+                                           CurrentLoopController * CurrentLoopControllerPtr):
   _State(STATE_STOPPED),
   _NmtUpdated(false),
   _NmtNewState(0),
@@ -35,7 +36,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
     _CommutationMaster = CommutationMasterPtr;
     _CommunicationInterface = CommunicationInterfacePtr;
     _ControlProcessData = ControlProcessDataPtr;
-
+    _CurrentLoopController = CurrentLoopControllerPtr;
   }
 
 /**
@@ -133,6 +134,7 @@ void ControlProcessMaster::GetData(void){
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" void CallControlProcessMaster(void){
+  /*
   if(CLA_SampleBufferActiveHalf==0){
     This->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
   } else if(CLA_SampleBufferActiveHalf==1) {
@@ -140,4 +142,7 @@ extern "C" void CallControlProcessMaster(void){
   }
 
   This->Execute();
+  */
+
+  This->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
 }

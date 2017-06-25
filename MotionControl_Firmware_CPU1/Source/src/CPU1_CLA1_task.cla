@@ -16,8 +16,8 @@
 
 __interrupt void Cla1Task1 ( void )
 {
-
-  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 1;
+  RESTART_CLOCK;
+  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 0;
 
   // reading ADC samples
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -25,55 +25,7 @@ __interrupt void Cla1Task1 ( void )
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
   CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
   CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
-
-  if(CLA_CycleCounter == 0){
-    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
-  }
-
-  // switch case structure for static multi-tasking
-  switch(CLA_CycleCounter){
-    case 0:
-      if(CLA_CurrentLoopEnable == 1){
-        dcVoltageSense = AdcbResultRegs.ADCRESULT1;
-        CLA_CurrentLoop();
-      }
-      break;
-    case 1:
-      if(CLA_PosLoopCounter==4){
-        CLA_PosLoopCounter = 0;
-        if(CLA_PosLoopCounter == 1){
-          CLA_PositionLoop();
-        }
-      }
-      CLA_PosLoopCounter += 1;
-      break;
-    case 2:
-      sensorSampleA += 10;
-      break;
-    case 3:
-      sensorSampleA += 3;
-      break;
-    case 4:
-      sensorSampleA += 4;
-      break;
-    case 5:
-      sensorSampleA += 5;
-      break;
-    case 6:
-      sensorSampleA += 6;
-      break;
-    case 7:
-      sensorSampleA += 7;
-      break;
-    case 8:
-      sensorSampleA += 8;
-      break;
-    case 9:
-      sensorSampleA += 9;
-      break;
-    default:
-      break;
-  }
+  dcVoltageSense = AdcbResultRegs.ADCRESULT1;
 
   if(CLA_SampleCounter==20){
     CLA_SampleCounter = 0;
@@ -87,10 +39,8 @@ __interrupt void Cla1Task1 ( void )
     CLA_CycleCounter += 1;
   }
 
-  // put it here for debug purpose
-  // if(CLA_CycleCounter==1){
-  //  Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 0;
-  // }
+  READ_CLOCK(timeCounter);
+
 }
 
 __interrupt void Cla1Task2 ( void ) {}
