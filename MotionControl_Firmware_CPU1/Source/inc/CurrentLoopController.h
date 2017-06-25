@@ -15,11 +15,10 @@
 #define _CURRENT_LOOP_CONTROLLER_H
 
 #include "stdint.h"
-#include "ControlProcessBase.h"
 #include "ControlProcessData.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 
-class CurrentLoopController : public ControlProcessBase{
+class CurrentLoopController{
 
   public:
     CurrentLoopController(ControlProcessData * ControlProcessDataPtr);

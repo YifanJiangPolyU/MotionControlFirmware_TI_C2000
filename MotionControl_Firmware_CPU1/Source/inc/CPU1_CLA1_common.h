@@ -57,58 +57,6 @@ extern uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buff
 extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase B
 extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffering active half
 
-extern float32_t VoltageSenseGain;
-extern float32_t CurrentSenseGain;
-
-// current loop parameters
-extern float32_t CL_Kp;                     // P gain
-extern float32_t CL_Ki;                     // I gain
-extern float32_t CL_Setpoint_Ia;            // current requirement (ADC raw), phase A
-extern float32_t CL_Setpoint_Ib;            // current requirement (ADC raw), phase B
-extern float32_t CL_OutputLimit;            // limit the output
-extern float32_t CL_AdcScalingFactor;       // convert from ADC cnt to mA
-
-extern float32_t CL_Error_Ia;               // current error, phase A
-extern float32_t CL_Error_Ib;               // current error, phase B
-extern float32_t CL_Integral_Ia;            // integral term, phase A
-extern float32_t CL_Integral_Ib;            // integral term, phase B
-extern float32_t CL_Output_Ua;               // output, phase A
-extern float32_t CL_Output_Ub;               // output, phase B
-extern float32_t CL_Output_Uc;               // output, phase C
-extern float32_t CL_OutputOffset;            // offset required to give positive PWM duty
-extern uint16_t CL_OutputPWM_Ua;             // output PWM duty, phase A
-extern uint16_t CL_OutputPWM_Ub;             // output PWM duty, phase B
-extern uint16_t CL_OutputPWM_Uc;             // output PWM duty, phase C
-
-// commutation parameters
-extern float32_t CommutationAngle_Cos;        // commutation angle cosine
-extern float32_t CommutationAngle_Sin;        // commutation angle sine
-
-// position loop parameters
-extern int32_t   PL_ActualPosition;           // actual encoder position (cnt)
-extern int32_t   PL_Setpoint_Pos;             // target position (cnt)
-extern float32_t PL_Setpoint_Vel;             // profile velocity (cnt/sp), for feed-forward only
-extern float32_t PL_Setpoint_Accel;           // profile acceleration (cnt/sp^2), for feed-forward only
-extern float32_t PL_PosError;                 // position error
-extern float32_t PL_PosIntegral;              // position error integral term
-extern float32_t PL_Kp1;                      // position loop PID gains group 1
-extern float32_t PL_Ki1;
-extern float32_t PL_Kd1;
-extern float32_t PL_Kp2;                      // position loop PID gains group 2
-extern float32_t PL_Ki2;
-extern float32_t PL_Kd2;
-extern float32_t PL_Kp3;                      // position loop PID gains group 3
-extern float32_t PL_Ki3;
-extern float32_t PL_Kd3;
-extern float32_t PL_FF_Vel;                   // velocity feed-forward gain
-extern float32_t PL_FF_Accel;                 // acceleration feed-forward gain
-extern float32_t PL_OutputRaw;                // position control raw output
-extern float32_t PL_OutputLimit;              // position control upper bound
-extern float32_t PL_OutputCurrent_D;          // cmd Id
-extern float32_t PL_OutputCurrent_Q;          // cmd Iq
-extern float32_t PL_OutputCurrent_Alpha;      // cmd I alpha
-extern float32_t PL_OutputCurrent_Beta;       // cmd I beta
-
 extern uint16_t timeCounter;
 
 

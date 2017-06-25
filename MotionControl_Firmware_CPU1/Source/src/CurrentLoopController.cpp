@@ -33,6 +33,7 @@ CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcess
 /**
  *  execute the current controller
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 void CurrentLoopController::Execute(void){
 
   // execute PI controller
