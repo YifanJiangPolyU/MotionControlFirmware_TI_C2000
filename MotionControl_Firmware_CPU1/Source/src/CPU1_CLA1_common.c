@@ -39,6 +39,8 @@
     uint16_t sensorSampleA;
     #pragma DATA_SECTION(sensorSampleB,"CLADataLS1")
     uint16_t sensorSampleB;
+    #pragma DATA_SECTION(dcVoltageSense,"CLADataLS1")
+    uint16_t dcVoltageSense;
 
     // ADC data buffer
     #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")

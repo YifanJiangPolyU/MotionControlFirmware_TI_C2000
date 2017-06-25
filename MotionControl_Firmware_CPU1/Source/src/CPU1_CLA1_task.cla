@@ -34,6 +34,7 @@ __interrupt void Cla1Task1 ( void )
   switch(CLA_CycleCounter){
     case 0:
       if(CLA_CurrentLoopEnable == 1){
+        dcVoltageSense = AdcbResultRegs.ADCRESULT1;
         CLA_CurrentLoop();
       }
       break;

@@ -132,6 +132,11 @@ void GPIO_GroupInit(void){
   GPIO_SetupPinMux(34, GPIO_MUX_CPU1, 0);
   GPIO_SetupPinOptions(34, GPIO_OUTPUT, GPIO_PUSHPULL);
 
+  // BoostXL DRV8301 gate enable
+  GPIO_SetupPinMux(26, GPIO_MUX_CPU1, 0);
+  GPIO_SetupPinOptions(26, GPIO_OUTPUT, GPIO_PUSHPULL);
+  GpioDataRegs.GPADAT.bit.GPIO26 = 1;
+
   // UART Rx Tx pins
   GPIO_SetupPinMux(43, GPIO_MUX_CPU1, 15);
   GPIO_SetupPinOptions(43, GPIO_INPUT, GPIO_PUSHPULL); // Rx
@@ -268,7 +273,7 @@ void ADC_GroupInit(void){
   AdcaRegs.ADCCTL1.bit.ADCPWDNZ = 1;
   AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
-  // conversion time and trigger
+  // phase A current
   AdcaRegs.ADCSOC0CTL.bit.CHSEL = 13;  //SOC0 will convert pin A4
   AdcaRegs.ADCSOC0CTL.bit.ACQPS = 179; //sample window is 64 SYSCLK cycles
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of EOC0 will set INT1 flag
@@ -276,12 +281,21 @@ void ADC_GroupInit(void){
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
   AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
 
+  // phase B current
   AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4
   AdcbRegs.ADCSOC0CTL.bit.ACQPS = 179;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
   AdcbRegs.ADCSOC0CTL.bit.TRIGSEL = 5;
+
+  // DC line voltage
+  AdcbRegs.ADCSOC1CTL.bit.CHSEL = 14;  //SOC0 will convert pin B4
+  AdcbRegs.ADCSOC1CTL.bit.ACQPS = 179;
+  AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
+  AdcbRegs.ADCINTSEL1N2.bit.INT1E = 0;
+  AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
+  AdcbRegs.ADCSOC1CTL.bit.TRIGSEL = 5;
 
   // if interrupt is used, flag rises when conversion completes
   AdcaRegs.ADCCTL1.bit.INTPULSEPOS = 1;

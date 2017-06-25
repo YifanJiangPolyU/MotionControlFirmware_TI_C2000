@@ -52,6 +52,7 @@ extern uint16_t CLA_PositionLoopEnable;              // enable position loop
 
 extern uint16_t sensorSampleA;
 extern uint16_t sensorSampleB;
+extern uint16_t dcVoltageSense;
 extern uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase A
 extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase B
 extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffering active half
