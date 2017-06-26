@@ -134,7 +134,6 @@ void ControlProcessMaster::GetData(void){
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" void CallControlProcessMaster(void){
-  /*
   if(CLA_SampleBufferActiveHalf==0){
     This->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
   } else if(CLA_SampleBufferActiveHalf==1) {
@@ -142,7 +141,4 @@ extern "C" void CallControlProcessMaster(void){
   }
 
   This->Execute();
-  */
-
-  This->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
 }

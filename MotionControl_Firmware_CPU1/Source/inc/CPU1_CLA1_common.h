@@ -71,8 +71,6 @@ __interrupt void Cla1Task6();
 __interrupt void Cla1Task7();
 __interrupt void Cla1Task8();
 
-void CLA_CurrentLoop();
-void CLA_PositionLoop();
 void CLA_Reset();
 
 

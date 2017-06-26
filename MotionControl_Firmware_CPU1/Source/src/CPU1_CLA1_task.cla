@@ -17,7 +17,7 @@
 __interrupt void Cla1Task1 ( void )
 {
   RESTART_CLOCK;
-  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 0;
+  Cla1SoftIntRegs.SOFTINTEN.bit.TASK1 = 1;
 
   // reading ADC samples
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -34,7 +34,7 @@ __interrupt void Cla1Task1 ( void )
   if(CLA_CycleCounter==9){
     CLA_CycleCounter = 0;
     CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
-    //Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
+    Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
   } else {
     CLA_CycleCounter += 1;
   }
