@@ -16,17 +16,18 @@
 
 #include "stdint.h"
 #include "ControlProcessData.h"
+#include "ControlProcessBase.h"
 #include "ControlTypeDef.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
 
-class CurrentLoopController{
+class CurrentLoopController : public ControlProcessBase{
 
   public:
     CurrentLoopController(ControlProcessData * ControlProcessDataPtr);
     ~CurrentLoopController(){}
 
-    void Execute(void);
+    virtual void Execute(void);
     void Reset(void);
 
   private:

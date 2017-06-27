@@ -17,6 +17,7 @@
 #define SYSTEMWAREHOUSE_h
 
 #include "ControlProcessMaster.h"
+#include "ControlProcessExecuter.h"
 #include "CommutationMaster.h"
 #include "CommunicationInterface.h"
 #include "ObjectDictionary.h"
@@ -28,7 +29,8 @@ class SystemWarehouse{
   public:
     SystemWarehouse():
       _ControlProcessMaster(&_CommutationMaster, &_CommunicationInterface,
-                            &_ControlProcessData, &_CurrentLoopController),
+                            &_ControlProcessData, &_ControlProcessExecuter),
+      _ControlProcessExecuter(&_ControlProcessData),
       _CommutationMaster(),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData),
       _ObjectDictionary(&_CommutationMaster),
@@ -41,6 +43,7 @@ class SystemWarehouse{
 
   private:
     ControlProcessMaster _ControlProcessMaster;
+    ControlProcessExecuter _ControlProcessExecuter;
     CommutationMaster _CommutationMaster;
     CommunicationInterface _CommunicationInterface;
     ObjectDictionary  _ObjectDictionary;

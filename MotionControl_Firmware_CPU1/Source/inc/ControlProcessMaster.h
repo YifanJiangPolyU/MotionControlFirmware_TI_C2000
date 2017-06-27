@@ -23,6 +23,7 @@
 #include "CommunicationInterface.h"
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
+#include "ControlProcessExecuter.h"
 
 #define MASTER_CYCLE_PRESCALE    4
 
@@ -40,7 +41,7 @@ class ControlProcessMaster{
     ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                          CommunicationInterface * CommunicationInterfacePtr,
                          ControlProcessData * ControlProcessDataPtr,
-                         CurrentLoopController * CurrentLoopControllerPtr);
+                         ControlProcessExecuter * ControlProcessExecuterPtr);
 
     ~ControlProcessMaster(){}
 
@@ -49,9 +50,8 @@ class ControlProcessMaster{
     void Execute(void);
 
     typedef struct ControlProcessMaster_Status_typedef{
-      uint16_t _InternalState:  3;
-      uint16_t _CiaState:       1;
-      uint16_t _Error:          12;
+      uint16_t _State   :  2;
+      uint16_t _ErrCode :  14;
     } ControlProcessMaster_Status;
 
   private:
@@ -60,7 +60,7 @@ class ControlProcessMaster{
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;
     ControlProcessData * _ControlProcessData;
-    CurrentLoopController * _CurrentLoopController;
+    ControlProcessExecuter * _ControlProcessExecuter;
 
     uint16_t CycleCounter;
     uint16_t _NmtNewState;

@@ -26,7 +26,7 @@ static ControlProcessMaster * This;
 ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                                            CommunicationInterface * CommunicationInterfacePtr,
                                            ControlProcessData * ControlProcessDataPtr,
-                                           CurrentLoopController * CurrentLoopControllerPtr):
+                                           ControlProcessExecuter * ControlProcessExecuterPtr):
   _State(STATE_STOPPED),
   _NmtUpdated(false),
   _NmtNewState(0),
@@ -36,7 +36,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
     _CommutationMaster = CommutationMasterPtr;
     _CommunicationInterface = CommunicationInterfacePtr;
     _ControlProcessData = ControlProcessDataPtr;
-    _CurrentLoopController = CurrentLoopControllerPtr;
+    _ControlProcessExecuter = ControlProcessExecuterPtr;
   }
 
 /**

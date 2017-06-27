@@ -19,11 +19,32 @@
 #include "stdint.h"
 #include "F28x_Project.h"
 
+/**
+ *  define control types
+ */
+#define CTRL_TYPE_NONE        0x00     // no process
+#define CTRL_TYPE_CURRENT     0x01     // current control
+#define CTRL_TYPE_SPEED       0x02     // speed control (rotary only)
+#define CTRL_TYPE_POSITION    0x03     // position control
+#define CTRL_TYPE_FORCE       0x04     // force or torque control
+
+/**
+ *  define type of motor
+ */
+#define MTR_TYPE_NONE           0x00    // default, no motor
+#define MTR_TYPE_PMSM_ROTARY    0x01    // PMSM rotary (include BLDC)
+#define MTR_TYPE_PMSM_LINEAR    0x02    // PMSM linear
+#define MTR_TYPE_DC_ROTARY      0x03    // brushed DC rotary
+#define MTR_TYPE_DC_LINEAR      0x04    // DC linear (include VCM)
+#define MTR_TYPE_STEPPER        0x05    // stepper motor
+
 class ControlProcessData{
 
 public:
 
   ControlProcessData():
+    _ControlType(CTRL_TYPE_NONE),
+    _MotorType(MTR_TYPE_NONE),
     _CurrentSenseGain(0),
     _VoltageSenseGain(0),
     _CommAngleCosine(1),
@@ -39,6 +60,9 @@ public:
   };
 
   ~ControlProcessData(){};
+
+  uint16_t _ControlType;
+  uint16_t _MotorType;
 
   // current actual values
   uint16_t * _CurrentValueBufferPhaseA;
