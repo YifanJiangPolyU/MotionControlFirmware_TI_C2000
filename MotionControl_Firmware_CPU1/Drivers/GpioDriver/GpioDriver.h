@@ -16,11 +16,19 @@
 
 #include "F28x_Project.h"
 
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
 void SetErrorLed(void);
 void ClearErrorLed(void);
 void SetStatusLed(void);
 void ClearStatusLed(void);
 void SetDrv8301GateEnable(void);
 void ClearDrv8301GateEnable(void);
+
+#ifdef __cplusplus
+  }
+#endif
 
 #endif

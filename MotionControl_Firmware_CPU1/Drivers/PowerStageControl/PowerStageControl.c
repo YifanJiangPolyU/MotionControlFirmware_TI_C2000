@@ -53,4 +53,20 @@ void PwrEnable(void){
 void PwrDisable(void){
   // Clear DRV gate enable
   ClearDrv8301GateEnable();
+  EPwm4Regs.CMPA.bit.CMPA = 0;
+  EPwm5Regs.CMPA.bit.CMPA = 0;
+  EPwm6Regs.CMPA.bit.CMPA = 0;
+}
+
+/**
+  * apply PWM duty
+  * @param duty    PWM Compare Match values
+  *                should be between PWM_MAX_DUTY and PWM_MIN_DUTY
+  */
+#pragma CODE_SECTION(PwrSetPwmDuty, ".TI.ramfunc");
+void PwrSetPwmDuty(PwmDutyVec * duty){
+
+  EPwm4Regs.CMPA.bit.CMPA = duty->A;
+  EPwm5Regs.CMPA.bit.CMPA = duty->B;
+  EPwm6Regs.CMPA.bit.CMPA = duty->C;
 }

@@ -14,6 +14,9 @@
 #ifndef _CONTROL_TYPEDEF_H
 #define _CONTROL_TYPEDEF_H
 
+#include "F28x_Project.h"
+#include "stdint.h"
+
 #ifdef __cplusplus
   extern "C" {
 #endif
@@ -29,7 +32,7 @@ typedef struct PhaseCVoltageTypedef{
   float32_t C;
 } PhaseVoltageVec;
 
-typedef struct PPwmDutyTypedef{
+typedef struct PwmDutyTypedef{
   uint16_t A;
   uint16_t B;
   uint16_t C;

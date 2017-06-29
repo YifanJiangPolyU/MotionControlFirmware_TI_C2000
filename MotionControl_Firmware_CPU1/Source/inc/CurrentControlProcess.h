@@ -8,37 +8,32 @@
  ******************************************************************************/
 
 /*
-* current loop sweep sine class
-*
-* Control the execution of current loop sweep sine, to obtain the frequency
-* domain response of the current loop. This is the sweep sine process
-* controller and setpoint generator only, current loop is executed by CLA.
+* define the current control process class
 */
 
-#ifndef _CURRENT_LOOP_SWEEPSINE_H
-#define _CURRENT_LOOP_SWEEPSINE_H
+#ifndef _CURRENT_CONTROL_PROCESS_H
+#define _CURRENT_CONTROL_PROCESS_H
 
+#include "ControlTypeDef.h"
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
 
-class CurrentLoopSweepSine : public ControlProcessBase{
+class CurrentControlProcess : public ControlProcessBase{
 
   public:
-    CurrentLoopSweepSine(CurrentLoopController * CurrentLoopControllerPtr,
+    CurrentControlProcess(CurrentLoopController * CurrentLoopControllerPtr,
                           ControlProcessData * ControlProcessDataPtr)
     {
       _CurrentLoopController = CurrentLoopControllerPtr;
       _ControlProcessData = ControlProcessDataPtr;
     }
 
-    ~CurrentLoopSweepSine(){}
+    ~CurrentControlProcess(){}
 
-    virtual void Execute(void){
-
-    }
+    virtual void Execute(void);
 
     virtual void Reset(void){
-
+      _CurrentLoopController->Reset();
     }
 
   private:

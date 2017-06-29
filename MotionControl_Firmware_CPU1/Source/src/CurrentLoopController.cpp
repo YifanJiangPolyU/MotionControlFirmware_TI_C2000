@@ -34,7 +34,7 @@ CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcess
  *  execute the current controller
  */
 #pragma CODE_SECTION(".TI.ramfunc");
-void CurrentLoopController::Execute(void){
+PwmDutyVec CurrentLoopController::Execute(void){
 
   PwmDutyVec Pwm;
 
@@ -95,6 +95,8 @@ void CurrentLoopController::Execute(void){
   Pwm.A = (uint16_t)(_Output_Ua * VoltToPwmScaleFactor);
   Pwm.B = (uint16_t)(_Output_Ub * VoltToPwmScaleFactor);
   Pwm.C = (uint16_t)(_Output_Uc * VoltToPwmScaleFactor);
+
+  return Pwm;
 
 }
 

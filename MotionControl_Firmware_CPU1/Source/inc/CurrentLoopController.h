@@ -21,13 +21,13 @@
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
 
-class CurrentLoopController : public ControlProcessBase{
+class CurrentLoopController{
 
   public:
     CurrentLoopController(ControlProcessData * ControlProcessDataPtr);
     ~CurrentLoopController(){}
 
-    virtual void Execute(void);
+    PwmDutyVec Execute(void);
     void Reset(void);
 
   private:

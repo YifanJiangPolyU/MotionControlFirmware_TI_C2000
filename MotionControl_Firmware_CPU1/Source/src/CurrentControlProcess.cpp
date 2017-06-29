@@ -8,33 +8,18 @@
  ******************************************************************************/
 
 /*
-* define power stage control functions
+* implement the current control process class
 */
 
-#ifndef _PWR_STAGE_CTRL_H
-#define _PWR_STAGE_CTRL_H
+#include "CurrentControlProcess.h"
+#include "Drivers/PowerStageControl/PowerStageControl.h"
 
-#include "F28x_Project.h"
-#include "ControlTypeDef.h"
+void CurrentControlProcess::Execute(void){
+  PwmDutyVec PwmDutyCycle;
 
-#ifdef __cplusplus
-  extern "C" {
-#endif
+  // execute current controller
+  PwmDutyCycle = _CurrentLoopController->Execute();
 
-#define PWM_COUNTER_TOP      3125
-#define PWM_MAX_DUTY         3000
-#define PWM_MIN_DUTY         150
-
-void SensorEnable(void);
-void PwmTimerEnable(void);
-void PwrEnable(void);
-void PwrDisable(void);
-void PwrReset(void);
-
-void PwrSetPwmDuty(PwmDutyVec * duty);
-
-#ifdef __cplusplus
-  }
-#endif
-
-#endif
+  // apply duty cycle
+  PwrSetPwmDuty(&PwmDutyCycle);
+}

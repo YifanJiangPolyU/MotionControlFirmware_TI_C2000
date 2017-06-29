@@ -20,22 +20,15 @@
 class ControlProcessBase{
 
   public:
+
     ControlProcessBase(){};
     ~ControlProcessBase(){};
 
     virtual void Execute(void){};
-
-    uint16_t GetProcessID(void){
-      return _ProcessID;
-    }
-
-    uint16_t GetStatus(void){
-      return _Status;
-    }
+    virtual void Reset(void){};
 
   protected:
-    uint16_t _ProcessID;
-    uint16_t _Status;
+    bool _ProcessCompleted;
 
   private:
 

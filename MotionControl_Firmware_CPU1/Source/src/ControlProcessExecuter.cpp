@@ -20,12 +20,13 @@
 void ControlProcessExecuter::StartProcess(uint16_t ProcessID){
   if(_ProcessArray[ProcessID] != NULL){
     // execute process if it exists
-    
+    _ProcessRunning = true;
+    _ActiveProcessID = ProcessID;
   }
 }
 
 /**
- *  terminate current active process
+ *  terminate currently active process
  *  doesn't do anything if no process is active
  */
 void ControlProcessExecuter::TerminateProcess(void){
@@ -42,7 +43,12 @@ void ControlProcessExecuter::TerminateProcess(void){
  *           false, if the process is going to remain active
  *                  ControlProcessMaster should remain in STATE_OP
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 bool ControlProcessExecuter::ExecuteProcess(void){
+
+  if(_ProcessRunning){
+    _ProcessArray[_ActiveProcessID]->Execute();
+  }
 
   return (! _ProcessRunning);
 }

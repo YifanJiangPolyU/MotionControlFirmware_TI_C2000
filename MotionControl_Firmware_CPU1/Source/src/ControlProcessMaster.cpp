@@ -70,6 +70,8 @@ void ControlProcessMaster::Execute(void){
           _State = STATE_STOPPED;
         }
       }
+
+      _ControlProcessExecuter->ExecuteProcess();
       break;
     case STATE_OP:
       if(_NmtUpdated==true){
@@ -85,6 +87,7 @@ void ControlProcessMaster::Execute(void){
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_TO_PREOP){
+          _ControlProcessExecuter->StartProcess(PROCESS_CURRENT);
           _State = STATE_PREOP;
         }
       }

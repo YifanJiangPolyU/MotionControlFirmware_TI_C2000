@@ -18,6 +18,9 @@
 #include "ControlProcessData.h"
 #include "ControlProcessBase.h"
 #include "CurrentLoopController.h"
+#include "CurrentControlProcess.h"
+#include "PositionControlProcess.h"
+#include "CurrentLoopSweepSine.h"
 
 /**
  *  define process IDs
@@ -37,21 +40,24 @@ class ControlProcessExecuter {
     ControlProcessExecuter(ControlProcessData * ControlProcessDataPtr):
       _ActiveProcessID(PROCESS_NONE),
       _ProcessRunning(false),
-      _CurrentLoopController(ControlProcessDataPtr)
+      _CurrentLoopController(ControlProcessDataPtr),
+      _CurrentControlProcess(&_CurrentLoopController, ControlProcessDataPtr),
+      _PositionControlProcess(&_CurrentLoopController, ControlProcessDataPtr),
+      _CurrentLoopSweepSine(&_CurrentLoopController, ControlProcessDataPtr)
     {
       _ControlProcessData = ControlProcessDataPtr;
 
       _ProcessArray[0] = NULL;
-      _ProcessArray[1] = &_CurrentLoopController;
+      _ProcessArray[1] = &_CurrentControlProcess;
       _ProcessArray[2] = NULL;
-      _ProcessArray[3] = NULL;
+      _ProcessArray[3] = &_PositionControlProcess;
       _ProcessArray[4] = NULL;
       _ProcessArray[5] = NULL;
       _ProcessArray[6] = NULL;
       _ProcessArray[7] = NULL;
       _ProcessArray[8] = NULL;
       _ProcessArray[9] = NULL;
-      _ProcessArray[10] = NULL;
+      _ProcessArray[10] = &_CurrentLoopSweepSine;
       _ProcessArray[11] = NULL;
       _ProcessArray[12] = NULL;
       _ProcessArray[13] = NULL;
@@ -78,6 +84,9 @@ class ControlProcessExecuter {
     ControlProcessBase * _ProcessArray[20];
 
     CurrentLoopController _CurrentLoopController;
+    CurrentControlProcess _CurrentControlProcess;
+    PositionControlProcess _PositionControlProcess;
+    CurrentLoopSweepSine _CurrentLoopSweepSine;
 
 };
 
