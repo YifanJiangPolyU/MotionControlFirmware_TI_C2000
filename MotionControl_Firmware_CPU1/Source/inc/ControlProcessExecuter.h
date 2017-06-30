@@ -24,6 +24,8 @@
 
 /**
  *  define process IDs
+ *  IMPORTANT: process ID MUST match the index of the corresponding process class
+ *  in the _ProcessArray
  */
 #define PROCESS_NONE        0     // no process
 #define PROCESS_CURRENT     1     // current control
@@ -47,6 +49,7 @@ class ControlProcessExecuter {
     {
       _ControlProcessData = ControlProcessDataPtr;
 
+      // IMPORTANT: index of process classes MUST match with the process ID
       _ProcessArray[0] = NULL;
       _ProcessArray[1] = &_CurrentControlProcess;
       _ProcessArray[2] = NULL;
