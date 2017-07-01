@@ -23,7 +23,11 @@
 #include "CommutationMaster.h"
 #include "CiATypeDef.h"
 #include "ObjectDictionaryEntryBase.h"
+#include "ControlProcessData.h"
+#include "CurrentLoopController.h"
 #include "CurrentControlProcess.h"
+#include "CurrentLoopSweepSine.h"
+#include "PositionControlProcess.h"
 
 #define MAX_NO_OF_ENTRY 100
 
@@ -31,7 +35,9 @@ class ObjectDictionary{
 
 public:
 
-  ObjectDictionary(CommutationMaster * CommutationMasterPtr)
+  ObjectDictionary(ControlProcessData * ControlProcessDataPtr,
+                   CommutationMaster * CommutationMasterPtr,
+                   CurrentLoopController * CurrentLoopControllerPtr)
   {
     _CommutationMaster = CommutationMasterPtr;
 

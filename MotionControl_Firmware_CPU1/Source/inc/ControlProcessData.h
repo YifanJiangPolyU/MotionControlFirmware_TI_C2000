@@ -19,6 +19,8 @@
 #include "stdint.h"
 #include "F28x_Project.h"
 
+#include "ObjectDictionaryEntryBase.h"
+
 /**
  *  define control types
  */
@@ -38,7 +40,7 @@
 #define MTR_TYPE_DC_LINEAR      0x04    // DC linear (include VCM)
 #define MTR_TYPE_STEPPER        0x05    // stepper motor
 
-class ControlProcessData{
+class ControlProcessData: public ObjectDictionaryEntryBase{
 
 public:
 

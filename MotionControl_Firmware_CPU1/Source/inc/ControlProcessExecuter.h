@@ -39,13 +39,13 @@
 class ControlProcessExecuter {
 
   public:
-    ControlProcessExecuter(ControlProcessData * ControlProcessDataPtr):
+    ControlProcessExecuter(ControlProcessData * ControlProcessDataPtr,
+                           CurrentLoopController * CurrentLoopControllerPtr,
+                           CurrentControlProcess * CurrentControlProcessPtr,
+                           CurrentLoopSweepSine * CurrentLoopSweepSinePtr,
+                           PositionControlProcess * PositionControlProcessPtr):
       _ActiveProcessID(PROCESS_NONE),
-      _ProcessRunning(false),
-      _CurrentLoopController(ControlProcessDataPtr),
-      _CurrentControlProcess(&_CurrentLoopController, ControlProcessDataPtr),
-      _PositionControlProcess(&_CurrentLoopController, ControlProcessDataPtr),
-      _CurrentLoopSweepSine(&_CurrentLoopController, ControlProcessDataPtr)
+      _ProcessRunning(false)
     {
       _ControlProcessData = ControlProcessDataPtr;
 
@@ -55,9 +55,9 @@ class ControlProcessExecuter {
       }
 
       // IMPORTANT: index of process classes MUST match with the process ID
-      _ProcessArray[1] = &_CurrentControlProcess;
-      _ProcessArray[3] = &_PositionControlProcess;
-      _ProcessArray[10] = &_CurrentLoopSweepSine;
+      _ProcessArray[1] = CurrentControlProcessPtr;
+      _ProcessArray[3] = PositionControlProcessPtr;
+      _ProcessArray[10] = CurrentLoopSweepSinePtr;
     }
 
     ~ControlProcessExecuter(){}
@@ -74,10 +74,6 @@ class ControlProcessExecuter {
     ControlProcessData * _ControlProcessData;
     ControlProcessBase * _ProcessArray[20];
 
-    CurrentLoopController _CurrentLoopController;
-    CurrentControlProcess _CurrentControlProcess;
-    PositionControlProcess _PositionControlProcess;
-    CurrentLoopSweepSine _CurrentLoopSweepSine;
 
 };
 

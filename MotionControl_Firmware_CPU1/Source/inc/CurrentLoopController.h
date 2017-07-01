@@ -21,7 +21,7 @@
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
 
-class CurrentLoopController{
+class CurrentLoopController: public ObjectDictionaryEntryBase{
 
   public:
     CurrentLoopController(ControlProcessData * ControlProcessDataPtr);

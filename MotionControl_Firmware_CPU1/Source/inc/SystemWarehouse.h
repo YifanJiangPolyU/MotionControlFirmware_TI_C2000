@@ -23,6 +23,11 @@
 #include "ObjectDictionary.h"
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
+#include "CurrentControlProcess.h"
+#include "CurrentLoopSweepSine.h"
+#include "PositionControlProcess.h"
+
+
 #include "Drivers/UartDriver/UartDriver.h"
 
 class SystemWarehouse{
@@ -30,11 +35,21 @@ class SystemWarehouse{
     SystemWarehouse():
       _ControlProcessMaster(&_CommutationMaster, &_CommunicationInterface,
                             &_ControlProcessData, &_ControlProcessExecuter),
-      _ControlProcessExecuter(&_ControlProcessData),
+      _ControlProcessExecuter(&_ControlProcessData,
+                              &_CurrentLoopController,
+                              &_CurrentControlProcess,
+                              &_CurrentLoopSweepSine,
+                              &_PositionControlProcess),
+      _ObjectDictionary(&_ControlProcessData,
+                        &_CommutationMaster,
+                        &_CurrentLoopController),
       _CommutationMaster(),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData),
-      _ObjectDictionary(&_CommutationMaster),
       _CurrentLoopController(&_ControlProcessData),
+      _CurrentControlProcess(&_CurrentLoopController, &_ControlProcessData),
+      _PositionControlProcess(&_CurrentLoopController, &_ControlProcessData),
+      _CurrentLoopSweepSine(&_CurrentLoopController, &_ControlProcessData),
+
       _ControlProcessData(),
       _UartDriver()
       {}
@@ -48,7 +63,11 @@ class SystemWarehouse{
     CommunicationInterface _CommunicationInterface;
     ObjectDictionary  _ObjectDictionary;
     ControlProcessData _ControlProcessData;
+
     CurrentLoopController _CurrentLoopController;
+    CurrentControlProcess _CurrentControlProcess;
+    PositionControlProcess _PositionControlProcess;
+    CurrentLoopSweepSine _CurrentLoopSweepSine;
 
     UartDriver _UartDriver;
 };
