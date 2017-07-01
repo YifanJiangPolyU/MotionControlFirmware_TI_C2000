@@ -17,8 +17,9 @@
 #include "ControlTypeDef.h"
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
+#include "ObjectDictionaryEntryBase.h"
 
-class CurrentControlProcess : public ControlProcessBase{
+class CurrentControlProcess : public ControlProcessBase, public ObjectDictionaryEntryBase{
 
   public:
     CurrentControlProcess(CurrentLoopController * CurrentLoopControllerPtr,
@@ -34,6 +35,10 @@ class CurrentControlProcess : public ControlProcessBase{
 
     virtual void Reset(void){
       _CurrentLoopController->Reset();
+    }
+
+    virtual void AccessObject(void){
+
     }
 
   private:

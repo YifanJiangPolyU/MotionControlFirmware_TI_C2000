@@ -59,12 +59,9 @@ void CommunicationInterface::ExecuteReception(void){
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
-      memcpy(&(sdomsg->Ctrl), &(ciamsg->Data[0]), sizeof(uint32_t));
-      memcpy(&(sdomsg->Data[0]), &(ciamsg->Data[2]), 4*sizeof(uint16_t));
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
-      memcpy(&(pdomsg->Data[0]), &(ciamsg->Data[0]), 6*sizeof(uint16_t));
       _PdoUpdated = true;
     } else {
 
@@ -83,6 +80,20 @@ bool CommunicationInterface::CheckNmtUpdate(uint16_t * mnt_state){
   if(_NmtUpdated == true){
     *mnt_state = _NmtNewState;
     _NmtUpdated = false;
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ *  retrive state transition cmd from PDO message
+ *  @param
+ *  @retval true if new PDO message is received, false otherwise
+ */
+bool CommunicationInterface::CheckPdoUpdate(void){
+  if(_PdoUpdated == true){
+    _PdoUpdated = false;
     return true;
   }
 

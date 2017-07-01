@@ -16,8 +16,9 @@
 
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
+#include "ObjectDictionaryEntryBase.h"
 
-class PositionControlProcess : public ControlProcessBase{
+class PositionControlProcess : public ControlProcessBase, public ObjectDictionaryEntryBase{
 
   public:
     PositionControlProcess(CurrentLoopController * CurrentLoopControllerPtr,

@@ -49,27 +49,15 @@ class ControlProcessExecuter {
     {
       _ControlProcessData = ControlProcessDataPtr;
 
+      uint16_t i;
+      for(i=0; i<20; i++){
+        _ProcessArray[i] = NULL;
+      }
+
       // IMPORTANT: index of process classes MUST match with the process ID
-      _ProcessArray[0] = NULL;
       _ProcessArray[1] = &_CurrentControlProcess;
-      _ProcessArray[2] = NULL;
       _ProcessArray[3] = &_PositionControlProcess;
-      _ProcessArray[4] = NULL;
-      _ProcessArray[5] = NULL;
-      _ProcessArray[6] = NULL;
-      _ProcessArray[7] = NULL;
-      _ProcessArray[8] = NULL;
-      _ProcessArray[9] = NULL;
       _ProcessArray[10] = &_CurrentLoopSweepSine;
-      _ProcessArray[11] = NULL;
-      _ProcessArray[12] = NULL;
-      _ProcessArray[13] = NULL;
-      _ProcessArray[14] = NULL;
-      _ProcessArray[15] = NULL;
-      _ProcessArray[16] = NULL;
-      _ProcessArray[17] = NULL;
-      _ProcessArray[18] = NULL;
-      _ProcessArray[19] = NULL;
     }
 
     ~ControlProcessExecuter(){}

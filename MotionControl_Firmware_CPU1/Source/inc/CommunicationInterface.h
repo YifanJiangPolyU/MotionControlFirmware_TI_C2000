@@ -42,6 +42,7 @@ class CommunicationInterface{
     void ExecuteReception(void);
 
     bool CheckNmtUpdate(uint16_t * mnt_state);
+    bool CheckPdoUpdate(void);
 
   private:
     UartDriver * _UartDriver;

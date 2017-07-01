@@ -22,6 +22,8 @@
 
 #include "CommutationMaster.h"
 #include "CiATypeDef.h"
+#include "ObjectDictionaryEntryBase.h"
+#include "CurrentControlProcess.h"
 
 class ObjectDictionary{
 
@@ -33,11 +35,12 @@ public:
 
   ~ObjectDictionary(){}
 
-  void AccessEntry(CiA_SdoMessage * sdomsg){};
+  void AccessEntry(CiA_Message * msg){};
 
 private:
 
   CommutationMaster * _CommutationMaster;
+  ObjectDictionaryEntryBase * _EntryArray[100];
 
 
 };
