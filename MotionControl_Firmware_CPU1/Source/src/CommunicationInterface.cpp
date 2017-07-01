@@ -71,7 +71,6 @@ void CommunicationInterface::ExecuteReception(void){
 
     if(ciamsg->CANID == CANID_NMT){
       // handle CANOpen NMT protocol
-      _ObjectDictionary->AccessEntry(ciamsg);
       _NmtNewState = __byte_uint16_t(ciamsg->Data, 0);
       _NmtUpdated = true;
 
@@ -80,6 +79,8 @@ void CommunicationInterface::ExecuteReception(void){
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
+      // this step takes 40 sysclk cycles
+      _ObjectDictionary->AccessEntry(ciamsg);
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
