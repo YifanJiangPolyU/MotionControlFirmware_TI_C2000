@@ -25,20 +25,22 @@ class CommunicationInterface{
   public:
     CommunicationInterface(UartDriver * UartDriverPtr,
                            ObjectDictionary * ObjectDictionaryPtr,
-                           ControlProcessData * ControlProcessDataPtr)
+                           ControlProcessData * ControlProcessDataPtr):
+        _UartDriver(UartDriverPtr),
+        _ObjectDictionary(ObjectDictionaryPtr),
+        _ControlProcessData(ControlProcessDataPtr),
+        _NmtUpdated(false),
+        _PdoUpdated(false),
+        _SdoReplyPending(false),
+        _NmtNewState(0x00)
     {
-      _UartDriver = UartDriverPtr;
-      _ObjectDictionary = ObjectDictionaryPtr;
-      _ControlProcessData = ControlProcessDataPtr;
-      _NmtUpdated = false;
-      _PdoUpdated = false;
-      _NmtNewState = 0x00;
+
     }
 
     ~CommunicationInterface(){}
 
-    void SetCiaMsgBuffer(CiA_Message* msgptr, CiA_SdoMessage* sdoptr, CiA_PdoMessage* pdoptr);
-    void ExecuteTransmission(void);
+    void SetCiaMsgBuffer(CiA_Message* msgptr);
+    void ExecuteTransmission(uint16_t CycleCounter);
     void ExecuteReception(void);
 
     bool CheckNmtUpdate(uint16_t * mnt_state);
@@ -53,9 +55,10 @@ class CommunicationInterface{
     bool _PdoUpdated;
     uint16_t _NmtNewState;
 
+    bool _SdoReplyPending;
+    CiA_Message _SodReplyMsg;
+
     CiA_Message * ciamsg;
-    CiA_SdoMessage * sdomsg;
-    CiA_PdoMessage * pdomsg;
 
 };
 

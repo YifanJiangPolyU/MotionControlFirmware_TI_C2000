@@ -53,9 +53,9 @@ public:
 
   ~ObjectDictionary(){}
 
-  void AccessEntry(CiA_Message * msg){
+  uint16_t AccessEntry(CiA_Message * msg){
     uint16_t hehe = (_InstanceArray[0]->*(_AccessFunctionArray[0]))(msg);
-    hehe += 1;
+    return OBD_ACCESS_SUCCESS;
   }
 
 private:

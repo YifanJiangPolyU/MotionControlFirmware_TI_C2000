@@ -21,26 +21,42 @@
  *  @param pdoptr
  *  @retval None
  */
-void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr,
-                                             CiA_SdoMessage * sdoptr,
-                                             CiA_PdoMessage * pdoptr)
+void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
 {
   ciamsg = msgptr;
-  sdomsg = sdoptr;
-  pdomsg = pdoptr;
 }
 
 /**
  *  transmits message(s) over communication interface
+ *  param CycleCounter   keep transmisson synchronized to ControlProcessMaster
  */
 #pragma CODE_SECTION(".TI.ramfunc");
-void CommunicationInterface::ExecuteTransmission(void){
+void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
   CiA_Message msg;
-  msg.CANID = 123;
-  msg.Length = 8;
-  memcpy(&(msg.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
-         4*sizeof(uint16_t));
-  _UartDriver->SendMessage(&msg);
+
+  switch (CycleCounter) {
+    case 0:
+      // transmit PDO status report
+      msg.CANID = 123;
+      msg.Length = 8;
+      memcpy(&(msg.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
+             4*sizeof(uint16_t));
+      _UartDriver->SendMessage(&msg);
+      break;
+    case 1:
+      break;
+    case 2:
+      break;
+    case 3:
+      // transmit SDO reply, if any
+      if(_SdoReplyPending==true){
+        _SdoReplyPending = false;
+
+      }
+      break;
+    default:
+      break;
+  }
 
 }
 
@@ -59,6 +75,9 @@ void CommunicationInterface::ExecuteReception(void){
       _NmtNewState = __byte_uint16_t(ciamsg->Data, 0);
       _NmtUpdated = true;
 
+    } else if(ciamsg->CANID == CANID_SYNC){
+      // handle sync msg
+
     } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
 
@@ -66,7 +85,7 @@ void CommunicationInterface::ExecuteReception(void){
       // handle CANOpen PDO
       _PdoUpdated = true;
     } else {
-
+      // default, nothing
     }
   }
 

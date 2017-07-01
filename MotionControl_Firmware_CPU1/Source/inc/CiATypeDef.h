@@ -19,6 +19,7 @@
 #define NODE_ID         0x003
 
 #define CANID_NMT       0x000
+#define CANID_SYNC      0x080
 #define CANID_SDO_TX    0x580
 #define CANID_SDO_RX    0x600
 #define CANID_PDO_TX    0x180

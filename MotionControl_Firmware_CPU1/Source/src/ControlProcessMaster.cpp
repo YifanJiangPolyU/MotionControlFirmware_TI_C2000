@@ -30,7 +30,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
   _State(STATE_STOPPED),
   _NmtUpdated(false),
   _NmtNewState(0),
-  CycleCounter(0)
+  _CycleCounter(0)
   {
     This = this;
     _CommutationMaster = CommutationMasterPtr;
@@ -48,8 +48,8 @@ void ControlProcessMaster::Execute(void){
   // Get data from current controller and ADC
   GetData();
 
-  _CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer, &_CiA_SdoBuffer,
-                                           &_CiA_PdoBuffer);
+  _CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer);
+
   // poll coummunication interface
   _CommunicationInterface->ExecuteReception();
   _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
@@ -103,12 +103,13 @@ void ControlProcessMaster::Execute(void){
   }
 
   // update cycle counter to synchronize activities
-  if(CycleCounter==MASTER_CYCLE_PRESCALE-1){
-    CycleCounter = 0;
-    _CommunicationInterface->ExecuteTransmission();
+  if(_CycleCounter==MASTER_CYCLE_PRESCALE-1){
+    _CycleCounter = 0;
   } else {
-    CycleCounter++;
+    _CycleCounter++;
   }
+
+  _CommunicationInterface->ExecuteTransmission(_CycleCounter);
 }
 
 /**
@@ -126,9 +127,9 @@ void ControlProcessMaster::SetCurrentValueBuffer(uint16_t * bufA, uint16_t * buf
  *  get data from ADC buffer
  */
 void ControlProcessMaster::GetData(void){
-  _ControlProcessData->_CurrentValuePhaseA[CycleCounter] =
+  _ControlProcessData->_CurrentValuePhaseA[_CycleCounter] =
                       *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
-  _ControlProcessData->_CurrentValuePhaseB[CycleCounter] =
+  _ControlProcessData->_CurrentValuePhaseB[_CycleCounter] =
                       *(_ControlProcessData->_CurrentValueBufferPhaseB+2);
 }
 
