@@ -41,13 +41,14 @@ public:
       _AccessFunctionArray[i] = NULL;
     }
 
+    _InstanceArray[0] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
     _AccessFunctionArray[0] = static_cast<uint16_t (ObjectDictionaryEntryBase::*)(CiA_Message*)> (&CommutationMaster::AccessParameter);
   }
 
   ~ObjectDictionary(){}
 
   void AccessEntry(CiA_Message * msg){
-    uint16_t hehe = (_CommutationMaster->*(_AccessFunctionArray[0]))(msg);
+    uint16_t hehe = (_InstanceArray[0]->*(_AccessFunctionArray[0]))(msg);
     hehe += 1;
   }
 
