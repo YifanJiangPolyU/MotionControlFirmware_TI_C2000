@@ -33,6 +33,7 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr,
 /**
  *  transmits message(s) over communication interface
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 void CommunicationInterface::ExecuteTransmission(void){
   CiA_Message msg;
   msg.CANID = 123;
@@ -54,6 +55,7 @@ void CommunicationInterface::ExecuteReception(void){
 
     if(ciamsg->CANID == CANID_NMT){
       // handle CANOpen NMT protocol
+      _ObjectDictionary->AccessEntry(ciamsg);
       _NmtNewState = __byte_uint16_t(ciamsg->Data, 0);
       _NmtUpdated = true;
 
@@ -76,6 +78,7 @@ void CommunicationInterface::ExecuteReception(void){
  *  @param mnt_state  buffer to hold new state
  *  @retval true if new NMT message is received, false otherwise
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 bool CommunicationInterface::CheckNmtUpdate(uint16_t * mnt_state){
   if(_NmtUpdated == true){
     *mnt_state = _NmtNewState;
@@ -91,6 +94,7 @@ bool CommunicationInterface::CheckNmtUpdate(uint16_t * mnt_state){
  *  @param
  *  @retval true if new PDO message is received, false otherwise
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 bool CommunicationInterface::CheckPdoUpdate(void){
   if(_PdoUpdated == true){
     _PdoUpdated = false;

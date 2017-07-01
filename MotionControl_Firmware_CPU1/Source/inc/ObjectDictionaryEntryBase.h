@@ -16,6 +16,7 @@
 #define _OBJ_ENTRY_BASE_H
 
 #include "stdint.h"
+#include "CiATypeDef.h"
 
 class ObjectDictionaryEntryBase{
 

@@ -25,22 +25,37 @@
 #include "ObjectDictionaryEntryBase.h"
 #include "CurrentControlProcess.h"
 
+#define MAX_NO_OF_ENTRY 100
+
 class ObjectDictionary{
 
 public:
+
   ObjectDictionary(CommutationMaster * CommutationMasterPtr)
   {
     _CommutationMaster = CommutationMasterPtr;
+
+    uint16_t i;
+    for(i=0; i<MAX_NO_OF_ENTRY; i++){
+      _InstanceArray[i] = NULL;
+      _AccessFunctionArray[i] = NULL;
+    }
+
+    _AccessFunctionArray[0] = static_cast<uint16_t (ObjectDictionaryEntryBase::*)(CiA_Message*)> (&CommutationMaster::AccessParameter);
   }
 
   ~ObjectDictionary(){}
 
-  void AccessEntry(CiA_Message * msg){};
+  void AccessEntry(CiA_Message * msg){
+    uint16_t hehe = (_CommutationMaster->*(_AccessFunctionArray[0]))(msg);
+    hehe += 1;
+  }
 
 private:
 
   CommutationMaster * _CommutationMaster;
-  ObjectDictionaryEntryBase * _EntryArray[100];
+  ObjectDictionaryEntryBase * _InstanceArray[ MAX_NO_OF_ENTRY ];
+  uint16_t (ObjectDictionaryEntryBase::*_AccessFunctionArray[ MAX_NO_OF_ENTRY ])(CiA_Message *);
 
 
 };

@@ -21,7 +21,10 @@
 #include "stdint.h"
 #include "F28x_Project.h"
 
-class CommutationMaster{
+#include "CiATypeDef.h"
+#include "ObjectDictionaryEntryBase.h"
+
+class CommutationMaster: public ObjectDictionaryEntryBase{
 
   public:
     CommutationMaster():
@@ -38,6 +41,10 @@ class CommutationMaster{
 
     void Update(int32_t PosCounter);
     void UpdateCommResolution(void);
+
+    uint16_t AccessParameter(CiA_Message * msg){
+      return 12;
+    }
 
   private:
     int32_t PosCounter_new;           // position counter value
