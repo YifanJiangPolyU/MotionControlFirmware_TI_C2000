@@ -79,8 +79,8 @@ void CommunicationInterface::ExecuteReception(void){
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
-      // this step takes 40 sysclk cycles
-      _ObjectDictionary->AccessEntry(ciamsg);
+      _ObjectDictionary->AccessEntry(ciamsg, &_SodReplyMsg);
+      _SdoReplyPending = true;
 
     } else if((ciamsg->CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO

@@ -48,21 +48,20 @@ public:
     }
 
     _InstanceArray[0] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
-    _AccessFunctionArray[0] = static_cast<uint16_t (ObjectDictionaryEntryBase::*)(CiA_Message*)> (&CommutationMaster::AccessParameter);
+    _AccessFunctionArray[0] = static_cast<void (ObjectDictionaryEntryBase::*)(CiA_Message*, CiA_Message*)> (&CommutationMaster::AccessParameter);
   }
 
   ~ObjectDictionary(){}
 
-  uint16_t AccessEntry(CiA_Message * msg){
-    uint16_t hehe = (_InstanceArray[0]->*(_AccessFunctionArray[0]))(msg);
-    return OBD_ACCESS_SUCCESS;
+  void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
+    (_InstanceArray[0]->*(_AccessFunctionArray[0]))(msg_in, msg_out);
   }
 
 private:
 
   CommutationMaster * _CommutationMaster;
   ObjectDictionaryEntryBase * _InstanceArray[ MAX_NO_OF_ENTRY ];
-  uint16_t (ObjectDictionaryEntryBase::*_AccessFunctionArray[ MAX_NO_OF_ENTRY ])(CiA_Message *);
+  void (ObjectDictionaryEntryBase::*_AccessFunctionArray[ MAX_NO_OF_ENTRY ])(CiA_Message*, CiA_Message*);
 
 
 };

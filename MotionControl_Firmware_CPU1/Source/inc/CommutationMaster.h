@@ -42,8 +42,8 @@ class CommutationMaster: public ObjectDictionaryEntryBase{
     void Update(int32_t PosCounter);
     void UpdateCommResolution(void);
 
-    uint16_t AccessParameter(CiA_Message * msg){
-      return 12;
+    void AccessParameter(CiA_Message * msg_in, CiA_Message * msg_out){
+      msg_out->CANID = 0x001;
     }
 
   private:
