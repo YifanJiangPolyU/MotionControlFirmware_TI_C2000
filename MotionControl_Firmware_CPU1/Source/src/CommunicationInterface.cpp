@@ -37,9 +37,9 @@ void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
   switch (CycleCounter) {
     case 0:
       // transmit PDO status report
-      msg.CANID = 123;
-      msg.Length = 8;
-      memcpy(&(msg.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
+      msg.Common.CANID = 123;
+      msg.Common.Length = 8;
+      memcpy(&(msg.Common.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
              4*sizeof(uint16_t));
       _UartDriver->SendMessage(&msg);
       break;
@@ -69,20 +69,20 @@ void CommunicationInterface::ExecuteReception(void){
   uint16_t msgcnt = _UartDriver->ExecuteParsing(ciamsg);
   if(msgcnt > 0 ){
 
-    if(ciamsg->CANID == CANID_NMT){
+    if(ciamsg->Common.CANID == CANID_NMT){
       // handle CANOpen NMT protocol
-      _NmtNewState = __byte_uint16_t(ciamsg->Data, 0);
+      _NmtNewState = __byte_uint16_t(ciamsg->Common.Data, 0);
       _NmtUpdated = true;
 
-    } else if(ciamsg->CANID == CANID_SYNC){
+    } else if(ciamsg->Common.CANID == CANID_SYNC){
       // handle sync msg
 
-    } else if((ciamsg->CANID-NODE_ID)==CANID_SDO_RX) {
+    } else if((ciamsg->Common.CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
       _ObjectDictionary->AccessEntry(ciamsg, &_SodReplyMsg);
       _SdoReplyPending = true;
 
-    } else if((ciamsg->CANID-NODE_ID)==CANID_PDO_RX) {
+    } else if((ciamsg->Common.CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
       _PdoUpdated = true;
     } else {
@@ -90,7 +90,7 @@ void CommunicationInterface::ExecuteReception(void){
     }
   }
 
-  ciamsg->reserve = 0x0A;
+  //ciamsg->reserve = 0x0A;
 }
 
 /**

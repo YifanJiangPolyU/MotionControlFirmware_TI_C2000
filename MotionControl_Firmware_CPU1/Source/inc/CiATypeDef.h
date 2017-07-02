@@ -15,6 +15,7 @@
 #define CIA_TYPEDEF_H
 
 #include "stdint.h"
+#include "DataTypeHelper.h"
 
 #define NODE_ID         0x003
 
@@ -26,11 +27,8 @@
 #define CANID_PDO_RX    0x200
 
 // CSS values to control segmented read/write
-#define SDO_CSS_SEGWRITE        0
-#define SDO_CSS_SEGWRITE_INIT   1
-#define SDO_CSS_SEGREAD_INIT    2
-#define SDO_CSS_SEGREAD         3
-#define SDO_CSS_SEGABORT        4
+#define SDO_CSS_WRITE        0
+#define SDO_CSS_READ         3
 
 // CSS values to control block read/write
 #define SDO_CSS_BLKREAD            5
@@ -65,7 +63,17 @@ typedef struct CiA_SdoControlTypedef{
  */
 typedef struct CiA_SdoMessageTypedef{
 
-  CiA_SdoControl Ctrl;
+  uint16_t CANID;
+  uint16_t reserve :7;    // not used
+  uint16_t RTR :1;        // RTR bit
+  uint16_t Length :8;     // data length
+
+  uint32_t SdoCtrl_ccs    : 4;      // cmd type
+  uint32_t SdoCtrl_n      : 2;      // data length
+  uint32_t SdoCtrl_e      : 1;      // whether it's a expedited transfer
+  uint32_t SdoCtrl_s      : 1;      // where to find data length for segmented access
+  uint32_t SdoIdx         : 16;     // obj index and subindex
+  uint32_t SdoSubIdx      : 8;
 
   // CANOpen SDO data + extended data
   // CAN PHY: use first 4 bytes only
@@ -81,25 +89,56 @@ typedef struct CiA_SdoMessageTypedef{
  */
 typedef struct CiA_PdoMessageTypedef{
 
+  uint16_t CANID;
+  uint16_t reserve :7;    // not used
+  uint16_t RTR :1;        // RTR bit
+  uint16_t Length :8;     // data length
+
   // CANOpen PDO data + extended data
   // CAN PHY: use first 8 bytes only
   // EtherCAT and UART: use all bytes
   // access using __byte()
-  uint16_t Data[8];
+  uint16_t Data[6];
 
 } CiA_PdoMessage;
 
 /**
  *  define CANOpen NMT data structure
  */
-typedef struct CiA_NmtDataTypedef{
+typedef struct CiA_NmtMessageTypedef{
 
   // CANOpen NMT data
-  uint16_t State  : 8;
-  uint16_t NodeID : 8;
+  uint16_t CANID;
+  uint16_t reserve :7;    // not used
+  uint16_t RTR :1;        // RTR bit
+  uint16_t Length :8;     // data length
+  uint16_t State  : 8;    // requested state
+  uint16_t NodeID : 8;    // target node
 
-} CiA_NmtData;
+  uint16_t reserved[5];
 
+} CiA_NmtMessage;
+
+typedef struct CiA_CommonTypeDef{
+  uint16_t CANID;
+  uint16_t reserve :7;    // not used
+  uint16_t RTR :1;        // RTR bit
+  uint16_t Length :8;     // data length
+  uint16_t Data[6];       // data buffer, access using __byte()
+} CiA_Common;
+
+
+typedef union CiA_MessageTypedef{
+
+  CiA_Common       Common;
+  CiA_NmtMessage   Nmt;
+  CiA_SdoMessage   Sdo;
+  CiA_PdoMessage   Pdo;
+  uint16_t data[8];
+
+} CiA_Message;
+
+/*
 typedef struct CiA_MessageTypedef{
 
   uint16_t CANID;
@@ -108,7 +147,71 @@ typedef struct CiA_MessageTypedef{
   uint16_t Length :8;     // data length
   uint16_t Data[6];       // data buffer, access using __byte()
 
-} CiA_Message;
+  uint16_t data[8];
 
+} CiA_Message;
+*/
+inline uint16_t SdoGetIndex(CiA_Message * msg){
+  return 0;
+}
+
+inline uint16_t SdoGetSubIndex(CiA_Message * msg){
+  return 0;
+}
+
+/**
+ *   read a 32-bit data type from CiA_Message
+ *   @param msg   ptr to msg
+ *   @retval      data extracted
+ */
+inline int32_t SdoRead32(CiA_Message * msg){
+  return 0;
+}
+
+/**
+ *   write a 32-bit data type to CiA_Message
+ *   @param msg   ptr to msg
+ *   @param data  data to be written
+ */
+inline void SdoWrite32(CiA_Message * msg, int32_t data){
+
+}
+
+/**
+ *   read a 16-bit data type from CiA_Message
+ *   @param msg   ptr to msg
+ *   @retval      data extracted
+ */
+inline int16_t SdoRead16(CiA_Message * msg){
+  return  0;
+}
+
+/**
+ *   write a 16-bit data type to CiA_Message
+ *   @param msg   ptr to msg
+ *   @param data  data to be written
+ */
+inline void SdoWrite16(CiA_Message * msg, int16_t data){
+
+
+}
+
+/**
+ *   read a 8-bit data type from CiA_Message
+ *   @param msg   ptr to msg
+ *   @retval      data extracted
+ */
+inline int16_t SdoRead8(CiA_Message * msg){
+  return 0;
+}
+
+/**
+ *   write a 8-bit data type to CiA_Message
+ *   @param msg   ptr to msg
+ *   @param data  data to be written
+ */
+inline void SdoWrite8(CiA_Message * msg, int16_t data){
+
+}
 
 #endif

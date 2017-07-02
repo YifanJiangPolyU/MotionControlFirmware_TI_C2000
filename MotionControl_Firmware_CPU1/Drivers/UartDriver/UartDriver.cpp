@@ -51,18 +51,18 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
           }
           break;
         case STATE_CANIDH:
-          __byte_uint16_t(msg_buffer.CANID, 1) = tmp;
+          __byte_uint16_t(msg_buffer.Common.CANID, 1) = tmp;
           _state = STATE_CANIDL;
           break;
         case STATE_CANIDL:
-          __byte_uint16_t(msg_buffer.CANID, 0) = tmp;
+          __byte_uint16_t(msg_buffer.Common.CANID, 0) = tmp;
           _state = STATE_LEN;
           break;
         case STATE_LEN:
           if(tmp>0 && tmp<12){
             data_length = tmp;
             data_counter = 0;
-            msg_buffer.Length = tmp;
+            msg_buffer.Common.Length = tmp;
             _state = STATE_DATA;
           } else {
             //data length error
@@ -70,7 +70,7 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
           }
           break;
         case STATE_DATA:
-          __byte_uint16_t(msg_buffer.Data, data_counter++) = tmp;
+          __byte_uint16_t(msg_buffer.Common.Data, data_counter++) = tmp;
           if(data_counter == data_length){
             _state = STATE_EOF;
           }
@@ -101,7 +101,7 @@ uint16_t UartDriver::ExecuteParsing(CiA_Message * msg){
 uint16_t UartDriver::SendMessage(CiA_Message * msg){
 
   uint16_t retval = 0;
-  uint16_t tx_length = msg->Length;
+  uint16_t tx_length = msg->Common.Length;
   uint16_t tx_counter = 0;
 
   if((11-SciaRegs.SCIFFTX.bit.TXFFST)>=tx_length){
@@ -109,15 +109,15 @@ uint16_t UartDriver::SendMessage(CiA_Message * msg){
     SciaRegs.SCITXBUF.all = SOF_PATTERN;
 
     // transmit CANID
-    SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->CANID, 1); // CANID high
-    SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->CANID, 0); // CANID low
+    SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Common.CANID, 1); // CANID high
+    SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Common.CANID, 0); // CANID low
 
     // transmit CAN data length
     SciaRegs.SCITXBUF.all = tx_length;
 
     // transmit CAN data
     for(tx_counter=0; tx_counter<tx_length; tx_counter++){
-      SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Data, tx_counter);
+      SciaRegs.SCITXBUF.all = __byte_uint16_t(msg->Common.Data, tx_counter);
     }
 
     SciaRegs.SCITXBUF.all = EOF_PATTERN;

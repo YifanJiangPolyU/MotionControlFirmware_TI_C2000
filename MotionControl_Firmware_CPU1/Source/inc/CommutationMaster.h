@@ -43,7 +43,7 @@ class CommutationMaster: public ObjectDictionaryEntryBase{
     void UpdateCommResolution(void);
 
     void AccessParameter(CiA_Message * msg_in, CiA_Message * msg_out){
-      msg_out->CANID = 0x001;
+      msg_out->Common.CANID = 0x001;
     }
 
   private:
