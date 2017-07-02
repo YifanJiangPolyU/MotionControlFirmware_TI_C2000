@@ -33,14 +33,15 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
 #pragma CODE_SECTION(".TI.ramfunc");
 void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
   CiA_Message msg;
-
+  static uint32_t counter = 0;
   switch (CycleCounter) {
     case 0:
       // transmit PDO status report
-      msg.Common.CANID = 123;
-      msg.Common.Length = 8;
-      memcpy(&(msg.Common.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
-             4*sizeof(uint16_t));
+      msg.Common.CANID = 823;
+      msg.Common.Length = 10;
+      msg.Sdo.Data.DataInt32 = counter++;
+      //memcpy(&(msg.Common.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
+      //       4*sizeof(uint16_t));
       _UartDriver->SendMessage(&msg);
       break;
     case 1:
