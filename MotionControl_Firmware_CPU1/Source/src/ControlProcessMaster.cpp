@@ -48,7 +48,7 @@ void ControlProcessMaster::Execute(void){
   // Get data from current controller and ADC
   GetData();
 
-  _CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer);
+  //_CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer);
 
   // poll coummunication interface
   _CommunicationInterface->ExecuteReception();

@@ -34,7 +34,7 @@ class CommunicationInterface{
         _SdoReplyPending(false),
         _NmtNewState(0x00)
     {
-
+      ciamsg = &_MsgBuffer;
     }
 
     ~CommunicationInterface(){}
@@ -46,6 +46,9 @@ class CommunicationInterface{
     bool CheckNmtUpdate(uint16_t * mnt_state);
     bool CheckPdoUpdate(void);
 
+    CiA_Message * ciamsg;
+    CiA_Message _MsgBuffer;
+    
   private:
     UartDriver * _UartDriver;
     ObjectDictionary * _ObjectDictionary;
@@ -58,7 +61,7 @@ class CommunicationInterface{
     bool _SdoReplyPending;
     CiA_Message _SodReplyMsg;
 
-    CiA_Message * ciamsg;
+
 
 };
 

@@ -23,7 +23,7 @@
  */
 void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
 {
-  ciamsg = msgptr;
+  //ciamsg = msgptr;
 }
 
 /**

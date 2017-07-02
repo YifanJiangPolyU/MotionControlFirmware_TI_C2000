@@ -14,7 +14,7 @@
 #include "CurrentLoopController.h"
 
 CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcessDataPtr):
-  _Kp(10),
+  _Kp(10.32),
   _Ki(0),
   _Setpoint_Ia(0),
   _Setpoint_Ib(0),
@@ -106,7 +106,27 @@ void CurrentLoopController::Reset(void){
 }
 
 void CurrentLoopController::AccessControlGains(CiA_Message* msg_in, CiA_Message* msg_out){
+  uint16_t SubIdx = msg_in->Sdo.SdoSubIdx;
+  switch (SubIdx) {
+    case 0x01:
+      if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_READ){
+        msg_out->Sdo.Data.DataFloat32 = _Kp;
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
+      } else if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_WRITE){
 
+      }
+      break;
+    case 0x02:
+      if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_READ){
+
+      } else if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_WRITE){
+
+      }
+      break;
+    default:
+      msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_SUBIDX_NONEXIST;
+      break;
+  }
 }
 
 void CurrentLoopController::AccessCurrentLimits(CiA_Message* msg_in, CiA_Message* msg_out){

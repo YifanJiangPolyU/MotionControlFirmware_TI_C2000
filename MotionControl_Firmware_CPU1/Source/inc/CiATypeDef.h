@@ -15,6 +15,7 @@
 #define CIA_TYPEDEF_H
 
 #include "stdint.h"
+#include "F28x_Project.h"
 #include "DataTypeHelper.h"
 
 #define NODE_ID         0x003
@@ -57,6 +58,11 @@ typedef struct CiA_SdoControlTypedef{
   uint32_t SdoSubIdx      : 8;
 } CiA_SdoControl;
 
+typedef union CiA_SdoDataTypedef{
+  float32_t DataFloat32;
+  uint32_t DataInt32;
+  uint16_t DataInt16[3];
+} CiA_SdoData;
 
 /**
  *  define CANOpen SDO data structure
@@ -79,7 +85,7 @@ typedef struct CiA_SdoMessageTypedef{
   // CAN PHY: use first 4 bytes only
   // EtherCAT and UART: use all bytes
   // access using __byte()
-  uint16_t Data[3];
+  CiA_SdoData Data;
 
 } CiA_SdoMessage;
 
