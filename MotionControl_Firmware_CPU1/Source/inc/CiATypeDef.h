@@ -74,12 +74,12 @@ typedef struct CiA_SdoMessageTypedef{
   uint32_t SdoCtrl_s      : 1;      // where to find data length for segmented access
   uint32_t SdoIdx         : 16;     // obj index and subindex
   uint32_t SdoSubIdx      : 8;
-
+  uint16_t SdoAccessResult;
   // CANOpen SDO data + extended data
   // CAN PHY: use first 4 bytes only
   // EtherCAT and UART: use all bytes
   // access using __byte()
-  uint16_t Data[4];
+  uint16_t Data[3];
 
 } CiA_SdoMessage;
 

@@ -47,8 +47,8 @@ public:
       _AccessFunctionArray[i] = NULL;
     }
 
-    _InstanceArray[0] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
-    _AccessFunctionArray[0] = static_cast<void (ObjectDictionaryEntryBase::*)(CiA_Message*, CiA_Message*)> (&CommutationMaster::AccessParameter);
+    _InstanceArray[5] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
+    _AccessFunctionArray[5] = static_cast<void (ObjectDictionaryEntryBase::*)(CiA_Message*, CiA_Message*)> (&CommutationMaster::AccessParameter);
 
     _InstanceArray[1] = static_cast<ObjectDictionaryEntryBase*>(ControlProcessDataPtr);
     _AccessFunctionArray[1] = static_cast<void (ObjectDictionaryEntryBase::*)(CiA_Message*, CiA_Message*)> (&ControlProcessData::AccessParameter);
@@ -57,7 +57,18 @@ public:
   ~ObjectDictionary(){}
 
   void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
-    (_InstanceArray[0]->*(_AccessFunctionArray[0]))(msg_in, msg_out);
+    uint16_t Idx = msg_in->Sdo.SdoIdx;
+    if(Idx<MAX_NO_OF_ENTRY){
+      if(_InstanceArray[Idx] != NULL){
+        (_InstanceArray[Idx]->*(_AccessFunctionArray[Idx]))(msg_in, msg_out);
+      } else {
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
+      }
+    } else {
+      msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
+    }
+
+
   }
 
 private:
