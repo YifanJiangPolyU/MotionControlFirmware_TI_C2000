@@ -48,7 +48,7 @@ class CommunicationInterface{
 
     CiA_Message * ciamsg;
     CiA_Message _MsgBuffer;
-    
+
   private:
     UartDriver * _UartDriver;
     ObjectDictionary * _ObjectDictionary;

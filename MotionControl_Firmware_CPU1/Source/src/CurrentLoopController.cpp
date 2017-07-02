@@ -113,14 +113,17 @@ void CurrentLoopController::AccessControlGains(CiA_Message* msg_in, CiA_Message*
         msg_out->Sdo.Data.DataFloat32 = _Kp;
         msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
       } else if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_WRITE){
-
+        _Kp = msg_out->Sdo.Data.DataFloat32;
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
       }
       break;
     case 0x02:
       if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_READ){
-
+        msg_out->Sdo.Data.DataFloat32 = _Ki;
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
       } else if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_WRITE){
-
+        _Ki = msg_out->Sdo.Data.DataFloat32;
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
       }
       break;
     default:
