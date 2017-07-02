@@ -13,7 +13,7 @@
  */
 
 #include "ControlProcessMaster.h"
-
+#include "Drivers/PowerStageControl/PowerStageControl.h"
 /**
  *  pointer to globally unique object of ControlProcessMaster
  */
@@ -67,6 +67,7 @@ void ControlProcessMaster::Execute(void){
         if(_NmtNewState==NMT_TO_OP){
           _State = STATE_OP;
         } else if(_NmtNewState==NMT_TO_STOP){
+          PwrDisable();
           _State = STATE_STOPPED;
         }
       }
@@ -82,11 +83,14 @@ void ControlProcessMaster::Execute(void){
           _State = STATE_STOPPED;
         }
       }
+
+      _ControlProcessExecuter->ExecuteProcess();
       break;
     case STATE_STOPPED:
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_TO_PREOP){
+          PwrEnable();
           _ControlProcessExecuter->StartProcess(PROCESS_CURRENT);
           _State = STATE_PREOP;
         }

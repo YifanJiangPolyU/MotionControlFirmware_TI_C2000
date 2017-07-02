@@ -15,6 +15,7 @@
 #define _CURRENT_LOOP_CONTROLLER_H
 
 #include "stdint.h"
+#include "CiATypeDef.h"
 #include "ControlProcessData.h"
 #include "ControlProcessBase.h"
 #include "ControlTypeDef.h"
@@ -29,6 +30,10 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
 
     PwmDutyVec Execute(void);
     void Reset(void);
+
+    void AccessControlGains(CiA_Message* msg_in, CiA_Message* msg_out);
+    void AccessCurrentLimits(CiA_Message* msg_in, CiA_Message* msg_out);
+
 
   private:
 

@@ -14,7 +14,7 @@
 #include "CurrentLoopController.h"
 
 CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcessDataPtr):
-  _Kp(0),
+  _Kp(10),
   _Ki(0),
   _Setpoint_Ia(0),
   _Setpoint_Ib(0),
@@ -103,4 +103,12 @@ PwmDutyVec CurrentLoopController::Execute(void){
 void CurrentLoopController::Reset(void){
   _Integral_Ia = 0;
   _Integral_Ib = 0;
+}
+
+void CurrentLoopController::AccessControlGains(CiA_Message* msg_in, CiA_Message* msg_out){
+
+}
+
+void CurrentLoopController::AccessCurrentLimits(CiA_Message* msg_in, CiA_Message* msg_out){
+
 }

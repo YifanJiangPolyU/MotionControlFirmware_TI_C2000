@@ -49,6 +49,9 @@ public:
 
     _InstanceArray[0] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
     _AccessFunctionArray[0] = static_cast<void (ObjectDictionaryEntryBase::*)(CiA_Message*, CiA_Message*)> (&CommutationMaster::AccessParameter);
+
+    _InstanceArray[1] = static_cast<ObjectDictionaryEntryBase*>(ControlProcessDataPtr);
+    _AccessFunctionArray[1] = static_cast<void (ObjectDictionaryEntryBase::*)(CiA_Message*, CiA_Message*)> (&ControlProcessData::AccessParameter);
   }
 
   ~ObjectDictionary(){}

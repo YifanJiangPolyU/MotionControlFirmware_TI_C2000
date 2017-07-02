@@ -63,6 +63,18 @@ public:
 
   ~ControlProcessData(){};
 
+  /* object dictionary access functions */
+  void AccessParameter(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessMotorType(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessControlType(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessPowerSupplyStatus(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessTemperatureStatus(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessAdcGains(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessAdcOffsets(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessCommutationAngles(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessSetpointValues(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessLimits(CiA_Message* msg_in, CiA_Message* msg_out);
+
   uint16_t _ControlType;
   uint16_t _MotorType;
 
@@ -74,11 +86,11 @@ public:
   uint16_t _CurrentValueDcLine;
 
   // current value in mA
-  float32_t _CurrentValueA;
-  float32_t _CurrentValueB;
+  int32_t _CurrentValueA;
+  int32_t _CurrentValueB;
 
   // voltage actual value
-  float32_t _VoltageDcLine;
+  uint32_t _VoltageDcLine;
 
   // position
   int32_t _Position;            // unit: encoder count
@@ -114,8 +126,6 @@ public:
   float32_t _ForceSetpoint;
   float32_t _CurrentSetpointA;      // unit: mA
   float32_t _CurrentSetpointB;
-
-
 
   // position control limit values
   float32_t _VelocityLimit;           // unit: cnt/sp
