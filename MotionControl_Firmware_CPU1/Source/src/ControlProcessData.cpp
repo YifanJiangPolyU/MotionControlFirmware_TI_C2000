@@ -15,48 +15,48 @@
 
 #include "ControlProcessData.h"
 
-void ControlProcessData::AccessParameter(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessParameter(ObdAccessHandle * handle){
 
 }
 
-void ControlProcessData::AccessMotorType(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessMotorType(ObdAccessHandle * handle){
 
 }
 
-void ControlProcessData::AccessControlType(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessControlType(ObdAccessHandle * handle){
 
 }
 
-void ControlProcessData::AccessPowerSupplyStatus(CiA_Message* msg_in, CiA_Message* msg_out){
-
-}
-
-
-void ControlProcessData::AccessTemperatureStatus(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessPowerSupplyStatus(ObdAccessHandle * handle){
 
 }
 
 
-void ControlProcessData::AccessAdcGains(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessTemperatureStatus(ObdAccessHandle * handle){
 
 }
 
 
-void ControlProcessData::AccessAdcOffsets(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessAdcGains(ObdAccessHandle * handle){
 
 }
 
 
-void ControlProcessData::AccessCommutationAngles(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessAdcOffsets(ObdAccessHandle * handle){
 
 }
 
 
-void ControlProcessData::AccessSetpointValues(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessCommutationAngles(ObdAccessHandle * handle){
 
 }
 
 
-void ControlProcessData::AccessLimits(CiA_Message* msg_in, CiA_Message* msg_out){
+void ControlProcessData::AccessSetpointValues(ObdAccessHandle * handle){
+
+}
+
+
+void ControlProcessData::AccessLimits(ObdAccessHandle * handle){
 
 }

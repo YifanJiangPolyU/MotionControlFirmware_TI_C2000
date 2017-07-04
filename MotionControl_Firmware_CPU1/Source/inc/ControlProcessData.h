@@ -64,16 +64,16 @@ public:
   ~ControlProcessData(){};
 
   /* object dictionary access functions */
-  void AccessParameter(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessMotorType(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessControlType(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessPowerSupplyStatus(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessTemperatureStatus(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessAdcGains(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessAdcOffsets(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessCommutationAngles(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessSetpointValues(CiA_Message* msg_in, CiA_Message* msg_out);
-  void AccessLimits(CiA_Message* msg_in, CiA_Message* msg_out);
+  void AccessParameter(ObdAccessHandle * handle);
+  void AccessMotorType(ObdAccessHandle * handle);
+  void AccessControlType(ObdAccessHandle * handle);
+  void AccessPowerSupplyStatus(ObdAccessHandle * handle);
+  void AccessTemperatureStatus(ObdAccessHandle * handle);
+  void AccessAdcGains(ObdAccessHandle * handle);
+  void AccessAdcOffsets(ObdAccessHandle * handle);
+  void AccessCommutationAngles(ObdAccessHandle * handle);
+  void AccessSetpointValues(ObdAccessHandle * handle);
+  void AccessLimits(ObdAccessHandle * handle);
 
   uint16_t _ControlType;
   uint16_t _MotorType;

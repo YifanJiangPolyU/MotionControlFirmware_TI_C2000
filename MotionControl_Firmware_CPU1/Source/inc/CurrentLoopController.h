@@ -31,8 +31,8 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
     PwmDutyVec Execute(void);
     void Reset(void);
 
-    void AccessControlGains(CiA_Message* msg_in, CiA_Message* msg_out);
-    void AccessCurrentLimits(CiA_Message* msg_in, CiA_Message* msg_out);
+    void AccessControlGains(ObdAccessHandle * handle);
+    void AccessCurrentLimits(ObdAccessHandle * handle);
 
 
   private:

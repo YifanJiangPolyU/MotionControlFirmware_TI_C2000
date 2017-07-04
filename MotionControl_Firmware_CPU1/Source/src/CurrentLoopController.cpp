@@ -105,33 +105,10 @@ void CurrentLoopController::Reset(void){
   _Integral_Ib = 0;
 }
 
-void CurrentLoopController::AccessControlGains(CiA_Message* msg_in, CiA_Message* msg_out){
-  uint16_t SubIdx = msg_in->Sdo.SdoSubIdx;
-  switch (SubIdx) {
-    case 0x01:
-      if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_READ){
-        msg_out->Sdo.Data.DataFloat32 = _Kp;
-        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
-      } else if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_WRITE){
-        _Kp = msg_out->Sdo.Data.DataFloat32;
-        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
-      }
-      break;
-    case 0x02:
-      if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_READ){
-        msg_out->Sdo.Data.DataFloat32 = _Ki;
-        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
-      } else if(msg_in->Sdo.SdoCtrl_ccs == SDO_CSS_WRITE){
-        _Ki = msg_out->Sdo.Data.DataFloat32;
-        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_SUCCESS;
-      }
-      break;
-    default:
-      msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_SUBIDX_NONEXIST;
-      break;
-  }
+void CurrentLoopController::AccessControlGains(ObdAccessHandle * handle){
+
 }
 
-void CurrentLoopController::AccessCurrentLimits(CiA_Message* msg_in, CiA_Message* msg_out){
+void CurrentLoopController::AccessCurrentLimits(ObdAccessHandle * handle){
 
 }

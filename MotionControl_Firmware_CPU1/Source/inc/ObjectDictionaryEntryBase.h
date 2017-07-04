@@ -24,6 +24,16 @@
 #define OBD_ACCESS_ERR_IDX_NONEXIST        0x03  // access failed, index does not exist
 #define OBD_ACCESS_ERR_SUBIDX_NONEXIST     0x04  // access failed, subindex does not exist
 
+typedef struct ObdAccessHandleTypedef{
+  uint16_t AccessType;
+  union {
+      float32_t DataFloat32;
+      int32_t   DataInt32;
+      int16_t   DataInt16[2];
+  } Data;
+
+} ObdAccessHandle;
+
 class ObjectDictionaryEntryBase{
 
   public:
