@@ -21,22 +21,25 @@
 
 class ObjectDictionaryEntry{
 
-  public:
-    ObjectDictionaryEntry(ObjectDictionaryEntryBase* InstancePtr,
-                          uint16_t (ObjectDictionaryEntryBase::*AccessFuncPtr)(CiA_Message*) ){
-      _Instance = InstancePtr;
-      _AccessFunctionPtr = AccessFuncPtr;
-    }
+ public:
+   ObjectDictionaryEntry(ObjectDictionaryEntryBase * InstancePtr,
+                         void (ObjectDictionaryEntryBase::*AccessFunctionPtr)(ObdAccessHandle*)):
+    _Instance(InstancePtr),
+    _AccessFunction(AccessFunctionPtr)
+  {
 
-    ~ObjectDictionaryEntry(){}
+  }
 
-    uint16_t AccessEntry(CiA_Message * msg){
-      return (_Instance->*(_AccessFunctionPtr))(msg);
-    }
+   ~ObjectDictionaryEntry(){}
 
-  private:
-    ObjectDictionaryEntryBase * _Instance;
-    uint16_t (ObjectDictionaryEntryBase::*_AccessFunctionPtr)(CiA_Message *);
+   // combination of object index and sub-index
+   uint32_t _Idx;
+
+   // ptr to calling instance
+   ObjectDictionaryEntryBase * _Instance;
+
+   // ptr to access function
+   void (ObjectDictionaryEntryBase::*_AccessFunction)(ObdAccessHandle*);
 };
 
 #endif

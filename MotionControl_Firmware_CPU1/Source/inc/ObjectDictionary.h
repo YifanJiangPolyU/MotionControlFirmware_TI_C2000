@@ -22,6 +22,7 @@
 
 #include "CommutationMaster.h"
 #include "CiATypeDef.h"
+#include "ObjectDictionaryEntry.h"
 #include "ObjectDictionaryEntryBase.h"
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
@@ -60,13 +61,16 @@ public:
   ~ObjectDictionary(){}
 
   void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
-
+    //ObdAccessHandle handle;
+    //handle.AccessType = msg_in->Sdo.SdoCtrl_ccs;
 
   }
 
 private:
 
   CommutationMaster * _CommutationMaster;
+
+  uint32_t _IdxArray[ MAX_NO_OF_ENTRY ];
   ObjectDictionaryEntryBase * _InstanceArray[ MAX_NO_OF_ENTRY ];
   void (ObjectDictionaryEntryBase::*_AccessFunctionArray[ MAX_NO_OF_ENTRY ])(ObdAccessHandle*);
 
