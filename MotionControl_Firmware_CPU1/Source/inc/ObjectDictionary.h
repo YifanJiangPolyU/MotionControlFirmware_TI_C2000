@@ -44,6 +44,7 @@ public:
 
     uint16_t i;
     for(i=0; i<MAX_NO_OF_ENTRY; i++){
+      _IdxArray[i] = i*5;
       _InstanceArray[i] = NULL;
       _AccessFunctionArray[i] = NULL;
     }
@@ -63,17 +64,21 @@ public:
   void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
     //ObdAccessHandle handle;
     //handle.AccessType = msg_in->Sdo.SdoCtrl_ccs;
-
+    uint16_t pos = SearchEntry(msg_in->Sdo.SdoIdx, msg_in->Sdo.SdoSubIdx);
+    if(pos==0xFFFF){
+      pos = 0;
+    }
   }
 
 private:
+
+  uint16_t SearchEntry(uint16_t Idx, uint16_t SubIdx);
 
   CommutationMaster * _CommutationMaster;
 
   uint32_t _IdxArray[ MAX_NO_OF_ENTRY ];
   ObjectDictionaryEntryBase * _InstanceArray[ MAX_NO_OF_ENTRY ];
   void (ObjectDictionaryEntryBase::*_AccessFunctionArray[ MAX_NO_OF_ENTRY ])(ObdAccessHandle*);
-
 
 };
 

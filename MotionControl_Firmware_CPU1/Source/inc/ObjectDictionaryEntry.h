@@ -32,8 +32,13 @@ class ObjectDictionaryEntry{
 
    ~ObjectDictionaryEntry(){}
 
+
+
    // combination of object index and sub-index
    uint32_t _Idx;
+
+   // whether the obj is RW or RO
+   char _AccessType;
 
    // ptr to calling instance
    ObjectDictionaryEntryBase * _Instance;
