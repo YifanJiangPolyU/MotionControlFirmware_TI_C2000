@@ -66,7 +66,9 @@ public:
     //handle.AccessType = msg_in->Sdo.SdoCtrl_ccs;
     int16_t pos = SearchEntry(msg_in->Sdo.SdoIdx, msg_in->Sdo.SdoSubIdx);
     if(pos==-1){
-      pos = 0;
+      msg_out->Sdo.SdoIdx = 0xEF12;
+    } else {
+      msg_out->Sdo.SdoIdx = (uint16_t)pos;
     }
   }
 

@@ -50,10 +50,6 @@ void ControlProcessMaster::Execute(void){
 
   //_CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer);
 
-  // poll coummunication interface
-  _CommunicationInterface->ExecuteReception();
-  _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
-
   // execute commutation angle calculation
 
   // check for errors
@@ -113,6 +109,11 @@ void ControlProcessMaster::Execute(void){
     _CycleCounter++;
   }
 
+  // poll coummunication interface
+  _CommunicationInterface->ExecuteReception();
+  _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
+
+  // transmit data
   _CommunicationInterface->ExecuteTransmission(_CycleCounter);
 }
 
