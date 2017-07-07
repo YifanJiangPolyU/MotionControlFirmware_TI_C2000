@@ -64,15 +64,15 @@ public:
   void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
     //ObdAccessHandle handle;
     //handle.AccessType = msg_in->Sdo.SdoCtrl_ccs;
-    uint16_t pos = SearchEntry(msg_in->Sdo.SdoIdx, msg_in->Sdo.SdoSubIdx);
-    if(pos==0xFFFF){
+    int16_t pos = SearchEntry(msg_in->Sdo.SdoIdx, msg_in->Sdo.SdoSubIdx);
+    if(pos==-1){
       pos = 0;
     }
   }
 
 private:
 
-  uint16_t SearchEntry(uint16_t Idx, uint16_t SubIdx);
+  int16_t SearchEntry(uint16_t Idx, uint16_t SubIdx);
 
   CommutationMaster * _CommutationMaster;
 

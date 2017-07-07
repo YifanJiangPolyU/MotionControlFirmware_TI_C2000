@@ -23,12 +23,12 @@
  *  @retval          position of the object in the array
  *                   return 0xFFFF if not found.
  */
-uint16_t ObjectDictionary::SearchEntry(uint16_t Idx, uint16_t SubIdx){
+int16_t ObjectDictionary::SearchEntry(uint16_t Idx, uint16_t SubIdx){
   uint32_t target = (Idx<<8) | SubIdx;
-  uint16_t retval = 0xFFFF;
-  uint16_t head = 0;
-  uint16_t tail = MAX_NO_OF_ENTRY-1;
-  uint16_t mid = 0;
+  int16_t retval = -1;
+  int16_t head = 0;
+  int16_t tail = MAX_NO_OF_ENTRY-1;
+  int16_t mid = 0;
   bool terminate = false;
 
   while(!terminate){
