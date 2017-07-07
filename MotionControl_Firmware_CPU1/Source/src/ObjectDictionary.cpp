@@ -23,6 +23,7 @@
  *  @retval          position of the object in the array
  *                   return 0xFFFF if not found.
  */
+#pragma CODE_SECTION(".TI.ramfunc")
 int16_t ObjectDictionary::SearchEntry(uint16_t Idx, uint16_t SubIdx){
   uint32_t target = (Idx<<8) | SubIdx;
   int16_t retval = -1;
