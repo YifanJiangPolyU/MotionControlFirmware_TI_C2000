@@ -59,7 +59,7 @@ void main(void)
   CLA_InitCpu1Cla1();
 
   // configure interrupt
-  Interrupt_Init();
+  // Interrupt_Init();
 
   CreateSystemWarehouseInstance();
 

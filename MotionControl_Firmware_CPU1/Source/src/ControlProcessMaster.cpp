@@ -113,7 +113,7 @@ void ControlProcessMaster::Execute(void){
   _CommunicationInterface->ExecuteReception();
   _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
 
-  // transmit data
+
   _CommunicationInterface->ExecuteTransmission(_CycleCounter);
 }
 

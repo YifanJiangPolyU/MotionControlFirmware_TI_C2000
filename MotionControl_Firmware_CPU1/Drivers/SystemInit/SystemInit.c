@@ -514,14 +514,14 @@ void CLA_InitCpu1Cla1(void){
 
   // Configure the vectors for the end-of-task interrupt for all
   // 8 tasks
-  PieVectTable.CLA1_1_INT = &cla1Isr1;
+  // PieVectTable.CLA1_1_INT = &cla1Isr1;
 
   // trigger source
   DmaClaSrcSelRegs.CLA1TASKSRCSEL1.bit.TASK1 = 1;
 
   // Enable CLA interrupts at the group and subgroup levels
-  PieCtrlRegs.PIEIER11.bit.INTx1 = 1;
-  IER |= (M_INT11 );
+  // PieCtrlRegs.PIEIER11.bit.INTx1 = 1;
+  // IER |= (M_INT11 );
 
   EDIS;
 }

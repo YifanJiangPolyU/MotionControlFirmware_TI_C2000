@@ -24,6 +24,6 @@ void CallControlProcessMaster(void);
 
 
  // CLA interrupt handlers
- __interrupt void cla1Isr1();
+void cla1Isr1();
 
  #endif
