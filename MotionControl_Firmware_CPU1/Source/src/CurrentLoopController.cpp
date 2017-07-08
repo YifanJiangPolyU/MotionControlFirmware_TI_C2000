@@ -106,7 +106,18 @@ void CurrentLoopController::Reset(void){
 }
 
 void CurrentLoopController::AccessControlGains(ObdAccessHandle * handle){
-
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _Kp = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _Kp;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
 }
 
 void CurrentLoopController::AccessCurrentLimits(ObdAccessHandle * handle){

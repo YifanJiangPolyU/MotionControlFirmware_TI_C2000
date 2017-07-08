@@ -85,7 +85,7 @@ typedef struct CiA_SdoMessageTypedef{
   // CAN PHY: use first 4 bytes only
   // EtherCAT and UART: use all bytes
   // access using __byte()
-  CiA_SdoData Data;
+  uint16_t Data[3];
 
 } CiA_SdoMessage;
 

@@ -62,7 +62,7 @@ void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
       // transmit PDO status report
       msg.Common.CANID = 823;
       msg.Common.Length = 10;
-      msg.Sdo.Data.DataInt32 = counter++;
+      msg.Sdo.Data[1] = counter++;
       //memcpy(&(msg.Common.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
       //       4*sizeof(uint16_t));
       _UartDriver->SendMessage(&msg);

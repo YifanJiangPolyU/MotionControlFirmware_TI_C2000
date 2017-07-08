@@ -4,7 +4,6 @@
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
 
-
 #include "stdint.h"
 #include "F28x_Project.h"
 #include "Drivers/SystemInit/SystemInit.h"

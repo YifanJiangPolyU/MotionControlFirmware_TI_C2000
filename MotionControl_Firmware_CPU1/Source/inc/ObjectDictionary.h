@@ -62,14 +62,25 @@ public:
   ~ObjectDictionary(){}
 
   void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
-    //ObdAccessHandle handle;
-    //handle.AccessType = msg_in->Sdo.SdoCtrl_ccs;
+    ObdAccessHandle handle;
+    handle.AccessType = msg_in->Sdo.SdoCtrl_ccs;
+    handle.Data.DataInt16[0] = msg_in->Sdo.Data[0];
+    handle.Data.DataInt16[1] = msg_in->Sdo.Data[1];
     int16_t pos = SearchEntry(msg_in->Sdo.SdoIdx, msg_in->Sdo.SdoSubIdx);
     if(pos==-1){
-      msg_out->Sdo.SdoIdx = 0xEF12;
+      msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
     } else {
-      msg_out->Sdo.SdoIdx = (uint16_t)pos;
+      if(_InstanceArray[pos]!=NULL){
+        (_InstanceArray[pos]->*(_AccessFunctionArray[pos]))(&handle);
+        msg_out->Sdo.SdoAccessResult = handle.AccessResult;
+        msg_out->Sdo.Data[0] = handle.Data.DataInt16[0];
+        msg_out->Sdo.Data[1] = handle.Data.DataInt16[1];
+      } else {
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
+      }
     }
+
+    msg_out->Sdo.Length = 10;
   }
 
 private:

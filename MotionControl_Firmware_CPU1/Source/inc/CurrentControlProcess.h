@@ -37,7 +37,7 @@ class CurrentControlProcess : public ControlProcessBase, public ObjectDictionary
       _CurrentLoopController->Reset();
     }
 
-    virtual void AccessObject(void){
+    void AccessObject(ObdAccessHandle * handle){
 
     }
 
