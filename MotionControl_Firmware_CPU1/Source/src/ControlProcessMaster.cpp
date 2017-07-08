@@ -18,7 +18,7 @@
  *  pointer to globally unique object of ControlProcessMaster
  */
 #pragma DATA_SECTION("CPU1DataRAM")
-static ControlProcessMaster * This;
+static ControlProcessMaster * ControlProcessMasterPtr;
 
 /**
  *  Constructor
@@ -32,7 +32,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
   _NmtNewState(0),
   _CycleCounter(0)
   {
-    This = this;
+    ControlProcessMasterPtr = this;
     _CommutationMaster = CommutationMasterPtr;
     _CommunicationInterface = CommunicationInterfacePtr;
     _ControlProcessData = ControlProcessDataPtr;
@@ -144,10 +144,10 @@ void ControlProcessMaster::GetData(void){
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" void CallControlProcessMaster(void){
   if(CLA_SampleBufferActiveHalf==0){
-    This->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
+    ControlProcessMasterPtr->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
   } else if(CLA_SampleBufferActiveHalf==1) {
-    This->SetCurrentValueBuffer(&(CLA_SampleBufferA[0]), &(CLA_SampleBufferB[0]));
+    ControlProcessMasterPtr->SetCurrentValueBuffer(&(CLA_SampleBufferA[0]), &(CLA_SampleBufferB[0]));
   }
 
-  This->Execute();
+  ControlProcessMasterPtr->Execute();
 }

@@ -20,22 +20,17 @@
 #include "ControlProcessData.h"
 #include "Drivers/UartDriver/UartDriver.h"
 
+extern "C" {
+
+  void OsTaskWarper_HandleObdAccess(void);
+}
+
 class CommunicationInterface{
 
   public:
     CommunicationInterface(UartDriver * UartDriverPtr,
                            ObjectDictionary * ObjectDictionaryPtr,
-                           ControlProcessData * ControlProcessDataPtr):
-        _UartDriver(UartDriverPtr),
-        _ObjectDictionary(ObjectDictionaryPtr),
-        _ControlProcessData(ControlProcessDataPtr),
-        _NmtUpdated(false),
-        _PdoUpdated(false),
-        _SdoReplyPending(false),
-        _NmtNewState(0x00)
-    {
-      ciamsg = &_MsgBuffer;
-    }
+                           ControlProcessData * ControlProcessDataPtr);
 
     ~CommunicationInterface(){}
 
@@ -43,6 +38,7 @@ class CommunicationInterface{
     void ExecuteTransmission(uint16_t CycleCounter);
     void ExecuteReception(void);
 
+    void HandleObdAccess(void);
     bool CheckNmtUpdate(uint16_t * mnt_state);
     bool CheckPdoUpdate(void);
 
@@ -50,6 +46,7 @@ class CommunicationInterface{
     CiA_Message _MsgBuffer;
 
   private:
+
     UartDriver * _UartDriver;
     ObjectDictionary * _ObjectDictionary;
     ControlProcessData * _ControlProcessData;
@@ -60,8 +57,6 @@ class CommunicationInterface{
 
     bool _SdoReplyPending;
     CiA_Message _SodReplyMsg;
-
-
 
 };
 

@@ -4,7 +4,7 @@ XOPTS = -I"/home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/" -Dxdc_t
 vpath % /home/yifan/ti/bios_6_46_04_53/packages/ti/sysbios/
 vpath %.c /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/
 
-CCOPTS    = -v28 -DLARGE_MODEL=1 -ml --float_support=fpu32 -q -mo  --program_level_compile -o3 -g --optimize_with_debug  -Dti_sysbios_family_c28_Hwi_zeroLatencyIERMask__D=0U -Dti_sysbios_knl_Task_minimizeLatency__D=FALSE -Dti_sysbios_knl_Clock_stopCheckNext__D=FALSE
+CCOPTS    = -v28 -DLARGE_MODEL=1 -ml --float_support=fpu32 -q -mo  --program_level_compile -o3 -g --optimize_with_debug  -Dti_sysbios_knl_Task_minimizeLatency__D=FALSE -Dti_sysbios_family_c28_Hwi_zeroLatencyIERMask__D=0U -Dti_sysbios_knl_Clock_stopCheckNext__D=FALSE
 
 XDC_ROOT  = /home/yifan/TI_CCS/V6.2.0/xdctools_3_32_01_22_core/packages/
 

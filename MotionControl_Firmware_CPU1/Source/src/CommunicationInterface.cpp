@@ -14,6 +14,29 @@
 
 #include "CommunicationInterface.h"
 
+#include <ti/sysbios/BIOS.h>
+#include <ti/sysbios/knl/Semaphore.h>
+
+#pragma DATA_SECTION("CPU1DataRAM")
+static CommunicationInterface * CommunicationInterfacePtr;
+
+extern Semaphore_Handle SemaphoreObdAccess;
+
+CommunicationInterface::CommunicationInterface(UartDriver * UartDriverPtr,
+                       ObjectDictionary * ObjectDictionaryPtr,
+                       ControlProcessData * ControlProcessDataPtr):
+    _UartDriver(UartDriverPtr),
+    _ObjectDictionary(ObjectDictionaryPtr),
+    _ControlProcessData(ControlProcessDataPtr),
+    _NmtUpdated(false),
+    _PdoUpdated(false),
+    _SdoReplyPending(false),
+    _NmtNewState(0x00)
+{
+  ciamsg = &_MsgBuffer;
+  CommunicationInterfacePtr = this;
+}
+
 /**
  *  initialize the CiA message buffers
  *  @param msgptr    pointer to CiA_Message
@@ -80,8 +103,11 @@ void CommunicationInterface::ExecuteReception(void){
 
     } else if((ciamsg->Common.CANID-NODE_ID)==CANID_SDO_RX) {
       // handle CANOpen SDO
-      _ObjectDictionary->AccessEntry(ciamsg, &_SodReplyMsg);
-      _SdoReplyPending = true;
+      // _ObjectDictionary->AccessEntry(ciamsg, &_SodReplyMsg);
+      // _SdoReplyPending = true;
+
+      // post semaphore to unlock sysbios task, which accesses obd
+      Semaphore_post(SemaphoreObdAccess);
 
     } else if((ciamsg->Common.CANID-NODE_ID)==CANID_PDO_RX) {
       // handle CANOpen PDO
@@ -123,4 +149,23 @@ bool CommunicationInterface::CheckPdoUpdate(void){
   }
 
   return false;
+}
+
+/**
+ *  function to handle object dictionary access. to be
+ *  run as a Sys/Bios task
+ */
+void CommunicationInterface::HandleObdAccess(void){
+  for(;;){
+    Semaphore_pend(SemaphoreObdAccess, BIOS_WAIT_FOREVER);
+    _ObjectDictionary->AccessEntry(ciamsg, &_SodReplyMsg);
+    _SdoReplyPending = true;
+  }
+}
+
+/**
+ *  C warper function for SysBios tasks
+ */
+extern "C" void OsTaskWarper_HandleObdAccess(void){
+  CommunicationInterfacePtr->HandleObdAccess();
 }

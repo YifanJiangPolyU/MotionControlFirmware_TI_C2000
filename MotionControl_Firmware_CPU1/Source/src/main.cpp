@@ -3,7 +3,7 @@
 #include <xdc/runtime/System.h>
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
-#include <ti/sysbios/knl/Mailbox.h>
+
 
 #include "stdint.h"
 #include "F28x_Project.h"
@@ -20,9 +20,7 @@
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" Void taskFxn(UArg a0, UArg a1)
 {
-
   for(;;){
-
 		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
     Task_sleep(500);
 		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
