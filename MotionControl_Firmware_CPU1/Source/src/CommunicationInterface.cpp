@@ -63,20 +63,19 @@ void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
       msg.Common.CANID = 823;
       msg.Common.Length = 10;
       msg.Sdo.Data[1] = counter++;
-      //memcpy(&(msg.Common.Data[0]), &(_ControlProcessData->_CurrentValuePhaseA[0]),
-      //       4*sizeof(uint16_t));
-      _UartDriver->SendMessage(&msg);
+      if(_SdoReplyPending==true){
+        _SdoReplyPending = false;
+        _UartDriver->SendMessage(&_SodReplyMsg);
+      } else {
+        _UartDriver->SendMessage(&msg);
+      }
+
       break;
     case 1:
       break;
     case 2:
       break;
     case 3:
-      // transmit SDO reply, if any
-      if(_SdoReplyPending==true){
-        _SdoReplyPending = false;
-
-      }
       break;
     default:
       break;

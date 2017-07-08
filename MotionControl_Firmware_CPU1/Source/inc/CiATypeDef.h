@@ -31,6 +31,11 @@
 #define SDO_CSS_WRITE        0
 #define SDO_CSS_READ         3
 
+#define OBD_ACCESS_SUCCESS                 0x00  // access successful
+#define OBD_ACCESS_ERR_READ                0x01  // access failed, trying to read a non-readable object
+#define OBD_ACCESS_ERR_WRITE               0x02  // access failed, trying to write to a read-only object
+#define OBD_ACCESS_ERR_IDX_NONEXIST        0x03  // access failed, index does not exist
+
 // CSS values to control block read/write
 #define SDO_CSS_BLKREAD            5
 #define SDO_CSS_BLKWRITE           6

@@ -18,11 +18,6 @@
 #include "stdint.h"
 #include "CiATypeDef.h"
 
-#define OBD_ACCESS_SUCCESS                 0x00  // access successful
-#define OBD_ACCESS_ERR_READ                0x01  // access failed, trying to read a non-readable object
-#define OBD_ACCESS_ERR_WRITE               0x02  // access failed, trying to write to a read-only object
-#define OBD_ACCESS_ERR_IDX_NONEXIST        0x03  // access failed, index does not exist
-
 typedef struct ObdAccessHandleTypedef{
   uint16_t AccessType     :  8;
   uint16_t AccessResult   :  8;
