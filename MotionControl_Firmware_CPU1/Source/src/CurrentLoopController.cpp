@@ -38,7 +38,7 @@ PwmDutyVec CurrentLoopController::Execute(void){
 
   PwmDutyVec Pwm;
 
-  float32_t VoltageDcLine = _ControlProcessData->_VoltageDcLine;
+  float32_t VoltageDcLine = _ControlProcessData->_VoltageValueDcLine;
   float32_t VoltToPwmScaleFactor = PWM_MAX_DUTY / VoltageDcLine;
   float32_t OutputVoltageLimit = VoltageDcLine * 0.85;
   float32_t OutputVoltageMinimum = VoltageDcLine * 0.05;
@@ -105,7 +105,7 @@ void CurrentLoopController::Reset(void){
   _Integral_Ib = 0;
 }
 
-void CurrentLoopController::AccessControlGains(ObdAccessHandle * handle){
+void CurrentLoopController::AccessCurrentLoopGains_Kp(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
       _Kp = handle->Data.DataFloat32;
@@ -120,6 +120,47 @@ void CurrentLoopController::AccessControlGains(ObdAccessHandle * handle){
   }
 }
 
-void CurrentLoopController::AccessCurrentLimits(ObdAccessHandle * handle){
+void CurrentLoopController::AccessCurrentLoopGains_Ki(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _Ki = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _Ki;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
 
+void CurrentLoopController::AccessCurrentLimits_Peak(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _CurrentLimitPeakValue = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _CurrentLimitPeakValue;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void CurrentLoopController::AccessCurrentLimits_RMS(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _CurrentLimitRmsValue = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _CurrentLimitRmsValue;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
 }

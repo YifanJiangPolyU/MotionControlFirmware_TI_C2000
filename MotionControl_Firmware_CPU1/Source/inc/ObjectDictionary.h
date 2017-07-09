@@ -53,7 +53,7 @@ public:
     _AccessFunctionArray[1] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&ControlProcessData::AccessParameter);
 
     _InstanceArray[2] = static_cast<ObjectDictionaryEntryBase*>(CurrentLoopControllerPtr);
-    _AccessFunctionArray[2] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessControlGains);
+    _AccessFunctionArray[2] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
 
     _InstanceArray[5] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
     _AccessFunctionArray[5] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CommutationMaster::AccessParameter);

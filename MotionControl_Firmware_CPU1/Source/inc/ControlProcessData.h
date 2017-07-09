@@ -67,30 +67,33 @@ public:
   void AccessParameter(ObdAccessHandle * handle);
   void AccessMotorType(ObdAccessHandle * handle);
   void AccessControlType(ObdAccessHandle * handle);
-  void AccessPowerSupplyStatus(ObdAccessHandle * handle);
-  void AccessTemperatureStatus(ObdAccessHandle * handle);
-  void AccessAdcGains(ObdAccessHandle * handle);
-  void AccessAdcOffsets(ObdAccessHandle * handle);
-  void AccessCommutationAngles(ObdAccessHandle * handle);
-  void AccessSetpointValues(ObdAccessHandle * handle);
-  void AccessLimits(ObdAccessHandle * handle);
+  void AccessDcLineVoltage(ObdAccessHandle * handle);
+  void AccessDcLineCurrent(ObdAccessHandle * handle);
+  void AccessCpuTemperature(ObdAccessHandle * handle);
+  void AccessPowerStageTemperature(ObdAccessHandle * handle);
+
+  void AccessCommutationAngles_Cos(ObdAccessHandle * handle);
+  void AccessCommutationAngles_Sin(ObdAccessHandle * handle);
+
+
 
   uint16_t _ControlType;
   uint16_t _MotorType;
 
-  // current actual values
+  // current actual values (Raw ADC output)
   uint16_t * _CurrentValueBufferPhaseA;
   uint16_t * _CurrentValueBufferPhaseB;
   uint16_t _CurrentValuePhaseA[4];
   uint16_t _CurrentValuePhaseB[4];
-  uint16_t _CurrentValueDcLine;
+
 
   // current value in mA
   int32_t _CurrentValueA;
   int32_t _CurrentValueB;
 
-  // voltage actual value
-  uint32_t _VoltageDcLine;
+  // power supply status actual value
+  uint32_t _VoltageValueDcLine;
+  uint16_t _CurrentValueDcLine;
 
   // position
   int32_t _Position;            // unit: encoder count
