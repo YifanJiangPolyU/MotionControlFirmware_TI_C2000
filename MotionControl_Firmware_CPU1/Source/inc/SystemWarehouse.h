@@ -56,6 +56,8 @@ class SystemWarehouse{
 
     ~SystemWarehouse(){}
 
+    static CurrentLoopController * _CurrentLoopController_GetInstance(void);
+
   private:
     ControlProcessMaster _ControlProcessMaster;
     ControlProcessExecuter _ControlProcessExecuter;

@@ -57,11 +57,14 @@ public:
 
     _InstanceArray[5] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
     _AccessFunctionArray[5] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CommutationMaster::AccessParameter);
+
+    //InitObd();
   }
 
   ~ObjectDictionary(){}
 
   void AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out);
+  void InitObd(void);
 
 private:
 

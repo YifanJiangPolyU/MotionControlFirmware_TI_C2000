@@ -15,6 +15,8 @@
 
 #include "SystemWarehouse.h"
 
+static SystemWarehouse * SystemWarehousePtr;
+
 /**
  *  create globally unique object of CreateSystemWarehouseInstance
  *    call this ONLY ONCE
@@ -23,4 +25,10 @@ void CreateSystemWarehouseInstance(void){
 
   #pragma DATA_SECTION("CPU1DataRAM")
   static SystemWarehouse SystemWarehouseInstance;
+  SystemWarehousePtr = &SystemWarehouseInstance;
+}
+
+
+CurrentLoopController * SystemWarehouse::_CurrentLoopController_GetInstance(void){
+  return &(SystemWarehousePtr->_CurrentLoopController);
 }
