@@ -31,6 +31,8 @@
 #define SDO_CSS_WRITE        0
 #define SDO_CSS_READ         3
 
+#define OBD_WRITE                          SDO_CSS_WRITE
+#define OBD_READ                           SDO_CSS_READ
 #define OBD_ACCESS_SUCCESS                 0x00  // access successful
 #define OBD_ACCESS_ERR_READ                0x01  // access failed, trying to read a non-readable object
 #define OBD_ACCESS_ERR_WRITE               0x02  // access failed, trying to write to a read-only object
