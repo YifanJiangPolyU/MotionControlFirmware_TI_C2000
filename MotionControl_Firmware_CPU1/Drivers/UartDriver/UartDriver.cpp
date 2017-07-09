@@ -12,12 +12,13 @@
  */
 
 #include "UartDriver.h"
-
+#include "Drivers/GpioDriver/GpioDriver.h"
 
 UartDriver::UartDriver():
   _state(STATE_IDEL)
 {
-
+  SciaRegs.SCIFFRX.bit.RXFIFORESET = 0;
+  SciaRegs.SCIFFRX.bit.RXFIFORESET = 1;
 }
 
 UartDriver::~UartDriver(){

@@ -13,6 +13,7 @@
 */
 
 #include "CommunicationInterface.h"
+#include "Drivers/GpioDriver/GpioDriver.h"
 
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Semaphore.h>
@@ -67,7 +68,7 @@ void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
         _SdoReplyPending = false;
         _UartDriver->SendMessage(&_SodReplyMsg);
       } else {
-        _UartDriver->SendMessage(&msg);
+        //_UartDriver->SendMessage(&msg);
       }
 
       break;
@@ -91,7 +92,6 @@ void CommunicationInterface::ExecuteReception(void){
 
   uint16_t msgcnt = _UartDriver->ExecuteParsing(ciamsg);
   if(msgcnt > 0 ){
-
     if(ciamsg->Common.CANID == CANID_NMT){
       // handle CANOpen NMT protocol
       _NmtNewState = __byte_uint16_t(ciamsg->Common.Data, 0);

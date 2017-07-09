@@ -29,10 +29,12 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
 
 void main(void)
 {
-
   // Initialize System Control:
   InitSysCtrl();
   SystemMemoryInit();
+
+  // UART does not work without this, don't know why
+  DELAY_US(500000);
 
   // temporarily disable interrupt
   // re-enabled inside Interrupt_init()
