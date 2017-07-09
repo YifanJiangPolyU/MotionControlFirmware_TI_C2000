@@ -1,0 +1,21 @@
+#
+# Input file for obd_code_generation
+# contains the index and subindex of objects, as well as the object containing
+# the object and the correcponding access funtion
+#
+# Lines begining with '#' are comments. All other lines MUST be compliant
+# to the standard format:
+#
+#    0xhhhh  0xhh  InstanceName   AccessFunctionName
+#
+
+
+# Idx     SubInx    Instance                  Access Method
+
+0x0003    0x00      ControlProcessData1        AccessParameter1
+0x000A    0x03      ControlProcessData2       AccessParameter2
+0x000B    0x02      ControlProcessData3        AccessParameter3
+0x000A    0x01      ControlProcessData4        AccessParameterds4
+0x0002    0x01      ControlProcessData5        AccessParameterds5
+0x000A    0x01      ControlProcessData6        AccessParameterds6
+0x0001    0x01      ControlProcessData7        AccessParameterds7
