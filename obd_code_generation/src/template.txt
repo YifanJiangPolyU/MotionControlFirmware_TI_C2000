@@ -8,25 +8,11 @@
  ******************************************************************************/
 
 /*
-* ObjectDictionaryEntry class
-* ObjectDictionary keeps a list of ObjectDictionaryEntry, which stores
-* ptrs to target instance and target access function
+* Initialize object dictionary entries here
+* This file is autmatically generated, do not make changes here
 */
 
-#ifndef OBJECT_DICTIONARY_ENTRY_H
-#define OBJECT_DICTIONARY_ENTRY_H
+#include "ObjectDictionary.h"
+#include "SystemWarehouse.h"
 
-#include "CiATypeDef.h"
-#include "ObjectDictionaryEntryBase.h"
-
-typedef struct ObjectDictionaryEntryTypeDef{
-
-  uint32_t _Idx;
-  char _AccessType;
-  char _DataType;
-  ObjectDictionaryEntryBase * _Instance;
-  void (ObjectDictionaryEntryBase::*_AccessMethod)(ObdAccessHandle*);
-
-} ObjectDictionaryEntry;
-
-#endif
+void ObjectDictionary::InitObd(void){

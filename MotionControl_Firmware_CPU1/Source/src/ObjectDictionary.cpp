@@ -33,9 +33,9 @@ void ObjectDictionary::AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
     // obj does not exist
     msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
   } else {
-    if(_InstanceArray[pos]!=NULL){
+    if(_ObdEntryList[pos]._Instance!=NULL){
       // call obd access function
-      (_InstanceArray[pos]->*(_AccessFunctionArray[pos]))(&handle);
+      (_ObdEntryList[pos]._Instance->*(_ObdEntryList[pos]._AccessMethod))(&handle);
 
       // copy results
       msg_out->Sdo.SdoAccessResult = handle.AccessResult;
@@ -70,12 +70,12 @@ int16_t ObjectDictionary::SearchEntry(uint16_t Idx, uint16_t SubIdx){
 
   while(!terminate){
     mid = (head + tail)/2;
-    if(target==_IdxArray[mid]){
+    if(target==_ObdEntryList[mid]._Idx){
       retval = mid;
       terminate = true;
-    }else if(target>_IdxArray[mid]){
+    }else if(target>_ObdEntryList[mid]._Idx){
       head = mid+1;
-    }else if(target<_IdxArray[mid]){
+    }else if(target<_ObdEntryList[mid]._Idx){
       tail = mid-1;
     }
 

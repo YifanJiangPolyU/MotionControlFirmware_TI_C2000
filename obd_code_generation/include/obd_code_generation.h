@@ -8,25 +8,6 @@
  ******************************************************************************/
 
 /*
-* ObjectDictionaryEntry class
-* ObjectDictionary keeps a list of ObjectDictionaryEntry, which stores
-* ptrs to target instance and target access function
+* generating object dictionary initialization code for the MCS firmware
+* based on a user input file
 */
-
-#ifndef OBJECT_DICTIONARY_ENTRY_H
-#define OBJECT_DICTIONARY_ENTRY_H
-
-#include "CiATypeDef.h"
-#include "ObjectDictionaryEntryBase.h"
-
-typedef struct ObjectDictionaryEntryTypeDef{
-
-  uint32_t _Idx;
-  char _AccessType;
-  char _DataType;
-  ObjectDictionaryEntryBase * _Instance;
-  void (ObjectDictionaryEntryBase::*_AccessMethod)(ObdAccessHandle*);
-
-} ObjectDictionaryEntry;
-
-#endif

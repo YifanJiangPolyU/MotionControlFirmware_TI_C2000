@@ -44,19 +44,13 @@ public:
 
     uint16_t i;
     for(i=0; i<MAX_NO_OF_ENTRY; i++){
-      _IdxArray[i] = i*5;
-      _InstanceArray[i] = NULL;
-      _AccessFunctionArray[i] = NULL;
+      _ObdEntryList[i]._Idx = i*5;
+      _ObdEntryList[i]._Instance = NULL;
+      _ObdEntryList[i]._AccessMethod = NULL;
     }
 
-    _InstanceArray[1] = static_cast<ObjectDictionaryEntryBase*>(ControlProcessDataPtr);
-    _AccessFunctionArray[1] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&ControlProcessData::AccessParameter);
-
-    _InstanceArray[2] = static_cast<ObjectDictionaryEntryBase*>(CurrentLoopControllerPtr);
-    _AccessFunctionArray[2] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
-
-    _InstanceArray[5] = static_cast<ObjectDictionaryEntryBase*>(CommutationMasterPtr);
-    _AccessFunctionArray[5] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CommutationMaster::AccessParameter);
+    _ObdEntryList[2]._Instance = static_cast<ObjectDictionaryEntryBase*>(CurrentLoopControllerPtr);
+    _ObdEntryList[2]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
 
     //InitObd();
   }
@@ -72,9 +66,7 @@ private:
 
   CommutationMaster * _CommutationMaster;
 
-  uint32_t _IdxArray[ MAX_NO_OF_ENTRY ];
-  ObjectDictionaryEntryBase * _InstanceArray[ MAX_NO_OF_ENTRY ];
-  void (ObjectDictionaryEntryBase::*_AccessFunctionArray[ MAX_NO_OF_ENTRY ])(ObdAccessHandle*);
+  ObjectDictionaryEntry _ObdEntryList[MAX_NO_OF_ENTRY];
 
 };
 

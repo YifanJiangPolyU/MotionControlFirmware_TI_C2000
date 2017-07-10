@@ -27,6 +27,32 @@
 
 using namespace std;
 
+const string Disclaimer =
+"/****************************************************************************** \n \
+ * Copyright (C) 2017 by Yifan Jiang                                          * \n \
+ * jiangyi@student.ethz.com                                                   * \n \
+ *                                                                            * \n \
+ * This program is distributed in the hope that it will be useful,            * \n \
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             * \n \
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       * \n \
+ ******************************************************************************/ \n \
+ \n \
+ /* \n \
+* Initialize object dictionary entries here \n \
+* This file is autmatically generated, do not make changes here \n \
+*/ \n\n";
+
+const string Include = "#include \"ObjectDictionary.h\" \n#include \"SystemWarehouse.h\"\n\n";
+const string MethodName = "void ObjectDictionary::InitObd(void){ \n";
+const string CastInstance = "static_cast<ObjectDictionaryEntryBase*>";
+const string CastAccessFunc = "static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>";
+const string EntryList = "_ObdEntryList";
+const string Instance = "_Instance";
+const string AccessType = "_AccessType";
+const string AccessFunc = "_AccessMethod";
+const string ObdIndex = "_Idx";
+const string DataType = "_DataType";
+
 
 typedef struct ObjInfoTypeDef {
     int Idx;
@@ -82,13 +108,19 @@ int main(int argc, char **argv)
       InputWordVec.push_back(Words);
   }
 
+  // check for input validity
   // extract object indexes
   vector<int> Idx;
   for(int i=0; i<InputWordVec.size(); i++){
-    if( ((InputWordVec[i]).size()!=4) ||
+    if( ((InputWordVec[i]).size()!=6) ||
         (((InputWordVec[i])[0])[0]!='0') || (((InputWordVec[i])[0])[1]!='x') ||
         (((InputWordVec[i])[1])[0]!='0') || (((InputWordVec[i])[1])[1]!='x') ){
       cout << "ERROR: input file format error (line "<< InputLineNum[i]<< ")" << endl;
+      return 0;
+    }
+
+    if(((InputWordVec[i])[2] != "RO") && ((InputWordVec[i])[2] != "RW")){
+      cout << "ERROR: wrong access type, must be either RO or RW (line "<< InputLineNum[i]<< ")" << endl;
       return 0;
     }
 
@@ -128,7 +160,37 @@ int main(int argc, char **argv)
     }
   }
 
+  // open output file
+  std::ofstream OutputFile("/home/yifan/catkin_ws/src/mcs/obd_code_generation/src/ObjectDictionaryInit.cpp");
+  OutputFile << Disclaimer << Include << MethodName << endl << endl;
+
+
+  for(int i=0; i<ObjList_sorted.size(); i++){
+    auto entry = ObjList_sorted[i];
+
+    ostringstream tmp;
+    tmp << EntryList << "[" << i << "].";
+    string EntryListIndex = tmp.str();
+
+
+    OutputFile << "  "<< EntryListIndex << ObdIndex << " = " << entry.Idx << ";" << endl;
+    OutputFile << "  "<< EntryListIndex << AccessType << " = " << 0 << ";" << endl;
+    OutputFile << "  "<< EntryListIndex << DataType << " = " << 0 << ";" << endl;
+    OutputFile << "  "<< EntryListIndex << Instance << " = " << CastInstance
+                      << "(SystemWarehouse::" << entry.WordVec[4] << "_GetInstance());" << endl;
+    OutputFile << "  "<< EntryListIndex << AccessFunc << " = " << CastAccessFunc
+                      << "(&" << entry.WordVec[3] << "::" << entry.WordVec[5] << ");" << endl;
+
+    OutputFile << endl;
+  }
+
+  OutputFile << "}" << endl;
+
+  InputFile.close();
+  OutputFile.close();
+
   // print out for debugging
+  /*
   for(auto a : ObjList_sorted){
     cout << a.Idx << " " << a.LineNumber << " ";
     for(auto b : a.WordVec){
@@ -136,16 +198,8 @@ int main(int argc, char **argv)
     }
     cout << endl;
   }
+  */
 
-
-
-  // examle section
-  vector<string> vec;
-  string test= "    this is my testing string.haha hehe 0x0032";
-  istringstream iss(test);
-  copy(istream_iterator<string>(iss),
-       istream_iterator<string>(),
-       back_inserter(vec));
 
 
 
