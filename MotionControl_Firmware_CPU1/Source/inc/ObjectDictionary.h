@@ -36,23 +36,9 @@ class ObjectDictionary{
 
 public:
 
-  ObjectDictionary(ControlProcessData * ControlProcessDataPtr,
-                   CommutationMaster * CommutationMasterPtr,
-                   CurrentLoopController * CurrentLoopControllerPtr)
+  ObjectDictionary()
   {
-    _CommutationMaster = CommutationMasterPtr;
-
-    uint16_t i;
-    for(i=0; i<MAX_NO_OF_ENTRY; i++){
-      _ObdEntryList[i]._Idx = i*5;
-      _ObdEntryList[i]._Instance = NULL;
-      _ObdEntryList[i]._AccessMethod = NULL;
-    }
-
-    _ObdEntryList[2]._Instance = static_cast<ObjectDictionaryEntryBase*>(CurrentLoopControllerPtr);
-    _ObdEntryList[2]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
-
-    //InitObd();
+    InitObd();
   }
 
   ~ObjectDictionary(){}
@@ -63,8 +49,6 @@ public:
 private:
 
   int16_t SearchEntry(uint16_t Idx, uint16_t SubIdx);
-
-  CommutationMaster * _CommutationMaster;
 
   ObjectDictionaryEntry _ObdEntryList[MAX_NO_OF_ENTRY];
 

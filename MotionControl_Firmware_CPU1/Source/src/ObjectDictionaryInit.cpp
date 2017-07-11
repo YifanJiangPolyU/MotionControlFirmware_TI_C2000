@@ -19,6 +19,8 @@ void ObjectDictionary::InitObd(void){
 
 //  _InstanceArray[2] = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::_CurrentLoopController_GetInstance());
 //  _AccessFunctionArray[2] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
+  _ObdEntryList[2]._Idx = 10;
+  _ObdEntryList[2]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopController_GetInstance());
+  _ObdEntryList[2]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
 
-  
 }

@@ -15,20 +15,65 @@
 
 #include "SystemWarehouse.h"
 
-static SystemWarehouse * SystemWarehousePtr;
-
 /**
- *  create globally unique object of CreateSystemWarehouseInstance
+ *  create globally unique object of SystemWarehouse
  *    call this ONLY ONCE
  */
 void CreateSystemWarehouseInstance(void){
+  SystemWarehouse::CreateInstance();
+}
+
+void SystemWarehouse::CreateInstance(void){
+  GetInstance();
+}
+
+/**
+ *  return a pointer to the globally unique objecte of SystemWarehouse
+ */
+SystemWarehouse * SystemWarehouse::GetInstance(void){
 
   #pragma DATA_SECTION("CPU1DataRAM")
   static SystemWarehouse SystemWarehouseInstance;
-  SystemWarehousePtr = &SystemWarehouseInstance;
+
+  return &SystemWarehouseInstance;
 }
 
+ControlProcessMaster * SystemWarehouse::_ControlProcessMaster_GetInstance(void){
+  return &_ControlProcessMaster;
+}
+
+ControlProcessExecuter * SystemWarehouse::_ControlProcessExecuter_GetInstance(void){
+  return &_ControlProcessExecuter;
+}
+
+CommutationMaster * SystemWarehouse::_CommutationMaster_GetInstance(void){
+  return &_CommutationMaster;
+}
+
+CommunicationInterface * SystemWarehouse::_CommunicationInterface_GetInstance(void){
+  return &_CommunicationInterface;
+}
+
+ObjectDictionary  * SystemWarehouse::_ObjectDictionary_GetInstance(void){
+  return &_ObjectDictionary;
+}
+
+ControlProcessData * SystemWarehouse::_ControlProcessData_GetInstance(void){
+  return &_ControlProcessData;
+}
 
 CurrentLoopController * SystemWarehouse::_CurrentLoopController_GetInstance(void){
-  return &(SystemWarehousePtr->_CurrentLoopController);
+  return &_CurrentLoopController;
+}
+
+CurrentControlProcess * SystemWarehouse::_CurrentControlProcess_GetInstance(void){
+  return &_CurrentControlProcess;
+}
+
+PositionControlProcess * SystemWarehouse::_PositionControlProcess_GetInstance(void){
+  return &_PositionControlProcess;
+}
+
+CurrentLoopSweepSine * SystemWarehouse::_CurrentLoopSweepSine_GetInstance(void){
+  return &_CurrentLoopSweepSine;
 }

@@ -40,9 +40,7 @@ class SystemWarehouse{
                               &_CurrentControlProcess,
                               &_CurrentLoopSweepSine,
                               &_PositionControlProcess),
-      _ObjectDictionary(&_ControlProcessData,
-                        &_CommutationMaster,
-                        &_CurrentLoopController),
+      _ObjectDictionary(),
       _CommutationMaster(),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData),
       _CurrentLoopController(&_ControlProcessData),
@@ -56,7 +54,20 @@ class SystemWarehouse{
 
     ~SystemWarehouse(){}
 
-    static CurrentLoopController * _CurrentLoopController_GetInstance(void);
+    ControlProcessMaster * _ControlProcessMaster_GetInstance(void);
+    ControlProcessExecuter * _ControlProcessExecuter_GetInstance(void);
+    CommutationMaster * _CommutationMaster_GetInstance(void);
+    CommunicationInterface * _CommunicationInterface_GetInstance(void);
+    ObjectDictionary  * _ObjectDictionary_GetInstance(void);
+    ControlProcessData * _ControlProcessData_GetInstance(void);
+
+    CurrentLoopController * _CurrentLoopController_GetInstance(void);
+    CurrentControlProcess * _CurrentControlProcess_GetInstance(void);
+    PositionControlProcess * _PositionControlProcess_GetInstance(void);
+    CurrentLoopSweepSine * _CurrentLoopSweepSine_GetInstance(void);
+
+    static void CreateInstance(void);
+    static SystemWarehouse * GetInstance(void);
 
   private:
     ControlProcessMaster _ControlProcessMaster;
