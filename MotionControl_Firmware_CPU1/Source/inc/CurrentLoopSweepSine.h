@@ -20,8 +20,9 @@
 
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
+#include "ObjectDictionaryEntryBase.h"
 
-class CurrentLoopSweepSine : public ControlProcessBase{
+class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryEntryBase{
 
   public:
     CurrentLoopSweepSine(CurrentLoopController * CurrentLoopControllerPtr,
@@ -29,21 +30,40 @@ class CurrentLoopSweepSine : public ControlProcessBase{
     {
       _CurrentLoopController = CurrentLoopControllerPtr;
       _ControlProcessData = ControlProcessDataPtr;
+
+      _ExcitationAmplitude = 0;
+      _StartFreq = 0;
+      _EndFreq = 0;
+
+      _ExcitationLength = 0;
+      _TimeCounter = 0;
     }
 
     ~CurrentLoopSweepSine(){}
 
-    virtual void Execute(void){
+    virtual void Execute(void);
+    virtual void Reset(void);
 
-    }
-
-    virtual void Reset(void){
-
-    }
+    void AccessExcitationAmplitude(ObdAccessHandle * handle);
+    void AccessExcitationLength(ObdAccessHandle * handle);
+    void AccessStartFrequency(ObdAccessHandle * handle);
+    void AccessEndFrequency(ObdAccessHandle * handle);
+    void AccessSweepRate(ObdAccessHandle * handle);
 
   private:
+
+    float32_t SignalGeneration(void);
+
     CurrentLoopController * _CurrentLoopController;
     ControlProcessData * _ControlProcessData;
+
+    float32_t _ExcitationAmplitude;
+    float32_t _StartFreq;
+    float32_t _EndFreq;
+    float32_t _SweepRate;
+
+    uint16_t _ExcitationLength;
+    uint16_t _TimeCounter;
 
 };
 
