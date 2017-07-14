@@ -34,7 +34,7 @@ CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcess
  *  execute the current controller
  */
 #pragma CODE_SECTION(".TI.ramfunc");
-PwmDutyVec CurrentLoopController::Execute(void){
+PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, PhaseCurrentVec * CurrentActual){
 
   PwmDutyVec Pwm;
 
@@ -44,10 +44,10 @@ PwmDutyVec CurrentLoopController::Execute(void){
   float32_t OutputVoltageMinimum = VoltageDcLine * 0.05;
 
   // execute PI controller
-  _Error_Ia = _ControlProcessData->_CurrentSetpointA;
-  _Error_Ib = _ControlProcessData->_CurrentSetpointB;
-  _Error_Ia -= _ControlProcessData->_CurrentSenseGain*(_ControlProcessData->_CurrentValueA);
-  _Error_Ib -= _ControlProcessData->_CurrentSenseGain*(_ControlProcessData->_CurrentValueB);
+  _Error_Ia = CurrentDemand->A;
+  _Error_Ib = CurrentDemand->B;
+  _Error_Ia -= _ControlProcessData->_CurrentSenseGain*(CurrentActual->A);
+  _Error_Ib -= _ControlProcessData->_CurrentSenseGain*(CurrentActual->B);
   _Integral_Ia += _Ki * _Error_Ia;
   _Integral_Ib += _Ki * _Error_Ib;
   _Output_Ua = _Kp * _Error_Ia + _Integral_Ia;

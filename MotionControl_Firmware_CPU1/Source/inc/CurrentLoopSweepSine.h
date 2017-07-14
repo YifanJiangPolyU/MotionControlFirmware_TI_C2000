@@ -31,12 +31,16 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
       _CurrentLoopController = CurrentLoopControllerPtr;
       _ControlProcessData = ControlProcessDataPtr;
 
+      _ActivePhase = 0;
+
       _ExcitationAmplitude = 0;
       _StartFreq = 0;
       _EndFreq = 0;
+      _RampRate = 0;
+      _HalfRampRate = 0;
 
-      _ExcitationLength = 0;
-      _TimeCounter = 0;
+      _TimeMax = 0;
+      _TimeStamp = 0;
     }
 
     ~CurrentLoopSweepSine(){}
@@ -48,22 +52,25 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     void AccessExcitationLength(ObdAccessHandle * handle);
     void AccessStartFrequency(ObdAccessHandle * handle);
     void AccessEndFrequency(ObdAccessHandle * handle);
-    void AccessSweepRate(ObdAccessHandle * handle);
+    void AccessRampRate(ObdAccessHandle * handle);
 
   private:
 
-    float32_t SignalGeneration(void);
+    float32_t GenerateSweepSine(void);
 
     CurrentLoopController * _CurrentLoopController;
     ControlProcessData * _ControlProcessData;
 
-    float32_t _ExcitationAmplitude;
-    float32_t _StartFreq;
-    float32_t _EndFreq;
-    float32_t _SweepRate;
+    char _ActivePhase;
 
-    uint16_t _ExcitationLength;
-    uint16_t _TimeCounter;
+    float32_t _ExcitationAmplitude;
+    float32_t _StartFreq;              // unit: rad/s
+    float32_t _EndFreq;
+    float32_t _RampRate;               // unit: rad/(s^2)
+    float32_t _HalfRampRate;
+
+    uint16_t _TimeMax;
+    uint16_t _TimeStamp;
 
 };
 

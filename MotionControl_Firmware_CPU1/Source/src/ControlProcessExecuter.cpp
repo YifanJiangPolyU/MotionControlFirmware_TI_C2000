@@ -13,6 +13,28 @@
 
 #include "ControlProcessExecuter.h"
 
+ControlProcessExecuter::ControlProcessExecuter(ControlProcessData * ControlProcessDataPtr,
+                       CurrentLoopController * CurrentLoopControllerPtr,
+                       CurrentControlProcess * CurrentControlProcessPtr,
+                       CurrentLoopSweepSine * CurrentLoopSweepSinePtr,
+                       PositionControlProcess * PositionControlProcessPtr):
+  _ActiveProcessID(PROCESS_NONE),
+  _ProcessRunning(false)
+{
+  _ControlProcessData = ControlProcessDataPtr;
+
+  uint16_t i;
+  for(i=0; i<20; i++){
+    _ProcessArray[i] = NULL;
+  }
+
+  // IMPORTANT: index of process classes MUST match with the process ID
+  _ProcessArray[1] = CurrentControlProcessPtr;
+  _ProcessArray[3] = PositionControlProcessPtr;
+  _ProcessArray[10] = CurrentLoopSweepSinePtr;
+}
+
+
 /**
  *  set the next process to be executed
  *  @param ProcessID   ID of the next active process
@@ -22,17 +44,19 @@ void ControlProcessExecuter::StartProcess(uint16_t ProcessID){
     // execute process if it exists
     _ProcessRunning = true;
     _ActiveProcessID = ProcessID;
+    _ProcessArray[_ActiveProcessID]->Initialize();
   }
 }
 
 /**
- *  terminate currently active process
+ *  Terminate currently active process
  *  doesn't do anything if no process is active
  */
 void ControlProcessExecuter::TerminateProcess(void){
   if(_ProcessRunning == true){
     _ActiveProcessID = PROCESS_NONE;
     _ProcessRunning = false;
+    _ProcessArray[_ActiveProcessID]->Terminate();
   }
 }
 
@@ -48,6 +72,11 @@ bool ControlProcessExecuter::ExecuteProcess(void){
 
   if(_ProcessRunning){
     _ProcessArray[_ActiveProcessID]->Execute();
+
+    // check for process completion
+    if(_ProcessArray[_ActiveProcessID]->_GetShouldQuitStatus()){
+      TerminateProcess();
+    }
   }
 
   return (! _ProcessRunning);

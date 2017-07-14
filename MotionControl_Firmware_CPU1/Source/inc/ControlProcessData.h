@@ -19,6 +19,7 @@
 #include "stdint.h"
 #include "F28x_Project.h"
 
+#include "ControlTypeDef.h"
 #include "ObjectDictionaryEntryBase.h"
 
 /**
@@ -52,13 +53,12 @@ public:
     _CommAngleCosine(1),
     _CommAngleSine(0),
     _ForceSetpoint(0),
-    _CurrentSetpointA(0),
-    _CurrentSetpointB(0),
     _PositionSetpoint(0),
     _VelocitySetpoint(0),
     _AccelSetpoint(0)
   {
-
+    _CurrentSetpoint.A = 0;
+    _CurrentSetpoint.B = 0;
   };
 
   ~ControlProcessData(){};
@@ -87,9 +87,8 @@ public:
   uint16_t _CurrentValuePhaseB[4];
 
 
-  // current value in mA
-  int32_t _CurrentValueA;
-  int32_t _CurrentValueB;
+  // current actual value in mA
+  PhaseCurrentVec _CurrentActualValue;
 
   // power supply status actual value
   uint32_t _VoltageValueDcLine;
@@ -127,8 +126,7 @@ public:
   float32_t _VelocitySetpoint;
   float32_t _AccelSetpoint;
   float32_t _ForceSetpoint;
-  float32_t _CurrentSetpointA;      // unit: mA
-  float32_t _CurrentSetpointB;
+  PhaseCurrentVec _CurrentSetpoint;      // unit: mA
 
   // position control limit values
   float32_t _VelocityLimit;           // unit: cnt/sp

@@ -23,7 +23,7 @@ typedef struct ObjectDictionaryEntryTypeDef{
 
   uint32_t _Idx;
   char _AccessType;
-  char _DataType;
+  char _DataLength;
   ObjectDictionaryEntryBase * _Instance;
   void (ObjectDictionaryEntryBase::*_AccessMethod)(ObdAccessHandle*);
 

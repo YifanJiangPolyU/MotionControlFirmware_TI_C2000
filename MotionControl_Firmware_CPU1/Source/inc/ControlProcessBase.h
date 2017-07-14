@@ -21,14 +21,32 @@ class ControlProcessBase{
 
   public:
 
-    ControlProcessBase(){};
-    ~ControlProcessBase(){};
+    ControlProcessBase():
+      _ProcessShouldQuit(false)
+    {
+
+    }
+
+    ~ControlProcessBase(){}
 
     virtual void Execute(void){};
     virtual void Reset(void){};
 
+    void Initialize(void){
+      _ProcessShouldQuit = false;
+      Reset();
+    };
+
+    void Terminate(void){
+      _ProcessShouldQuit = true;
+    };
+
+    bool _GetShouldQuitStatus(void){
+      return _ProcessShouldQuit;
+    }
+
   protected:
-    bool _ProcessCompleted;
+    bool _ProcessShouldQuit;
 
   private:
 

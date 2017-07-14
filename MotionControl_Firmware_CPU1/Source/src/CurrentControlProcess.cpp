@@ -18,7 +18,8 @@ void CurrentControlProcess::Execute(void){
   PwmDutyVec PwmDutyCycle;
 
   // execute current controller
-  PwmDutyCycle = _CurrentLoopController->Execute();
+  PwmDutyCycle = _CurrentLoopController->Execute(&(_ControlProcessData->_CurrentSetpoint),
+                                                 &(_ControlProcessData->_CurrentActualValue));
 
   // apply duty cycle
   PwrSetPwmDuty(&PwmDutyCycle);

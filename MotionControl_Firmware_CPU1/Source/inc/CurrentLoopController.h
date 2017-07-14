@@ -28,7 +28,7 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
     CurrentLoopController(ControlProcessData * ControlProcessDataPtr);
     ~CurrentLoopController(){}
 
-    PwmDutyVec Execute(void);
+    PwmDutyVec Execute(PhaseCurrentVec * Demand, PhaseCurrentVec * Actual);
     void Reset(void);
 
     void AccessCurrentLoopGains_Kp(ObdAccessHandle * handle);

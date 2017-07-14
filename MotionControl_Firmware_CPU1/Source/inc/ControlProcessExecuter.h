@@ -43,22 +43,7 @@ class ControlProcessExecuter {
                            CurrentLoopController * CurrentLoopControllerPtr,
                            CurrentControlProcess * CurrentControlProcessPtr,
                            CurrentLoopSweepSine * CurrentLoopSweepSinePtr,
-                           PositionControlProcess * PositionControlProcessPtr):
-      _ActiveProcessID(PROCESS_NONE),
-      _ProcessRunning(false)
-    {
-      _ControlProcessData = ControlProcessDataPtr;
-
-      uint16_t i;
-      for(i=0; i<20; i++){
-        _ProcessArray[i] = NULL;
-      }
-
-      // IMPORTANT: index of process classes MUST match with the process ID
-      _ProcessArray[1] = CurrentControlProcessPtr;
-      _ProcessArray[3] = PositionControlProcessPtr;
-      _ProcessArray[10] = CurrentLoopSweepSinePtr;
-    }
+                           PositionControlProcess * PositionControlProcessPtr);
 
     ~ControlProcessExecuter(){}
 

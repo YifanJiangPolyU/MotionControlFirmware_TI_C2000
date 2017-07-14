@@ -16,12 +16,25 @@
 */
 
 #include "CurrentLoopSweepSine.h"
+#include "math.h"
+
+const uint16_t _CurrentControlFrequency = 32000;
+const float32_t _TimeBase = 1.f/_CurrentControlFrequency;
 
 /**
  *  Execute the current loop sweepsine process
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 void CurrentLoopSweepSine::Execute(void){
 
+  float32_t Amplitude = 0;
+
+  if(_TimeStamp < _TimeMax){
+    Amplitude = GenerateSweepSine();
+    _TimeStamp += 1;
+  } else {
+
+  }
 }
 
 /**
@@ -29,16 +42,31 @@ void CurrentLoopSweepSine::Execute(void){
  *  @param   None
  *  @retval  Next point in the sweepsine waveform
  */
-float32_t CurrentLoopSweepSine::SignalGeneration(void){
-  return 0.0f;
+#pragma CODE_SECTION(".TI.ramfunc");
+float32_t CurrentLoopSweepSine::GenerateSweepSine(void){
+
+  float32_t Time = _TimeStamp * _TimeBase;
+  float32_t Angle = _StartFreq*Time + _HalfRampRate*Time*Time;
+  float32_t Amplitude = _ExcitationAmplitude * sin(Angle);
+
+  return Amplitude;
 }
 
 /**
  *  Reset the current loop sweepsine process
  */
 void CurrentLoopSweepSine::Reset(void){
+
   _CurrentLoopController->Reset();
-  _TimeCounter = 0;
+  _TimeStamp = 0;
+  _HalfRampRate = _RampRate * 0.5;
+
+  if(_StartFreq<_EndFreq){
+    _TimeMax = (uint16_t)((_EndFreq - _StartFreq)/_RampRate/_TimeBase);
+  } else {
+    _TimeMax = 0;
+  }
+
 }
 
 void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){
@@ -59,11 +87,11 @@ void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){
 void CurrentLoopSweepSine::AccessExcitationLength(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _ExcitationLength = handle->Data.DataFloat32;
+      _TimeMax = handle->Data.DataInt16[0];
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataFloat32 = _ExcitationLength;
+      handle->Data.DataInt16[0] = _TimeMax;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
@@ -101,14 +129,14 @@ void CurrentLoopSweepSine::AccessEndFrequency(ObdAccessHandle * handle){
   }
 }
 
-void CurrentLoopSweepSine::AccessSweepRate(ObdAccessHandle * handle){
+void CurrentLoopSweepSine::AccessRampRate(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _SweepRate = handle->Data.DataFloat32;
+      _RampRate = handle->Data.DataFloat32;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataFloat32 = _SweepRate;
+      handle->Data.DataFloat32 = _RampRate;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
