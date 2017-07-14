@@ -47,7 +47,6 @@ void ObjectDictionary::AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
     }
   }
 
-  // set som
   msg_out->Common.CANID = CANID_SDO_TX + NODE_ID;
   msg_out->Sdo.Length = 10;
 }

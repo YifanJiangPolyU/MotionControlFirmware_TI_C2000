@@ -17,32 +17,68 @@
 
 #include "CiATypeDef.h"
 #include "ObjectDictionary.h"
+#include "ControlProcessData.h"
 
 #define PDO_MAX_BYTE    10
 
-#define PDO_ID_CUSTOM    0
+#define PDO_ID_DEBUG     255
 #define PDO_ID_CLSW      1
 #define PDO_ID_PLSW      2
+
+
+// define PDO data access types
+
+typedef struct PdoCLSWTypedef{
+  uint16_t CurrentActual[4];
+  uint16_t Reserved;
+}PdoMessageCLSW;
+
+typedef struct PdoPLSWTypedef{
+  uint16_t Status;
+  uint32_t EncPos;
+  uint16_t CurrentDemand;
+  uint16_t Reserved;
+}PdoMessagePLSW;
+
+typedef struct PdoDEBUGTypedef{
+  uint16_t Reserved[5];
+}PdoMessageDEBUG;
+
+typedef union PdoDataTypedef{
+  PdoMessageCLSW    clsw;
+  PdoMessagePLSW    plsw;
+  PdoMessageDEBUG   debug;
+  uint16_t          data[5];
+}PdoData;
+
+
 
 class PdoMaster{
 
   public:
-    PdoMaster(ObjectDictionary * ObjectDictionaryPtr):
-        _Obd(ObjectDictionaryPtr)
+    PdoMaster(ObjectDictionary * ObjectDictionaryPtr,
+              ControlProcessData * ControlProcessDataPtr):
+        _Obd(ObjectDictionaryPtr),
+        _ControlProcessData(ControlProcessDataPtr)
     {
 
     }
 
     ~PdoMaster(){}
 
-  private:
-    ObjectDictionary * _Obd;
+    void ComposePdoMessage(char id, CiA_Message * msg);
 
-    // current number of bytes in the PDO message
-    uint16_t _PdoMsgNmberOfBytes;
+  private:
+
+    void ComposeCLSW(CiA_Message * msg);
+    void ComposePLSW(CiA_Message * msg);
+    void ComposeDEBUG(CiA_Message * msg);
+    void CopyData(PdoData * data, CiA_Message * msg);
+
+    ObjectDictionary * _Obd;
+    ControlProcessData * _ControlProcessData;
 
     char _PdoID;
-    uint16_t _PdoDataListPosition[PDO_MAX_BYTE];
 
 };
 
