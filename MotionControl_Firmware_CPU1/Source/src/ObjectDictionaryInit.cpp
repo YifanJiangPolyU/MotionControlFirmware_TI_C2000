@@ -17,6 +17,11 @@
 
 void ObjectDictionary::InitObd(void){
 
+  int i = 0;
+  for(i=0; i<MAX_NO_OF_ENTRY; i++){
+    _ObdEntryList[i]._Idx = i*5;
+  }
+
 //  _InstanceArray[2] = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::_CurrentLoopController_GetInstance());
 //  _AccessFunctionArray[2] = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)> (&CurrentLoopController::AccessCurrentLoopGains_Kp);
   _ObdEntryList[2]._Idx = 10;

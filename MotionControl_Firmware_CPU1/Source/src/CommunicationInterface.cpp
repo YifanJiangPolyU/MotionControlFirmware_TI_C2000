@@ -68,7 +68,7 @@ void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
         _SdoReplyPending = false;
         _UartDriver->SendMessage(&_SodReplyMsg);
       } else {
-        _UartDriver->SendMessage(&msg);
+        //_UartDriver->SendMessage(&msg);
       }
 
       break;
