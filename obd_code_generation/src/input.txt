@@ -6,16 +6,16 @@
 # Lines begining with '#' are comments. All other lines MUST be compliant
 # to the standard format:
 #
-#    0xhhhh  0xhh  InstanceName   AccessFunctionName
+#    0xhhhh  0xhh  AccessType  ClassName  InstanceName   AccessFunctionName
 #
 
 
-# Idx     SubInx    AccessType     ClassName   Instance         Access Method
+# Idx     SubInx    DataType   AccessType     ClassName   Instance         Access Method
 
-0x0003    0x00      RO             class1      instance1        method1
-0x000A    0x03      RW             class1      instance2        method2
-0x000B    0x02      RO             class1      instance3        method3
-0x000A    0x02      RO             class1      instance4        method4
-0x0002    0x01      RO             class1      instance5        method5
-0x000A    0x01      RO             class1      instance6        method6
-0x0001    0x01      RO             class1      instance7        method7
+0x0003    0x00      int16      RO             class1      instance1        method1
+0x000A    0x03      uint16     RW             class1      instance2        method2
+0x000B    0x02      int32      RO             class1      instance3        method3
+0x000A    0x02      uint32     RO             class1      instance4        method4
+0x0002    0x01      uint8      RO             class1      instance5        method5
+0x000A    0x01      float32    RO             class1      instance6        method6
+0x0001    0x01      string     RO             class1      instance7        method7

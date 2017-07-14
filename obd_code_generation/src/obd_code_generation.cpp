@@ -51,7 +51,7 @@ const string Instance = "_Instance";
 const string AccessType = "_AccessType";
 const string AccessFunc = "_AccessMethod";
 const string ObdIndex = "_Idx";
-const string DataType = "_DataType";
+const string DataSize = "_DataSize";
 
 
 typedef struct ObjInfoTypeDef {
@@ -112,16 +112,25 @@ int main(int argc, char **argv)
   // extract object indexes
   vector<int> Idx;
   for(int i=0; i<InputWordVec.size(); i++){
-    if( ((InputWordVec[i]).size()!=6) ||
+    if( ((InputWordVec[i]).size()!=7) ||
         (((InputWordVec[i])[0])[0]!='0') || (((InputWordVec[i])[0])[1]!='x') ||
         (((InputWordVec[i])[1])[0]!='0') || (((InputWordVec[i])[1])[1]!='x') ){
       cout << "ERROR: input file format error (line "<< InputLineNum[i]<< ")" << endl;
       return 0;
     }
 
-    if(((InputWordVec[i])[2] != "RO") && ((InputWordVec[i])[2] != "RW")){
+    if(((InputWordVec[i])[3] != "RO") && ((InputWordVec[i])[3] != "RW")){
       cout << "ERROR: wrong access type, must be either RO or RW (line "<< InputLineNum[i]<< ")" << endl;
       return 0;
+    }
+
+    if(((InputWordVec[i])[2] != "int16") && ((InputWordVec[i])[2] != "uint16") &&
+       ((InputWordVec[i])[2] != "int32") && ((InputWordVec[i])[2] != "uint32") &&
+       ((InputWordVec[i])[2] != "float32") && ((InputWordVec[i])[2] != "string") &&
+       ((InputWordVec[i])[2] != "uint8")   ){
+
+         cout << "ERROR: unregonized or unsupported data type (line "<< InputLineNum[i]<< ")" << endl;
+         return 0;
     }
 
     int index = stoi ((InputWordVec[i])[0],nullptr,16);
@@ -168,18 +177,28 @@ int main(int argc, char **argv)
   for(int i=0; i<ObjList_sorted.size(); i++){
     auto entry = ObjList_sorted[i];
 
+    int ds = 10;
+    if((entry.WordVec[2]=="uint16") || (entry.WordVec[2]=="int16")) {
+      ds = 2;
+    } else if((entry.WordVec[2]=="uint32") || (entry.WordVec[2]=="int32") || (entry.WordVec[2]=="float32")){
+      ds = 4;
+    } else if((entry.WordVec[2]=="uint8")){
+      ds = 1;
+    } else if((entry.WordVec[2]=="string")){
+      ds = 10;
+    }
+
     ostringstream tmp;
     tmp << EntryList << "[" << i << "].";
     string EntryListIndex = tmp.str();
 
-
     OutputFile << "  "<< EntryListIndex << ObdIndex << " = " << entry.Idx << ";" << endl;
     OutputFile << "  "<< EntryListIndex << AccessType << " = " << 0 << ";" << endl;
-    OutputFile << "  "<< EntryListIndex << DataType << " = " << 0 << ";" << endl;
+    OutputFile << "  "<< EntryListIndex << DataSize << " = " << ds << ";" << endl;
     OutputFile << "  "<< EntryListIndex << Instance << " = " << CastInstance
-                      << "(SystemWarehouse::" << entry.WordVec[4] << "_GetInstance());" << endl;
+                      << "(SystemWarehouse::GetInstance()->" << entry.WordVec[5] << "_GetInstance());" << endl;
     OutputFile << "  "<< EntryListIndex << AccessFunc << " = " << CastAccessFunc
-                      << "(&" << entry.WordVec[3] << "::" << entry.WordVec[5] << ");" << endl;
+                      << "(&" << entry.WordVec[4] << "::" << entry.WordVec[6] << ");" << endl;
 
     OutputFile << endl;
   }
