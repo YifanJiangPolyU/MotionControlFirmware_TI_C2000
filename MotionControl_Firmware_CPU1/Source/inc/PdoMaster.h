@@ -21,9 +21,12 @@
 
 #define PDO_MAX_BYTE    10
 
-#define PDO_ID_DEBUG     255
-#define PDO_ID_CLSW      1
-#define PDO_ID_PLSW      2
+#define PDO_ID_DEBUG     255     // debug PDO
+#define PDO_ID_CLSW      1       // current loop sweepsine report
+#define PDO_ID_PLSW      2       // position loop sweepsine report
+#define PDO_ID_PR1       3       // process report 1
+#define PDO_ID_PR2       4       // process report 1
+#define PDO_ID_PR3       5       // process report 1
 
 
 // define PDO data access types

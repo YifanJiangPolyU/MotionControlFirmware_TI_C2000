@@ -57,8 +57,8 @@ public:
     _VelocitySetpoint(0),
     _AccelSetpoint(0)
   {
-    _CurrentSetpoint.A = 0;
-    _CurrentSetpoint.B = 0;
+    _PhaseCurrentSetpoint.A = 0;
+    _PhaseCurrentSetpoint.B = 0;
   };
 
   ~ControlProcessData(){};
@@ -85,7 +85,6 @@ public:
   uint16_t * _CurrentValueBufferPhaseB;
   uint16_t _CurrentValuePhaseA[4];
   uint16_t _CurrentValuePhaseB[4];
-
 
   // current actual value in mA
   PhaseCurrentVec _CurrentActualValue;
@@ -126,7 +125,8 @@ public:
   float32_t _VelocitySetpoint;
   float32_t _AccelSetpoint;
   float32_t _ForceSetpoint;
-  PhaseCurrentVec _CurrentSetpoint;      // unit: mA
+  DQCurrentVec _DQCurrentSetpoint;            // unit: mA
+  PhaseCurrentVec _PhaseCurrentSetpoint;      // unit: mA
 
   // position control limit values
   float32_t _VelocityLimit;           // unit: cnt/sp

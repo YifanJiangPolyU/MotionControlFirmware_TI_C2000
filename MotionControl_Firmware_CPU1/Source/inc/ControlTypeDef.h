@@ -21,6 +21,16 @@
   extern "C" {
 #endif
 
+typedef struct DQCurrentTypedef{
+  float32_t D;
+  float32_t Q;
+} DQCurrentVec;
+
+typedef struct AlBeCurrentTypedef{
+  float32_t Alpha;
+  float32_t Beta;
+} AlBeCurrentVec;
+
 typedef struct PhaseCurrentTypedef{
   float32_t A;
   float32_t B;
