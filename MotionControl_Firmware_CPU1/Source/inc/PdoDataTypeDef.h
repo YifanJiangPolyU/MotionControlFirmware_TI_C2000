@@ -7,8 +7,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       *
  ******************************************************************************/
 
-#ifndef PDO_TYPEDEF_H
-#define PDO_TYPEDEF_H
+/*
+*  define the Pdo data structures
+*/
+
+#ifndef _PDO_DATA_TYPEDEF_H
+#define _PDO_DATA_TYPEDEF_H
+
+#define PDO_MAX_BYTE    10
 
 #define PDO_ID_DEBUG     255     // debug PDO
 #define PDO_ID_CLSW      1       // current loop sweepsine report
@@ -74,5 +80,6 @@ typedef union PdoDataTypedef{
   PdoMessageDEBUG   debug;
   uint16_t          data[5];
 }PdoData;
+
 
 #endif

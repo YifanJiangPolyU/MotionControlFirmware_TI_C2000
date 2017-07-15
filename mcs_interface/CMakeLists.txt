@@ -18,6 +18,7 @@ add_message_files(
   FILES
   CiA_SdoMessage.msg
   CiA_PdoMessage.msg
+  CiA_NmtMessage.msg
 )
 
 ## Generate services in the 'srv' folder

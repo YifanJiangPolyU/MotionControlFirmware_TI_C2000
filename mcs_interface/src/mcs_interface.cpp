@@ -25,6 +25,7 @@
 #include "std_msgs/String.h"
 #include "mcs_interface/CiA_SdoMessage.h"
 #include "mcs_interface/CiA_PdoMessage.h"
+#include "mcs_interface/CiA_NmtMessage.h"
 
 // function prototypes
 void InitSerialPort(void);
@@ -36,6 +37,8 @@ void ProcessSdoMessage(CiA_Message* msg);
 void ProcessPdoMessage(CiA_Message* msg);
 
 void SdoRequestCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg);
+void PdoRequestCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg);
+void NmtRequestCallback(const mcs_interface::CiA_NmtMessage::ConstPtr& msg);
 
 // globally define publisher
 ros::Publisher SdoReply_pub;
@@ -59,8 +62,8 @@ int main(int argc, char **argv){
 
   // initialize subscriber
   SdoRequest_sub = node.subscribe("SdoRequest", 5, SdoRequestCallback);
-  Pdo_sub = node.subscribe("Pdo", 20, SdoRequestCallback);
-  Nmt_sub = node.subscribe("Nmt", 5, SdoRequestCallback);
+  Pdo_sub = node.subscribe("Pdo", 20, PdoRequestCallback);
+  Nmt_sub = node.subscribe("Nmt", 5, NmtRequestCallback);
   Sync_sub = node.subscribe("Sync", 5, SdoRequestCallback);
 
   InitSerialPort();
@@ -93,6 +96,20 @@ void SdoRequestCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
 
   len = CANOpenMsgToSendBuffer(send_buffer, &msg_buf);
   Send(send_buffer, len);
+}
+
+/**
+ *  callback function to transmit a PDO message over uart
+ */
+void PdoRequestCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
+
+}
+
+/**
+ *  callback function to transmit a NMT message over uart
+ */
+void NmtRequestCallback(const mcs_interface::CiA_NmtMessage::ConstPtr& msg){
+
 }
 
 /**
@@ -238,7 +255,7 @@ void ProcessMessage(CiA_Message * msg){
   if((msg->Common.CANID-NODE_ID)==CANID_SDO_TX){
     ProcessSdoMessage(msg);
   } else if((msg->Common.CANID-NODE_ID)==CANID_PDO_TX){
-
+    ProcessPdoMessage(msg);
   }
 }
 
