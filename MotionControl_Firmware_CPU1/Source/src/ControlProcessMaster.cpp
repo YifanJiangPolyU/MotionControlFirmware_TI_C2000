@@ -14,6 +14,8 @@
 
 #include "ControlProcessMaster.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
+#include "Drivers/EncoderDriver/EncoderDriver.h"
+
 /**
  *  pointer to globally unique object of ControlProcessMaster
  */
@@ -136,6 +138,8 @@ void ControlProcessMaster::UpdateProcessData(void){
                       *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
   _ControlProcessData->_CurrentValuePhaseB[_CycleCounter] =
                       *(_ControlProcessData->_CurrentValueBufferPhaseB+2);
+
+  _ControlProcessData->_Position = GetEncoder1Position();
 }
 
 /**

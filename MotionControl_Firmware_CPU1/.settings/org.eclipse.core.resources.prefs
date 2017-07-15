@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
+encoding//Debug/Drivers/EncoderDriver/subdir_rules.mk=UTF-8
+encoding//Debug/Drivers/EncoderDriver/subdir_vars.mk=UTF-8
 encoding//Debug/Drivers/GpioDriver/subdir_rules.mk=UTF-8
 encoding//Debug/Drivers/GpioDriver/subdir_vars.mk=UTF-8
 encoding//Debug/Drivers/PowerStageControl/subdir_rules.mk=UTF-8
