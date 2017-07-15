@@ -21,15 +21,15 @@
   extern "C" {
 #endif
 
-typedef struct DQCurrentTypedef{
+typedef struct DQTypedef{
   float32_t D;
   float32_t Q;
-} DQCurrentVec;
+} DQVec;
 
-typedef struct AlBeCurrentTypedef{
+typedef struct AlBeTypedef{
   float32_t Alpha;
   float32_t Beta;
-} AlBeCurrentVec;
+} AlBeVec;
 
 typedef struct PhaseCurrentTypedef{
   float32_t A;

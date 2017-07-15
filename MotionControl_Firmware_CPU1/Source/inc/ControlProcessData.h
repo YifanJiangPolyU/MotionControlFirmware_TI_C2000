@@ -57,6 +57,8 @@ public:
     _VelocitySetpoint(0),
     _AccelSetpoint(0)
   {
+    _DQCurrentSetpoint.D = 0;
+    _DQCurrentSetpoint.Q = 0;
     _PhaseCurrentSetpoint.A = 0;
     _PhaseCurrentSetpoint.B = 0;
   };
@@ -72,8 +74,12 @@ public:
   void AccessCpuTemperature(ObdAccessHandle * handle);
   void AccessPowerStageTemperature(ObdAccessHandle * handle);
 
-  void AccessCommutationAngles_Cos(ObdAccessHandle * handle);
-  void AccessCommutationAngles_Sin(ObdAccessHandle * handle);
+  void AccessCommutationAngle(ObdAccessHandle * handle);
+  void AccessCommutationAngle_Cos(ObdAccessHandle * handle);
+  void AccessCommutationAngle_Sin(ObdAccessHandle * handle);
+
+  void AccessDQCurrentSetpoint_D(ObdAccessHandle * handle);
+  void AccessDQCurrentSetpoint_Q(ObdAccessHandle * handle);
 
 
 
@@ -117,6 +123,7 @@ public:
   float32_t _Factor_AccelerationToSI;   // cnt/sp to SI unit (rad/s^2 or mm/s^2)
 
   // commutation angles
+  float32_t _CommAngle;
   float32_t _CommAngleCosine;
   float32_t _CommAngleSine;
 
@@ -125,7 +132,7 @@ public:
   float32_t _VelocitySetpoint;
   float32_t _AccelSetpoint;
   float32_t _ForceSetpoint;
-  DQCurrentVec _DQCurrentSetpoint;            // unit: mA
+  DQVec _DQCurrentSetpoint;                   // unit: mA
   PhaseCurrentVec _PhaseCurrentSetpoint;      // unit: mA
 
   // position control limit values

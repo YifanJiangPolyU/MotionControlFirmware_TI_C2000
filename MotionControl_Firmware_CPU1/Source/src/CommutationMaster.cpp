@@ -23,28 +23,88 @@
  *  compute commutation angle per count
  */
 void CommutationMaster::UpdateCommResolution(void){
-  CommAnglePerCount = 6.28318530717958623200 / CountPerRev / NPolePair;
+  _CommAnglePerCount = 6.28318530717958623200 / _CountPerRev / _NPolePair;
 }
 
 
 //__attribute__((ramfunc))
 void CommutationMaster::Update(int32_t PosCounter){
 
-  PosCounter_new = PosCounter;
+  _PosCounter_new = PosCounter;
 
-  CommAngle += (PosCounter_new-PosCounter_old) * CommAnglePerCount;
+  _CommAngle += (_PosCounter_new-_PosCounter_old) * _CommAnglePerCount;
 
-  // handling commutation angle warp arround
+  // handling commutation angle wrap arround
   // range limited to 0 ~ 2pi
-  if(CommAngle < 0){
-    CommAngle += 6.28318530717958623200f;
-  }else if(CommAngle > 6.28318530717958623200f){
-    CommAngle -= 6.28318530717958623200f;
+  if(_CommAngle < 0){
+    _CommAngle += 6.28318530717958623200f;
+  }else if(_CommAngle > 6.28318530717958623200f){
+    _CommAngle -= 6.28318530717958623200f;
   }
 
   // compute the sin and cos using TMU (faster)
-  CommAngle_Cos = cos(CommAngle);
-  CommAngle_Sin = sin(CommAngle);
+  _CommAngle_Cos = cos(_CommAngle);
+  _CommAngle_Sin = sin(_CommAngle);
 
-  PosCounter_old = PosCounter_new;
+  _PosCounter_old = _PosCounter_new;
+}
+
+void CommutationMaster::AccessNPolePair(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _NPolePair = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _NPolePair;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void CommutationMaster::AccessCountPerRev(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _CountPerRev = handle->Data.DataUint32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint32 = _CountPerRev;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void CommutationMaster::AccessPolePitch(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _PolePitch = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _PolePitch;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void CommutationMaster::AccessLinearResolution(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _PolePitch = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _PolePitch;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
 }

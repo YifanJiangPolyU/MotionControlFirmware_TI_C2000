@@ -109,11 +109,24 @@ void ControlProcessData::AccessPowerStageTemperature(ObdAccessHandle * handle){
   }
 }
 
-void ControlProcessData::AccessCommutationAngles_Cos(ObdAccessHandle * handle){
+void ControlProcessData::AccessCommutationAngle(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _CommAngleCosine = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_ERR_WRITE;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _CommAngle;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessCommutationAngle_Cos(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _CommAngleCosine;
@@ -124,14 +137,43 @@ void ControlProcessData::AccessCommutationAngles_Cos(ObdAccessHandle * handle){
   }
 }
 
-void ControlProcessData::AccessCommutationAngles_Sin(ObdAccessHandle * handle){
+void ControlProcessData::AccessCommutationAngle_Sin(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _CommAngleSine = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _CommAngleSine;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessDQCurrentSetpoint_D(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _DQCurrentSetpoint.D = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _DQCurrentSetpoint.D;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessDQCurrentSetpoint_Q(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _DQCurrentSetpoint.Q = handle->Data.DataFloat32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _DQCurrentSetpoint.Q;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

@@ -46,7 +46,7 @@ class ControlProcessMaster{
     ~ControlProcessMaster(){}
 
     void SetCurrentValueBuffer(uint16_t * bufA, uint16_t * bufB);
-    void GetData(void);
+    void UpdateProcessData(void);
     void Execute(void);
 
     typedef struct ControlProcessMaster_Status_typedef{

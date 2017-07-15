@@ -46,7 +46,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
 void ControlProcessMaster::Execute(void){
 
   // Get data from current controller and ADC
-  GetData();
+  UpdateProcessData();
 
   //_CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer);
 
@@ -131,7 +131,7 @@ void ControlProcessMaster::SetCurrentValueBuffer(uint16_t * bufA, uint16_t * buf
 /**
  *  get data from ADC buffer
  */
-void ControlProcessMaster::GetData(void){
+void ControlProcessMaster::UpdateProcessData(void){
   _ControlProcessData->_CurrentValuePhaseA[_CycleCounter] =
                       *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
   _ControlProcessData->_CurrentValuePhaseB[_CycleCounter] =

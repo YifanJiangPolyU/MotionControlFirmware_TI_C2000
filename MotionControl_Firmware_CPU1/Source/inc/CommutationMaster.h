@@ -28,13 +28,15 @@ class CommutationMaster: public ObjectDictionaryEntryBase{
 
   public:
     CommutationMaster():
-      NPolePair(1),
-      CountPerRev(1024),
-      HallSensorPattern(0b001),
-      CommAnglePerCount(0.0f),
-      CommAngle(0.0f),
-      CommAngle_Cos(1.0f),
-      CommAngle_Sin(0.0f)
+      _NPolePair(1),
+      _CountPerRev(1024),
+      _PolePitch(20),
+      _LinearResolution(1000),
+      _HallSensorPattern(0b001),
+      _CommAnglePerCount(0.0f),
+      _CommAngle(0.0f),
+      _CommAngle_Cos(1.0f),
+      _CommAngle_Sin(0.0f)
     {};
 
     ~CommutationMaster(){};
@@ -42,22 +44,26 @@ class CommutationMaster: public ObjectDictionaryEntryBase{
     void Update(int32_t PosCounter);
     void UpdateCommResolution(void);
 
-    void AccessParameter(ObdAccessHandle * handle){
-      
-    }
+    void AccessNPolePair(ObdAccessHandle * handle);
+    void AccessCountPerRev(ObdAccessHandle * handle);
+    void AccessPolePitch(ObdAccessHandle * handle);
+    void AccessLinearResolution(ObdAccessHandle * handle);
 
   private:
-    int32_t PosCounter_new;           // position counter value
-    int32_t PosCounter_old;
+    int32_t _PosCounter_new;           // position counter value
+    int32_t _PosCounter_old;
 
-    uint16_t  NPolePair;              // number of pole pairs (rotary)
-    uint16_t  CountPerRev;            // resolution: count per revolution (rotaty)
+    uint16_t  _NPolePair;              // number of pole pairs (rotary)
+    uint32_t  _CountPerRev;            // resolution: count per revolution (rotaty)
 
-    uint16_t  HallSensorPattern;      // hall sensor pattern (used only when hall sensor available)
-    float32_t CommAnglePerCount;      // electrical angle per count (rad)
-    float32_t CommAngle;              // electrical angle (rad)
-    float32_t CommAngle_Cos;          // cosine of electrical angle
-    float32_t CommAngle_Sin;          // sine of electrical angle
+    float32_t _PolePitch;              // pitch of pole pair (linear, unit: mm)
+    uint16_t _LinearResolution;       // resolution of linear encoder (unit: cnt/mm)
+
+    uint16_t  _HallSensorPattern;      // hall sensor pattern (used only when hall sensor available)
+    float32_t _CommAnglePerCount;      // electrical angle per count (rad)
+    float32_t _CommAngle;              // electrical angle (rad)
+    float32_t _CommAngle_Cos;          // cosine of electrical angle
+    float32_t _CommAngle_Sin;          // sine of electrical angle
 
 };
 
