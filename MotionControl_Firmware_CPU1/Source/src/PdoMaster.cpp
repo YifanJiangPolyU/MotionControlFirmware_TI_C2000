@@ -52,7 +52,7 @@ void PdoMaster::ComposePLSW(CiA_Message * msg){
   PdoData data;
 
   data.plsw.EncPos = _ControlProcessData->_Position;
-  data.plsw.CurrentDemand = 0;
+  data.plsw.CurrentDemand = _ControlProcessData->_DQCurrentSetpoint.Q;
 
   CopyData(&data, msg);
 

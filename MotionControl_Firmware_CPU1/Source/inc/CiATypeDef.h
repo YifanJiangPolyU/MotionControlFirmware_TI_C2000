@@ -111,7 +111,9 @@ typedef struct CiA_PdoMessageTypedef{
   // CAN PHY: use first 8 bytes only
   // EtherCAT and UART: use all bytes
   // access using __byte()
-  uint16_t Data[6];
+  uint16_t Data[5];
+  uint16_t PDO_ID:    8;
+  uint16_t reserved:  8;
 
 } CiA_PdoMessage;
 

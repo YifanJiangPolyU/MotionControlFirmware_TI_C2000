@@ -41,7 +41,7 @@ class SystemWarehouse{
                               &_CurrentLoopSweepSine,
                               &_PositionControlProcess),
       _ObjectDictionary(),
-      _CommutationMaster(),
+      _CommutationMaster(&_ControlProcessData),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData),
       _CurrentLoopController(&_ControlProcessData),
       _CurrentControlProcess(&_CurrentLoopController, &_ControlProcessData),

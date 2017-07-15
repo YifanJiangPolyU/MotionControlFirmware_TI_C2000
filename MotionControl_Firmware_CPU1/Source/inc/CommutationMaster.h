@@ -22,12 +22,14 @@
 #include "F28x_Project.h"
 
 #include "CiATypeDef.h"
+#include "ControlProcessData.h"
 #include "ObjectDictionaryEntryBase.h"
 
 class CommutationMaster: public ObjectDictionaryEntryBase{
 
   public:
-    CommutationMaster():
+    CommutationMaster(ControlProcessData * ControlProcessDataPtr):
+      _ControlProcessData(ControlProcessDataPtr),
       _NPolePair(1),
       _CountPerRev(1024),
       _PolePitch(20),
@@ -41,6 +43,7 @@ class CommutationMaster: public ObjectDictionaryEntryBase{
 
     ~CommutationMaster(){};
 
+    void SetCommAngle(float32_t angle);
     void Update(int32_t PosCounter);
     void UpdateCommResolution(void);
 
@@ -50,6 +53,12 @@ class CommutationMaster: public ObjectDictionaryEntryBase{
     void AccessLinearResolution(ObdAccessHandle * handle);
 
   private:
+
+    void UpdateRotary(int32_t PosCounter);
+    void UpdateLinear(int32_t PosCounter);
+
+    ControlProcessData * _ControlProcessData;
+
     int32_t _PosCounter_new;           // position counter value
     int32_t _PosCounter_old;
 
