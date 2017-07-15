@@ -45,6 +45,7 @@ void PdoMaster::ComposeCLSW(CiA_Message * msg){
 
   CopyData(&data, msg);
 
+  msg->Pdo.PDO_ID = PDO_ID_CLSW;
 }
 
 #pragma CODE_SECTION(".TI.ramfunc");
@@ -56,6 +57,7 @@ void PdoMaster::ComposePLSW(CiA_Message * msg){
 
   CopyData(&data, msg);
 
+  msg->Pdo.PDO_ID = PDO_ID_PLSW;
 }
 
 #pragma CODE_SECTION(".TI.ramfunc")
@@ -64,6 +66,8 @@ void PdoMaster::ComposeDEBUG(CiA_Message * msg){
   PdoData data;
 
   CopyData(&data, msg);
+
+  msg->Pdo.PDO_ID = PDO_ID_DEBUG;
 }
 
 #pragma CODE_SECTION(".TI.ramfunc")
