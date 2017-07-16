@@ -23,9 +23,9 @@ __interrupt void Cla1Task1 ( void )
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
   sensorSampleA = AdcaResultRegs.ADCRESULT0;
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
-  CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
-  CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
-  dcVoltageSense = AdcbResultRegs.ADCRESULT1;
+  CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA * CLA_CurrentSenseGain_Phase;
+  CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB * CLA_CurrentSenseGain_Phase;
+  dcVoltageSense = AdcbResultRegs.ADCRESULT1 * CLA_VoltageSenseGain;
 
   if(CLA_SampleCounter==20){
     CLA_SampleCounter = 0;
@@ -40,7 +40,6 @@ __interrupt void Cla1Task1 ( void )
   }
 
   READ_CLOCK(timeCounter);
-
 }
 
 __interrupt void Cla1Task2 ( void ) {}

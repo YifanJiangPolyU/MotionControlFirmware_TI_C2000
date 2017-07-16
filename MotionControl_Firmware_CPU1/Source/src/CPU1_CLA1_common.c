@@ -28,25 +28,26 @@
     uint16_t CLA_SampleCounter;
     #pragma DATA_SECTION(CLA_CycleCounter,"CLADataLS1")
     uint16_t CLA_CycleCounter;
-    #pragma DATA_SECTION(CLA_PosLoopCounter,"CLADataLS1")
-    uint16_t CLA_PosLoopCounter;
-    #pragma DATA_SECTION(CLA_CurrentLoopEnable,"CLADataLS1")
-    uint16_t CLA_CurrentLoopEnable;
-    #pragma DATA_SECTION(CLA_PositionLoopEnable,"CLADataLS1")
-    uint16_t CLA_PositionLoopEnable;
+
+    #pragma DATA_SECTION(CLA_CurrentSenseGain_Phase,"CLADataLS1")
+    float32_t CLA_CurrentSenseGain_Phase = 1.0f;
+    #pragma DATA_SECTION(CLA_CurrentSenseGain_DcLine,"CLADataLS1")
+    float32_t CLA_CurrentSenseGain_DcLine = 1.0f;
+    #pragma DATA_SECTION(CLA_VoltageSenseGain,"CLADataLS1")
+    float32_t CLA_VoltageSenseGain = 1.0f;
 
     #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
-    uint16_t sensorSampleA;
+    float32_t sensorSampleA;
     #pragma DATA_SECTION(sensorSampleB,"CLADataLS1")
-    uint16_t sensorSampleB;
+    float32_t sensorSampleB;
     #pragma DATA_SECTION(dcVoltageSense,"CLADataLS1")
     uint16_t dcVoltageSense;
 
     // ADC data buffer
     #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")
-    uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
+    float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
     #pragma DATA_SECTION(CLA_SampleBufferB,"CLADataLS1")
-    uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
+    float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
     #pragma DATA_SECTION(CLA_SampleBufferActiveHalf,"CLADataLS1")
     uint16_t CLA_SampleBufferActiveHalf;
 
@@ -57,5 +58,4 @@
 void CLA_Reset(){
   CLA_SampleCounter = 0;
   CLA_CycleCounter = 0;
-  CLA_PosLoopCounter = 0;
 }

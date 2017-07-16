@@ -76,7 +76,6 @@ void main(void)
 
   // sync ePWM counter value
   CLA_Reset();
-  CLA_CurrentLoopEnable = 1;
   EPwm1Regs.TBCTL.bit.SWFSYNC = 1;
 
   EDIS;

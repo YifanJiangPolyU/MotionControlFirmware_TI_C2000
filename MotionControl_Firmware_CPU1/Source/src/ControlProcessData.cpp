@@ -14,6 +14,27 @@
 */
 
 #include "ControlProcessData.h"
+#include "CPU1_CLA1_common.h"
+
+const float32_t ADC_RESOLUTION = 4096;
+const float32_t ADC_REF_VOLTAGE = 3.0f;
+
+const float32_t CURRENT_SENSE_AMP_GAIN = 10.0f;
+const float32_t CURRENT_SENSE_RES_VALUE = 0.01f;
+
+const float32_t CURREN_SENSE_GAIN_PHASE = ADC_REF_VOLTAGE/
+                                          ADC_RESOLUTION/
+                                          CURRENT_SENSE_AMP_GAIN/
+                                          CURRENT_SENSE_RES_VALUE;
+
+const float32_t CURREN_SENSE_GAIN_DCLINE = 1.0f;
+const float32_t VOLTAGE_SENSE_GAIN_DCLINE = 1.0f;
+
+void ControlProcessData::InitCLAGains(void){
+  CLA_CurrentSenseGain_Phase = CURREN_SENSE_GAIN_PHASE;
+  CLA_CurrentSenseGain_DcLine = CURREN_SENSE_GAIN_PHASE;
+  CLA_VoltageSenseGain = VOLTAGE_SENSE_GAIN_DCLINE;
+}
 
 void ControlProcessData::AccessParameter(ObdAccessHandle * handle){
 
@@ -108,6 +129,97 @@ void ControlProcessData::AccessPowerStageTemperature(ObdAccessHandle * handle){
       break;
   }
 }
+
+void ControlProcessData::AccessDcLineVoltageUpperLimit(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _DcLineVoltageUpperLimit = handle->Data.DataUint32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint32 = _DcLineVoltageUpperLimit;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessDcLineVoltageLowerLimit(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _DcLineVoltageLowerLimit = handle->Data.DataUint32;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint32 = _DcLineVoltageLowerLimit;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessDcLineCurrentLimitRMS(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _DcLineCurrentLimitRMS = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _DcLineCurrentLimitRMS;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessDcLineCurrentLimitPEAK(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _DcLineCurrentLimitPEAK = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _DcLineCurrentLimitPEAK;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessMotorCurrentLimitRMS(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _MotorCurrentLimitRMS = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _MotorCurrentLimitRMS;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessData::AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _MotorCurrentLimitPEAK = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _MotorCurrentLimitPEAK;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
 
 void ControlProcessData::AccessCommutationAngle(ObdAccessHandle * handle){
   switch (handle->AccessType) {

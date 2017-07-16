@@ -44,10 +44,8 @@ PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, Phase
   float32_t OutputVoltageMinimum = VoltageDcLine * 0.05;
 
   // execute PI controller
-  _Error_Ia = CurrentDemand->A;
-  _Error_Ib = CurrentDemand->B;
-  _Error_Ia -= _ControlProcessData->_CurrentSenseGain*(CurrentActual->A);
-  _Error_Ib -= _ControlProcessData->_CurrentSenseGain*(CurrentActual->B);
+  _Error_Ia = CurrentDemand->A - CurrentActual->A;
+  _Error_Ib = CurrentDemand->B - CurrentActual->B;
   _Integral_Ia += _Ki * _Error_Ia;
   _Integral_Ib += _Ki * _Error_Ib;
   _Output_Ua = _Kp * _Error_Ia + _Integral_Ia;
@@ -97,7 +95,6 @@ PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, Phase
   Pwm.C = (uint16_t)(_Output_Uc * VoltToPwmScaleFactor);
 
   return Pwm;
-
 }
 
 void CurrentLoopController::Reset(void){

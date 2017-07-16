@@ -125,7 +125,7 @@ void ControlProcessMaster::Execute(void){
  *  @ param bufA   ptr to phase A current sample buffer
  *  @ param bufB   ptr to phase B current sample buffer
  */
-void ControlProcessMaster::SetCurrentValueBuffer(uint16_t * bufA, uint16_t * bufB){
+void ControlProcessMaster::SetCurrentValueBuffer(float32_t * bufA, float32_t * bufB){
   _ControlProcessData->_CurrentValueBufferPhaseA = bufA;
   _ControlProcessData->_CurrentValueBufferPhaseB = bufB;
 }

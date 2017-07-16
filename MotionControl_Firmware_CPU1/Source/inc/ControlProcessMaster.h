@@ -45,7 +45,7 @@ class ControlProcessMaster{
 
     ~ControlProcessMaster(){}
 
-    void SetCurrentValueBuffer(uint16_t * bufA, uint16_t * bufB);
+    void SetCurrentValueBuffer(float32_t * bufA, float32_t * bufB);
     void UpdateProcessData(void);
     void Execute(void);
 

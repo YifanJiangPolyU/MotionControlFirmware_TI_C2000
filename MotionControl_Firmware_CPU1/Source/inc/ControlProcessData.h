@@ -48,8 +48,12 @@ public:
   ControlProcessData():
     _ControlType(CTRL_TYPE_NONE),
     _MotorType(MTR_TYPE_NONE),
-    _CurrentSenseGain(0),
-    _VoltageSenseGain(0),
+    _DcLineVoltageUpperLimit(25),
+    _DcLineVoltageLowerLimit(10),
+    _DcLineCurrentLimitRMS(10),
+    _DcLineCurrentLimitPEAK(20),
+    _MotorCurrentLimitRMS(8),
+    _MotorCurrentLimitPEAK(16),
     _CommAngleCosine(1),
     _CommAngleSine(0),
     _ForceSetpoint(0),
@@ -61,6 +65,8 @@ public:
     _DQCurrentSetpoint.Q = 0;
     _PhaseCurrentSetpoint.A = 0;
     _PhaseCurrentSetpoint.B = 0;
+
+    InitCLAGains();
   };
 
   ~ControlProcessData(){};
@@ -73,6 +79,13 @@ public:
   void AccessDcLineCurrent(ObdAccessHandle * handle);
   void AccessCpuTemperature(ObdAccessHandle * handle);
   void AccessPowerStageTemperature(ObdAccessHandle * handle);
+
+  void AccessDcLineVoltageUpperLimit(ObdAccessHandle * handle);
+  void AccessDcLineVoltageLowerLimit(ObdAccessHandle * handle);
+  void AccessDcLineCurrentLimitRMS(ObdAccessHandle * handle);
+  void AccessDcLineCurrentLimitPEAK(ObdAccessHandle * handle);
+  void AccessMotorCurrentLimitRMS(ObdAccessHandle * handle);
+  void AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle);
 
   void AccessCommutationAngle(ObdAccessHandle * handle);
   void AccessCommutationAngle_Cos(ObdAccessHandle * handle);
@@ -87,10 +100,10 @@ public:
   uint16_t _MotorType;
 
   // current actual values (Raw ADC output)
-  uint16_t * _CurrentValueBufferPhaseA;
-  uint16_t * _CurrentValueBufferPhaseB;
-  uint16_t _CurrentValuePhaseA[4];
-  uint16_t _CurrentValuePhaseB[4];
+  float32_t * _CurrentValueBufferPhaseA;
+  float32_t * _CurrentValueBufferPhaseB;
+  float32_t _CurrentValuePhaseA[4];
+  float32_t _CurrentValuePhaseB[4];
 
   // current actual value in mA
   PhaseCurrentVec _CurrentActualValue;
@@ -99,13 +112,22 @@ public:
   uint32_t _VoltageValueDcLine;
   uint16_t _CurrentValueDcLine;
 
+  // current and voltage limits
+  uint32_t _DcLineVoltageUpperLimit;
+  uint32_t _DcLineVoltageLowerLimit;
+  uint16_t _DcLineCurrentLimitRMS;
+  uint16_t _DcLineCurrentLimitPEAK;
+  uint16_t _MotorCurrentLimitRMS;
+  uint16_t _MotorCurrentLimitPEAK;
+
   // position
   int32_t _Position;            // unit: encoder count
   float32_t _Velocity;          // unit: count/sp
   float32_t _Acceleration;      // unit: count/sp^2
 
   // gains
-  float32_t _CurrentSenseGain;         // unit: mA/LSB
+  float32_t _CurrentSenseGain_Phase;   // unit: mA/LSB
+  float32_t _CurrentSenseGain_DcLine;   // unit: mA/LSB
   float32_t _VoltageSenseGain;         // unit: V/LSB
   float32_t _TemperatureSenseGain1;    // unit: K/LSB
   float32_t _TemperatureSenseGain2;    // unit: K/LSB
@@ -138,6 +160,9 @@ public:
   // position control limit values
   float32_t _VelocityLimit;           // unit: cnt/sp
   float32_t _AccelerationLimit;       // unit: cnt/sp^2
+
+private:
+  void InitCLAGains(void);
 
 
 };

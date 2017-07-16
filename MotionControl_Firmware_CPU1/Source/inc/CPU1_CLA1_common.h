@@ -44,17 +44,20 @@ extern "C" {
 extern float init;
 extern uint16_t result;
 
+extern const float32_t CURREN_SENSE_GAIN_PHASE;
+
 extern uint16_t CLA_SampleCounter;
 extern uint16_t CLA_CycleCounter;
-extern uint16_t CLA_PosLoopCounter;
-extern uint16_t CLA_CurrentLoopEnable;               // enable current loop
-extern uint16_t CLA_PositionLoopEnable;              // enable position loop
 
-extern uint16_t sensorSampleA;
-extern uint16_t sensorSampleB;
+extern float32_t CLA_CurrentSenseGain_Phase;
+extern float32_t CLA_CurrentSenseGain_DcLine;
+extern float32_t CLA_VoltageSenseGain;
+
+extern float32_t sensorSampleA;
+extern float32_t sensorSampleB;
 extern uint16_t dcVoltageSense;
-extern uint16_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase A
-extern uint16_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase B
+extern float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase A
+extern float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase B
 extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffering active half
 
 extern uint16_t timeCounter;
