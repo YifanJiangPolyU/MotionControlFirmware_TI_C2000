@@ -12,10 +12,35 @@
 
 # Idx     SubInx    DataType   AccessType     ClassName   Instance         Access Method
 
-0x0003    0x00      int16      RO             class1      instance1        method1
-0x000A    0x03      uint16     RW             class1      instance2        method2
-0x000B    0x02      int32      RO             class1      instance3        method3
-0x000A    0x02      uint32     RO             class1      instance4        method4
-0x0002    0x01      uint8      RO             class1      instance5        method5
-0x000A    0x01      float32    RO             class1      instance6        method6
-0x0001    0x01      string     RO             class1      instance7        method7
+# DC line voltage and current
+0x2000    0x01      uint32     RO      ControlProcessData    _ControlProcessData    AccessDcLineVoltage
+0x2000    0x02      uint16     RO      ControlProcessData    _ControlProcessData    AccessDcLineCurrent
+
+# temperature of CPU and power stage
+0x2001    0x01      uint16     RO      ControlProcessData    _ControlProcessData    AccessCpuTemperature
+0x2001    0x02      uint16     RO      ControlProcessData    _ControlProcessData    AccessPowerStageTemperature
+
+# DC line limits
+0x2001    0x01
+0x2001    0x02
+0x2001    0x03
+0x2001    0x04
+0x2001    0x05
+
+# encoder resolution and actual commutation angle
+0x2104    0x01    float32    RW    ControlProcessData   _ControlProcessData   AccessCommutationAngle
+0x2104    0x02    uint32     RW    CommutationMaster    _CommutationMaster    AccessCountPerRev
+0x2104    0x03    uint16     RW    CommutationMaster    _CommutationMaster    AccessLinearResolution
+0x2104    0x04    uint16     RW    CommutationMaster    _CommutationMaster    AccessNPolePair
+0x2104    0x05    float32    RW    CommutationMaster    _CommutationMaster    AccessPolePitch
+
+# current controller gains
+0x2105    0x01    uint16    RO    CurrentLoopController   _CurrentLoopController   AccessCurrentControlFrequency
+0x2105    0x02    float32   RW    CurrentLoopController   _CurrentLoopController   AccessCurrentLoopGains_Kp
+0x2105    0x03    float32   RW    CurrentLoopController   _CurrentLoopController   AccessCurrentLoopGains_Ki
+
+# current sampling filter
+0x2105    0x04    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_a1
+0x2105    0x05    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_a2
+0x2105    0x06    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_b1
+0x2105    0x07    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_b2

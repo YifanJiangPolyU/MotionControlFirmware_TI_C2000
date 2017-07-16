@@ -14,6 +14,7 @@
 
 #include "PowerStageControl.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
+#include "F2837xD_epwm.h"
 
 /**
  *  enable current, voltage, and temperature sampling
@@ -41,9 +42,12 @@ void PwmTimerEnable(void){
   * enable power stage output
   */
 void PwrEnable(void){
-  // enable PWM output
+  // enable PWM output by clearing PWM trip
+  EPwm4Regs.TZCLR.bit.OST = 1;
+  EPwm5Regs.TZCLR.bit.OST = 1;
+  EPwm6Regs.TZCLR.bit.OST = 1;
 
-  // set DRV gate enable
+  // set DRV8301 gate enable
   SetDrv8301GateEnable();
 }
 
@@ -51,8 +55,14 @@ void PwrEnable(void){
   * disable power stage output
   */
 void PwrDisable(void){
-  // Clear DRV gate enable
+  // Clear DRV8301 gate enable
   ClearDrv8301GateEnable();
+
+  // force PWM trip
+  EPwm4Regs.TZFRC.bit.OST = 1;
+  EPwm5Regs.TZFRC.bit.OST = 1;
+  EPwm6Regs.TZFRC.bit.OST = 1;
+
   EPwm4Regs.CMPA.bit.CMPA = 0;
   EPwm5Regs.CMPA.bit.CMPA = 0;
   EPwm6Regs.CMPA.bit.CMPA = 0;
