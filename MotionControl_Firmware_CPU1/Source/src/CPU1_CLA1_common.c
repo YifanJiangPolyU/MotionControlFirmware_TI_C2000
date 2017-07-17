@@ -36,6 +36,15 @@
     #pragma DATA_SECTION(CLA_VoltageSenseGain,"CLADataLS1")
     float32_t CLA_VoltageSenseGain = 1.0f;
 
+    #pragma DATA_SECTION(CLA_CurrentFilter_a1,"CLADataLS1")
+    float32_t CLA_CurrentFilter_a1 = 1.0f;
+    #pragma DATA_SECTION(CLA_CurrentFilter_a2,"CLADataLS1")
+    float32_t CLA_CurrentFilter_a2 = 0.0f;
+    #pragma DATA_SECTION(CLA_CurrentFilter_b1,"CLADataLS1")
+    float32_t CLA_CurrentFilter_b1 = 0.0f;
+    #pragma DATA_SECTION(CLA_CurrentFilter_b2,"CLADataLS1")
+    float32_t CLA_CurrentFilter_b2 = 0.0f;
+
     #pragma DATA_SECTION(sensorSampleA,"CLADataLS1")
     float32_t sensorSampleA;
     #pragma DATA_SECTION(sensorSampleB,"CLADataLS1")

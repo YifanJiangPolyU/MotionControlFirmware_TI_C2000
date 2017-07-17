@@ -53,6 +53,11 @@ extern float32_t CLA_CurrentSenseGain_Phase;
 extern float32_t CLA_CurrentSenseGain_DcLine;
 extern float32_t CLA_VoltageSenseGain;
 
+extern float32_t CLA_CurrentFilter_a1;
+extern float32_t CLA_CurrentFilter_a2;
+extern float32_t CLA_CurrentFilter_b1;
+extern float32_t CLA_CurrentFilter_b2;
+
 extern float32_t sensorSampleA;
 extern float32_t sensorSampleB;
 extern uint16_t dcVoltageSense;
