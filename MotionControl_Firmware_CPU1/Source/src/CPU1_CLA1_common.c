@@ -54,11 +54,13 @@
 
     // ADC data buffer
     #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")
-    float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];
+    float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X3];
     #pragma DATA_SECTION(CLA_SampleBufferB,"CLADataLS1")
-    float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];
-    #pragma DATA_SECTION(CLA_SampleBufferActiveHalf,"CLADataLS1")
-    uint16_t CLA_SampleBufferActiveHalf;
+    float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X3];
+    #pragma DATA_SECTION(CLA_SampleBufferPtrA,"CLADataLS1")
+    float32_t * CLA_SampleBufferPtrA;
+    #pragma DATA_SECTION(CLA_SampleBufferPtrB,"CLADataLS1")
+    float32_t * CLA_SampleBufferPtrB;
 
 
     #pragma DATA_SECTION(timeCounter,"CLADataLS1")
@@ -67,4 +69,7 @@
 void CLA_Reset(){
   CLA_SampleCounter = 0;
   CLA_CycleCounter = 0;
+
+  CLA_SampleBufferPtrA = &(CLA_SampleBufferA[0]);
+  CLA_SampleBufferPtrB = &(CLA_SampleBufferB[0]);
 }

@@ -33,16 +33,19 @@ __interrupt void Cla1Task1 ( void )
   CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
   dcVoltageSense = AdcbResultRegs.ADCRESULT1 * CLA_VoltageSenseGain;
 
-  if(CLA_SampleCounter==20){
-    CLA_SampleCounter = 0;
-  }
-
   if(CLA_CycleCounter==9){
     CLA_CycleCounter = 0;
-    CLA_SampleBufferActiveHalf = (~CLA_SampleBufferActiveHalf) & 0x0001;
+
+    CLA_SampleBufferPtrA = &(CLA_SampleBufferA[CLA_SampleCounter-10]);
+    CLA_SampleBufferPtrB = &(CLA_SampleBufferB[CLA_SampleCounter-10]);
+
     Cla1SoftIntRegs.SOFTINTFRC.bit.TASK1 = 1;
   } else {
     CLA_CycleCounter += 1;
+  }
+
+  if(CLA_SampleCounter==30){
+    CLA_SampleCounter = 0;
   }
 
   READ_CLOCK(timeCounter);

@@ -22,7 +22,7 @@ extern "C" {
 
 #include "F28x_Project.h"
 
-#define CLA_SAMPLE_BUFFER_LEN_X2 20
+#define CLA_SAMPLE_BUFFER_LEN_X3 30
 
 #define DEBUG_CODE_PROFILING
 
@@ -61,9 +61,10 @@ extern float32_t CLA_CurrentFilter_b2;
 extern float32_t sensorSampleA;
 extern float32_t sensorSampleB;
 extern uint16_t dcVoltageSense;
-extern float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase A
-extern float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X2];    // ADC data buffer, phase B
-extern uint16_t CLA_SampleBufferActiveHalf;                     // double buffering active half
+extern float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X3];    // ADC data buffer, phase A
+extern float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X3];    // ADC data buffer, phase B
+extern float32_t * CLA_SampleBufferPtrA;                         // Ptr to the ready-to-read section of buffer
+extern float32_t * CLA_SampleBufferPtrB;
 
 extern uint16_t timeCounter;
 

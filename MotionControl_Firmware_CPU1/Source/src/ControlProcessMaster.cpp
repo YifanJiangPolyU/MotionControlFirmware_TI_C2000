@@ -147,11 +147,7 @@ void ControlProcessMaster::UpdateProcessData(void){
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" void CallControlProcessMaster(void){
-  if(CLA_SampleBufferActiveHalf==0){
-    ControlProcessMasterPtr->SetCurrentValueBuffer(&(CLA_SampleBufferA[10]), &(CLA_SampleBufferB[10]));
-  } else if(CLA_SampleBufferActiveHalf==1) {
-    ControlProcessMasterPtr->SetCurrentValueBuffer(&(CLA_SampleBufferA[0]), &(CLA_SampleBufferB[0]));
-  }
 
-  ControlProcessMasterPtr->Execute();
+  ControlProcessMasterPtr->SetCurrentValueBuffer(CLA_SampleBufferPtrA, CLA_SampleBufferPtrB);
+  //ControlProcessMasterPtr->Execute();
 }
