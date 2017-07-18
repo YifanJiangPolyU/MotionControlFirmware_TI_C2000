@@ -32,7 +32,9 @@ CommunicationInterface::CommunicationInterface(UartDriver * UartDriverPtr,
     _NmtUpdated(false),
     _PdoUpdated(false),
     _SdoReplyPending(false),
-    _NmtNewState(0x00)
+    _NmtNewState(0x00),
+    _TxCounter(0),
+    _TxRatePrescale(COMM_REPORT_RATE_8000)
 {
   ciamsg = &_MsgBuffer;
   CommunicationInterfacePtr = this;
@@ -52,13 +54,12 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
 
 /**
  *  transmits message(s) over communication interface
- *  param CycleCounter   keep transmisson synchronized to ControlProcessMaster
  */
 #pragma CODE_SECTION(".TI.ramfunc");
-void CommunicationInterface::ExecuteTransmission(uint16_t CycleCounter){
+void CommunicationInterface::ExecuteTransmission(void){
   CiA_Message msg;
   static uint32_t counter = 0;
-  switch (CycleCounter) {
+  switch (_ControlProcessData->_SyncFlag) {
     case 0:
       // transmit PDO status report
       msg.Common.CANID = 823;

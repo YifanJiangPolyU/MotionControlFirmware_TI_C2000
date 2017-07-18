@@ -21,9 +21,16 @@
 #include "Drivers/UartDriver/UartDriver.h"
 
 extern "C" {
-
   void OsTaskWarper_HandleObdAccess(void);
 }
+
+#define COMM_REPORT_RATE_8000    1
+#define COMM_REPORT_RATE_4000    2
+#define COMM_REPORT_RATE_2000    4
+#define COMM_REPORT_RATE_1000    8
+#define COMM_REPORT_RATE_500     16
+#define COMM_REPORT_RATE_250     32
+#define COMM_REPORT_RATE_125     64
 
 class CommunicationInterface{
 
@@ -35,7 +42,7 @@ class CommunicationInterface{
     ~CommunicationInterface(){}
 
     void SetCiaMsgBuffer(CiA_Message* msgptr);
-    void ExecuteTransmission(uint16_t CycleCounter);
+    void ExecuteTransmission(void);
     void ExecuteReception(void);
 
     void HandleObdAccess(void);
@@ -57,6 +64,9 @@ class CommunicationInterface{
 
     bool _SdoReplyPending;
     CiA_Message _SodReplyMsg;
+
+    uint16_t _TxCounter;
+    uint16_t _TxRatePrescale;
 
 };
 

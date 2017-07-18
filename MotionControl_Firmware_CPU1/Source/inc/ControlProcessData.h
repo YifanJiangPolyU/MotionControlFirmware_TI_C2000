@@ -46,6 +46,7 @@ class ControlProcessData: public ObjectDictionaryEntryBase{
 public:
 
   ControlProcessData():
+    _SyncFlag(0),
     _ControlType(CTRL_TYPE_NONE),
     _MotorType(MTR_TYPE_NONE),
     _DcLineVoltageUpperLimit(25),
@@ -95,6 +96,7 @@ public:
   void AccessDQCurrentSetpoint_Q(ObdAccessHandle * handle);
 
 
+  uint16_t _SyncFlag;
 
   uint16_t _ControlType;
   uint16_t _MotorType;

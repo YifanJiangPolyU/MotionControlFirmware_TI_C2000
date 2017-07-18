@@ -78,6 +78,7 @@ void ControlProcessMaster::Execute(void){
         if(_NmtNewState==NMT_TO_PREOP){
           _State = STATE_PREOP;
         } else if(_NmtNewState==NMT_TO_STOP){
+          PwrDisable();
           _State = STATE_STOPPED;
         }
       }
@@ -104,6 +105,13 @@ void ControlProcessMaster::Execute(void){
       break;
   }
 
+  // poll coummunication interface
+  _CommunicationInterface->ExecuteReception();
+  _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
+
+  // transmit data
+  _CommunicationInterface->ExecuteTransmission();
+
   // update cycle counter to synchronize activities
   if(_CycleCounter==MASTER_CYCLE_PRESCALE-1){
     _CycleCounter = 0;
@@ -111,12 +119,8 @@ void ControlProcessMaster::Execute(void){
     _CycleCounter++;
   }
 
-  // poll coummunication interface
-  _CommunicationInterface->ExecuteReception();
-  _NmtUpdated = _CommunicationInterface->CheckNmtUpdate(&_NmtNewState);
-
-
-  _CommunicationInterface->ExecuteTransmission(_CycleCounter);
+  // update synchronization flag
+  _ControlProcessData->_SyncFlag = _CycleCounter;
 }
 
 /**
