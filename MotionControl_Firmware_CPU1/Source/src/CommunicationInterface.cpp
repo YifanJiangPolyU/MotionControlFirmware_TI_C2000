@@ -59,8 +59,8 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
 void CommunicationInterface::ExecuteTransmission(void){
   CiA_Message msg;
   static uint32_t counter = 0;
-  switch (_ControlProcessData->_SyncFlag) {
-    case 0:
+  
+  if(_ControlProcessData->_SyncFlag == 0) {
       // transmit PDO status report
       msg.Common.CANID = 823;
       msg.Common.Length = 10;
@@ -71,18 +71,7 @@ void CommunicationInterface::ExecuteTransmission(void){
       } else {
         _UartDriver->SendMessage(&msg);
       }
-
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      break;
-    default:
-      break;
   }
-
 }
 
 /**
