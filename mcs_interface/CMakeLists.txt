@@ -108,6 +108,10 @@ add_executable(mcs_interface_node src/mcs_interface.cpp)
 add_dependencies(mcs_interface_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(mcs_interface_node ${catkin_LIBRARIES})
 
+add_executable(mcs_clsw_node src/mcs_clsw.cpp)
+add_dependencies(mcs_clsw_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(mcs_clsw_node ${catkin_LIBRARIES})
+
 add_executable(mcs_example_node src/mcs_example.cpp)
 add_dependencies(mcs_example_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(mcs_example_node ${catkin_LIBRARIES})

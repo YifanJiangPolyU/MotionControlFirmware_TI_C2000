@@ -12,4 +12,4 @@
 # see CANOpenDataTypeDef.h for details
 
 uint8  NodeID     # ID of the target node
-uint8  Mode       # target mode, see above for definition
+uint8  State      # target state, see above for definition

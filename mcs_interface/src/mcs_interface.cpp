@@ -110,6 +110,18 @@ void PdoRequestCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
  */
 void NmtRequestCallback(const mcs_interface::CiA_NmtMessage::ConstPtr& msg){
 
+  printf("recevied request\n");
+  CiA_Message msg_buf;
+  uint8_t send_buffer[16];
+  uint8_t len;
+
+  msg_buf.Nmt.CANID = CANID_NMT;
+  msg_buf.Nmt.State = msg->State;
+  msg_buf.Nmt.NodeID = msg->NodeID;
+  msg_buf.Nmt.Length = 2;
+
+  len = CANOpenMsgToSendBuffer(send_buffer, &msg_buf);
+  Send(send_buffer, len);
 }
 
 /**
@@ -132,7 +144,7 @@ uint8_t CANOpenMsgToSendBuffer(uint8_t * buffer, CiA_Message * msg){
   buffer[3] = Length;
 
   uint8_t i;
-  if(Length<=10){
+  if(Length<=11){
     retval = Length + 5;
     for(i=0; i<Length; i++){
       buffer[i+4] = msg->Common.Data[i];
