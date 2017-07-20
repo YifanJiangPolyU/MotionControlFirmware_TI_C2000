@@ -29,7 +29,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
                                            CommunicationInterface * CommunicationInterfacePtr,
                                            ControlProcessData * ControlProcessDataPtr,
                                            ControlProcessExecuter * ControlProcessExecuterPtr):
-  _State(STATE_STOPPED),
+  _State(STATE_PREOP),
   _NmtUpdated(false),
   _NmtNewState(0),
   _CycleCounter(0)
@@ -59,23 +59,20 @@ void ControlProcessMaster::Execute(void){
   // update state machine
   switch(_State){
     case STATE_PREOP:
-      // mode switch by NMT
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_TO_OP){
-          _State = STATE_OP;
-        } else if(_NmtNewState==NMT_TO_STOP){
-          PwrDisable();
-          _State = STATE_STOPPED;
+          PwrEnable();
+          _ControlProcessExecuter->StartProcess(PROCESS_CURRENT);
+          _State = STATE_PREOP;
         }
       }
-
-      _ControlProcessExecuter->ExecuteProcess();
       break;
     case STATE_OP:
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_TO_PREOP){
+          PwrDisable();
           _State = STATE_PREOP;
         } else if(_NmtNewState==NMT_TO_STOP){
           PwrDisable();
@@ -89,19 +86,11 @@ void ControlProcessMaster::Execute(void){
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_TO_PREOP){
-          PwrEnable();
-          _ControlProcessExecuter->StartProcess(PROCESS_CURRENT);
           _State = STATE_PREOP;
         }
       }
       break;
-    case STATE_ERROR:
-      if(_NmtUpdated==true){
-        _NmtUpdated = false;
-        if(_NmtNewState==NMT_TO_STOP){
-          _State = STATE_STOPPED;
-        }
-      }
+    default:
       break;
   }
 
