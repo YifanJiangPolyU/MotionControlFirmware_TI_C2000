@@ -55,14 +55,14 @@ void ControlProcessData::AccessMotorType(ObdAccessHandle * handle){
   }
 }
 
-void ControlProcessData::AccessControlType(ObdAccessHandle * handle){
+void ControlProcessData::AccessControlProcess(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _ControlType = handle->Data.DataInt16[0];
+      _ControlProcess = handle->Data.DataInt16[0];
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataInt16[0] = _ControlType;
+      handle->Data.DataInt16[0] = _ControlProcess;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

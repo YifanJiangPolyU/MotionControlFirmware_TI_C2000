@@ -15,26 +15,13 @@
 #define _CONTROL_PROCESS_EXECUTER_H
 
 #include "stdint.h"
+#include "SysDef.h"
 #include "ControlProcessData.h"
 #include "ControlProcessBase.h"
 #include "CurrentLoopController.h"
 #include "CurrentControlProcess.h"
 #include "PositionControlProcess.h"
 #include "CurrentLoopSweepSine.h"
-
-/**
- *  define process IDs
- *  IMPORTANT: process ID MUST match the index of the corresponding process class
- *  in the _ProcessArray
- */
-#define PROCESS_NONE        0     // no process
-#define PROCESS_CURRENT     1     // current control
-#define PROCESS_SPEED       2     // speed control (rotary only)
-#define PROCESS_POSITION    3     // position control
-#define PROCESS_FORCE       4     // force or torque control
-#define PROCESS_CLSW        10    // current loop sweepsine test process
-#define PROCESS_PLSW        11    // position loop sweepsine test process
-#define PROCESS_POLARITY    12    // polarity test process
 
 class ControlProcessExecuter {
 

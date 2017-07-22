@@ -38,6 +38,15 @@ class ControlProcessMaster{
       STATE_ERROR     // error
     };
 
+    enum MotionControl_STATES {
+      STATE_NOT_READY,
+      STATE_READY,
+      STATE_SWITCHED_ON,
+      STATE_OPERATION,
+      STATE_QUICK_STOP,
+      STATE_FAULT
+    };
+
     ControlProcessMaster(CommutationMaster * CommutationMasterPtr,
                          CommunicationInterface * CommunicationInterfacePtr,
                          ControlProcessData * ControlProcessDataPtr,
@@ -55,7 +64,10 @@ class ControlProcessMaster{
     } ControlProcessMaster_Status;
 
   private:
+    void UpdateStateMachine(void);
+
     enum ControlProcessMaster_STATES _State;
+    enum MotionControl_STATES        _MotionControlState;
 
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;

@@ -30,6 +30,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
                                            ControlProcessData * ControlProcessDataPtr,
                                            ControlProcessExecuter * ControlProcessExecuterPtr):
   _State(STATE_PREOP),
+  _MotionControlState(STATE_NOT_READY),
   _NmtUpdated(false),
   _NmtNewState(0),
   _CycleCounter(0)
@@ -110,6 +111,30 @@ void ControlProcessMaster::Execute(void){
 
   // update synchronization flag
   _ControlProcessData->_SyncFlag = _CycleCounter;
+}
+
+/**
+ *  Update the ControlProcessMaster state machine
+ *  State definition compatible with CiA 402 standard
+ */
+void ControlProcessMaster::UpdateStateMachine(void){
+  switch (_MotionControlState) {
+    case STATE_NOT_READY:
+      break;
+    case STATE_READY:
+      break;
+    case STATE_SWITCHED_ON:
+      break;
+    case STATE_OPERATION:
+      break;
+    case STATE_QUICK_STOP:
+      break;
+    case STATE_FAULT:
+      break;
+    default:
+      // should not get here
+      break;
+  }
 }
 
 /**
