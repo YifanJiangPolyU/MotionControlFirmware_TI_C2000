@@ -81,3 +81,13 @@ bool ControlProcessExecuter::ExecuteProcess(void){
 
   return (! _ProcessRunning);
 }
+
+/**
+ *  get process status
+ *  @retval  true, if the process is running
+ *           false, if the process is not running
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+bool ControlProcessExecuter::GetProcessStatus(void){
+  return _ProcessRunning;
+}

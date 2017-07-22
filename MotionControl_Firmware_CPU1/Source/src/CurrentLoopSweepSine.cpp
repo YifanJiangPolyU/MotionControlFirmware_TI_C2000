@@ -33,7 +33,7 @@ void CurrentLoopSweepSine::Execute(void){
     Amplitude = GenerateSweepSine();
     _TimeStamp += 1;
   } else {
-
+    _ProcessShouldQuit = true;
   }
 }
 
@@ -67,6 +67,7 @@ void CurrentLoopSweepSine::Reset(void){
     _TimeMax = 0;
   }
 
+  _ProcessShouldQuit = false;
 }
 
 void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){

@@ -163,6 +163,10 @@ void ControlProcessMaster::UpdateMotionControlState(void){
           _State = STATE_READY;
         }
       }
+
+      if(!_ControlProcessExecuter->GetProcessStatus()){
+        _State = STATE_READY;
+      }
       break;
     case STATE_OPERATION:
       if(_NmtUpdated==true){

@@ -37,6 +37,7 @@ class ControlProcessExecuter {
     void StartProcess(uint16_t ProcessID);
     void TerminateProcess(void);
     bool ExecuteProcess(void);
+    bool GetProcessStatus(void);
 
   private:
 

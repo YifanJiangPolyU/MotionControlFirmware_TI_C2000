@@ -65,7 +65,7 @@ int main(int argc, char **argv){
 
   mcs_interface::CiA_NmtMessage msg1;
   msg1.NodeID = 0x03;
-  msg1.State = NMT_SWITCH_OFF;
+  msg1.State = NMT_TEST_CLSW;
   nmt_pub.publish(msg1);
 
   while(ros::ok() && (!terminate)){
