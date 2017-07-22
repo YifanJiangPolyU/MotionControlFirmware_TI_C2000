@@ -58,7 +58,7 @@ void ControlProcessMaster::Execute(void){
 
   // update state machine
   UpdateMotionControlState();
-  
+
 /*
   switch(_State){
     case STATE_PREOP:
@@ -130,7 +130,9 @@ void ControlProcessMaster::UpdateMotionControlState(void){
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_SWITCH_ON){
-
+          PwrEnable();
+          _ControlProcessExecuter->StartProcess(_ControlProcessData->_ActiveProcess);
+          _State = STATE_SWITCHED_ON;
         }
       }
       break;
@@ -138,9 +140,12 @@ void ControlProcessMaster::UpdateMotionControlState(void){
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_ENABLE_OP){
-
+          _ControlProcessData->_OperationEnabled = true;
+          _State = STATE_OPERATION;
         } else if(_NmtNewState==NMT_SWITCH_OFF){
-
+          PwrDisable();
+          _ControlProcessExecuter->TerminateProcess();
+          _State = STATE_READY;
         }
       }
       break;
@@ -148,20 +153,22 @@ void ControlProcessMaster::UpdateMotionControlState(void){
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_SWITCH_OFF){
-
+          PwrDisable();
+          _ControlProcessExecuter->TerminateProcess();
+          _ControlProcessData->_OperationEnabled = false;
+          _State = STATE_READY;
         } else if(_NmtNewState==NMT_DISABLE_OP){
-
+          _ControlProcessData->_OperationEnabled = false;
+          _State = STATE_SWITCHED_ON;
         } else if(_NmtNewState==NMT_QUICK_STOP){
-
+          _ControlProcessData->_OperationEnabled = false;
+          _State = STATE_QUICK_STOP;
         }
       }
       break;
     case STATE_QUICK_STOP:
       if(_NmtUpdated==true){
         _NmtUpdated = false;
-        if(_NmtNewState==NMT_SWITCH_OFF){
-
-        }
       }
       break;
     case STATE_FAULT:
@@ -210,7 +217,7 @@ void ControlProcessMaster::UpdateProcessData(void){
 extern "C" void CallControlProcessMaster(void){
 
   ControlProcessMasterPtr->SetCurrentValueBuffer(CLA_SampleBufferPtrA, CLA_SampleBufferPtrB);
-  //ControlProcessMasterPtr->Execute();
+  ControlProcessMasterPtr->Execute();
 }
 
 

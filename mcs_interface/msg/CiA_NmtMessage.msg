@@ -1,13 +1,13 @@
 # possible values for Mode:
 #
-#    NMT_TO_OP          0x01
-#    NMT_TO_STOP        0x02
-#    NMT_TO_PREOP       0x80
-#    NMT_RESET          0x81
-#    NMT_RESET_COMM     0x82
-#    NMT_CLSW           0xA0
-#    NMT_PLSW           0xA1
-#    NMT_POLARITY       0xA2
+# NMT_SWITCH_ON      0x10
+# NMT_SWITCH_OFF     0x11
+# NMT_ENABLE_OP      0x12
+# NMT_DISABLE_OP     0x13
+# NMT_QUICK_STOP     0x14
+# NME_RESET_FAULT    0x15
+# NMT_RESET_NODE     0x80
+# NMT_RESET_COMM     0x81
 #
 # see CANOpenDataTypeDef.h for details
 

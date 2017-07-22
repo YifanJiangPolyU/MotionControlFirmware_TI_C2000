@@ -23,6 +23,7 @@
 
 #include "std_msgs/String.h"
 #include "mcs_interface/CiA_SdoMessage.h"
+#include "mcs_interface/CiA_NmtMessage.h"
 
 volatile bool terminate;
 
@@ -45,6 +46,7 @@ int main(int argc, char **argv){
 
   // initialize publisher
   ros::Publisher sdo_pub = node.advertise<mcs_interface::CiA_SdoMessage>("SdoRequest", 20);
+  ros::Publisher nmt_pub = node.advertise<mcs_interface::CiA_NmtMessage>("Nmt", 20);
   ros::Subscriber sdo_sub = node.subscribe("SdoReply", 5, SdoReplyCallback);
 
   ObdAccessHandle handle;
@@ -60,6 +62,12 @@ int main(int argc, char **argv){
 
   usleep (1000000);
   sdo_pub.publish(msg);
+
+  usleep(100000);
+  mcs_interface::CiA_NmtMessage msg1;
+  msg1.NodeID = 0x03;
+  msg1.State = NMT_SWITCH_OFF;
+  nmt_pub.publish(msg1);
 
   while(ros::ok() && (!terminate)){
 

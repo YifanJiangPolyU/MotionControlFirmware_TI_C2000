@@ -110,7 +110,7 @@ void PdoRequestCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
  */
 void NmtRequestCallback(const mcs_interface::CiA_NmtMessage::ConstPtr& msg){
 
-  printf("recevied request\n");
+  printf("recevied nmt request\n");
   CiA_Message msg_buf;
   uint8_t send_buffer[16];
   uint8_t len;

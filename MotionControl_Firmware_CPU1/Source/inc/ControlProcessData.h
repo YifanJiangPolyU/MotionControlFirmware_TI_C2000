@@ -30,6 +30,7 @@ public:
 
   ControlProcessData():
     _SyncFlag(0),
+    _OperationEnabled(false),
     _ControlProcess(PROCESS_NONE),
     _ActiveProcess(PROCESS_NONE),
     _MotorType(MTR_TYPE_NONE),
@@ -81,6 +82,7 @@ public:
 
 
   uint16_t _SyncFlag;
+  bool     _OperationEnabled;
 
   uint16_t _ControlProcess;       // control process used for operation
   uint16_t _ActiveProcess;        // currently active control process
