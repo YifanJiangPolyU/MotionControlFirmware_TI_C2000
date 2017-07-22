@@ -24,21 +24,22 @@
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
 #include "ControlProcessExecuter.h"
+#include "ObjectDictionaryEntryBase.h"
 
 #define MASTER_CYCLE_PRESCALE    4
 
-class ControlProcessMaster{
+class ControlProcessMaster: public ObjectDictionaryEntryBase{
 
   public:
 
+/*
     enum ControlProcessMaster_STATES {
       STATE_PREOP,    // enabled
       STATE_OP,       // enabled and running
-      STATE_STOPPED,  // disabled
-      STATE_ERROR     // error
+      STATE_STOPPED  // disabled
     };
-
-    enum MotionControl_STATES {
+*/
+    enum ControlProcessMaster_STATES {
       STATE_NOT_READY,
       STATE_READY,
       STATE_SWITCHED_ON,
@@ -58,16 +59,18 @@ class ControlProcessMaster{
     void UpdateProcessData(void);
     void Execute(void);
 
+    void AccessMotionControlState(ObdAccessHandle * handle);
+
     typedef struct ControlProcessMaster_Status_typedef{
       uint16_t _State   :  2;
       uint16_t _ErrCode :  14;
     } ControlProcessMaster_Status;
 
   private:
-    void UpdateStateMachine(void);
+    void UpdateMotionControlState(void);
 
-    enum ControlProcessMaster_STATES _State;
-    enum MotionControl_STATES        _MotionControlState;
+    //enum ControlProcessMaster_STATES _State;
+    enum ControlProcessMaster_STATES        _State;
 
     CommutationMaster * _CommutationMaster;
     CommunicationInterface * _CommunicationInterface;

@@ -29,8 +29,7 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
                                            CommunicationInterface * CommunicationInterfacePtr,
                                            ControlProcessData * ControlProcessDataPtr,
                                            ControlProcessExecuter * ControlProcessExecuterPtr):
-  _State(STATE_PREOP),
-  _MotionControlState(STATE_NOT_READY),
+  _State(STATE_NOT_READY),
   _NmtUpdated(false),
   _NmtNewState(0),
   _CycleCounter(0)
@@ -58,13 +57,16 @@ void ControlProcessMaster::Execute(void){
   // check for errors
 
   // update state machine
+  UpdateMotionControlState();
+  
+/*
   switch(_State){
     case STATE_PREOP:
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_TO_OP){
           PwrEnable();
-          _ControlProcessExecuter->StartProcess(PROCESS_CURRENT);
+          _ControlProcessExecuter->StartProcess(_ControlProcessData->_ActiveProcess);
           _State = STATE_PREOP;
         }
       }
@@ -94,6 +96,7 @@ void ControlProcessMaster::Execute(void){
     default:
       break;
   }
+*/
 
   // poll coummunication interface
   _CommunicationInterface->ExecuteReception();
@@ -117,19 +120,57 @@ void ControlProcessMaster::Execute(void){
  *  Update the ControlProcessMaster state machine
  *  State definition compatible with CiA 402 standard
  */
-void ControlProcessMaster::UpdateStateMachine(void){
-  switch (_MotionControlState) {
+#pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessMaster::UpdateMotionControlState(void){
+  switch (_State) {
     case STATE_NOT_READY:
+      _State = STATE_READY;
       break;
     case STATE_READY:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_SWITCH_ON){
+
+        }
+      }
       break;
     case STATE_SWITCHED_ON:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_ENABLE_OP){
+
+        } else if(_NmtNewState==NMT_SWITCH_OFF){
+
+        }
+      }
       break;
     case STATE_OPERATION:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_SWITCH_OFF){
+
+        } else if(_NmtNewState==NMT_DISABLE_OP){
+
+        } else if(_NmtNewState==NMT_QUICK_STOP){
+
+        }
+      }
       break;
     case STATE_QUICK_STOP:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NMT_SWITCH_OFF){
+
+        }
+      }
       break;
     case STATE_FAULT:
+      if(_NmtUpdated==true){
+        _NmtUpdated = false;
+        if(_NmtNewState==NME_RESET_FAULT){
+
+        }
+      }
       break;
     default:
       // should not get here
@@ -143,6 +184,7 @@ void ControlProcessMaster::UpdateStateMachine(void){
  *  @ param bufA   ptr to phase A current sample buffer
  *  @ param bufB   ptr to phase B current sample buffer
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::SetCurrentValueBuffer(float32_t * bufA, float32_t * bufB){
   _ControlProcessData->_CurrentValueBufferPhaseA = bufA;
   _ControlProcessData->_CurrentValueBufferPhaseB = bufB;
@@ -151,6 +193,7 @@ void ControlProcessMaster::SetCurrentValueBuffer(float32_t * bufA, float32_t * b
 /**
  *  get data from ADC buffer
  */
+#pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::UpdateProcessData(void){
   _ControlProcessData->_CurrentValuePhaseA[_CycleCounter] =
                       *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
@@ -168,4 +211,9 @@ extern "C" void CallControlProcessMaster(void){
 
   ControlProcessMasterPtr->SetCurrentValueBuffer(CLA_SampleBufferPtrA, CLA_SampleBufferPtrB);
   //ControlProcessMasterPtr->Execute();
+}
+
+
+void AccessMotionControlState(ObdAccessHandle * handle){
+
 }

@@ -42,16 +42,20 @@
 #define SDO_CSS_BLKREAD            5
 #define SDO_CSS_BLKWRITE           6
 
-// NMT mode transitions
+// NMT mode transitions for CiA 301 states
 #define NMT_TO_OP          0x01
 #define NMT_TO_STOP        0x02
-#define NMT_TO_PREOP       0x80
-#define NMT_RESET          0x81
-#define NMT_RESET_COMM     0x82
-// NMT custom modes
-#define NMT_CLSW           0xA0
-#define NMT_PLSW           0xA1
-#define NMT_POLARITY       0xA2
+#define NMT_TO_PREOP       0x03
+// NMT mode transition for CiA 402 states
+#define NMT_SWITCH_ON      0x10
+#define NMT_SWITCH_OFF     0x11
+#define NMT_ENABLE_OP      0x12
+#define NMT_DISABLE_OP     0x13
+#define NMT_QUICK_STOP     0x14
+#define NME_RESET_FAULT    0x15
+// reset
+#define NMT_RESET_NODE     0x80
+#define NMT_RESET_COMM     0x81
 
 /**
  *  define CANOpen SDO control data
