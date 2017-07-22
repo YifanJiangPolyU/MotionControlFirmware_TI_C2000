@@ -59,6 +59,9 @@ void ControlProcessMaster::Execute(void){
   // update state machine
   UpdateMotionControlState();
 
+  // execute process
+  _ControlProcessExecuter->ExecuteProcess();
+
 /*
   switch(_State){
     case STATE_PREOP:
@@ -131,7 +134,19 @@ void ControlProcessMaster::UpdateMotionControlState(void){
         _NmtUpdated = false;
         if(_NmtNewState==NMT_SWITCH_ON){
           PwrEnable();
-          _ControlProcessExecuter->StartProcess(_ControlProcessData->_ActiveProcess);
+          _ControlProcessExecuter->StartProcess(_ControlProcessData->_ControlProcess);
+          _State = STATE_SWITCHED_ON;
+        } else if(_NmtNewState==NMT_TEST_CLSW){
+          PwrEnable();
+          _ControlProcessExecuter->StartProcess(PROCESS_CLSW);
+          _State = STATE_SWITCHED_ON;
+        } else if(_NmtNewState==NMT_TEST_PLSW){
+          PwrEnable();
+          _ControlProcessExecuter->StartProcess(PROCESS_PLSW);
+          _State = STATE_SWITCHED_ON;
+        } else if(_NmtNewState==NMT_TEST_POLARITY){
+          PwrEnable();
+          _ControlProcessExecuter->StartProcess(PROCESS_POLARITY);
           _State = STATE_SWITCHED_ON;
         }
       }

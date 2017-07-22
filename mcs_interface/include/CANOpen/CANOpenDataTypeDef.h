@@ -44,6 +44,10 @@
 // reset
 #define NMT_RESET_NODE     0x80
 #define NMT_RESET_COMM     0x81
+// custom modes
+#define NMT_TEST_CLSW      0x90
+#define NMT_TEST_PLSW      0x91
+#define NMT_TEST_POLARITY  0x92
 
 
 typedef struct ObdAccessHandleTypedef{
