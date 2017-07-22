@@ -27,10 +27,19 @@ const float32_t _TimeBase = 1.f/_CurrentControlFrequency;
 #pragma CODE_SECTION(".TI.ramfunc");
 void CurrentLoopSweepSine::Execute(void){
 
-  float32_t Amplitude = 0;
+  PhaseCurrentVec CurrenDemand;
+  PhaseCurrentVec CurrenActual = _ControlProcessData->_CurrentActualValue;
+
+  PwmDutyVec Pwm;
+  Pwm.A = 0;
+  Pwm.B = 0;
+  Pwm.C = 0;
 
   if(_TimeStamp < _TimeMax){
-    Amplitude = GenerateSweepSine();
+    CurrenDemand.A = GenerateSweepSine();
+    CurrenDemand.B = 0;
+    Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
+    PwrSetPwmDuty(&Pwm);
     _TimeStamp += 1;
   } else {
     _ProcessShouldQuit = true;
