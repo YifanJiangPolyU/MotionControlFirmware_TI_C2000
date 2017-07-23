@@ -24,6 +24,7 @@ void PdoMaster::ComposePdoMessage(CiA_Message * msg){
   msg->Common.Length = 11;
   switch (_ControlProcessData->_PdoID) {
     case PDO_ID_DEBUG:
+      ComposeDEBUG(msg);
       break;
     case PDO_ID_CLSW:
       ComposeCLSW(msg);

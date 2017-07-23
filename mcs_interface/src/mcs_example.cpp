@@ -17,6 +17,9 @@
 #include "errno.h"
 #include "fcntl.h"
 #include "termios.h"
+#include "iostream"
+#include "fstream"
+#include "sstream"
 
 #include "ros/ros.h"
 #include "CANOpen/CANOpenDataTypeDef.h"
@@ -28,6 +31,7 @@
 #include "mcs_interface/CiA_NmtMessage.h"
 
 volatile bool terminate;
+std::ofstream OutputFile;
 
 void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   printf("got reply! \n");
@@ -41,16 +45,18 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
 
 void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
   PdoData data;
+
   if(msg->PDO_ID==PDO_ID_CLSW){
     data.data[0] = msg->Data[0];
     data.data[1] = msg->Data[1];
     data.data[2] = msg->Data[2];
     data.data[3] = msg->Data[3];
     data.data[4] = msg->Data[4];
-    printf("%d\n", data.clsw.CurrentActual[0]);
-    printf("%d\n", data.clsw.CurrentActual[1]);
-    printf("%d\n", data.clsw.CurrentActual[2]);
-    printf("%d\n", data.clsw.CurrentActual[3]);
+
+    OutputFile << data.clsw.CurrentActual[0] << std::endl;
+    OutputFile << data.clsw.CurrentActual[1] << std::endl;
+    OutputFile << data.clsw.CurrentActual[2] << std::endl;
+    OutputFile << data.clsw.CurrentActual[3] << std::endl;
   }
 }
 
@@ -80,6 +86,9 @@ int main(int argc, char **argv){
 
   usleep (1000000);
   //sdo_pub.publish(msg);
+
+  OutputFile.open("/home/yifan/catkin_ws/src/mcs/mcs_interface/SweepSineData.txt",
+                    std::ofstream::out | std::ofstream::trunc);
 
   mcs_interface::CiA_NmtMessage msg1;
   msg1.NodeID = 0x03;
