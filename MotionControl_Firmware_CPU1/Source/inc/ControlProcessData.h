@@ -60,6 +60,9 @@ public:
 
   /* Access functions for internal use */
   void SetCurrentSweepSineBuffer(int16_t data){
+    // ensure correct data sequence
+    // compensate for offset caused by the fact that transmission of PDO_ID
+    // occurs after execution of sweepsine generation.
     if(_SyncFlag==0){
       _CurrentSweepSineBuffer[3] = data;
     }else{
