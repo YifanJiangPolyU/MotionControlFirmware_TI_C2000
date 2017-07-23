@@ -59,6 +59,7 @@ public:
   ~ControlProcessData(){};
 
   /* Access functions for internal use */
+  #pragma CODE_SECTION(".TI.ramfunc");
   void SetCurrentSweepSineBuffer(int16_t data){
     // ensure correct data sequence
     // compensate for offset caused by the fact that transmission of PDO_ID
@@ -70,6 +71,7 @@ public:
     }
   }
 
+  #pragma CODE_SECTION(".TI.ramfunc");
   void ClearCurrentSweepSineBuffer(void){
     _CurrentSweepSineBuffer[0] = 0;
     _CurrentSweepSineBuffer[1] = 0;

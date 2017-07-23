@@ -40,6 +40,8 @@ void CurrentLoopSweepSine::Execute(void){
     case STATE_WAIT_SYNC:
       // synchronize sweepsine generation to ControlProcessMaster
       if(_ControlProcessData->_SyncFlag==0){
+        _OldPdoID = _ControlProcessData->_PdoID;
+        _ControlProcessData->_PdoID = PDO_ID_CLSW;
         _State = STATE_RUNNING;
       }
       break;
@@ -53,12 +55,14 @@ void CurrentLoopSweepSine::Execute(void){
 
         _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
       } else {
-        _ControlProcessData->_PdoID = _OldPdoID;
-        _ProcessShouldQuit = true;
-        _State = STATE_END;
+        if(_ControlProcessData->_SyncFlag==0){
+          _State = STATE_END;
+        }
       }
       break;
     case STATE_END:
+      _ControlProcessData->_PdoID = _OldPdoID;
+      _ProcessShouldQuit = true;
       break;
   }
 }
@@ -94,8 +98,6 @@ void CurrentLoopSweepSine::Reset(void){
     _TimeMax = 0;
   }
 
-  _OldPdoID = _ControlProcessData->_PdoID;
-  _ControlProcessData->_PdoID = PDO_ID_CLSW;
   _ControlProcessData->ClearCurrentSweepSineBuffer();
   _ProcessShouldQuit = false;
 }
