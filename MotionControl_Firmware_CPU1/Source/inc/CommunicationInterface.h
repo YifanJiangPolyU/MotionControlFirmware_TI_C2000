@@ -16,6 +16,7 @@
 #define COMMUNICATION_INTERFACE_H
 
 #include "CiATypeDef.h"
+#include "PdoMaster.h"
 #include "ObjectDictionary.h"
 #include "ControlProcessData.h"
 #include "Drivers/UartDriver/UartDriver.h"
@@ -37,7 +38,8 @@ class CommunicationInterface{
   public:
     CommunicationInterface(UartDriver * UartDriverPtr,
                            ObjectDictionary * ObjectDictionaryPtr,
-                           ControlProcessData * ControlProcessDataPtr);
+                           ControlProcessData * ControlProcessDataPtr,
+                           PdoMaster * PdoMasterPtr);
 
     ~CommunicationInterface(){}
 
@@ -57,6 +59,7 @@ class CommunicationInterface{
     UartDriver * _UartDriver;
     ObjectDictionary * _ObjectDictionary;
     ControlProcessData * _ControlProcessData;
+    PdoMaster * _PdoMaster;
 
     bool _NmtUpdated;
     bool _PdoUpdated;

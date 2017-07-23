@@ -26,7 +26,7 @@
 #include "CurrentControlProcess.h"
 #include "CurrentLoopSweepSine.h"
 #include "PositionControlProcess.h"
-
+#include "PdoMaster.h"
 
 #include "Drivers/UartDriver/UartDriver.h"
 
@@ -42,12 +42,12 @@ class SystemWarehouse{
                               &_PositionControlProcess),
       _ObjectDictionary(),
       _CommutationMaster(&_ControlProcessData),
-      _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData),
+      _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData, &_PdoMaster),
       _CurrentLoopController(&_ControlProcessData),
       _CurrentControlProcess(&_CurrentLoopController, &_ControlProcessData),
       _PositionControlProcess(&_CurrentLoopController, &_ControlProcessData),
       _CurrentLoopSweepSine(&_CurrentLoopController, &_ControlProcessData),
-
+      _PdoMaster(&_ObjectDictionary, &_ControlProcessData),
       _ControlProcessData(),
       _UartDriver()
       {}
@@ -76,6 +76,7 @@ class SystemWarehouse{
     CommunicationInterface _CommunicationInterface;
     ObjectDictionary  _ObjectDictionary;
     ControlProcessData _ControlProcessData;
+    PdoMaster _PdoMaster;
 
     CurrentLoopController _CurrentLoopController;
     CurrentControlProcess _CurrentControlProcess;

@@ -26,10 +26,12 @@ extern Semaphore_Handle SemaphoreObdAccess;
 
 CommunicationInterface::CommunicationInterface(UartDriver * UartDriverPtr,
                        ObjectDictionary * ObjectDictionaryPtr,
-                       ControlProcessData * ControlProcessDataPtr):
+                       ControlProcessData * ControlProcessDataPtr,
+                       PdoMaster * PdoMasterPtr):
     _UartDriver(UartDriverPtr),
     _ObjectDictionary(ObjectDictionaryPtr),
     _ControlProcessData(ControlProcessDataPtr),
+    _PdoMaster(PdoMasterPtr),
     _NmtUpdated(false),
     _PdoUpdated(false),
     _SdoReplyPending(false),
