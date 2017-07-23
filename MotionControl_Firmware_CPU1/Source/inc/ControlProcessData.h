@@ -56,6 +56,18 @@ public:
 
   ~ControlProcessData(){};
 
+  /* Access functions for internal use */
+  void SetCurrentSweepSineBuffer(int16_t data){
+    _CurrentSweepSineBuffer[_SyncFlag] = data;
+  }
+
+  void ClearCurrentSweepSineBuffer(void){
+    _CurrentSweepSineBuffer[0] = 0;
+    _CurrentSweepSineBuffer[1] = 0;
+    _CurrentSweepSineBuffer[2] = 0;
+    _CurrentSweepSineBuffer[3] = 0;
+  }
+
   /* object dictionary access functions */
   void AccessParameter(ObdAccessHandle * handle);
   void AccessMotorType(ObdAccessHandle * handle);
@@ -148,6 +160,8 @@ public:
 
 private:
   void InitCLAGains(void);
+
+  int16_t _CurrentSweepSineBuffer[4];
 
 
 };

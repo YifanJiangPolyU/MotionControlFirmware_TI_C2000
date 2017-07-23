@@ -38,17 +38,23 @@ void CurrentLoopSweepSine::Execute(void){
   switch (_State) {
     case STATE_WAIT_SYNC:
       // synchronize sweepsine generation to ControlProcessMaster
-      if(_ControlProcessData->_SyncFlag==3){
+      if(_ControlProcessData->_SyncFlag==0){
         _State = STATE_RUNNING;
       }
       break;
     case STATE_RUNNING:
+      if(_ControlProcessData->_SyncFlag==0){
+        _ControlProcessData->ClearCurrentSweepSineBuffer();
+      }
+
       if(_TimeStamp < _TimeMax){
         CurrenDemand.A = GenerateSweepSine();
         CurrenDemand.B = 0;
         Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
         PwrSetPwmDuty(&Pwm);
         _TimeStamp += 1;
+
+        _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
       } else {
         _ProcessShouldQuit = true;
         _State = STATE_END;

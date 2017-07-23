@@ -34,6 +34,7 @@ class PdoMaster{
     ~PdoMaster(){}
 
     void ComposePdoMessage(char id, CiA_Message * msg);
+    void SetCurrentSweepSineBuffer(int16_t * data);
 
   private:
 

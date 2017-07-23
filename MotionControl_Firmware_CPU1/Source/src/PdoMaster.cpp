@@ -35,6 +35,10 @@ void PdoMaster::ComposePdoMessage(char id, CiA_Message * msg){
   }
 }
 
+void PdoMaster::SetCurrentSweepSineBuffer(int16_t * data){
+  
+}
+
 
 #pragma CODE_SECTION(".TI.ramfunc");
 void PdoMaster::ComposeCLSW(CiA_Message * msg){
