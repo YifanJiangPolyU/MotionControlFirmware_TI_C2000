@@ -43,10 +43,6 @@ void CurrentLoopSweepSine::Execute(void){
       }
       break;
     case STATE_RUNNING:
-      if(_ControlProcessData->_SyncFlag==0){
-        _ControlProcessData->ClearCurrentSweepSineBuffer();
-      }
-
       if(_TimeStamp < _TimeMax){
         CurrenDemand.A = GenerateSweepSine();
         CurrenDemand.B = 0;
@@ -96,6 +92,7 @@ void CurrentLoopSweepSine::Reset(void){
     _TimeMax = 0;
   }
 
+  _ControlProcessData->ClearCurrentSweepSineBuffer();
   _ProcessShouldQuit = false;
 }
 

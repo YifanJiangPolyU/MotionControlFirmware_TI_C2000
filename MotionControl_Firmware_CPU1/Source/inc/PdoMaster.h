@@ -26,15 +26,16 @@ class PdoMaster{
     PdoMaster(ObjectDictionary * ObjectDictionaryPtr,
               ControlProcessData * ControlProcessDataPtr):
         _Obd(ObjectDictionaryPtr),
-        _ControlProcessData(ControlProcessDataPtr)
+        _ControlProcessData(ControlProcessDataPtr),
+        _PdoID(PDO_ID_DEBUG)
     {
 
     }
 
     ~PdoMaster(){}
 
-    void ComposePdoMessage(char id, CiA_Message * msg);
-    void SetCurrentSweepSineBuffer(int16_t * data);
+    void ComposePdoMessage(CiA_Message * msg);
+    void SetPdoID(char id);
 
   private:
 

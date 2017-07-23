@@ -20,13 +20,14 @@
  *  @param msg    buffer to store PDO message
  */
 #pragma CODE_SECTION(".TI.ramfunc");
-void PdoMaster::ComposePdoMessage(char id, CiA_Message * msg){
+void PdoMaster::ComposePdoMessage(CiA_Message * msg){
   msg->Common.CANID = CANID_PDO_TX;
   msg->Common.Length = 11;
-  switch (id) {
+  switch (_PdoID) {
     case PDO_ID_DEBUG:
       break;
     case PDO_ID_CLSW:
+      ComposeCLSW(msg);
       break;
     case PDO_ID_PLSW:
       break;
@@ -35,8 +36,12 @@ void PdoMaster::ComposePdoMessage(char id, CiA_Message * msg){
   }
 }
 
-void PdoMaster::SetCurrentSweepSineBuffer(int16_t * data){
-  
+/**
+ *  change the PdoID of next PDO message
+ *  @param id     new PdoID
+ */
+void PdoMaster::SetPdoID(char id){
+  _PdoID = id;
 }
 
 
@@ -44,10 +49,11 @@ void PdoMaster::SetCurrentSweepSineBuffer(int16_t * data){
 void PdoMaster::ComposeCLSW(CiA_Message * msg){
   PdoData data;
 
-  data.clsw.CurrentActual[0] = 0;
-  data.clsw.CurrentActual[1] = 0;
-  data.clsw.CurrentActual[2] = 0;
-  data.clsw.CurrentActual[3] = 0;
+  data.clsw.CurrentActual[0] = _ControlProcessData->_CurrentSweepSineBuffer[0];
+  data.clsw.CurrentActual[1] = _ControlProcessData->_CurrentSweepSineBuffer[1];
+  data.clsw.CurrentActual[2] = _ControlProcessData->_CurrentSweepSineBuffer[2];
+  data.clsw.CurrentActual[3] = _ControlProcessData->_CurrentSweepSineBuffer[3];
+  _ControlProcessData->ClearCurrentSweepSineBuffer();
 
   CopyData(&data, msg);
 

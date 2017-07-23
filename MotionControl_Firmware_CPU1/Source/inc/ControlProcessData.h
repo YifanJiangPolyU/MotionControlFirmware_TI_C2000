@@ -158,10 +158,11 @@ public:
   float32_t _VelocityLimit;           // unit: cnt/sp
   float32_t _AccelerationLimit;       // unit: cnt/sp^2
 
+  // buffer to store current loop sweepsine data
+  int16_t _CurrentSweepSineBuffer[4];
+
 private:
   void InitCLAGains(void);
-
-  int16_t _CurrentSweepSineBuffer[4];
 
 
 };
