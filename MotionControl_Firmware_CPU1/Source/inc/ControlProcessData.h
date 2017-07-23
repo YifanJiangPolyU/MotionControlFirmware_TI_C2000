@@ -89,8 +89,6 @@ public:
   // current actual values (Raw ADC output)
   float32_t * _CurrentValueBufferPhaseA;
   float32_t * _CurrentValueBufferPhaseB;
-  float32_t _CurrentValuePhaseA[4];
-  float32_t _CurrentValuePhaseB[4];
 
   // current actual value in mA
   PhaseCurrentVec _CurrentActualValue;

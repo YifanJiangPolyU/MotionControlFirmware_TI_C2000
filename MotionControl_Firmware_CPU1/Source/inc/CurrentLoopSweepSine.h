@@ -26,7 +26,8 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
 
   public:
     CurrentLoopSweepSine(CurrentLoopController * CurrentLoopControllerPtr,
-                          ControlProcessData * ControlProcessDataPtr)
+                          ControlProcessData * ControlProcessDataPtr):
+      _State(STATE_WAIT_SYNC)
     {
       _CurrentLoopController = CurrentLoopControllerPtr;
       _ControlProcessData = ControlProcessDataPtr;
@@ -45,8 +46,16 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
 
     ~CurrentLoopSweepSine(){}
 
+    enum CurrentLoopSweepSine_STATE{
+      STATE_WAIT_SYNC,
+      STATE_RUNNING,
+      STATE_END
+    };
+
     virtual void Execute(void);
     virtual void Reset(void);
+
+    void GetCurrentHistory(float32_t * buffer);
 
     void AccessExcitationAmplitude(ObdAccessHandle * handle);
     void AccessExcitationLength(ObdAccessHandle * handle);
@@ -63,6 +72,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
 
     char _ActivePhase;
 
+    enum CurrentLoopSweepSine_STATE _State;
     float32_t _ExcitationAmplitude;
     float32_t _StartFreq;              // unit: rad/s
     float32_t _EndFreq;

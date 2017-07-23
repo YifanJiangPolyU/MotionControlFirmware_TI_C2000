@@ -221,10 +221,9 @@ void ControlProcessMaster::SetCurrentValueBuffer(float32_t * bufA, float32_t * b
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::UpdateProcessData(void){
-  _ControlProcessData->_CurrentValuePhaseA[_CycleCounter] =
-                      *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
-  _ControlProcessData->_CurrentValuePhaseB[_CycleCounter] =
-                      *(_ControlProcessData->_CurrentValueBufferPhaseB+2);
+
+  _ControlProcessData->_CurrentActualValue.A = *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
+  _ControlProcessData->_CurrentActualValue.B = *(_ControlProcessData->_CurrentValueBufferPhaseB+2);
 
   _ControlProcessData->_Position = GetEncoder1Position();
 }

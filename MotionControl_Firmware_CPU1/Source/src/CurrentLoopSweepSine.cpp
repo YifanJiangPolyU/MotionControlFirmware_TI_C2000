@@ -35,14 +35,27 @@ void CurrentLoopSweepSine::Execute(void){
   Pwm.B = 0;
   Pwm.C = 0;
 
-  if(_TimeStamp < _TimeMax){
-    CurrenDemand.A = GenerateSweepSine();
-    CurrenDemand.B = 0;
-    Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
-    PwrSetPwmDuty(&Pwm);
-    _TimeStamp += 1;
-  } else {
-    _ProcessShouldQuit = true;
+  switch (_State) {
+    case STATE_WAIT_SYNC:
+      // synchronize sweepsine generation to ControlProcessMaster
+      if(_ControlProcessData->_SyncFlag==3){
+        _State = STATE_RUNNING;
+      }
+      break;
+    case STATE_RUNNING:
+      if(_TimeStamp < _TimeMax){
+        CurrenDemand.A = GenerateSweepSine();
+        CurrenDemand.B = 0;
+        Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
+        PwrSetPwmDuty(&Pwm);
+        _TimeStamp += 1;
+      } else {
+        _ProcessShouldQuit = true;
+        _State = STATE_END;
+      }
+      break;
+    case STATE_END:
+      break;
   }
 }
 
@@ -66,6 +79,7 @@ float32_t CurrentLoopSweepSine::GenerateSweepSine(void){
  */
 void CurrentLoopSweepSine::Reset(void){
 
+  _State = STATE_WAIT_SYNC;
   _CurrentLoopController->Reset();
   _TimeStamp = 0;
   _HalfRampRate = _RampRate * 0.5;

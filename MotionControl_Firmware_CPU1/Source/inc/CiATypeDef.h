@@ -96,10 +96,7 @@ typedef struct CiA_SdoMessageTypedef{
   uint32_t SdoIdx         : 16;     // obj index and subindex
   uint32_t SdoSubIdx      : 8;
   uint16_t SdoAccessResult;
-  // CANOpen SDO data + extended data
-  // CAN PHY: use first 4 bytes only
-  // EtherCAT and UART: use all bytes
-  // access using __byte()
+
   uint16_t Data[3];
 
 } CiA_SdoMessage;
@@ -115,10 +112,6 @@ typedef struct CiA_PdoMessageTypedef{
   uint16_t RTR :1;        // RTR bit
   uint16_t Length :8;     // data length
 
-  // CANOpen PDO data + extended data
-  // CAN PHY: use first 8 bytes only
-  // EtherCAT and UART: use all bytes
-  // access using __byte()
   uint16_t Data[5];
   uint16_t PDO_ID:    8;
   uint16_t reserved:  8;

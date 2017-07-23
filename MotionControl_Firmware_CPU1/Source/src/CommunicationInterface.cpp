@@ -13,6 +13,7 @@
 */
 
 #include "CommunicationInterface.h"
+#include "PdoDataTypeDef.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
 
 #include <ti/sysbios/BIOS.h>
@@ -58,17 +59,16 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
 #pragma CODE_SECTION(".TI.ramfunc");
 void CommunicationInterface::ExecuteTransmission(void){
   CiA_Message msg;
-  static uint32_t counter = 0;
-  
+
   if(_ControlProcessData->_SyncFlag == 0) {
-      // transmit PDO status report
-      msg.Common.CANID = 823;
-      msg.Common.Length = 10;
-      msg.Sdo.Data[1] = counter++;
       if(_SdoReplyPending==true){
         _SdoReplyPending = false;
         _UartDriver->SendMessage(&_SodReplyMsg);
       } else {
+        // transmit PDO status report
+        msg.Common.CANID = CANID_PDO_TX;
+        msg.Common.Length = 11;
+
         _UartDriver->SendMessage(&msg);
       }
   }

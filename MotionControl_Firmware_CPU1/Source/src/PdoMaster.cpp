@@ -21,6 +21,8 @@
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 void PdoMaster::ComposePdoMessage(char id, CiA_Message * msg){
+  msg->Common.CANID = CANID_PDO_TX;
+  msg->Common.Length = 11;
   switch (id) {
     case PDO_ID_DEBUG:
       break;
