@@ -16,6 +16,7 @@
 */
 
 #include "CurrentLoopSweepSine.h"
+#include "PdoDataTypeDef.h"
 #include "math.h"
 
 const uint16_t _CurrentControlFrequency = 32000;
@@ -52,6 +53,7 @@ void CurrentLoopSweepSine::Execute(void){
 
         _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
       } else {
+        _ControlProcessData->_PdoID = _OldPdoID;
         _ProcessShouldQuit = true;
         _State = STATE_END;
       }
@@ -92,6 +94,8 @@ void CurrentLoopSweepSine::Reset(void){
     _TimeMax = 0;
   }
 
+  _OldPdoID = _ControlProcessData->_PdoID;
+  _ControlProcessData->_PdoID = PDO_ID_CLSW;
   _ControlProcessData->ClearCurrentSweepSineBuffer();
   _ProcessShouldQuit = false;
 }

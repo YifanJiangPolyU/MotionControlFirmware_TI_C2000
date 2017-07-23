@@ -20,6 +20,7 @@
 #include "F28x_Project.h"
 
 #include "SysDef.h"
+#include "PdoDataTypeDef.h"
 #include "ControlTypeDef.h"
 #include "ObjectDictionaryEntryBase.h"
 
@@ -44,7 +45,8 @@ public:
     _ForceSetpoint(0),
     _PositionSetpoint(0),
     _VelocitySetpoint(0),
-    _AccelSetpoint(0)
+    _AccelSetpoint(0),
+    _PdoID(PDO_ID_DEBUG)
   {
     _DQCurrentSetpoint.D = 0;
     _DQCurrentSetpoint.Q = 0;
@@ -160,6 +162,9 @@ public:
 
   // buffer to store current loop sweepsine data
   int16_t _CurrentSweepSineBuffer[4];
+
+  // current ID of PDO
+  char _PdoID;
 
 private:
   void InitCLAGains(void);

@@ -23,7 +23,7 @@
 void PdoMaster::ComposePdoMessage(CiA_Message * msg){
   msg->Common.CANID = CANID_PDO_TX;
   msg->Common.Length = 11;
-  switch (_PdoID) {
+  switch (_ControlProcessData->_PdoID) {
     case PDO_ID_DEBUG:
       break;
     case PDO_ID_CLSW:
@@ -34,14 +34,6 @@ void PdoMaster::ComposePdoMessage(CiA_Message * msg){
     default:
       break;
   }
-}
-
-/**
- *  change the PdoID of next PDO message
- *  @param id     new PdoID
- */
-void PdoMaster::SetPdoID(char id){
-  _PdoID = id;
 }
 
 

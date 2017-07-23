@@ -26,8 +26,7 @@ class PdoMaster{
     PdoMaster(ObjectDictionary * ObjectDictionaryPtr,
               ControlProcessData * ControlProcessDataPtr):
         _Obd(ObjectDictionaryPtr),
-        _ControlProcessData(ControlProcessDataPtr),
-        _PdoID(PDO_ID_DEBUG)
+        _ControlProcessData(ControlProcessDataPtr)
     {
 
     }
@@ -46,8 +45,6 @@ class PdoMaster{
 
     ObjectDictionary * _Obd;
     ControlProcessData * _ControlProcessData;
-
-    char _PdoID;
 
 };
 

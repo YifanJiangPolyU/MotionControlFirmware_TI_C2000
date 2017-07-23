@@ -81,6 +81,8 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
 
     uint16_t _TimeMax;
     uint16_t _TimeStamp;
+
+    char _OldPdoID;
 };
 
 #endif
