@@ -20,9 +20,11 @@
 
 #include "ros/ros.h"
 #include "CANOpen/CANOpenDataTypeDef.h"
+#include "CANOpen/PdoTypeDef.h"
 
 #include "std_msgs/String.h"
 #include "mcs_interface/CiA_SdoMessage.h"
+#include "mcs_interface/CiA_PdoMessage.h"
 #include "mcs_interface/CiA_NmtMessage.h"
 
 volatile bool terminate;
@@ -37,6 +39,21 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   printf("sdo access successful, value: %f\n", handle.Data.DataFloat32 );
 }
 
+void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
+  PdoData data;
+  if(msg->PDO_ID==PDO_ID_CLSW){
+    data.data[0] = msg->Data[0];
+    data.data[1] = msg->Data[1];
+    data.data[2] = msg->Data[2];
+    data.data[3] = msg->Data[3];
+    data.data[4] = msg->Data[4];
+    printf("%d\n", data.clsw.CurrentActual[0]);
+    printf("%d\n", data.clsw.CurrentActual[1]);
+    printf("%d\n", data.clsw.CurrentActual[2]);
+    printf("%d\n", data.clsw.CurrentActual[3]);
+  }
+}
+
 int main(int argc, char **argv){
 
   ros::init(argc, argv, "mcs_example");
@@ -48,6 +65,7 @@ int main(int argc, char **argv){
   ros::Publisher sdo_pub = node.advertise<mcs_interface::CiA_SdoMessage>("SdoRequest", 20);
   ros::Publisher nmt_pub = node.advertise<mcs_interface::CiA_NmtMessage>("Nmt", 20);
   ros::Subscriber sdo_sub = node.subscribe("SdoReply", 5, SdoReplyCallback);
+  ros::Subscriber pdo_sub = node.subscribe("Pdo", 100, PdoCallback);
 
   ObdAccessHandle handle;
   handle.Data.DataFloat32 = 31.2;
@@ -71,5 +89,6 @@ int main(int argc, char **argv){
   while(ros::ok() && (!terminate)){
 
     ros::spinOnce();
+    usleep(100);
   }
 }

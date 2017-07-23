@@ -34,7 +34,6 @@ class PdoMaster{
     ~PdoMaster(){}
 
     void ComposePdoMessage(CiA_Message * msg);
-    void SetPdoID(char id);
 
   private:
 

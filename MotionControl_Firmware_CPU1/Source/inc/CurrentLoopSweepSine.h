@@ -34,7 +34,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
 
       _ActivePhase = 0;
 
-      _ExcitationAmplitude = 0;
+      _ExcitationAmplitude = 100;
       _StartFreq = 600;
       _EndFreq = 7600;
       _RampRate = 7000;

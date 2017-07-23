@@ -16,12 +16,11 @@
 
 /**
  *  compose a PDO message and put it into CiA_Message buffer
- *  @param id     ID of PDO message (Predefined, see PdoMaster.h)
  *  @param msg    buffer to store PDO message
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 void PdoMaster::ComposePdoMessage(CiA_Message * msg){
-  msg->Common.CANID = CANID_PDO_TX;
+  msg->Common.CANID = CANID_PDO_TX + NODE_ID;
   msg->Common.Length = 11;
   switch (_ControlProcessData->_PdoID) {
     case PDO_ID_DEBUG:
@@ -75,7 +74,7 @@ void PdoMaster::ComposeDEBUG(CiA_Message * msg){
 }
 
 #pragma CODE_SECTION(".TI.ramfunc")
-void CopyData(PdoData * data, CiA_Message * msg){
+void PdoMaster::CopyData(PdoData * data, CiA_Message * msg){
   msg->Pdo.Data[0] = data->data[0];
   msg->Pdo.Data[1] = data->data[1];
   msg->Pdo.Data[2] = data->data[2];

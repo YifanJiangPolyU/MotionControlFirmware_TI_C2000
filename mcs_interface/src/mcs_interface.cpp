@@ -263,7 +263,6 @@ void SerialPoll(void){
  *  @param msg       ptr to received CiA message
  */
 void ProcessMessage(CiA_Message * msg){
-
   if((msg->Common.CANID-NODE_ID)==CANID_SDO_TX){
     ProcessSdoMessage(msg);
   } else if((msg->Common.CANID-NODE_ID)==CANID_PDO_TX){

@@ -60,7 +60,11 @@ public:
 
   /* Access functions for internal use */
   void SetCurrentSweepSineBuffer(int16_t data){
-    _CurrentSweepSineBuffer[_SyncFlag] = data;
+    if(_SyncFlag==0){
+      _CurrentSweepSineBuffer[3] = data;
+    }else{
+      _CurrentSweepSineBuffer[_SyncFlag-1] = data;
+    }
   }
 
   void ClearCurrentSweepSineBuffer(void){

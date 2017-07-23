@@ -60,6 +60,7 @@ void CommunicationInterface::SetCiaMsgBuffer(CiA_Message * msgptr)
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 void CommunicationInterface::ExecuteTransmission(void){
+
   CiA_Message msg;
 
   if(_ControlProcessData->_SyncFlag == 0) {
@@ -67,10 +68,7 @@ void CommunicationInterface::ExecuteTransmission(void){
         _SdoReplyPending = false;
         _UartDriver->SendMessage(&_SodReplyMsg);
       } else {
-        // transmit PDO status report
-        msg.Common.CANID = CANID_PDO_TX;
-        msg.Common.Length = 11;
-
+        _PdoMaster->ComposePdoMessage(&msg);
         _UartDriver->SendMessage(&msg);
       }
   }
