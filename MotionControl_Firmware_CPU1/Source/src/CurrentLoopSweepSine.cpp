@@ -103,8 +103,12 @@ void CurrentLoopSweepSine::Reset(void){
 void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _ExcitationAmplitude = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      if(handle->Data.DataFloat32>=0){
+        _ExcitationAmplitude = handle->Data.DataFloat32;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _ExcitationAmplitude;
@@ -118,8 +122,8 @@ void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){
 void CurrentLoopSweepSine::AccessExcitationLength(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _TimeMax = handle->Data.DataInt16[0];
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      // _TimeMax = handle->Data.DataInt16[0];
+      handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
       handle->Data.DataInt16[0] = _TimeMax;
@@ -133,8 +137,12 @@ void CurrentLoopSweepSine::AccessExcitationLength(ObdAccessHandle * handle){
 void CurrentLoopSweepSine::AccessStartFrequency(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _StartFreq = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      if(handle->Data.DataFloat32>=0){
+        _StartFreq = handle->Data.DataFloat32;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _StartFreq;
@@ -148,8 +156,12 @@ void CurrentLoopSweepSine::AccessStartFrequency(ObdAccessHandle * handle){
 void CurrentLoopSweepSine::AccessEndFrequency(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _EndFreq = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      if(handle->Data.DataFloat32>=0){
+        _EndFreq = handle->Data.DataFloat32;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _EndFreq;
@@ -163,8 +175,12 @@ void CurrentLoopSweepSine::AccessEndFrequency(ObdAccessHandle * handle){
 void CurrentLoopSweepSine::AccessRampRate(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _RampRate = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      if(handle->Data.DataFloat32>=0){
+        _RampRate = handle->Data.DataFloat32;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _RampRate;
