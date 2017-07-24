@@ -27,8 +27,8 @@ const float32_t CURREN_SENSE_GAIN_PHASE = ADC_REF_VOLTAGE/
                                           CURRENT_SENSE_AMP_GAIN/
                                           CURRENT_SENSE_RES_VALUE;
 
-const float32_t CURREN_SENSE_GAIN_DCLINE = 1.0f;
-const float32_t VOLTAGE_SENSE_GAIN_DCLINE = 1.0f;
+const float32_t CURREN_SENSE_GAIN_DCLINE = CURREN_SENSE_GAIN_PHASE;
+const float32_t VOLTAGE_SENSE_GAIN_DCLINE = ADC_REF_VOLTAGE/ADC_RESOLUTION/0.125156759468272f;
 
 void ControlProcessData::InitCLAGains(void){
   CLA_CurrentSenseGain_Phase = CURREN_SENSE_GAIN_PHASE;
