@@ -17,6 +17,7 @@
 
 #include "CurrentLoopSweepSine.h"
 #include "PdoDataTypeDef.h"
+#include "DataTypeHelper.h"
 #include "math.h"
 
 const uint16_t _CurrentControlFrequency = 32000;
@@ -36,6 +37,9 @@ void CurrentLoopSweepSine::Execute(void){
   Pwm.B = 0;
   Pwm.C = 0;
 
+  CurrenDemand.A = 0;
+  CurrenDemand.B = 0;
+
   switch (_State) {
     case STATE_WAIT_SYNC:
       // synchronize sweepsine generation to ControlProcessMaster
@@ -47,13 +51,19 @@ void CurrentLoopSweepSine::Execute(void){
       break;
     case STATE_RUNNING:
       if(_TimeStamp < _TimeMax){
-        CurrenDemand.A = GenerateSweepSine();
-        CurrenDemand.B = 0;
+        if(_ActivePhase=='A'){
+          CurrenDemand.A = GenerateSweepSine();
+          _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
+        } else {
+          CurrenDemand.B = GenerateSweepSine();
+          _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.B);
+        }
+
         Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
         PwrSetPwmDuty(&Pwm);
         _TimeStamp += 1;
 
-        _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
+
       } else {
         if(_ControlProcessData->_SyncFlag==0){
           _State = STATE_END;
@@ -186,6 +196,28 @@ void CurrentLoopSweepSine::AccessRampRate(ObdAccessHandle * handle){
       break;
     case SDO_CSS_READ:
       handle->Data.DataFloat32 = _RampRate;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void CurrentLoopSweepSine::AccessActivePhase(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      if(__byte_uint16_t(handle->Data.DataUint16[0], 0)=='A'){
+        _ActivePhase = 'A';
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else if(__byte_uint16_t(handle->Data.DataUint16[0], 0)=='B') {
+        _ActivePhase = 'B';
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
+      break;
+    case SDO_CSS_READ:
+      __byte_uint16_t(handle->Data.DataUint16[0], 0) = _ActivePhase;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

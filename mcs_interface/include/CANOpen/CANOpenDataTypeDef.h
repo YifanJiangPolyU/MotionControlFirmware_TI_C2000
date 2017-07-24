@@ -56,8 +56,9 @@ typedef struct ObdAccessHandleTypedef{
   union {
       float DataFloat32;
       int32_t   DataInt32;
-      char      DataInt8[6];
+      uint32_t  DataUint32;
       int16_t   DataInt16[3];
+      uint16_t  DataUint16[3];
   } Data;
 
 } ObdAccessHandle;

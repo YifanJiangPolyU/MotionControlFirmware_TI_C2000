@@ -85,15 +85,15 @@ int main(int argc, char **argv){
   msg.Length = 10;
 
   usleep (1000000);
-  //sdo_pub.publish(msg);
+  sdo_pub.publish(msg);
 
-  OutputFile.open("/home/yifan/catkin_ws/src/mcs/mcs_interface/SweepSineData.txt",
-                    std::ofstream::out | std::ofstream::trunc);
+  //OutputFile.open("/home/yifan/catkin_ws/src/mcs/mcs_interface/SweepSineData.txt",
+  //                  std::ofstream::out | std::ofstream::trunc);
 
   mcs_interface::CiA_NmtMessage msg1;
   msg1.NodeID = 0x03;
   msg1.State = NMT_TEST_CLSW;
-  nmt_pub.publish(msg1);
+  //nmt_pub.publish(msg1);
 
   while(ros::ok() && (!terminate)){
 

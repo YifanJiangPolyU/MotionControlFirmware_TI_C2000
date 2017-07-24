@@ -32,7 +32,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
       _CurrentLoopController = CurrentLoopControllerPtr;
       _ControlProcessData = ControlProcessDataPtr;
 
-      _ActivePhase = 0;
+      _ActivePhase = 'A';
 
       _ExcitationAmplitude = 100;
       _StartFreq = 600;
@@ -62,6 +62,8 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     void AccessStartFrequency(ObdAccessHandle * handle);
     void AccessEndFrequency(ObdAccessHandle * handle);
     void AccessRampRate(ObdAccessHandle * handle);
+
+    void AccessActivePhase(ObdAccessHandle * handle);
 
   private:
 
