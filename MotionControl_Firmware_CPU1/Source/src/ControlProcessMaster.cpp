@@ -14,6 +14,7 @@
 
 #include "ControlProcessMaster.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
+#include "Drivers/GpioDriver/GpioDriver.h"
 #include "Drivers/EncoderDriver/EncoderDriver.h"
 
 /**
@@ -44,11 +45,32 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
 /**
  * execute ControlProcessMaster
  */
- #pragma CODE_SECTION(".TI.ramfunc");
+char EnablePwrTest = 0;
+char EnablePwrTestState = 0;
+#pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::Execute(void){
 
   // Get data from current controller and ADC
   UpdateProcessData();
+
+  // testing PwrEnable
+  // should be removed after test
+  switch (EnablePwrTestState) {
+    case 0:
+      if(EnablePwrTest==1){
+        GpioDataRegs.GPBDAT.bit.GPIO34 = 0;
+        PwrEnable();
+        EnablePwrTestState = 1;
+      }
+      break;
+    case 1:
+      if(EnablePwrTest==0){
+        GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
+        PwrDisable();
+        EnablePwrTestState = 0;
+      }
+      break;
+  }
 
   //_CommunicationInterface->SetCiaMsgBuffer(&_CiA_MsgBuffer);
 
@@ -61,45 +83,6 @@ void ControlProcessMaster::Execute(void){
 
   // execute process
   _ControlProcessExecuter->ExecuteProcess();
-
-/*
-  switch(_State){
-    case STATE_PREOP:
-      if(_NmtUpdated==true){
-        _NmtUpdated = false;
-        if(_NmtNewState==NMT_TO_OP){
-          PwrEnable();
-          _ControlProcessExecuter->StartProcess(_ControlProcessData->_ActiveProcess);
-          _State = STATE_PREOP;
-        }
-      }
-      break;
-    case STATE_OP:
-      if(_NmtUpdated==true){
-        _NmtUpdated = false;
-        if(_NmtNewState==NMT_TO_PREOP){
-          PwrDisable();
-          _State = STATE_PREOP;
-        } else if(_NmtNewState==NMT_TO_STOP){
-          PwrDisable();
-          _State = STATE_STOPPED;
-        }
-      }
-
-      _ControlProcessExecuter->ExecuteProcess();
-      break;
-    case STATE_STOPPED:
-      if(_NmtUpdated==true){
-        _NmtUpdated = false;
-        if(_NmtNewState==NMT_TO_PREOP){
-          _State = STATE_PREOP;
-        }
-      }
-      break;
-    default:
-      break;
-  }
-*/
 
   // poll coummunication interface
   _CommunicationInterface->ExecuteReception();
