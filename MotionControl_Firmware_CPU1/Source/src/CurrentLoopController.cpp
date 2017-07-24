@@ -40,7 +40,7 @@ PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, Phase
 
   float32_t VoltageDcLine = _ControlProcessData->_VoltageValueDcLine;
   float32_t VoltToPwmScaleFactor = PWM_MAX_DUTY / VoltageDcLine;
-  float32_t OutputVoltageLimit = VoltageDcLine * 0.85;
+  float32_t OutputVoltageLimit = VoltageDcLine * 0.519;
   float32_t OutputVoltageMinimum = VoltageDcLine * 0.05;
 
   // execute PI controller
