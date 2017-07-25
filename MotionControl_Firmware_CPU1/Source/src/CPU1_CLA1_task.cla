@@ -31,7 +31,7 @@ __interrupt void Cla1Task1 ( void )
   // save sample to buffer
   CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
   CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
-  dcVoltageSense = AdcbResultRegs.ADCRESULT15 * CLA_VoltageSenseGain;
+  dcVoltageSense = AdcaResultRegs.ADCRESULT15 * CLA_VoltageSenseGain;
 
   if(CLA_CycleCounter==9){
     CLA_CycleCounter = 0;
