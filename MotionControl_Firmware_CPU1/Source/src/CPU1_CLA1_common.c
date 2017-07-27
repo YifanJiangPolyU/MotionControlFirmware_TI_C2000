@@ -62,6 +62,9 @@
     #pragma DATA_SECTION(CLA_SampleBufferPtrB,"CLADataLS1")
     float32_t * CLA_SampleBufferPtrB;
 
+    #pragma DATA_SECTION(CLA_VoltageBuffer,"CLADataLS1")
+    float32_t CLA_VoltageBuffer[CLA_SAMPLE_BUFFER_LEN_X3];
+
 
     #pragma DATA_SECTION(timeCounter,"CLADataLS1")
     uint16_t timeCounter;

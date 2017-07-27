@@ -263,32 +263,35 @@ void ADC_GroupInit(void){
   CpuSysRegs.PCLKCR13.bit.ADC_B = 1;
 
   //set ADCCLK divider to /4, ADCCLK = 50MHz
-  AdccRegs.ADCCTL2.bit.PRESCALE = 6;
-  AdcbRegs.ADCCTL2.bit.PRESCALE = 6;
   AdcaRegs.ADCCTL2.bit.PRESCALE = 6;
+  AdcbRegs.ADCCTL2.bit.PRESCALE = 6;
+  AdccRegs.ADCCTL2.bit.PRESCALE = 6;
+
 
   // set 12-bit resolution and single ended input
-  AdcSetMode(ADC_ADCC, ADC_RESOLUTION_12BIT, ADC_SIGNALMODE_SINGLE);
-  AdcSetMode(ADC_ADCB, ADC_RESOLUTION_12BIT, ADC_SIGNALMODE_SINGLE);
   AdcSetMode(ADC_ADCA, ADC_RESOLUTION_12BIT, ADC_SIGNALMODE_SINGLE);
+  AdcSetMode(ADC_ADCB, ADC_RESOLUTION_12BIT, ADC_SIGNALMODE_SINGLE);
+  AdcSetMode(ADC_ADCC, ADC_RESOLUTION_12BIT, ADC_SIGNALMODE_SINGLE);
 
   // power up ADC
-  AdccRegs.ADCCTL1.bit.ADCPWDNZ = 1;
-  AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
   AdcaRegs.ADCCTL1.bit.ADCPWDNZ = 1;
+  AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
+  AdccRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
-  // phase A current (connected to ADCC)
-  AdccRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin C4
-  AdccRegs.ADCSOC0CTL.bit.ACQPS = 63; //sample window is 64 SYSCLK cycles
+
+
+  // phase A current
+  AdccRegs.ADCSOC0CTL.bit.CHSEL = 4;     //SOC0 will convert pin C4 (phase A)
+  AdccRegs.ADCSOC0CTL.bit.ACQPS = 63;    //sample window is 64 SYSCLK cycles
   AdccRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of EOC0 will set INT1 flag
   AdccRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
-  AdccRegs.ADCINTFLGCLR.bit.ADCINT1 = 1; //make sure INT1 flag is cleared
-  AdccRegs.ADCSOC0CTL.bit.TRIGSEL = 5; // trigger source: EPWM1, ADCSOCA
+  AdccRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
+  AdccRegs.ADCSOC0CTL.bit.TRIGSEL = 5;   // trigger source: EPWM1, ADCSOCA
 
-  // phase B current (connected to ADCB)
-  AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4
+  // phase B current
+  AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4 (phase B)
   AdcbRegs.ADCSOC0CTL.bit.ACQPS = 63;
-  AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
+  AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 0;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
   AdcbRegs.ADCSOC0CTL.bit.TRIGSEL = 5;
@@ -296,7 +299,7 @@ void ADC_GroupInit(void){
   // DC line voltage
   AdcaRegs.ADCSOC0CTL.bit.CHSEL = 15;  //SOC0 will convert pin ADCIN15
   AdcaRegs.ADCSOC0CTL.bit.ACQPS = 63;
-  AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 1;
+  AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0;
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
   AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = 5;
@@ -531,7 +534,8 @@ void CLA_InitCpu1Cla1(void){
   // 8 tasks
   // PieVectTable.CLA1_1_INT = &cla1Isr1;
 
-  // trigger source (ADCCINT1)
+
+  // trigger source
   DmaClaSrcSelRegs.CLA1TASKSRCSEL1.bit.TASK1 = 11;
 
   // Enable CLA interrupts at the group and subgroup levels

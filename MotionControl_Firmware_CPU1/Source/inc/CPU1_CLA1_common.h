@@ -66,6 +66,8 @@ extern float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X3];    // ADC data buf
 extern float32_t * CLA_SampleBufferPtrA;                         // Ptr to the ready-to-read section of buffer
 extern float32_t * CLA_SampleBufferPtrB;
 
+extern float32_t CLA_VoltageBuffer[CLA_SAMPLE_BUFFER_LEN_X3];
+
 extern uint16_t timeCounter;
 
 
