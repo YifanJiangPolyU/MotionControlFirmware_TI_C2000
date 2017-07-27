@@ -60,11 +60,13 @@ extern float32_t CLA_CurrentFilter_b2;
 
 extern float32_t sensorSampleA;
 extern float32_t sensorSampleB;
-extern uint16_t dcVoltageSense;
+extern float32_t dcVoltageSense;
 extern float32_t CLA_SampleBufferA[CLA_SAMPLE_BUFFER_LEN_X3];    // ADC data buffer, phase A
 extern float32_t CLA_SampleBufferB[CLA_SAMPLE_BUFFER_LEN_X3];    // ADC data buffer, phase B
 extern float32_t * CLA_SampleBufferPtrA;                         // Ptr to the ready-to-read section of buffer
 extern float32_t * CLA_SampleBufferPtrB;
+
+extern float32_t CLA_VoltageBuffer[CLA_SAMPLE_BUFFER_LEN_X3];
 
 extern uint16_t timeCounter;
 

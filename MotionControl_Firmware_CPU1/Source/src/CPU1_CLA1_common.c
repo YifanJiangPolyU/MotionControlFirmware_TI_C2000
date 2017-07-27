@@ -50,7 +50,7 @@
     #pragma DATA_SECTION(sensorSampleB,"CLADataLS1")
     float32_t sensorSampleB;
     #pragma DATA_SECTION(dcVoltageSense,"CLADataLS1")
-    uint16_t dcVoltageSense;
+    float32_t dcVoltageSense;
 
     // ADC data buffer
     #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")
@@ -61,6 +61,9 @@
     float32_t * CLA_SampleBufferPtrA;
     #pragma DATA_SECTION(CLA_SampleBufferPtrB,"CLADataLS1")
     float32_t * CLA_SampleBufferPtrB;
+
+    #pragma DATA_SECTION(CLA_VoltageBuffer,"CLADataLS1")
+    float32_t CLA_VoltageBuffer[CLA_SAMPLE_BUFFER_LEN_X3];
 
 
     #pragma DATA_SECTION(timeCounter,"CLADataLS1")
