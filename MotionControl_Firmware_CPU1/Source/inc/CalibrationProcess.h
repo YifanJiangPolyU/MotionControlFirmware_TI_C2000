@@ -35,6 +35,9 @@ class CalibrationProcess : public ControlProcessBase, public ObjectDictionaryEnt
       STATE_COMPLETE
     };
 
+    void AccessCurrentOffsetPhaseA(ObdAccessHandle * handle);
+    void AccessCurrentOffsetPhaseB(ObdAccessHandle * handle);
+
   private:
     enum CalibrationProcess_State _State;
 

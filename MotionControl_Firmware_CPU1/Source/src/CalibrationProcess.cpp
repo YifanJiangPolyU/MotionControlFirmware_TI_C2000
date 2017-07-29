@@ -61,3 +61,30 @@ void CalibrationProcess::Reset(void){
 
   _State = STATE_CAl_CURRENT_OFFSET;
 }
+
+
+void CalibrationProcess::AccessCurrentOffsetPhaseA(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _CurrentOffset_PhaseA;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void CalibrationProcess::AccessCurrentOffsetPhaseB(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _CurrentOffset_PhaseB;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
