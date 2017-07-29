@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(mcs_interface)
 
+# Set compiler flags
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp

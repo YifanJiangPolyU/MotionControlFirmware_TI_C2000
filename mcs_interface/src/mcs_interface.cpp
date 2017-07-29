@@ -281,11 +281,11 @@ void ProcessSdoMessage(CiA_Message* msg){
 
   msg_pub.Idx = (msg->Sdo.SdoIdx<<8)|(msg->Sdo.SdoSubIdx);
   msg_pub.AccessType = msg->Sdo.SdoCtrl_ccs;
+  msg_pub.AccessResult = msg->Sdo.SdoAccessResult;
   msg_pub.Data[0] = msg->Sdo.Data[0];
   msg_pub.Data[1] = msg->Sdo.Data[1];
 
   handle.AccessResult = msg->Sdo.SdoAccessResult;
-  msg_pub.AccessResult = handle.AccessResult;
   handle.Data.DataInt16[0] = msg->Sdo.Data[0];
   handle.Data.DataInt16[1] = msg->Sdo.Data[1];
 

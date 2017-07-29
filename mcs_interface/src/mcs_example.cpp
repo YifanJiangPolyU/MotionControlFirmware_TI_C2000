@@ -20,6 +20,7 @@
 #include "iostream"
 #include "fstream"
 #include "sstream"
+#include "string"
 
 #include "ros/ros.h"
 #include "CANOpen/CANOpenDataTypeDef.h"
@@ -40,6 +41,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   ObdAccessHandle handle;
   handle.Data.DataInt16[0] = msg->Data[0];
   handle.Data.DataInt16[1] = msg->Data[1];
+  handle.AccessResult = msg->AccessResult;
 
   if(handle.AccessResult==0){
     printf("sdo access successful, value: %f\n", handle.Data.DataFloat32 );
@@ -70,6 +72,15 @@ int main(int argc, char **argv){
   ros::init(argc, argv, "mcs_example");
   ros::NodeHandle node;
 
+  std::string idx, subidx;
+  if(argc != 3){
+     printf("Usage: \n    rosrun mcs_interface mcs_example_node 0xHHHH 0xHH\n");
+     return 0;
+  } else {
+    idx = argv[1];
+    subidx = argv[2];
+  }
+
   terminate = false;
 
   // initialize publisher
@@ -82,8 +93,8 @@ int main(int argc, char **argv){
   handle.Data.DataFloat32 = 31.2;
 
   mcs_interface::CiA_SdoMessage msg;
-  msg.Idx = 0x2105;
-  msg.SubIdx = 0x02;
+  msg.Idx = stoi (idx,nullptr,16);
+  msg.SubIdx = stoi (subidx,nullptr,16);
   msg.AccessType = SDO_CSS_READ;
   msg.AccessResult = 0;
   msg.Data[0] = 34; //handle.Data.DataInt16[0];
