@@ -40,6 +40,9 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
     _CommunicationInterface = CommunicationInterfacePtr;
     _ControlProcessData = ControlProcessDataPtr;
     _ControlProcessExecuter = ControlProcessExecuterPtr;
+
+    _StatusReg.all = 0;
+    _StatusReg.bit.State = STATE_NOT_READY;
   }
 
 /**
@@ -222,6 +225,21 @@ extern "C" void CallControlProcessMaster(void){
 }
 
 
-void AccessMotionControlState(ObdAccessHandle * handle){
+void ControlProcessMaster::AccessMotionControlState(ObdAccessHandle * handle){
 
+}
+
+
+void ControlProcessMaster::AccessSystemStatusReg(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      handle->AccessResult = OBD_ACCESS_ERR_WRITE;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _StatusReg.all;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
 }

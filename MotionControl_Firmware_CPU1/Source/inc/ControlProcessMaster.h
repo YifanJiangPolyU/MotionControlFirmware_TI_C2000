@@ -60,11 +60,26 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     void Execute(void);
 
     void AccessMotionControlState(ObdAccessHandle * handle);
+    void AccessSystemStatusReg(ObdAccessHandle * handle);
 
+    // define system status and error flags
     typedef struct ControlProcessMaster_Status_typedef{
-      uint16_t _State   :  2;
-      uint16_t _ErrCode :  14;
+      uint16_t State :                3;
+      uint16_t ErrOverCurrent :       1;
+      uint16_t ErrOverTemperature :   1;
+      uint16_t ErrUnderVoltage :      1;
+      uint16_t ErrOverVoltage :       1;
+      uint16_t ErrPowerStage :        1;
+      uint16_t ErrSoftware :          1;
+      uint16_t ErrHardware :          1;
+      uint16_t ErrCommunication :     1;
+      uint16_t reserve :              6;
     } ControlProcessMaster_Status;
+
+    typedef union ControlProcessMasterStatusRegTypedef{
+      ControlProcessMaster_Status bit;
+      uint16_t all;
+    }ControlProcessMaster_StatusReg;
 
   private:
     void UpdateMotionControlState(void);
@@ -80,7 +95,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     uint16_t _CycleCounter;
     uint16_t _NmtNewState;
     bool _NmtUpdated;
-    ControlProcessMaster_Status _Status;
+    ControlProcessMaster_StatusReg _StatusReg;
 
     CiA_Message _CiA_MsgBuffer;
     CiA_SdoMessage _CiA_SdoBuffer;

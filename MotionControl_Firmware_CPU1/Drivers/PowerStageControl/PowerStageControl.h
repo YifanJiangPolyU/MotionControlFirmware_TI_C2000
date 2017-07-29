@@ -21,9 +21,12 @@
   extern "C" {
 #endif
 
-#define PWM_COUNTER_TOP      3125
-#define PWM_MAX_DUTY         3000
-#define PWM_MIN_DUTY         150
+#define PWM_COUNTER_TOP            3125   // PWM timer counter top
+#define PWM_MAX_DUTY               2810   // max counter value
+#define PWM_MIN_DUTY               312    // minimum duty cycle
+#define PWM_MAX_PERCENTAGE         0.9f   // maximum duty percentage
+#define PWM_MIN_PERCENTAGE         0.1f   // minimum duty percentage
+#define PWM_PHASE_MAX_PERCENTAGE   0.4f   // maximum phase-to-neutro percentage, 1/2 - PWM_MIN_PERCENTAGE
 
 void SensorEnable(void);
 void PwmTimerEnable(void);
