@@ -102,6 +102,20 @@ void CurrentLoopController::Reset(void){
   _Integral_Ib = 0;
 }
 
+
+void CurrentLoopController::AccessCurrentControlFrequency(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = 32000;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
 void CurrentLoopController::AccessCurrentLoopGains_Kp(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:

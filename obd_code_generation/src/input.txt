@@ -21,11 +21,9 @@
 0x2001    0x02      uint16     RO      ControlProcessData    _ControlProcessData    AccessPowerStageTemperature
 
 # DC line limits
-0x2001    0x01
-0x2001    0x02
-0x2001    0x03
-0x2001    0x04
-0x2001    0x05
+0x2002    0x01    uint16    RO    ControlProcessData     _ControlProcessData   AccessDcLineCurrentLimit
+0x2002    0x02    uint16    RO    ControlProcessData     _ControlProcessData   AccessDcLineVoltageUpperLimit
+0x2002    0x03    uint16    RO    ControlProcessData     _ControlProcessData   AccessDcLineVoltageLowerLimit
 
 # encoder resolution and actual commutation angle
 0x2104    0x01    float32    RW    ControlProcessData   _ControlProcessData   AccessCommutationAngle
@@ -40,7 +38,3 @@
 0x2105    0x03    float32   RW    CurrentLoopController   _CurrentLoopController   AccessCurrentLoopGains_Ki
 
 # current sampling filter
-0x2105    0x04    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_a1
-0x2105    0x05    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_a2
-0x2105    0x06    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_b1
-0x2105    0x07    float32   RW  CurrentLoopController    _CurrentLoopController    AccessCurrentFilter_b2

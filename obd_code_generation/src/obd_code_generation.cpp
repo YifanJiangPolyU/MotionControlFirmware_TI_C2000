@@ -188,13 +188,21 @@ int main(int argc, char **argv)
       ds = 10;
     }
 
+    // access type, 0 is RO, 1 is RW
+    int at = 0;
+    if((InputWordVec[i])[3] == "RO"){
+      at = 0;
+    } else if((InputWordVec[i])[3] == "RW"){
+      at = 1;
+    }
+
     ostringstream tmp;
     tmp << EntryList << "[" << i << "].";
     string EntryListIndex = tmp.str();
 
     OutputFile << "  "<< EntryListIndex << ObdIndex << " = " << entry.Idx << ";" << endl;
-    OutputFile << "  "<< EntryListIndex << AccessType << " = " << 0 << ";" << endl;
-    OutputFile << "  "<< EntryListIndex << DataSize << " = " << ds << ";" << endl;
+    OutputFile << "  "<< EntryListIndex << AccessType << " = " << at << ";" << endl;
+    //OutputFile << "  "<< EntryListIndex << DataSize << " = " << ds << ";" << endl;
     OutputFile << "  "<< EntryListIndex << Instance << " = " << CastInstance
                       << "(SystemWarehouse::GetInstance()->" << entry.WordVec[5] << "_GetInstance());" << endl;
     OutputFile << "  "<< EntryListIndex << AccessFunc << " = " << CastAccessFunc

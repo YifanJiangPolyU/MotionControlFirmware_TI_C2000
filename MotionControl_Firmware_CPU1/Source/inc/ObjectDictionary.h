@@ -30,7 +30,7 @@
 #include "CurrentLoopSweepSine.h"
 #include "PositionControlProcess.h"
 
-#define MAX_NO_OF_ENTRY 100
+#define MAX_NO_OF_ENTRY 15
 
 class ObjectDictionary{
 

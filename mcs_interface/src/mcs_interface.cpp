@@ -86,8 +86,8 @@ void SdoRequestCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   uint8_t len;
 
   msg_buf.Sdo.CANID = NODE_ID + CANID_SDO_RX;
-  msg_buf.Sdo.SdoIdx = (uint16_t)((msg->Idx)>>8);
-  msg_buf.Sdo.SdoSubIdx = (uint8_t)((msg->Idx) & 0x000000FF);
+  msg_buf.Sdo.SdoIdx = (uint16_t)(msg->Idx);
+  msg_buf.Sdo.SdoSubIdx = (uint8_t)(msg->SubIdx);
   msg_buf.Sdo.SdoCtrl_ccs = msg->AccessType;
   msg_buf.Sdo.SdoAccessResult = 0;
   msg_buf.Sdo.Data[0] = msg->Data[0];
@@ -281,13 +281,14 @@ void ProcessSdoMessage(CiA_Message* msg){
 
   msg_pub.Idx = (msg->Sdo.SdoIdx<<8)|(msg->Sdo.SdoSubIdx);
   msg_pub.AccessType = msg->Sdo.SdoCtrl_ccs;
-  msg_pub.AccessResult = msg->Sdo.SdoAccessResult;
   msg_pub.Data[0] = msg->Sdo.Data[0];
   msg_pub.Data[1] = msg->Sdo.Data[1];
 
   handle.AccessResult = msg->Sdo.SdoAccessResult;
+  msg_pub.AccessResult = handle.AccessResult;
   handle.Data.DataInt16[0] = msg->Sdo.Data[0];
   handle.Data.DataInt16[1] = msg->Sdo.Data[1];
+
 
   SdoReply_pub.publish(msg_pub);
 

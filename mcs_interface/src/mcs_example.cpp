@@ -40,7 +40,12 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   ObdAccessHandle handle;
   handle.Data.DataInt16[0] = msg->Data[0];
   handle.Data.DataInt16[1] = msg->Data[1];
-  printf("sdo access successful, value: %f\n", handle.Data.DataFloat32 );
+
+  if(handle.AccessResult==0){
+    printf("sdo access successful, value: %f\n", handle.Data.DataFloat32 );
+  }else{
+    printf("sdo access failed: %d\n", handle.AccessResult);
+  }
 }
 
 void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
@@ -77,7 +82,8 @@ int main(int argc, char **argv){
   handle.Data.DataFloat32 = 31.2;
 
   mcs_interface::CiA_SdoMessage msg;
-  msg.Idx = 0x00A;
+  msg.Idx = 0x2105;
+  msg.SubIdx = 0x02;
   msg.AccessType = SDO_CSS_READ;
   msg.AccessResult = 0;
   msg.Data[0] = 34; //handle.Data.DataInt16[0];

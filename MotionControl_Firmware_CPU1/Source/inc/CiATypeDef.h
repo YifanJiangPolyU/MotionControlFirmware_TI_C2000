@@ -31,6 +31,9 @@
 #define SDO_CSS_WRITE        0
 #define SDO_CSS_READ         3
 
+#define OBD_ACCESS_TYPE_RO   0
+#define OBD_ACCESS_TYPE_RW   1
+
 #define OBD_WRITE                          SDO_CSS_WRITE
 #define OBD_READ                           SDO_CSS_READ
 #define OBD_ACCESS_SUCCESS                 0x00  // access successful

@@ -1,5 +1,6 @@
 
-uint32      Idx                    # obj index and subindex
+uint16      Idx                    # obj index
+uint8       SubIdx                 # obj sub index
 uint8       Length
 uint8       AccessType             # read or write
 uint8       AccessResult           # access results

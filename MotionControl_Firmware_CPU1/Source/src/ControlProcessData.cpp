@@ -133,11 +133,10 @@ void ControlProcessData::AccessPowerStageTemperature(ObdAccessHandle * handle){
 void ControlProcessData::AccessDcLineVoltageUpperLimit(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _DcLineVoltageUpperLimit = handle->Data.DataUint32;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataUint32 = _DcLineVoltageUpperLimit;
+      handle->Data.DataUint16[0] = _DcLineVoltageUpperLimit;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
@@ -148,11 +147,10 @@ void ControlProcessData::AccessDcLineVoltageUpperLimit(ObdAccessHandle * handle)
 void ControlProcessData::AccessDcLineVoltageLowerLimit(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _DcLineVoltageLowerLimit = handle->Data.DataUint32;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataUint32 = _DcLineVoltageLowerLimit;
+      handle->Data.DataUint16[0] = _DcLineVoltageLowerLimit;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
@@ -160,29 +158,13 @@ void ControlProcessData::AccessDcLineVoltageLowerLimit(ObdAccessHandle * handle)
   }
 }
 
-void ControlProcessData::AccessDcLineCurrentLimitRMS(ObdAccessHandle * handle){
+void ControlProcessData::AccessDcLineCurrentLimit(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      _DcLineCurrentLimitRMS = handle->Data.DataUint16[0];
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataUint16[0] = _DcLineCurrentLimitRMS;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    default:
-      break;
-  }
-}
-
-void ControlProcessData::AccessDcLineCurrentLimitPEAK(ObdAccessHandle * handle){
-  switch (handle->AccessType) {
-    case SDO_CSS_WRITE:
-      _DcLineCurrentLimitPEAK = handle->Data.DataUint16[0];
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    case SDO_CSS_READ:
-      handle->Data.DataUint16[0] = _DcLineCurrentLimitPEAK;
+      handle->Data.DataUint16[0] = _DcLineCurrentLimit;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

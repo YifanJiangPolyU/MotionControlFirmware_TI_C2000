@@ -23,6 +23,7 @@
 #include "PdoDataTypeDef.h"
 #include "ControlTypeDef.h"
 #include "ObjectDictionaryEntryBase.h"
+#include "Drivers/PowerStageControl/PowerStageControl.h"
 
 
 class ControlProcessData: public ObjectDictionaryEntryBase{
@@ -34,10 +35,9 @@ public:
     _OperationEnabled(false),
     _ControlProcess(PROCESS_NONE),
     _MotorType(MTR_TYPE_NONE),
-    _DcLineVoltageUpperLimit(25),
-    _DcLineVoltageLowerLimit(10),
-    _DcLineCurrentLimitRMS(10),
-    _DcLineCurrentLimitPEAK(20),
+    _DcLineVoltageUpperLimit(PWR_MAX_DCLINE_VOLTAGE),
+    _DcLineVoltageLowerLimit(PWR_MIN_DCLINE_VOLTAGE),
+    _DcLineCurrentLimit(PWR_MAX_DCLINE_CURRENT),
     _MotorCurrentLimitRMS(8),
     _MotorCurrentLimitPEAK(16),
     _CommAngleCosine(1),
@@ -90,8 +90,7 @@ public:
 
   void AccessDcLineVoltageUpperLimit(ObdAccessHandle * handle);
   void AccessDcLineVoltageLowerLimit(ObdAccessHandle * handle);
-  void AccessDcLineCurrentLimitRMS(ObdAccessHandle * handle);
-  void AccessDcLineCurrentLimitPEAK(ObdAccessHandle * handle);
+  void AccessDcLineCurrentLimit(ObdAccessHandle * handle);
   void AccessMotorCurrentLimitRMS(ObdAccessHandle * handle);
   void AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle);
 
@@ -121,10 +120,9 @@ public:
   uint16_t _CurrentValueDcLine;
 
   // current and voltage limits
-  uint32_t _DcLineVoltageUpperLimit;
-  uint32_t _DcLineVoltageLowerLimit;
-  uint16_t _DcLineCurrentLimitRMS;
-  uint16_t _DcLineCurrentLimitPEAK;
+  uint16_t _DcLineVoltageUpperLimit;
+  uint16_t _DcLineVoltageLowerLimit;
+  uint16_t _DcLineCurrentLimit;
   uint16_t _MotorCurrentLimitRMS;
   uint16_t _MotorCurrentLimitPEAK;
 

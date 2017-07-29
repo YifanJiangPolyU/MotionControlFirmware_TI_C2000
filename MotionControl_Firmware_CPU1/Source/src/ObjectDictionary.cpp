@@ -34,13 +34,20 @@ void ObjectDictionary::AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
     msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
   } else {
     if(_ObdEntryList[pos]._Instance!=NULL){
-      // call obd access function
-      (_ObdEntryList[pos]._Instance->*(_ObdEntryList[pos]._AccessMethod))(&handle);
 
-      // copy results
-      msg_out->Sdo.SdoAccessResult = handle.AccessResult;
-      msg_out->Sdo.Data[0] = handle.Data.DataInt16[0];
-      msg_out->Sdo.Data[1] = handle.Data.DataInt16[1];
+      if((handle.AccessType==SDO_CSS_WRITE) && (_ObdEntryList[pos]._AccessType==OBD_ACCESS_TYPE_RO)){
+        // trying to write a RO object, fail!
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_TYPE_RO;
+      }else{
+        // call obd access function
+        (_ObdEntryList[pos]._Instance->*(_ObdEntryList[pos]._AccessMethod))(&handle);
+
+        // copy results
+        msg_out->Sdo.SdoAccessResult = handle.AccessResult;
+        msg_out->Sdo.Data[0] = handle.Data.DataInt16[0];
+        msg_out->Sdo.Data[1] = handle.Data.DataInt16[1];
+      }
+
     } else {
       // obj does not exist
       msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_IDX_NONEXIST;
@@ -60,7 +67,7 @@ void ObjectDictionary::AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
  *                   return -1 if not found.
  */
 int16_t ObjectDictionary::SearchEntry(uint16_t Idx, uint16_t SubIdx){
-  uint32_t target = (Idx<<8) | SubIdx;
+  uint32_t target = ((uint32_t)Idx<<8) | SubIdx;
   int16_t retval = -1;
   int16_t head = 0;
   int16_t tail = MAX_NO_OF_ENTRY-1;
