@@ -24,6 +24,7 @@
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
 #include "CurrentControlProcess.h"
+#include "CalibrationProcess.h"
 #include "CurrentLoopSweepSine.h"
 #include "PositionControlProcess.h"
 #include "PdoMaster.h"
@@ -39,13 +40,15 @@ class SystemWarehouse{
                               &_CurrentLoopController,
                               &_CurrentControlProcess,
                               &_CurrentLoopSweepSine,
-                              &_PositionControlProcess),
+                              &_PositionControlProcess,
+                              &_CalibrationProcess),
       _ObjectDictionary(),
       _CommutationMaster(&_ControlProcessData),
       _CommunicationInterface(&_UartDriver, &_ObjectDictionary, &_ControlProcessData, &_PdoMaster),
       _CurrentLoopController(&_ControlProcessData),
       _CurrentControlProcess(&_CurrentLoopController, &_ControlProcessData),
       _PositionControlProcess(&_CurrentLoopController, &_ControlProcessData),
+      _CalibrationProcess(&_ControlProcessData),
       _CurrentLoopSweepSine(&_CurrentLoopController, &_ControlProcessData),
       _PdoMaster(&_ObjectDictionary, &_ControlProcessData),
       _ControlProcessData(),
@@ -64,6 +67,7 @@ class SystemWarehouse{
     CurrentLoopController * _CurrentLoopController_GetInstance(void);
     CurrentControlProcess * _CurrentControlProcess_GetInstance(void);
     PositionControlProcess * _PositionControlProcess_GetInstance(void);
+    CalibrationProcess * _CalibrationProcess_GetInstance(void);
     CurrentLoopSweepSine * _CurrentLoopSweepSine_GetInstance(void);
 
     static void CreateInstance(void);
@@ -81,6 +85,7 @@ class SystemWarehouse{
     CurrentLoopController _CurrentLoopController;
     CurrentControlProcess _CurrentControlProcess;
     PositionControlProcess _PositionControlProcess;
+    CalibrationProcess _CalibrationProcess;
     CurrentLoopSweepSine _CurrentLoopSweepSine;
 
     UartDriver _UartDriver;

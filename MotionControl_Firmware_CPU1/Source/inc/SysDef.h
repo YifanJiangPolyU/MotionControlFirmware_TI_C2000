@@ -38,6 +38,7 @@
 #define PROCESS_CLSW        10    // current loop sweepsine test process
 #define PROCESS_PLSW        11    // position loop sweepsine test process
 #define PROCESS_POLARITY    12    // polarity test process
+#define PROCESS_CALIBRATION 13    // calibration process
 
 
 #endif

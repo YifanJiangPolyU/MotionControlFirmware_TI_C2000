@@ -17,7 +17,8 @@ ControlProcessExecuter::ControlProcessExecuter(ControlProcessData * ControlProce
                        CurrentLoopController * CurrentLoopControllerPtr,
                        CurrentControlProcess * CurrentControlProcessPtr,
                        CurrentLoopSweepSine * CurrentLoopSweepSinePtr,
-                       PositionControlProcess * PositionControlProcessPtr):
+                       PositionControlProcess * PositionControlProcessPtr,
+                       CalibrationProcess * CalibrationProcessPtr):
   _ActiveProcessID(PROCESS_NONE),
   _ProcessRunning(false)
 {
@@ -28,10 +29,11 @@ ControlProcessExecuter::ControlProcessExecuter(ControlProcessData * ControlProce
     _ProcessArray[i] = NULL;
   }
 
-  // IMPORTANT: index of process classes MUST match with the process ID
+  // IMPORTANT: index of process classes MUST match with the process ID (SysDef.h)
   _ProcessArray[1] = CurrentControlProcessPtr;
   _ProcessArray[3] = PositionControlProcessPtr;
   _ProcessArray[10] = CurrentLoopSweepSinePtr;
+  _ProcessArray[13] = CalibrationProcessPtr;
 }
 
 
@@ -45,6 +47,7 @@ void ControlProcessExecuter::StartProcess(uint16_t ProcessID){
     _ProcessRunning = true;
     _ActiveProcessID = ProcessID;
     _ProcessArray[_ActiveProcessID]->Initialize();
+    _ProcessArray[_ActiveProcessID]->Reset();
   }
 }
 

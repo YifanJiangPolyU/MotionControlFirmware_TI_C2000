@@ -22,6 +22,7 @@
 #include "CurrentControlProcess.h"
 #include "PositionControlProcess.h"
 #include "CurrentLoopSweepSine.h"
+#include "CalibrationProcess.h"
 
 class ControlProcessExecuter {
 
@@ -30,7 +31,8 @@ class ControlProcessExecuter {
                            CurrentLoopController * CurrentLoopControllerPtr,
                            CurrentControlProcess * CurrentControlProcessPtr,
                            CurrentLoopSweepSine * CurrentLoopSweepSinePtr,
-                           PositionControlProcess * PositionControlProcessPtr);
+                           PositionControlProcess * PositionControlProcessPtr,
+                           CalibrationProcess * CalibrationProcessPtr);
 
     ~ControlProcessExecuter(){}
 

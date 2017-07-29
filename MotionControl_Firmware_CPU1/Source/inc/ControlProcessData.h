@@ -108,7 +108,7 @@ public:
   uint16_t _ControlProcess;       // control process used for operation
   uint16_t _MotorType;
 
-  // current actual values (Raw ADC output)
+  // current actual values
   float32_t * _CurrentValueBufferPhaseA;
   float32_t * _CurrentValueBufferPhaseB;
 

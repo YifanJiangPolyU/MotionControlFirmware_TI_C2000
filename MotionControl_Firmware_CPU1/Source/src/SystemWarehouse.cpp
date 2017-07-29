@@ -74,6 +74,10 @@ PositionControlProcess * SystemWarehouse::_PositionControlProcess_GetInstance(vo
   return &_PositionControlProcess;
 }
 
+CalibrationProcess * SystemWarehouse::_CalibrationProcess_GetInstance(void){
+  return &_CalibrationProcess;
+}
+
 CurrentLoopSweepSine * SystemWarehouse::_CurrentLoopSweepSine_GetInstance(void){
   return &_CurrentLoopSweepSine;
 }
