@@ -37,7 +37,7 @@ void ObjectDictionary::AccessEntry(CiA_Message * msg_in, CiA_Message * msg_out){
 
       if((handle.AccessType==SDO_CSS_WRITE) && (_ObdEntryList[pos]._AccessType==OBD_ACCESS_TYPE_RO)){
         // trying to write a RO object, fail!
-        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_TYPE_RO;
+        msg_out->Sdo.SdoAccessResult = OBD_ACCESS_ERR_WRITE;
       }else{
         // call obd access function
         (_ObdEntryList[pos]._Instance->*(_ObdEntryList[pos]._AccessMethod))(&handle);
