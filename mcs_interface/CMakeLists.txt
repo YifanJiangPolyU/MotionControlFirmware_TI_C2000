@@ -118,6 +118,10 @@ add_executable(mcs_example_node src/mcs_example.cpp)
 add_dependencies(mcs_example_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(mcs_example_node ${catkin_LIBRARIES})
 
+add_executable(mcs_obd_read src/mcs_obd_read.cpp)
+add_dependencies(mcs_obd_read ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(mcs_obd_read ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

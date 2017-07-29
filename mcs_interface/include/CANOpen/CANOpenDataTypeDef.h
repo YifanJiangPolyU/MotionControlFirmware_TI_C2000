@@ -10,10 +10,10 @@
 #ifndef CANOPEN_DATA_TYPEDEF_H
 #define CANOPEN_DATA_TYPEDEF_H
 
-#define NODE_ID         0x003
-
 #define CIA_SOF_PATTERN  0xEF
 #define CIA_EOF_PATTERN  0xDB
+
+#define NODE_ID         0x003
 
 #define CANID_NMT       0x000
 #define CANID_SYNC      0x080
@@ -25,6 +25,17 @@
 // CSS values to control segmented read/write
 #define SDO_CSS_WRITE        0
 #define SDO_CSS_READ         3
+
+#define OBD_ACCESS_TYPE_RO   0
+#define OBD_ACCESS_TYPE_RW   1
+
+#define OBD_WRITE                          SDO_CSS_WRITE
+#define OBD_READ                           SDO_CSS_READ
+#define OBD_ACCESS_SUCCESS                 0x00  // access successful
+#define OBD_ACCESS_ERR_READ                0x01  // access failed, trying to read a non-readable object
+#define OBD_ACCESS_ERR_WRITE               0x02  // access failed, trying to write to a read-only object
+#define OBD_ACCESS_ERR_IDX_NONEXIST        0x03  // access failed, index does not exist
+#define OBD_ACCESS_ERR_DATA_RANGE          0x04  // write failed, data range error
 
 // CSS values to control block read/write
 #define SDO_CSS_BLKREAD            5
