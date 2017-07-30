@@ -36,7 +36,24 @@ const float StartFreqency = 50;
 const float EndFreqency = 5000;
 const float RampRate = 4950;
 
+enum CLSW_STATE {
+  STATE_SET_FSTART,
+  STATE_SET_FEND,
+  STATE_SET_RATE,
+  STATE_ASK_CNT,
+  STATE_GET_CNT,
+  STATE_START,
+  STATE_GET_DATA,
+  STATE_ANALYZE,
+  STATE_COMPLETE
+};
+
+enum CLSW_STATE _state;
+
 volatile bool terminate;
+volatile bool SetStartFrequencySuccess;
+volatile bool SetEndFrequencySuccess;
+volatile bool SetRampRateSuccess;
 volatile bool ReceivedDataSize;
 volatile bool DataRxComplete;
 volatile uint32_t PkgCounter;
@@ -52,6 +69,9 @@ std::ofstream OutputFile;
 
 void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg);
 void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg);
+void SetStartFrequency(void);
+void SetEndFrequency(void);
+void SetRampRate(void);
 void RequestDataSize(void);
 
 int main(int argc, char **argv){
@@ -60,7 +80,11 @@ int main(int argc, char **argv){
   ros::NodeHandle node;
 
   terminate = false;
+  SetStartFrequencySuccess = false;
+  SetEndFrequencySuccess = false;
+  SetRampRateSuccess = false;
   ReceivedDataSize = false;
+  DataRxComplete = false;
   PkgCounter = 0;
   NumberOfPkg = 0;
 
@@ -74,31 +98,41 @@ int main(int argc, char **argv){
   OutputFile.open("/home/yifan/catkin_ws/src/mcs/mcs_interface/SweepSineData.txt",
                     std::ofstream::out | std::ofstream::trunc);
 
-  enum CLSW_STATE {
-    STATE_SET_FSTART,
-    STATE_SET_FEND,
-    STATE_SET_RATE,
-    STATE_ASK_CNT,
-    STATE_GET_CNT,
-    STATE_START,
-    STATE_GET_DATA,
-    STATE_ANALYZE,
-    STATE_COMPLETE
-  };
 
-  enum CLSW_STATE _state = STATE_ASK_CNT;
+  _state = STATE_SET_FSTART;
 
   printf("Current Loop Sweepsine Test\n");
 
   while(ros::ok() && (!terminate)){
 
     switch (_state) {
+      case STATE_SET_FSTART:
+        printf("    Setting start frequency.\n");
+        SetStartFrequency();
+        _state = STATE_SET_FEND;
+        break;
+      case STATE_SET_FEND:
+        if(SetStartFrequencySuccess==true){
+          printf("    Setting end frequency.\n");
+          SetEndFrequency();
+          _state = STATE_SET_RATE;
+        }
+        break;
+      case STATE_SET_RATE:
+        if(SetEndFrequencySuccess==true){
+          printf("    Setting frequency ramp rate.\n");
+          SetRampRate();
+          _state = STATE_ASK_CNT;
+        }
+        break;
       case STATE_ASK_CNT:
-        // send SDO request to ask for number of samples (data size)
-        printf("    Geting data size.\n");
-        RequestDataSize();
-        ReceivedDataSize = false;
-        _state = STATE_GET_CNT;
+        if(SetRampRateSuccess==true){
+          // send SDO request to ask for number of samples (data size)
+          printf("    Geting data size.\n");
+          RequestDataSize();
+          ReceivedDataSize = false;
+          _state = STATE_GET_CNT;
+        }
         break;
       case STATE_GET_CNT:
         // wait for the reception of SDO reply
@@ -137,6 +171,50 @@ int main(int argc, char **argv){
   }
 }
 
+void SetStartFrequency(void){
+  mcs_interface::CiA_SdoMessage SdoMsg;
+  ObdAccessHandle handle;
+  handle.Data.DataFloat32 = StartFreqency;
+
+  SdoMsg.Idx = 0x2106;
+  SdoMsg.SubIdx = 0x01;
+  SdoMsg.AccessType = SDO_CSS_WRITE;
+  SdoMsg.AccessResult = 0;
+  SdoMsg.Data[0] = handle.Data.DataUint16[0];
+  SdoMsg.Data[1] = handle.Data.DataUint16[1];
+  SdoMsg.Length = 10;
+  sdo_pub.publish(SdoMsg);
+}
+
+void SetEndFrequency(void){
+  mcs_interface::CiA_SdoMessage SdoMsg;
+  ObdAccessHandle handle;
+  handle.Data.DataFloat32 = EndFreqency;
+
+  SdoMsg.Idx = 0x2106;
+  SdoMsg.SubIdx = 0x02;
+  SdoMsg.AccessType = SDO_CSS_WRITE;
+  SdoMsg.AccessResult = 0;
+  SdoMsg.Data[0] = handle.Data.DataUint16[0];
+  SdoMsg.Data[1] = handle.Data.DataUint16[1];
+  SdoMsg.Length = 10;
+  sdo_pub.publish(SdoMsg);
+}
+
+void SetRampRate(void){
+  mcs_interface::CiA_SdoMessage SdoMsg;
+  ObdAccessHandle handle;
+  handle.Data.DataFloat32 = RampRate;
+
+  SdoMsg.Idx = 0x2106;
+  SdoMsg.SubIdx = 0x03;
+  SdoMsg.AccessType = SDO_CSS_WRITE;
+  SdoMsg.AccessResult = 0;
+  SdoMsg.Data[0] = handle.Data.DataUint16[0];
+  SdoMsg.Data[1] = handle.Data.DataUint16[1];
+  SdoMsg.Length = 10;
+  sdo_pub.publish(SdoMsg);
+}
 
 void RequestDataSize(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
@@ -179,11 +257,30 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   handle.Data.DataInt16[1] = msg->Data[1];
   handle.AccessResult = msg->AccessResult;
 
-  NumberOfPkg = handle.Data.DataUint32;
-
-  if(NumberOfPkg == 0xFFFFFFFF){
-    printf("Wrong Parameters: is starting freqeuncy higher than end freqeuncy?\n");
+  switch (_state) {
+    case STATE_SET_FEND:
+      SetStartFrequencySuccess = true;
+      break;
+    case STATE_SET_RATE:
+      SetEndFrequencySuccess = true;
+      break;
+    case STATE_ASK_CNT:
+      SetRampRateSuccess = true;
+      break;
+    case STATE_GET_CNT:
+      NumberOfPkg = handle.Data.DataUint32;
+      ReceivedDataSize = true;
+      if(NumberOfPkg == 0xFFFFFFFF){
+        printf("    Wrong Parameters: is starting freqeuncy higher than end freqeuncy?\n");
+        printf("Terminating..\n");
+        terminate = true;
+      }
+      break;
+    default:
+      break;
   }
 
-  ReceivedDataSize = true;
+
+
+
 }
