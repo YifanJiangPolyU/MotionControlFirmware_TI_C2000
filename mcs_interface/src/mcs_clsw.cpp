@@ -32,9 +32,11 @@
 #include "mcs_interface/CiA_NmtMessage.h"
 
 
-const float StartFrequency = 50;
+const float StartFrequency = 50; // Hz
 const float EndFrequency = 5000;
 const float RampRate = 4950;
+
+const float PI = 3.141592653589793116f;
 
 enum CLSW_STATE {
   STATE_SET_FSTART,
@@ -73,6 +75,7 @@ void SetStartFrequency(void);
 void SetEndFrequency(void);
 void SetRampRate(void);
 void RequestDataSize(void);
+void StartSweepSineTest(void);
 
 int main(int argc, char **argv){
 
@@ -142,8 +145,7 @@ int main(int argc, char **argv){
         break;
       case STATE_START :
         printf("    Starting current loop sweepsine.\n");
-        // send NMT to start CLSW process
-
+        StartSweepSineTest();
         DataRxComplete = false;
         _state = STATE_GET_DATA;
         printf("    Collecting data ...\n");
@@ -156,6 +158,7 @@ int main(int argc, char **argv){
         break;
       case STATE_ANALYZE :
         // analyze data
+        _state = STATE_COMPLETE;
         break;
       case STATE_COMPLETE :
         // terminate
@@ -174,7 +177,7 @@ int main(int argc, char **argv){
 void SetStartFrequency(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   ObdAccessHandle handle;
-  handle.Data.DataFloat32 = StartFrequency;
+  handle.Data.DataFloat32 = StartFrequency * 2 * PI;
 
   SdoMsg.Idx = 0x2106;
   SdoMsg.SubIdx = 0x01;
@@ -189,7 +192,7 @@ void SetStartFrequency(void){
 void SetEndFrequency(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   ObdAccessHandle handle;
-  handle.Data.DataFloat32 = EndFrequency;
+  handle.Data.DataFloat32 = EndFrequency * 2 * PI;
 
   SdoMsg.Idx = 0x2106;
   SdoMsg.SubIdx = 0x02;
@@ -204,7 +207,7 @@ void SetEndFrequency(void){
 void SetRampRate(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   ObdAccessHandle handle;
-  handle.Data.DataFloat32 = RampRate;
+  handle.Data.DataFloat32 = RampRate * 2 * PI;
 
   SdoMsg.Idx = 0x2106;
   SdoMsg.SubIdx = 0x03;
@@ -228,6 +231,12 @@ void RequestDataSize(void){
   sdo_pub.publish(SdoMsg);
 }
 
+void StartSweepSineTest(void){
+  mcs_interface::CiA_NmtMessage msg1;
+  msg1.NodeID = 0x03;
+  msg1.State = NMT_TEST_CLSW;
+  nmt_pub.publish(msg1);
+}
 
 void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
   PdoData data;
