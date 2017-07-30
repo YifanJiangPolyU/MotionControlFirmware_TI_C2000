@@ -35,6 +35,7 @@
 const float StartFrequency = 50; // Hz
 const float EndFrequency = 5000;
 const float RampRate = 4950;
+const float Amplitude = 1000;
 
 const float PI = 3.141592653589793116f;
 
@@ -42,6 +43,7 @@ enum CLSW_STATE {
   STATE_SET_FSTART,
   STATE_SET_FEND,
   STATE_SET_RATE,
+  STATE_SET_AMPLITUDE,
   STATE_ASK_CNT,
   STATE_GET_CNT,
   STATE_START,
@@ -56,6 +58,7 @@ volatile bool terminate;
 volatile bool SetStartFrequencySuccess;
 volatile bool SetEndFrequencySuccess;
 volatile bool SetRampRateSuccess;
+volatile bool SetAmplitudeSuccess;
 volatile bool ReceivedDataSize;
 volatile bool DataRxComplete;
 volatile uint32_t PkgCounter;
@@ -74,6 +77,7 @@ void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg);
 void SetStartFrequency(void);
 void SetEndFrequency(void);
 void SetRampRate(void);
+void SetAmplitude(void);
 void RequestDataSize(void);
 void StartSweepSineTest(void);
 
@@ -86,6 +90,7 @@ int main(int argc, char **argv){
   SetStartFrequencySuccess = false;
   SetEndFrequencySuccess = false;
   SetRampRateSuccess = false;
+  SetAmplitudeSuccess = false;
   ReceivedDataSize = false;
   DataRxComplete = false;
   PkgCounter = 0;
@@ -125,11 +130,18 @@ int main(int argc, char **argv){
         if(SetEndFrequencySuccess==true){
           printf("    Setting frequency ramp rate.\n");
           SetRampRate();
+          _state = STATE_SET_AMPLITUDE;
+        }
+        break;
+      case STATE_SET_AMPLITUDE:
+        if(SetRampRateSuccess==true){
+          printf("    Setting excitation amplitude.\n");
+          SetAmplitude();
           _state = STATE_ASK_CNT;
         }
         break;
       case STATE_ASK_CNT:
-        if(SetRampRateSuccess==true){
+        if(SetAmplitudeSuccess==true){
           // send SDO request to ask for number of samples (data size)
           printf("    Geting data size.\n");
           RequestDataSize();
@@ -219,6 +231,21 @@ void SetRampRate(void){
   sdo_pub.publish(SdoMsg);
 }
 
+void SetAmplitude(void){
+  mcs_interface::CiA_SdoMessage SdoMsg;
+  ObdAccessHandle handle;
+  handle.Data.DataFloat32 = Amplitude;
+
+  SdoMsg.Idx = 0x2106;
+  SdoMsg.SubIdx = 0x04;
+  SdoMsg.AccessType = SDO_CSS_WRITE;
+  SdoMsg.AccessResult = 0;
+  SdoMsg.Data[0] = handle.Data.DataUint16[0];
+  SdoMsg.Data[1] = handle.Data.DataUint16[1];
+  SdoMsg.Length = 10;
+  sdo_pub.publish(SdoMsg);
+}
+
 void RequestDataSize(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   SdoMsg.Idx = 0x2106;
@@ -283,11 +310,19 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
         terminate = true;
       }
       break;
-    case STATE_ASK_CNT:
+    case STATE_SET_AMPLITUDE:
       if(handle.AccessResult==0){
         SetRampRateSuccess = true;
       } else {
         printf("    Failed to set frequency ramp rate\n");
+        terminate = true;
+      }
+      break;
+    case STATE_ASK_CNT:
+      if(handle.AccessResult==0){
+        SetAmplitudeSuccess = true;
+      } else {
+        printf("    Failed to set excitation amplitude\n");
         terminate = true;
       }
       break;
