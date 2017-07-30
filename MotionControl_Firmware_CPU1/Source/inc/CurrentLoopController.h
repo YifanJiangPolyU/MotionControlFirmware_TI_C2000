@@ -52,10 +52,9 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
     float32_t _Error_Ib;               // current error, phase B
     float32_t _Integral_Ia;            // integral term, phase A
     float32_t _Integral_Ib;            // integral term, phase B
-    float32_t _Output_Ua;               // output, phase A
-    float32_t _Output_Ub;               // output, phase B
-    float32_t _Output_Uc;               // output, phase C
     float32_t _OutputOffset;            // offset required to give positive PWM duty
+    ABCVec _OutputVoltage;             // output phase voltage 
+
 
     // current control limit values
     float32_t _CurrentLimitPeakValue;   // unit: mA

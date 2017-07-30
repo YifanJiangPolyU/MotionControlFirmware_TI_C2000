@@ -26,8 +26,8 @@
 #define PWM_MIN_DUTY               312    // minimum duty cycle
 #define PWM_MAX_PERCENTAGE         0.9f   // maximum duty percentage
 #define PWM_MIN_PERCENTAGE         0.1f   // minimum duty percentage
-#define PWM_PHASE_MAX_PERCENTAGE   0.4f   // maximum phase-to-neutro percentage, 1/2 - PWM_MIN_PERCENTAGE
 
+// power stage limits. these are hardware-specific
 #define PWR_MAX_DCLINE_CURRENT     30       // max dc line current, A
 #define PWR_MAX_DCLINE_VOLTAGE     60       // max and min dc line voltage, V
 #define PWR_MIN_DCLINE_VOLTAGE     15
