@@ -37,4 +37,9 @@
 0x2105    0x02    float32   RW    CurrentLoopController   _CurrentLoopController   AccessCurrentLoopGains_Kp
 0x2105    0x03    float32   RW    CurrentLoopController   _CurrentLoopController   AccessCurrentLoopGains_Ki
 
-# current sampling filter
+# current loop sweepsine
+0x2106    0x01    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessStartFrequency
+0x2106    0x02    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessEndFrequency
+0x2106    0x03    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessRampRate
+0x2106    0x04    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessExcitationAmplitude
+0x2106    0x05    uint16    RO    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessDataLength

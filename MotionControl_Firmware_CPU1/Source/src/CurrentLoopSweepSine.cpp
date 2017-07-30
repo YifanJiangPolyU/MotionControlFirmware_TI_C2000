@@ -93,6 +93,34 @@ float32_t CurrentLoopSweepSine::GenerateSweepSine(void){
 }
 
 /**
+ *  calculate sweep sine data length based on start freq, end freq, and
+ *  ramp rate
+ */
+void CurrentLoopSweepSine::CalculateSweepSineParameters(void){
+  _HalfRampRate = _RampRate * 0.5;
+
+  if(_StartFreq<_EndFreq){
+    _TimeMax = (uint16_t)((_EndFreq - _StartFreq)/_RampRate/_TimeBase);
+
+    // calculate number of PDO messages required to transmit the sweep sine data
+    // should be 1 plus the smallest integer larger than _TimeMax/4
+    // the additional 1 msg account for the empty period required to
+    // sync sweep sine to ControlProcessMaster
+    _NumberOfPkg = _TimeMax/4;
+    if(_NumberOfPkg*4 < _TimeMax){
+      _NumberOfPkg += 2;
+    } else {
+      _NumberOfPkg += 1;
+    }
+
+  } else {
+    _NumberOfPkg = 0xFFFF;
+    _TimeMax = 0;
+  }
+
+}
+
+/**
  *  Reset the current loop sweepsine process
  */
 void CurrentLoopSweepSine::Reset(void){
@@ -100,13 +128,8 @@ void CurrentLoopSweepSine::Reset(void){
   _State = STATE_WAIT_SYNC;
   _CurrentLoopController->Reset();
   _TimeStamp = 0;
-  _HalfRampRate = _RampRate * 0.5;
 
-  if(_StartFreq<_EndFreq){
-    _TimeMax = (uint16_t)((_EndFreq - _StartFreq)/_RampRate/_TimeBase);
-  } else {
-    _TimeMax = 0;
-  }
+  CalculateSweepSineParameters();
 
   _ControlProcessData->ClearCurrentSweepSineBuffer();
   _ProcessShouldQuit = false;
@@ -131,14 +154,13 @@ void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){
   }
 }
 
-void CurrentLoopSweepSine::AccessExcitationLength(ObdAccessHandle * handle){
+void CurrentLoopSweepSine::AccessDataLength(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      // _TimeMax = handle->Data.DataInt16[0];
       handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataInt16[0] = _TimeMax;
+      handle->Data.DataInt16[0] = _NumberOfPkg;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
@@ -152,6 +174,7 @@ void CurrentLoopSweepSine::AccessStartFrequency(ObdAccessHandle * handle){
       if(handle->Data.DataFloat32>=0){
         _StartFreq = handle->Data.DataFloat32;
         handle->AccessResult = OBD_ACCESS_SUCCESS;
+        CalculateSweepSineParameters();
       } else {
         handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
       }
@@ -171,6 +194,7 @@ void CurrentLoopSweepSine::AccessEndFrequency(ObdAccessHandle * handle){
       if(handle->Data.DataFloat32>=0){
         _EndFreq = handle->Data.DataFloat32;
         handle->AccessResult = OBD_ACCESS_SUCCESS;
+        CalculateSweepSineParameters();
       } else {
         handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
       }
@@ -190,6 +214,7 @@ void CurrentLoopSweepSine::AccessRampRate(ObdAccessHandle * handle){
       if(handle->Data.DataFloat32>=0){
         _RampRate = handle->Data.DataFloat32;
         handle->AccessResult = OBD_ACCESS_SUCCESS;
+        CalculateSweepSineParameters();
       } else {
         handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
       }

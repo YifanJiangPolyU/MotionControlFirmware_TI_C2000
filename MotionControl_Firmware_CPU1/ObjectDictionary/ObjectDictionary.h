@@ -24,13 +24,13 @@
 #include "CiATypeDef.h"
 #include "ObjectDictionaryEntry.h"
 #include "ObjectDictionaryEntryBase.h"
+#include "ObdNumberOfEntries.h"
 #include "ControlProcessData.h"
 #include "CurrentLoopController.h"
 #include "CurrentControlProcess.h"
 #include "CurrentLoopSweepSine.h"
 #include "PositionControlProcess.h"
 
-#define MAX_NO_OF_ENTRY 15
 
 class ObjectDictionary{
 

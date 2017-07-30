@@ -43,6 +43,7 @@ void CalibrationProcess::Execute(void){
       }
       break;
     case STATE_COMPLETE:
+      _ProcessShouldQuit = true;
       break;
     default:
       break;

@@ -40,6 +40,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
       _RampRate = 7000;
       _HalfRampRate = 0;
 
+      _NumberOfPkg = 0xFFFF;
       _TimeMax = 0;
       _TimeStamp = 0;
     }
@@ -58,7 +59,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     void GetCurrentHistory(float32_t * buffer);
 
     void AccessExcitationAmplitude(ObdAccessHandle * handle);
-    void AccessExcitationLength(ObdAccessHandle * handle);
+    void AccessDataLength(ObdAccessHandle * handle);
     void AccessStartFrequency(ObdAccessHandle * handle);
     void AccessEndFrequency(ObdAccessHandle * handle);
     void AccessRampRate(ObdAccessHandle * handle);
@@ -67,6 +68,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
 
   private:
 
+    void CalculateSweepSineParameters(void);
     float32_t GenerateSweepSine(void);
 
     CurrentLoopController * _CurrentLoopController;
@@ -81,6 +83,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     float32_t _RampRate;               // unit: rad/(s^2)
     float32_t _HalfRampRate;
 
+    uint16_t _NumberOfPkg;
     uint16_t _TimeMax;
     uint16_t _TimeStamp;
 

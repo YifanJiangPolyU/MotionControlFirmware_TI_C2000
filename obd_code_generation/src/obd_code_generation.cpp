@@ -36,9 +36,17 @@ const string Disclaimer =
  * but WITHOUT ANY WARRANTY; without even the implied warranty of             * \n \
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       * \n \
  ******************************************************************************/ \n \
- \n \
- /* \n \
+ \n ";
+
+const string FileDescription = "\
+/* \n \
 * Initialize object dictionary entries here \n \
+* This file is autmatically generated, do not make changes here \n \
+*/ \n\n";
+
+const string FileDescription0 = "\
+/* \n \
+* define the number of entries in Obd \n \
 * This file is autmatically generated, do not make changes here \n \
 */ \n\n";
 
@@ -81,6 +89,9 @@ int main(int argc, char **argv)
 {
   // open input file
   std::ifstream InputFile("/home/yifan/catkin_ws/src/mcs/obd_code_generation/src/input.txt");
+  // open output file
+  std::ofstream OutputFile("/home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/ObjectDictionary/ObjectDictionaryInit.cpp");
+  std::ofstream OutputFile0("/home/yifan/TI_CCS_MotionControl_workspace/MotionControl_Firmware_CPU1/ObjectDictionary/ObdNumberOfEntries.h");
 
   // extract nonempty lines input vector
   vector<string> InputLines;
@@ -169,10 +180,8 @@ int main(int argc, char **argv)
     }
   }
 
-  // open output file
-  std::ofstream OutputFile("/home/yifan/catkin_ws/src/mcs/obd_code_generation/src/ObjectDictionaryInit.cpp");
-  OutputFile << Disclaimer << Include << MethodName << endl << endl;
-
+  // write first sentense to OutputFile : ObjectDictionaryInit.cpp
+  OutputFile << Disclaimer << FileDescription << Include << MethodName << endl << endl;
 
   for(int i=0; i<ObjList_sorted.size(); i++){
     auto entry = ObjList_sorted[i];
@@ -213,8 +222,16 @@ int main(int argc, char **argv)
 
   OutputFile << "}" << endl;
 
+  // write to OutputFile0 : ObdNumberOfEntries.h
+  OutputFile0 << Disclaimer << FileDescription0 << endl << endl;
+  OutputFile0 << "#ifndef OBD_NUMBER_OF_ENTRIED_H" << endl;
+  OutputFile0 << "#define OBD_NUMBER_OF_ENTRIED_H" << endl << endl;
+  OutputFile0 << "#define MAX_NO_OF_ENTRY  " << ObjList_sorted.size() << endl << endl;
+  OutputFile0 << "#endif" << endl;
+
   InputFile.close();
   OutputFile.close();
+  OutputFile0.close();
 
   // print out for debugging
   /*
