@@ -17,9 +17,14 @@
 #include "errno.h"
 #include "fcntl.h"
 #include "termios.h"
+#include "iostream"
+#include "fstream"
+#include "sstream"
+#include "string"
 
 #include "ros/ros.h"
 #include "CANOpen/CANOpenDataTypeDef.h"
+#include "CANOpen/PdoTypeDef.h"
 
 #include "std_msgs/String.h"
 #include "mcs_interface/CiA_SdoMessage.h"
@@ -27,38 +32,27 @@
 #include "mcs_interface/CiA_NmtMessage.h"
 
 
+const float StartFreqency = 50;
+const float EndFreqency = 5000;
+const float RampRate = 4950;
+
 volatile bool terminate;
 volatile bool ReceivedDataSize;
-volatile bool ReceivedData;
-volatile uint16_t PkgCounter;
-volatile uint16_t NumberOfPkg;
+volatile bool DataRxComplete;
+volatile uint32_t PkgCounter;
+volatile uint32_t NumberOfPkg;
 
-void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
+ros::Publisher nmt_pub;
+ros::Publisher sdo_pub;
+ros::Subscriber sdo_sub;
+ros::Subscriber pdo_sub;
 
-  NumberOfPkg = msg->Data[0];
-  ReceivedDataSize = true;
-}
+std::ofstream OutputFile;
 
-void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
-  if(PkgCounter<NumberOfPkg){
-    PkgCounter += 1;
-  } else {
-    ReceivedData = true;
-  }
-}
 
-void RequestDataSize(ros::Publisher sdo_pub){
-
-  mcs_interface::CiA_SdoMessage SdoMsg;
-  SdoMsg.Idx = 0x00A;
-  SdoMsg.AccessType = SDO_CSS_READ;
-  SdoMsg.AccessResult = 0;
-  SdoMsg.Data[0] = 0;
-  SdoMsg.Data[1] = 0;
-  SdoMsg.Length = 10;
-  usleep (1000000);
-  sdo_pub.publish(SdoMsg);
-}
+void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg);
+void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg);
+void RequestDataSize(void);
 
 int main(int argc, char **argv){
 
@@ -71,12 +65,19 @@ int main(int argc, char **argv){
   NumberOfPkg = 0;
 
   // initialize publishers and subscribers
-  ros::Publisher nmt_pub = node.advertise<mcs_interface::CiA_NmtMessage>("Nmt", 20);
-  ros::Publisher sdo_pub = node.advertise<mcs_interface::CiA_SdoMessage>("SdoRequest", 20);
-  ros::Subscriber sdo_sub = node.subscribe("SdoReply", 5, SdoReplyCallback);
-  ros::Subscriber pdo_sub = node.subscribe("Pdo", 100, PdoCallback);
+  nmt_pub = node.advertise<mcs_interface::CiA_NmtMessage>("Nmt", 20);
+  sdo_pub = node.advertise<mcs_interface::CiA_SdoMessage>("SdoRequest", 20);
+  sdo_sub = node.subscribe("SdoReply", 5, SdoReplyCallback);
+  pdo_sub = node.subscribe("Pdo", 100, PdoCallback);
+  usleep(1000000);
+
+  OutputFile.open("/home/yifan/catkin_ws/src/mcs/mcs_interface/SweepSineData.txt",
+                    std::ofstream::out | std::ofstream::trunc);
 
   enum CLSW_STATE {
+    STATE_SET_FSTART,
+    STATE_SET_FEND,
+    STATE_SET_RATE,
     STATE_ASK_CNT,
     STATE_GET_CNT,
     STATE_START,
@@ -93,9 +94,9 @@ int main(int argc, char **argv){
 
     switch (_state) {
       case STATE_ASK_CNT:
-        printf("    Geting data size.\n");
         // send SDO request to ask for number of samples (data size)
-        RequestDataSize(sdo_pub);
+        printf("    Geting data size.\n");
+        RequestDataSize();
         ReceivedDataSize = false;
         _state = STATE_GET_CNT;
         break;
@@ -109,13 +110,13 @@ int main(int argc, char **argv){
         printf("    Starting current loop sweepsine.\n");
         // send NMT to start CLSW process
 
-        ReceivedData = false;
+        DataRxComplete = false;
         _state = STATE_GET_DATA;
         printf("    Collecting data ...\n");
         break;
       case STATE_GET_DATA :
         // collect data from controller
-        if(ReceivedData==true){
+        if(DataRxComplete==true){
           _state = STATE_ANALYZE;
         }
         break;
@@ -125,6 +126,7 @@ int main(int argc, char **argv){
       case STATE_COMPLETE :
         // terminate
         printf("    Current loop sweepsine complete.\n");
+        OutputFile.close();
         terminate = true;
         break;
       default :
@@ -133,4 +135,55 @@ int main(int argc, char **argv){
 
     ros::spinOnce();
   }
+}
+
+
+void RequestDataSize(void){
+  mcs_interface::CiA_SdoMessage SdoMsg;
+  SdoMsg.Idx = 0x2106;
+  SdoMsg.SubIdx = 0x05;
+  SdoMsg.AccessType = SDO_CSS_READ;
+  SdoMsg.AccessResult = 0;
+  SdoMsg.Data[0] = 0;
+  SdoMsg.Data[1] = 0;
+  SdoMsg.Length = 10;
+  sdo_pub.publish(SdoMsg);
+}
+
+
+void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
+  PdoData data;
+  if(PkgCounter<NumberOfPkg){
+    if(msg->PDO_ID==PDO_ID_CLSW){
+      PkgCounter += 1;
+      data.data[0] = msg->Data[0];
+      data.data[1] = msg->Data[1];
+      data.data[2] = msg->Data[2];
+      data.data[3] = msg->Data[3];
+      data.data[4] = msg->Data[4];
+
+      OutputFile << data.clsw.CurrentActual[0] << std::endl;
+      OutputFile << data.clsw.CurrentActual[1] << std::endl;
+      OutputFile << data.clsw.CurrentActual[2] << std::endl;
+      OutputFile << data.clsw.CurrentActual[3] << std::endl;
+    }
+  } else {
+    DataRxComplete = true;
+  }
+}
+
+
+void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
+  ObdAccessHandle handle;
+  handle.Data.DataInt16[0] = msg->Data[0];
+  handle.Data.DataInt16[1] = msg->Data[1];
+  handle.AccessResult = msg->AccessResult;
+
+  NumberOfPkg = handle.Data.DataUint32;
+
+  if(NumberOfPkg == 0xFFFFFFFF){
+    printf("Wrong Parameters: is starting freqeuncy higher than end freqeuncy?\n");
+  }
+
+  ReceivedDataSize = true;
 }

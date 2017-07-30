@@ -44,7 +44,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   handle.AccessResult = msg->AccessResult;
 
   if(handle.AccessResult==0){
-    printf("sdo access successful, value: %f\n", handle.Data.DataFloat32 );
+    printf("sdo access successful, value: %d\n", handle.Data.DataUint16[0] );
   }else{
     printf("sdo access failed: %d\n", handle.AccessResult);
   }
@@ -72,15 +72,6 @@ int main(int argc, char **argv){
   ros::init(argc, argv, "mcs_example");
   ros::NodeHandle node;
 
-  std::string idx, subidx;
-  if(argc != 3){
-     printf("Usage: \n    rosrun mcs_interface mcs_example_node 0xHHHH 0xHH\n");
-     return 0;
-  } else {
-    idx = argv[1];
-    subidx = argv[2];
-  }
-
   terminate = false;
 
   // initialize publisher
@@ -93,8 +84,8 @@ int main(int argc, char **argv){
   handle.Data.DataFloat32 = 31.2;
 
   mcs_interface::CiA_SdoMessage msg;
-  msg.Idx = stoi (idx,nullptr,16);
-  msg.SubIdx = stoi (subidx,nullptr,16);
+  msg.Idx = 0x2106;
+  msg.SubIdx = 0x05;
   msg.AccessType = SDO_CSS_READ;
   msg.AccessResult = 0;
   msg.Data[0] = 34; //handle.Data.DataInt16[0];

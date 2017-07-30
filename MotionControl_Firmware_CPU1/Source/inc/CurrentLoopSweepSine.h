@@ -40,7 +40,7 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
       _RampRate = 7000;
       _HalfRampRate = 0;
 
-      _NumberOfPkg = 0xFFFF;
+      _NumberOfPkg = 0xFFFFFFFF;
       _TimeMax = 0;
       _TimeStamp = 0;
     }
@@ -83,9 +83,9 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     float32_t _RampRate;               // unit: rad/(s^2)
     float32_t _HalfRampRate;
 
-    uint16_t _NumberOfPkg;
-    uint16_t _TimeMax;
-    uint16_t _TimeStamp;
+    uint32_t _NumberOfPkg;
+    uint32_t _TimeMax;
+    uint32_t _TimeStamp;
 
     char _OldPdoID;
 };

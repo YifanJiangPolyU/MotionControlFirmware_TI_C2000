@@ -114,7 +114,7 @@ void CurrentLoopSweepSine::CalculateSweepSineParameters(void){
     }
 
   } else {
-    _NumberOfPkg = 0xFFFF;
+    _NumberOfPkg = 0xFFFFFFFF;
     _TimeMax = 0;
   }
 
@@ -160,7 +160,7 @@ void CurrentLoopSweepSine::AccessDataLength(ObdAccessHandle * handle){
       handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataInt16[0] = _NumberOfPkg;
+      handle->Data.DataUint32 = _NumberOfPkg;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

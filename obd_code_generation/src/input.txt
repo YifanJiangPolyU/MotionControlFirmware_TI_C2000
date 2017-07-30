@@ -42,4 +42,4 @@
 0x2106    0x02    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessEndFrequency
 0x2106    0x03    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessRampRate
 0x2106    0x04    float32   RW    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessExcitationAmplitude
-0x2106    0x05    uint16    RO    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessDataLength
+0x2106    0x05    uint32    RO    CurrentLoopSweepSine  _CurrentLoopSweepSine    AccessDataLength
