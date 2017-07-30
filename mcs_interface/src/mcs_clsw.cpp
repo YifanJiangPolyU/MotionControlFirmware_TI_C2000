@@ -32,8 +32,8 @@
 #include "mcs_interface/CiA_NmtMessage.h"
 
 
-const float StartFreqency = 50;
-const float EndFreqency = 5000;
+const float StartFrequency = 50;
+const float EndFrequency = 5000;
 const float RampRate = 4950;
 
 enum CLSW_STATE {
@@ -174,7 +174,7 @@ int main(int argc, char **argv){
 void SetStartFrequency(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   ObdAccessHandle handle;
-  handle.Data.DataFloat32 = StartFreqency;
+  handle.Data.DataFloat32 = StartFrequency;
 
   SdoMsg.Idx = 0x2106;
   SdoMsg.SubIdx = 0x01;
@@ -189,7 +189,7 @@ void SetStartFrequency(void){
 void SetEndFrequency(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   ObdAccessHandle handle;
-  handle.Data.DataFloat32 = EndFreqency;
+  handle.Data.DataFloat32 = EndFrequency;
 
   SdoMsg.Idx = 0x2106;
   SdoMsg.SubIdx = 0x02;
@@ -259,19 +259,34 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
 
   switch (_state) {
     case STATE_SET_FEND:
-      SetStartFrequencySuccess = true;
+      if(handle.AccessResult==0){
+        SetStartFrequencySuccess = true;
+      } else {
+        printf("    Failed to set start frequency\n");
+        terminate = true;
+      }
       break;
     case STATE_SET_RATE:
-      SetEndFrequencySuccess = true;
+      if(handle.AccessResult==0){
+        SetEndFrequencySuccess = true;
+      } else {
+        printf("    Failed to set end frequency\n");
+        terminate = true;
+      }
       break;
     case STATE_ASK_CNT:
-      SetRampRateSuccess = true;
+      if(handle.AccessResult==0){
+        SetRampRateSuccess = true;
+      } else {
+        printf("    Failed to set frequency ramp rate\n");
+        terminate = true;
+      }
       break;
     case STATE_GET_CNT:
       NumberOfPkg = handle.Data.DataUint32;
       ReceivedDataSize = true;
       if(NumberOfPkg == 0xFFFFFFFF){
-        printf("    Wrong Parameters: is starting freqeuncy higher than end freqeuncy?\n");
+        printf("    Wrong Parameters: is starting frequency higher than end frequency?\n");
         printf("Terminating..\n");
         terminate = true;
       }
