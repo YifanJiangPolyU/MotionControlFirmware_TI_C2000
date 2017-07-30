@@ -31,16 +31,21 @@ typedef struct AlBeTypedef{
   float32_t Beta;
 } AlBeVec;
 
+typedef struct ABCVecTypeDef{
+  float32_t A;
+  float32_t B;
+  float32_t C;
+} ABCVec;
+
+typedef struct RotationFrameTypeDef{
+  float32_t Cosine;
+  float32_t Sine;
+} RotationFrame;
+
 typedef struct PhaseCurrentTypedef{
   float32_t A;
   float32_t B;
 } PhaseCurrentVec;
-
-typedef struct PhaseCVoltageTypedef{
-  float32_t A;
-  float32_t B;
-  float32_t C;
-} PhaseVoltageVec;
 
 typedef struct PwmDutyTypedef{
   uint16_t A;

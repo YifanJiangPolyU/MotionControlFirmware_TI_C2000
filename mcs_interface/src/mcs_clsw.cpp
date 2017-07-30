@@ -36,6 +36,7 @@ const float StartFrequency = 50; // Hz
 const float EndFrequency = 5000;
 const float RampRate = 4950;
 const float Amplitude = 1000;
+const uint8_t Phase = 'C';
 
 const float PI = 3.141592653589793116f;
 
@@ -55,11 +56,7 @@ enum CLSW_STATE {
 enum CLSW_STATE _state;
 
 volatile bool terminate;
-volatile bool SetStartFrequencySuccess;
-volatile bool SetEndFrequencySuccess;
-volatile bool SetRampRateSuccess;
-volatile bool SetAmplitudeSuccess;
-volatile bool ReceivedDataSize;
+volatile bool ReadyFlag;
 volatile bool DataRxComplete;
 volatile uint32_t PkgCounter;
 volatile uint32_t NumberOfPkg;
@@ -78,6 +75,7 @@ void SetStartFrequency(void);
 void SetEndFrequency(void);
 void SetRampRate(void);
 void SetAmplitude(void);
+void SetPhase(void);
 void RequestDataSize(void);
 void StartSweepSineTest(void);
 
@@ -87,11 +85,7 @@ int main(int argc, char **argv){
   ros::NodeHandle node;
 
   terminate = false;
-  SetStartFrequencySuccess = false;
-  SetEndFrequencySuccess = false;
-  SetRampRateSuccess = false;
-  SetAmplitudeSuccess = false;
-  ReceivedDataSize = false;
+  ReadyFlag = false;
   DataRxComplete = false;
   PkgCounter = 0;
   NumberOfPkg = 0;
@@ -117,41 +111,46 @@ int main(int argc, char **argv){
       case STATE_SET_FSTART:
         printf("    Setting start frequency.\n");
         SetStartFrequency();
+        ReadyFlag = false;
         _state = STATE_SET_FEND;
         break;
       case STATE_SET_FEND:
-        if(SetStartFrequencySuccess==true){
+        if(ReadyFlag==true){
           printf("    Setting end frequency.\n");
           SetEndFrequency();
+          ReadyFlag = false;
           _state = STATE_SET_RATE;
         }
         break;
       case STATE_SET_RATE:
-        if(SetEndFrequencySuccess==true){
+        if(ReadyFlag==true){
           printf("    Setting frequency ramp rate.\n");
           SetRampRate();
+          ReadyFlag = false;
           _state = STATE_SET_AMPLITUDE;
         }
         break;
       case STATE_SET_AMPLITUDE:
-        if(SetRampRateSuccess==true){
+        if(ReadyFlag==true){
           printf("    Setting excitation amplitude.\n");
           SetAmplitude();
+          ReadyFlag = false;
           _state = STATE_ASK_CNT;
         }
         break;
       case STATE_ASK_CNT:
-        if(SetAmplitudeSuccess==true){
+        if(ReadyFlag==true){
           // send SDO request to ask for number of samples (data size)
           printf("    Geting data size.\n");
           RequestDataSize();
-          ReceivedDataSize = false;
+          ReadyFlag = false;
           _state = STATE_GET_CNT;
         }
         break;
       case STATE_GET_CNT:
         // wait for the reception of SDO reply
-        if(ReceivedDataSize==true){
+        if(ReadyFlag==true){
+          ReadyFlag = false;
           _state = STATE_START;
         }
         break;
@@ -246,6 +245,21 @@ void SetAmplitude(void){
   sdo_pub.publish(SdoMsg);
 }
 
+void SetPhase(void){
+  mcs_interface::CiA_SdoMessage SdoMsg;
+  ObdAccessHandle handle;
+  handle.Data.DataFloat32 = Amplitude;
+
+  SdoMsg.Idx = 0x2106;
+  SdoMsg.SubIdx = 0x04;
+  SdoMsg.AccessType = SDO_CSS_WRITE;
+  SdoMsg.AccessResult = 0;
+  SdoMsg.Data[0] = handle.Data.DataUint16[0];
+  SdoMsg.Data[1] = handle.Data.DataUint16[1];
+  SdoMsg.Length = 10;
+  sdo_pub.publish(SdoMsg);
+}
+
 void RequestDataSize(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   SdoMsg.Idx = 0x2106;
@@ -296,7 +310,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
   switch (_state) {
     case STATE_SET_FEND:
       if(handle.AccessResult==0){
-        SetStartFrequencySuccess = true;
+        ReadyFlag = true;
       } else {
         printf("    Failed to set start frequency\n");
         terminate = true;
@@ -304,7 +318,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
       break;
     case STATE_SET_RATE:
       if(handle.AccessResult==0){
-        SetEndFrequencySuccess = true;
+        ReadyFlag = true;
       } else {
         printf("    Failed to set end frequency\n");
         terminate = true;
@@ -312,7 +326,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
       break;
     case STATE_SET_AMPLITUDE:
       if(handle.AccessResult==0){
-        SetRampRateSuccess = true;
+        ReadyFlag = true;
       } else {
         printf("    Failed to set frequency ramp rate\n");
         terminate = true;
@@ -320,7 +334,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
       break;
     case STATE_ASK_CNT:
       if(handle.AccessResult==0){
-        SetAmplitudeSuccess = true;
+        ReadyFlag = true;
       } else {
         printf("    Failed to set excitation amplitude\n");
         terminate = true;
@@ -328,7 +342,7 @@ void SdoReplyCallback(const mcs_interface::CiA_SdoMessage::ConstPtr& msg){
       break;
     case STATE_GET_CNT:
       NumberOfPkg = handle.Data.DataUint32;
-      ReceivedDataSize = true;
+      ReadyFlag = true;
       if(NumberOfPkg == 0xFFFFFFFF){
         printf("    Wrong Parameters: is starting frequency higher than end frequency?\n");
         printf("Terminating..\n");
