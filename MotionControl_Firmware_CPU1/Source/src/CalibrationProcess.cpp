@@ -12,6 +12,7 @@
 */
 
 #include "CalibrationProcess.h"
+#include "CPU1_CLA1_common.h"
 
 CalibrationProcess::CalibrationProcess(ControlProcessData * ControlProcessDataPtr):
   _ControlProcessData(ControlProcessDataPtr),
@@ -21,7 +22,12 @@ CalibrationProcess::CalibrationProcess(ControlProcessData * ControlProcessDataPt
   _CurrentOffsetSampleCnt(0),
   _CurrentOffsetCycleCnt(0)
 {
+  // initialize offset to middel point
+  _CurrentOffset_PhaseA = -2048.0f * CURREN_SENSE_GAIN_PHASE;
+  _CurrentOffset_PhaseB = -2048.0f * CURREN_SENSE_GAIN_PHASE;
 
+  CLA_CurrentSenseOffset_PhaseA = _CurrentOffset_PhaseB;
+  CLA_CurrentSenseOffset_PhaseB = _CurrentOffset_PhaseB;
 }
 
 
@@ -37,8 +43,10 @@ void CalibrationProcess::Execute(void){
       _CurrentOffsetSampleCnt += 10;
       _CurrentOffsetCycleCnt -= 1;
       if(_CurrentOffsetCycleCnt==0){
-        _CurrentOffset_PhaseA = _CurrentOffsetSumA / (float32_t)_CurrentOffsetSampleCnt;
-        _CurrentOffset_PhaseB = _CurrentOffsetSumB / (float32_t)_CurrentOffsetSampleCnt;
+        _CurrentOffset_PhaseA -= _CurrentOffsetSumA / (float32_t)_CurrentOffsetSampleCnt;
+        _CurrentOffset_PhaseB -= _CurrentOffsetSumB / (float32_t)_CurrentOffsetSampleCnt;
+        CLA_CurrentSenseOffset_PhaseA = _CurrentOffset_PhaseB;
+        CLA_CurrentSenseOffset_PhaseB = _CurrentOffset_PhaseB;
         _State = STATE_CAl_CURRENT_OFFSET;
       }
       break;

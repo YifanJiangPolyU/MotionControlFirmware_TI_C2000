@@ -44,11 +44,11 @@ extern "C" {
 extern float init;
 extern uint16_t result;
 
-extern const float32_t CURREN_SENSE_GAIN_PHASE;
-
 extern uint16_t CLA_SampleCounter;
 extern uint16_t CLA_CycleCounter;
 
+extern float32_t CLA_CurrentSenseOffset_PhaseA;
+extern float32_t CLA_CurrentSenseOffset_PhaseB;
 extern float32_t CLA_CurrentSenseGain_Phase;
 extern float32_t CLA_CurrentSenseGain_DcLine;
 extern float32_t CLA_VoltageSenseGain;

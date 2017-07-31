@@ -29,6 +29,11 @@
     #pragma DATA_SECTION(CLA_CycleCounter,"CLADataLS1")
     uint16_t CLA_CycleCounter;
 
+    #pragma DATA_SECTION(CLA_CurrentSenseOffset_PhaseA,"CLADataLS1")
+    float32_t CLA_CurrentSenseOffset_PhaseA = 0.0f;
+    #pragma DATA_SECTION(CLA_CurrentSenseOffset_PhaseB,"CLADataLS1")
+    float32_t CLA_CurrentSenseOffset_PhaseB = 0.0f;
+
     #pragma DATA_SECTION(CLA_CurrentSenseGain_Phase,"CLADataLS1")
     float32_t CLA_CurrentSenseGain_Phase = 1.0f;
     #pragma DATA_SECTION(CLA_CurrentSenseGain_DcLine,"CLADataLS1")

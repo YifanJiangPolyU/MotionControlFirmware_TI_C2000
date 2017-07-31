@@ -27,6 +27,8 @@ __interrupt void Cla1Task1 ( void )
 
   sensorSampleA *= CLA_CurrentSenseGain_Phase;
   sensorSampleB *= CLA_CurrentSenseGain_Phase;
+  sensorSampleA += CLA_CurrentSenseOffset_PhaseA;
+  sensorSampleB += CLA_CurrentSenseOffset_PhaseB;
   dcVoltageSense *= CLA_VoltageSenseGain;
 
   // pass samples through low-pass filter

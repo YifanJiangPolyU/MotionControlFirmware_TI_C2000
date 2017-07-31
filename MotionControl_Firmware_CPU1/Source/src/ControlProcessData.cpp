@@ -16,6 +16,7 @@
 #include "ControlProcessData.h"
 #include "CPU1_CLA1_common.h"
 
+/*
 const float32_t ADC_RESOLUTION = 4096;
 const float32_t ADC_REF_VOLTAGE = 3.0f;
 
@@ -26,9 +27,7 @@ const float32_t CURREN_SENSE_GAIN_PHASE = ADC_REF_VOLTAGE/
                                           ADC_RESOLUTION/
                                           CURRENT_SENSE_AMP_GAIN/
                                           CURRENT_SENSE_RES_VALUE;
-
-const float32_t CURREN_SENSE_GAIN_DCLINE = CURREN_SENSE_GAIN_PHASE;
-const float32_t VOLTAGE_SENSE_GAIN_DCLINE = ADC_REF_VOLTAGE/ADC_RESOLUTION/0.125156759468272f;
+*/
 
 void ControlProcessData::InitCLAGains(void){
   CLA_CurrentSenseGain_Phase = CURREN_SENSE_GAIN_PHASE;

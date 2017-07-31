@@ -182,7 +182,7 @@ void CurrentLoopSweepSine::Reset(void){
 void CurrentLoopSweepSine::AccessExcitationAmplitude(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      if(handle->Data.DataFloat32>=0){
+      if((handle->Data.DataFloat32>=0) &&(handle->Data.DataFloat32<10000)){
         _ExcitationAmplitude = handle->Data.DataFloat32;
         handle->AccessResult = OBD_ACCESS_SUCCESS;
       } else {

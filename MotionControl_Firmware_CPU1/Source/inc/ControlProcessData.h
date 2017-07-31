@@ -25,6 +25,14 @@
 #include "ObjectDictionaryEntryBase.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 
+// ADC phase current sense gain
+#define CURREN_SENSE_GAIN_PHASE     0.00732421875f
+
+// ADC DC line current sense gain
+#define CURREN_SENSE_GAIN_DCLINE    0.00732421875f
+
+// ADC DC line voltage sense gain
+#define VOLTAGE_SENSE_GAIN_DCLINE    0.0058520361035f
 
 class ControlProcessData: public ObjectDictionaryEntryBase{
 
