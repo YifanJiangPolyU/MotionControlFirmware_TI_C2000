@@ -278,8 +278,6 @@ void ADC_GroupInit(void){
   AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
   AdccRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
-
-
   // phase A current
   AdccRegs.ADCSOC0CTL.bit.CHSEL = 4;     //SOC0 will convert pin C4 (phase A)
   AdccRegs.ADCSOC0CTL.bit.ACQPS = 63;    //sample window is 64 SYSCLK cycles
@@ -308,6 +306,12 @@ void ADC_GroupInit(void){
   AdccRegs.ADCCTL1.bit.INTPULSEPOS = 1;
   AdcbRegs.ADCCTL1.bit.INTPULSEPOS = 1;
   AdcaRegs.ADCCTL1.bit.INTPULSEPOS = 1;
+
+  // configure Post Processing Block (PPB) to sense over-current
+  AdccRegs.ADCPPB1TRIPHI.bit.LIMITHI = 4095;
+  AdccRegs.ADCPPB1TRIPLO.bit.LIMITLO = 0;
+  AdcbRegs.ADCPPB1TRIPHI.bit.LIMITHI = 4095;
+  AdcbRegs.ADCPPB1TRIPLO.bit.LIMITLO = 0;
 
   DELAY_US(1000);
 

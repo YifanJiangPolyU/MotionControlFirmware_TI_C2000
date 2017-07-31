@@ -57,6 +57,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
 
     void SetCurrentValueBuffer(float32_t * bufA, float32_t * bufB);
     void UpdateProcessData(void);
+    void SignalErrorState(void);
     void Execute(void);
 
     void AccessMotionControlState(ObdAccessHandle * handle);

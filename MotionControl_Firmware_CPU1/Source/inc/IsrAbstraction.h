@@ -23,6 +23,12 @@
 void CallControlProcessMaster(void);
 
 
+/**
+ *   C API to call C++ member functions
+ */
+void SignalControlProcessMasterError(void);
+
+
  // CLA interrupt handlers
 void cla1Isr1();
 

@@ -61,14 +61,14 @@ void ControlProcessMaster::Execute(void){
   switch (EnablePwrTestState) {
     case 0:
       if(EnablePwrTest==1){
-        GpioDataRegs.GPBDAT.bit.GPIO34 = 0;
+        SetErrorLed();
         PwrEnable();
         EnablePwrTestState = 1;
       }
       break;
     case 1:
       if(EnablePwrTest==0){
-        GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
+        ClearErrorLed();
         PwrDisable();
         EnablePwrTestState = 0;
       }
@@ -180,7 +180,7 @@ void ControlProcessMaster::UpdateMotionControlState(void){
       if(_NmtUpdated==true){
         _NmtUpdated = false;
         if(_NmtNewState==NME_RESET_FAULT){
-
+          ClearErrorLed();
         }
       }
       break;
@@ -215,6 +215,20 @@ void ControlProcessMaster::UpdateProcessData(void){
 }
 
 /**
+ *  signal ControlProcessMaster to enter fault state
+ */
+void ControlProcessMaster::SignalErrorState(void){
+
+  _State = STATE_FAULT;
+
+  // disable power output
+  PwrDisable();
+
+  // turn on Error LED
+  SetErrorLed();
+}
+
+/**
  *  C warper to call ControlProcessMaster from ISR
  */
 #pragma CODE_SECTION(".TI.ramfunc");
@@ -224,11 +238,19 @@ extern "C" void CallControlProcessMaster(void){
   ControlProcessMasterPtr->Execute();
 }
 
+/**
+ *  C warper to call ControlProcessMaster SignalErrorState from ISR
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+extern "C" void SignalControlProcessMasterError(void){
+  ControlProcessMasterPtr->SignalErrorState();
+}
+
+
 
 void ControlProcessMaster::AccessMotionControlState(ObdAccessHandle * handle){
 
 }
-
 
 void ControlProcessMaster::AccessSystemStatusReg(ObdAccessHandle * handle){
   switch (handle->AccessType) {
