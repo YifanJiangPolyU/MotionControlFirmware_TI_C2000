@@ -17,6 +17,6 @@
 #ifndef OBD_NUMBER_OF_ENTRIED_H
 #define OBD_NUMBER_OF_ENTRIED_H
 
-#define MAX_NO_OF_ENTRY  20
+#define MAX_NO_OF_ENTRY  23
 
 #endif

@@ -8,26 +8,7 @@
  ******************************************************************************/
 
 /*
-* implement functions for clark and park transformations
+* implement pwm modulation functions
 */
 
-#ifndef TRANSFORMATION_H
-#define TRANSFORMATION_H
-
-#include "ControlTypeDef.h"
-
-#ifdef __cplusplus
-  extern "C" {
-#endif
-
-void ClarkTransformation(ABCVec * in, AlBeVec * out);
-void InvClarkTransformation(AlBeVec * in, ABCVec * out);
-
-void ParkTransformation(AlBeVec * in, DQVec * out, RotationFrame * frame);
-void InvParkTransformation(DQVec * in, AlBeVec * out, RotationFrame * frame);
-
-#ifdef __cplusplus
-  }
-#endif
-
-#endif
+#include "PwmModulation.h"

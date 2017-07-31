@@ -18,6 +18,8 @@
 #include "CurrentLoopSweepSine.h"
 #include "PdoDataTypeDef.h"
 #include "DataTypeHelper.h"
+#include "Transformation.h"
+#include "PwmModulation.h"
 #include "math.h"
 
 const uint16_t _CurrentControlFrequency = 32000;
@@ -29,16 +31,10 @@ const float32_t _TimeBase = 1.f/_CurrentControlFrequency;
 #pragma CODE_SECTION(".TI.ramfunc");
 void CurrentLoopSweepSine::Execute(void){
 
-  PhaseCurrentVec CurrenDemand;
-  PhaseCurrentVec CurrenActual = _ControlProcessData->_CurrentActualValue;
-
   PwmDutyVec Pwm;
   Pwm.A = 0;
   Pwm.B = 0;
   Pwm.C = 0;
-
-  CurrenDemand.A = 0;
-  CurrenDemand.B = 0;
 
   switch (_State) {
     case STATE_WAIT_SYNC:
@@ -51,18 +47,14 @@ void CurrentLoopSweepSine::Execute(void){
       break;
     case STATE_RUNNING:
       if(_TimeStamp < _TimeMax){
-        if(_ActivePhase=='A'){
-          CurrenDemand.A = GenerateSweepSine();
-          _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
+        if(_Mode == 0){
+          Pwm = ExecuteClosedLoopSweepSine();
         } else {
-          CurrenDemand.B = GenerateSweepSine();
-          _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.B);
+          Pwm = ExecuteOpenLoopSweepSine();
         }
 
-        Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
         PwrSetPwmDuty(&Pwm);
         _TimeStamp += 1;
-
 
       } else {
         if(_ControlProcessData->_SyncFlag==0){
@@ -75,6 +67,58 @@ void CurrentLoopSweepSine::Execute(void){
       _ProcessShouldQuit = true;
       break;
   }
+}
+
+/**
+ *  execute close loop sweep sine, I_cmd -> I_actual
+ *  @param   None
+ *  @retval  pwm duty cycle to be applied
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+PwmDutyVec CurrentLoopSweepSine::ExecuteClosedLoopSweepSine(void){
+  PwmDutyVec Pwm;
+  PhaseCurrentVec CurrenDemand;
+  PhaseCurrentVec CurrenActual = _ControlProcessData->_CurrentActualValue;
+
+  CurrenDemand.A = 0;
+  CurrenDemand.B = 0;
+
+  if(_ActivePhase==0){
+    CurrenDemand.A = GenerateSweepSine();
+    _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
+  } else {
+    CurrenDemand.B = GenerateSweepSine();
+    _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.B);
+  }
+
+  Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
+
+  return Pwm;
+}
+
+/**
+ *  execute open loop sweep sine, Voltage -> I_actual
+ *  @param   None
+ *  @retval  pwm duty cycle to be applied
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+PwmDutyVec CurrentLoopSweepSine::ExecuteOpenLoopSweepSine(void){
+  PwmDutyVec Pwm;
+  ABCVec  VoltageABC;
+  AlBeVec VoltageAlBe;
+
+  float32_t VoltToPwmScaleFactor = PWM_MAX_DUTY / (_ControlProcessData->_VoltageValueDcLine);
+  float32_t Amplitude = GenerateSweepSine();
+  Amplitude *= _ExcitationAmplitude;
+
+  VoltageAlBe.Alpha = Amplitude * _VoltageAngleFrame.Cosine;
+  VoltageAlBe.Beta = Amplitude * _VoltageAngleFrame.Sine;
+  InvClarkTransformation(&VoltageAlBe, &VoltageABC);
+  PwmModulation(&VoltageABC, &Pwm, VoltToPwmScaleFactor);
+
+  _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)VoltageAlBe.Alpha);
+
+  return Pwm;
 }
 
 /**
@@ -231,11 +275,11 @@ void CurrentLoopSweepSine::AccessRampRate(ObdAccessHandle * handle){
 void CurrentLoopSweepSine::AccessActivePhase(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
-      if(__byte_uint16_t(handle->Data.DataUint16[0], 0)=='A'){
-        _ActivePhase = 'A';
+      if(handle->Data.DataUint16[0]==0){
+        _ActivePhase = 0;
         handle->AccessResult = OBD_ACCESS_SUCCESS;
-      } else if(__byte_uint16_t(handle->Data.DataUint16[0], 0)=='B') {
-        _ActivePhase = 'B';
+      } else if(handle->Data.DataUint16[0]==1) {
+        _ActivePhase = 1;
         handle->AccessResult = OBD_ACCESS_SUCCESS;
       } else {
         handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
@@ -243,6 +287,47 @@ void CurrentLoopSweepSine::AccessActivePhase(ObdAccessHandle * handle){
       break;
     case SDO_CSS_READ:
       __byte_uint16_t(handle->Data.DataUint16[0], 0) = _ActivePhase;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+
+void CurrentLoopSweepSine::AccessSweepSineMode(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      if(handle->Data.DataUint16[0]==0){
+        _Mode = 0;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else if(handle->Data.DataUint16[0]==1) {
+        _Mode = 1;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
+      break;
+    case SDO_CSS_READ:
+      __byte_uint16_t(handle->Data.DataUint16[0], 0) = _ActivePhase;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+
+void CurrentLoopSweepSine::AccessExcitationVoltageAngle(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _VoltageAngle = handle->Data.DataFloat32;
+      _VoltageAngleFrame.Cosine = cos(_VoltageAngle);
+      _VoltageAngleFrame.Sine = sin(_VoltageAngle);
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataFloat32 = _VoltageAngle;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

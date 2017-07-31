@@ -37,14 +37,6 @@ class CurrentControlProcess : public ControlProcessBase, public ObjectDictionary
       _CurrentLoopController->Reset();
     }
 
-    void AccessObject(ObdAccessHandle * handle){
-
-    }
-
-    uint16_t AccessParameter(CiA_Message * msg){
-      return 3;
-    }
-
   private:
     CurrentLoopController * _CurrentLoopController;
     ControlProcessData * _ControlProcessData;

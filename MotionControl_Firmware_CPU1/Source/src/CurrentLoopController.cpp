@@ -12,6 +12,7 @@
 */
 
 #include "CurrentLoopController.h"
+#include "PwmModulation.h"
 
 CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcessDataPtr):
   _Kp(10.32),
@@ -41,7 +42,7 @@ PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, Phase
   float32_t VoltageDcLine = _ControlProcessData->_VoltageValueDcLine;
   float32_t VoltToPwmScaleFactor = PWM_MAX_DUTY / VoltageDcLine;
   float32_t OutputVoltageLimit = VoltageDcLine * PWM_MAX_PERCENTAGE * 0.57f;
-  float32_t OutputVoltageMinimum = VoltageDcLine * PWM_MIN_PERCENTAGE;
+  //float32_t OutputVoltageMinimum = VoltageDcLine * PWM_MIN_PERCENTAGE;
 
   // execute PI controller
   _Error_Ia = CurrentDemand->A - CurrentActual->A;
@@ -71,28 +72,7 @@ PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, Phase
 
   _OutputVoltage.C = -_OutputVoltage.A -_OutputVoltage.B;
 
-  // calculate neutral point voltage offset
-  if(_OutputVoltage.A<_OutputVoltage.B){
-    if(_OutputVoltage.A<_OutputVoltage.C){
-      _OutputOffset = -_OutputVoltage.A;
-    }
-  }else if(_OutputVoltage.B<_OutputVoltage.C){
-    _OutputOffset = -_OutputVoltage.B;
-  }else{
-    _OutputOffset = -_OutputVoltage.C;
-  }
-
-  // offset voltage demand by neutral point voltage
-  // ensure positive PWM duty
-  _OutputOffset += OutputVoltageMinimum;
-  _OutputVoltage.A += _OutputOffset;
-  _OutputVoltage.B += _OutputOffset;
-  _OutputVoltage.C += _OutputOffset;
-
-  // calculate PWM duty
-  Pwm.A = (uint16_t)(_OutputVoltage.A * VoltToPwmScaleFactor);
-  Pwm.B = (uint16_t)(_OutputVoltage.B * VoltToPwmScaleFactor);
-  Pwm.C = (uint16_t)(_OutputVoltage.C * VoltToPwmScaleFactor);
+  PwmModulation(&_OutputVoltage, &Pwm, VoltToPwmScaleFactor);
 
   return Pwm;
 }

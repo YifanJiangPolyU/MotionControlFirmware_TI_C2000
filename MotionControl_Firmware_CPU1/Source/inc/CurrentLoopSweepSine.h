@@ -32,7 +32,8 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
       _CurrentLoopController = CurrentLoopControllerPtr;
       _ControlProcessData = ControlProcessDataPtr;
 
-      _ActivePhase = 'A';
+      _ActivePhase = 0;
+      _Mode = 0;
 
       _ExcitationAmplitude = 100;
       _StartFreq = 600;
@@ -43,6 +44,10 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
       _NumberOfPkg = 0xFFFFFFFF;
       _TimeMax = 0;
       _TimeStamp = 0;
+
+      _VoltageAngle = 0.0f;
+      _VoltageAngleFrame.Cosine = 1.0f;
+      _VoltageAngleFrame.Sine = 0.0f;
     }
 
     ~CurrentLoopSweepSine(){}
@@ -65,19 +70,35 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     void AccessRampRate(ObdAccessHandle * handle);
 
     void AccessActivePhase(ObdAccessHandle * handle);
+    void AccessSweepSineMode(ObdAccessHandle * handle);
+
+    void AccessExcitationVoltageAngle(ObdAccessHandle * handle);
 
   private:
 
     void CalculateSweepSineParameters(void);
+
+    PwmDutyVec ExecuteClosedLoopSweepSine(void);
+    PwmDutyVec ExecuteOpenLoopSweepSine(void);
     float32_t GenerateSweepSine(void);
 
     CurrentLoopController * _CurrentLoopController;
     ControlProcessData * _ControlProcessData;
 
-    char _ActivePhase;
+    // the target phase for the sweep sine
+    // 0: phase A
+    // 1: phase B
+    uint16_t _ActivePhase;
+
+    // sweepsine mode
+    // 0: closed loop
+    // 1: open loop (voltage)
+    uint16_t _Mode;
 
     enum CurrentLoopSweepSine_STATE _State;
-    float32_t _ExcitationAmplitude;
+
+    // sweep sine parameters
+    float32_t _ExcitationAmplitude;    // unit: mA or mV
     float32_t _StartFreq;              // unit: rad/s
     float32_t _EndFreq;
     float32_t _RampRate;               // unit: rad/(s^2)
@@ -86,6 +107,11 @@ class CurrentLoopSweepSine : public ControlProcessBase, public ObjectDictionaryE
     uint32_t _NumberOfPkg;
     uint32_t _TimeMax;
     uint32_t _TimeStamp;
+
+    // parameters for open-loop sweep sine only
+    // direction of applied voltage in alpha-beta domain
+    float32_t _VoltageAngle;           // unit: rad
+    RotationFrame _VoltageAngleFrame;
 
     char _OldPdoID;
 };

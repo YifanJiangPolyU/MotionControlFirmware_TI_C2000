@@ -263,7 +263,7 @@ void SetPhase(void){
 void RequestDataSize(void){
   mcs_interface::CiA_SdoMessage SdoMsg;
   SdoMsg.Idx = 0x2106;
-  SdoMsg.SubIdx = 0x05;
+  SdoMsg.SubIdx = 0x08;
   SdoMsg.AccessType = SDO_CSS_READ;
   SdoMsg.AccessResult = 0;
   SdoMsg.Data[0] = 0;

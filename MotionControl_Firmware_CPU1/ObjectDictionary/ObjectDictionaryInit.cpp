@@ -114,8 +114,23 @@ void ObjectDictionary::InitObd(void){
   _ObdEntryList[18]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessExcitationAmplitude);
 
   _ObdEntryList[19]._Idx = 2164229;
-  _ObdEntryList[19]._AccessType = 0;
+  _ObdEntryList[19]._AccessType = 1;
   _ObdEntryList[19]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[19]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessDataLength);
+  _ObdEntryList[19]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessActivePhase);
+
+  _ObdEntryList[20]._Idx = 2164230;
+  _ObdEntryList[20]._AccessType = 1;
+  _ObdEntryList[20]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
+  _ObdEntryList[20]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessSweepSineMode);
+
+  _ObdEntryList[21]._Idx = 2164231;
+  _ObdEntryList[21]._AccessType = 1;
+  _ObdEntryList[21]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
+  _ObdEntryList[21]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessExcitationVoltageAngle);
+
+  _ObdEntryList[22]._Idx = 2164232;
+  _ObdEntryList[22]._AccessType = 0;
+  _ObdEntryList[22]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
+  _ObdEntryList[22]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessDataLength);
 
 }
