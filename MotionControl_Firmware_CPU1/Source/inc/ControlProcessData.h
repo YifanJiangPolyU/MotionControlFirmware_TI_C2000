@@ -33,8 +33,8 @@
 #define CURREN_SENSE_GAIN_PHASE     7.32421875f
 // ADC DC line current sense gain (mA/LSB)
 #define CURREN_SENSE_GAIN_DCLINE    7.32421875f
-// ADC DC line voltage sense gain (V/LSB)
-#define VOLTAGE_SENSE_GAIN_DCLINE    0.0058520361035f
+// ADC DC line voltage sense gain (mV/LSB)
+#define VOLTAGE_SENSE_GAIN_DCLINE    5.8520361035f
 
 class ControlProcessData: public ObjectDictionaryEntryBase{
 
