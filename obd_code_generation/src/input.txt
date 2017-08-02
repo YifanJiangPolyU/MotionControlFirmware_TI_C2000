@@ -1,10 +1,10 @@
 #
 # Input file for obd_code_generation
-# contains the index and subindex of objects, as well as the object containing
+# contains the index and subindex of objects, as well as the class containing
 # the object and the correcponding access funtion
 #
 # Lines begining with '#' are comments. All other lines MUST be compliant
-# to the standard format:
+# to the following standard format:
 #
 #    0xhhhh  0xhh  AccessType  ClassName  InstanceName   AccessFunctionName
 #
@@ -21,9 +21,15 @@
 0x2001    0x02      uint16     RO      ControlProcessData    _ControlProcessData    AccessPowerStageTemperature
 
 # DC line limits
+# unit: x100 mA, x100 mV
 0x2002    0x01    uint16    RO    ControlProcessData     _ControlProcessData   AccessDcLineCurrentLimit
 0x2002    0x02    uint16    RO    ControlProcessData     _ControlProcessData   AccessDcLineVoltageUpperLimit
 0x2002    0x03    uint16    RO    ControlProcessData     _ControlProcessData   AccessDcLineVoltageLowerLimit
+
+# motor current limits
+# unit: x100 mA
+0x2103    0x01    uint16    RW    ControlProcessData    _ControlProcessData    AccessMotorCurrentLimitRMS
+0x2103    0x02    uint16    RW    ControlProcessData    _ControlProcessData    AccessMotorCurrentLimitPEAK
 
 # encoder resolution and actual commutation angle
 0x2104    0x01    float32    RW    ControlProcessData   _ControlProcessData   AccessCommutationAngle

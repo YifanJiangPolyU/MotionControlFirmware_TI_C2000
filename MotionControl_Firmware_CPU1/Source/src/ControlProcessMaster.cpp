@@ -15,7 +15,7 @@
 #include "ControlProcessMaster.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
-#include "Drivers/EncoderDriver/EncoderDriver.h"
+
 
 /**
  *  pointer to globally unique object of ControlProcessMaster
@@ -33,7 +33,10 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
   _State(STATE_NOT_READY),
   _NmtUpdated(false),
   _NmtNewState(0),
-  _CycleCounter(0)
+  _CycleCounter(0),
+  _CurrentSquaredFiltered(0.0f),
+  _MovingAverageFactor1(1.0f),
+  _MovingAverageFactor2(0.0f)
   {
     ControlProcessMasterPtr = this;
     _CommutationMaster = CommutationMasterPtr;
@@ -103,6 +106,26 @@ void ControlProcessMaster::Execute(void){
 
   // update synchronization flag
   _ControlProcessData->_SyncFlag = _CycleCounter;
+}
+
+/**
+ *  periodically check RMS current of the motor
+ */
+void ControlProcessMaster::CheckRmsCurrent(void){
+  float32_t CurrentSquared = _ControlProcessData->_StatorCurrent.Alpha;
+  float32_t CurrentSquaredBeta = _ControlProcessData->_StatorCurrent.Beta;
+  CurrentSquared *= CurrentSquared;
+  CurrentSquaredBeta *= CurrentSquaredBeta;
+  CurrentSquared += CurrentSquaredBeta;
+
+  // 1st order IIR filter approximating moving average
+  _CurrentSquaredFiltered *= _MovingAverageFactor1;
+  _CurrentSquaredFiltered += _MovingAverageFactor2 * CurrentSquared;
+
+  // check if RMS current has been exceeded
+  if(_CurrentSquaredFiltered >= _ControlProcessData->_MotorCurrentLimitRMSSquared){
+    // rise an error
+  }
 }
 
 /**
@@ -207,11 +230,7 @@ void ControlProcessMaster::SetCurrentValueBuffer(float32_t * bufA, float32_t * b
  */
 #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::UpdateProcessData(void){
-
-  _ControlProcessData->_CurrentActualValue.A = *(_ControlProcessData->_CurrentValueBufferPhaseA+2);
-  _ControlProcessData->_CurrentActualValue.B = *(_ControlProcessData->_CurrentValueBufferPhaseB+2);
-
-  _ControlProcessData->_Position = GetEncoder1Position();
+  _ControlProcessData->UpdateMeasurements();
 }
 
 /**

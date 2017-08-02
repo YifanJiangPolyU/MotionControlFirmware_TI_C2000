@@ -57,6 +57,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
 
     void SetCurrentValueBuffer(float32_t * bufA, float32_t * bufB);
     void UpdateProcessData(void);
+    void CheckRmsCurrent(void);
     void SignalErrorState(void);
     void Execute(void);
 
@@ -101,6 +102,10 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     CiA_Message _CiA_MsgBuffer;
     CiA_SdoMessage _CiA_SdoBuffer;
     CiA_PdoMessage _CiA_PdoBuffer;
+
+    float32_t _CurrentSquaredFiltered;
+    float32_t _MovingAverageFactor1;
+    float32_t _MovingAverageFactor2;
 
 
 };

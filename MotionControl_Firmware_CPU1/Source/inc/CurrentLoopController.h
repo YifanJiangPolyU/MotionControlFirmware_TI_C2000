@@ -35,10 +35,6 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
     void AccessCurrentLoopGains_Kp(ObdAccessHandle * handle);
     void AccessCurrentLoopGains_Ki(ObdAccessHandle * handle);
 
-    void AccessCurrentLimits_Peak(ObdAccessHandle * handle);
-    void AccessCurrentLimits_RMS(ObdAccessHandle * handle);
-
-
   private:
 
     ControlProcessData * _ControlProcessData;
@@ -53,12 +49,7 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
     float32_t _Integral_Ia;            // integral term, phase A
     float32_t _Integral_Ib;            // integral term, phase B
     float32_t _OutputOffset;            // offset required to give positive PWM duty
-    ABCVec _OutputVoltage;             // output phase voltage 
-
-
-    // current control limit values
-    float32_t _CurrentLimitPeakValue;   // unit: mA
-    float32_t _CurrentLimitRmsValue;
+    ABCVec _OutputVoltage;             // output phase voltage
 
 };
 

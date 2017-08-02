@@ -125,33 +125,3 @@ void CurrentLoopController::AccessCurrentLoopGains_Ki(ObdAccessHandle * handle){
       break;
   }
 }
-
-void CurrentLoopController::AccessCurrentLimits_Peak(ObdAccessHandle * handle){
-  switch (handle->AccessType) {
-    case SDO_CSS_WRITE:
-      _CurrentLimitPeakValue = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    case SDO_CSS_READ:
-      handle->Data.DataFloat32 = _CurrentLimitPeakValue;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    default:
-      break;
-  }
-}
-
-void CurrentLoopController::AccessCurrentLimits_RMS(ObdAccessHandle * handle){
-  switch (handle->AccessType) {
-    case SDO_CSS_WRITE:
-      _CurrentLimitRmsValue = handle->Data.DataFloat32;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    case SDO_CSS_READ:
-      handle->Data.DataFloat32 = _CurrentLimitRmsValue;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    default:
-      break;
-  }
-}

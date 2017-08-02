@@ -46,8 +46,10 @@ public:
     _DcLineVoltageUpperLimit(PWR_MAX_DCLINE_VOLTAGE),
     _DcLineVoltageLowerLimit(PWR_MIN_DCLINE_VOLTAGE),
     _DcLineCurrentLimit(PWR_MAX_DCLINE_CURRENT),
-    _MotorCurrentLimitRMS(8),
+    _MotorCurrentLimitRMS(10),
     _MotorCurrentLimitPEAK(16),
+    _MotorCurrentLimitTimeConstant(100),
+    _MotorCurrentLimitRMSSquared(1.0f),
     _CommAngleCosine(1),
     _CommAngleSine(0),
     _ForceSetpoint(0),
@@ -67,6 +69,7 @@ public:
   ~ControlProcessData(){};
 
   /* Access functions for internal use */
+  void UpdateMeasurements(void);
   void SetCurrentSweepSineBuffer(int16_t data);
   void ClearCurrentSweepSineBuffer(void);
 
@@ -84,6 +87,7 @@ public:
   void AccessDcLineCurrentLimit(ObdAccessHandle * handle);
   void AccessMotorCurrentLimitRMS(ObdAccessHandle * handle);
   void AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle);
+  void AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle);
 
   void AccessCommutationAngle(ObdAccessHandle * handle);
   void AccessCommutationAngle_Cos(ObdAccessHandle * handle);
@@ -105,6 +109,7 @@ public:
 
   // current actual value in mA
   PhaseCurrentVec _CurrentActualValue;
+  AlBeVec _StatorCurrent;
 
   // power supply status actual value
   uint32_t _VoltageValueDcLine;
@@ -116,6 +121,8 @@ public:
   uint16_t _DcLineCurrentLimit;
   uint16_t _MotorCurrentLimitRMS;
   uint16_t _MotorCurrentLimitPEAK;
+  uint16_t _MotorCurrentLimitTimeConstant;
+  float32_t _MotorCurrentLimitRMSSquared;
 
   // position
   int32_t _Position;            // unit: encoder count

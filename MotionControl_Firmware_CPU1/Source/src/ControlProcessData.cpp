@@ -14,6 +14,8 @@
 */
 
 #include "ControlProcessData.h"
+#include "Transformation.h"
+#include "Drivers/EncoderDriver/EncoderDriver.h"
 #include "CPU1_CLA1_common.h"
 
 /*
@@ -35,7 +37,30 @@ void ControlProcessData::InitCLAGains(void){
   CLA_VoltageSenseGain = VOLTAGE_SENSE_GAIN_DCLINE;
 }
 
-/* Access functions for internal use */
+/**
+ *  update control process data with latest measurements
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessData::UpdateMeasurements(void){
+  ABCVec PhaseCurrent;
+
+  _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+2);
+  _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+2);
+
+  PhaseCurrent.A = _CurrentActualValue.A;
+  PhaseCurrent.B = _CurrentActualValue.B;
+  PhaseCurrent.C = -PhaseCurrent.A-PhaseCurrent.B;
+
+  ClarkTransformation(&PhaseCurrent, &_StatorCurrent);
+
+  _Position = GetEncoder1Position();
+}
+
+/**
+ *  write data to the sweepsine buffer,
+ *  used for sweepsine PDO data transmission
+ *  @param data    new measurement to be transmitted
+ */
 #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessData::SetCurrentSweepSineBuffer(int16_t data){
   // ensure correct data sequence
@@ -48,6 +73,9 @@ void ControlProcessData::SetCurrentSweepSineBuffer(int16_t data){
   }
 }
 
+/**
+ *  clear the sweepsine buffer
+ */
 #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessData::ClearCurrentSweepSineBuffer(void){
   _CurrentSweepSineBuffer[0] = 0;
@@ -196,6 +224,9 @@ void ControlProcessData::AccessMotorCurrentLimitRMS(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
       _MotorCurrentLimitRMS = handle->Data.DataUint16[0];
+      _MotorCurrentLimitRMSSquared = (float32_t)_MotorCurrentLimitRMS;
+      _MotorCurrentLimitRMSSquared /= 10.0f;
+      _MotorCurrentLimitRMSSquared *= _MotorCurrentLimitRMSSquared;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
@@ -222,6 +253,20 @@ void ControlProcessData::AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle){
   }
 }
 
+void ControlProcessData::AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      _MotorCurrentLimitTimeConstant = handle->Data.DataUint16[0];
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _MotorCurrentLimitTimeConstant;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
 
 void ControlProcessData::AccessCommutationAngle(ObdAccessHandle * handle){
   switch (handle->AccessType) {
