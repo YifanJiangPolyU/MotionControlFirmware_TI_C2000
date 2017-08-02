@@ -124,7 +124,7 @@ void ControlProcessData::AccessDcLineVoltage(ObdAccessHandle * handle){
       handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataInt32 = _VoltageValueDcLine;
+      handle->Data.DataUint32 = _VoltageValueDcLine;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
@@ -139,7 +139,7 @@ void ControlProcessData::AccessDcLineCurrent(ObdAccessHandle * handle){
       handle->AccessResult = OBD_ACCESS_ERR_WRITE;
       break;
     case SDO_CSS_READ:
-      handle->Data.DataInt32 = _CurrentValueDcLine;
+      handle->Data.DataUint32 = _CurrentValueDcLine;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

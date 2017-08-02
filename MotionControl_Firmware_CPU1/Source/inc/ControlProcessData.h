@@ -61,6 +61,7 @@ public:
     _PhaseCurrentSetpoint.A = 0;
     _PhaseCurrentSetpoint.B = 0;
 
+    // convert unit: x100mA -> A
     _MotorCurrentLimitPEAKSquared = (float32_t)_MotorCurrentLimitPEAK;
     _MotorCurrentLimitPEAKSquared /= 10.f;
     _MotorCurrentLimitPEAKSquared *= _MotorCurrentLimitPEAKSquared;
@@ -117,10 +118,12 @@ public:
   AlBeVec _StatorCurrent;
 
   // power supply status actual value
+  // unit: mV, mA
   uint32_t _VoltageValueDcLine;
-  uint16_t _CurrentValueDcLine;
+  uint32_t _CurrentValueDcLine;
 
   // current and voltage limits
+  // unit: x100mV, x100mA
   uint16_t _DcLineVoltageUpperLimit;
   uint16_t _DcLineVoltageLowerLimit;
   uint16_t _DcLineCurrentLimit;

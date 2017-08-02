@@ -13,8 +13,9 @@
 # Idx     SubInx    DataType   AccessType     ClassName   Instance         Access Method
 
 # DC line voltage and current
+# unit: mV, mA
 0x2000    0x01      uint32     RO      ControlProcessData    _ControlProcessData    AccessDcLineVoltage
-0x2000    0x02      uint16     RO      ControlProcessData    _ControlProcessData    AccessDcLineCurrent
+0x2000    0x02      uint32     RO      ControlProcessData    _ControlProcessData    AccessDcLineCurrent
 
 # temperature of CPU and power stage
 0x2001    0x01      uint16     RO      ControlProcessData    _ControlProcessData    AccessCpuTemperature
