@@ -41,9 +41,7 @@ class CurrentLoopController: public ObjectDictionaryEntryBase{
 
     float32_t _Kp;                     // P gain
     float32_t _Ki;                     // I gain
-    float32_t _Setpoint_Ia;            // current requirement (ADC raw), phase A
-    float32_t _Setpoint_Ib;            // current requirement (ADC raw), phase B
-
+    float32_t _Ki_dt;                  // I gain multiplied by control period
     float32_t _Error_Ia;               // current error, phase A
     float32_t _Error_Ib;               // current error, phase B
     float32_t _Integral_Ia;            // integral term, phase A

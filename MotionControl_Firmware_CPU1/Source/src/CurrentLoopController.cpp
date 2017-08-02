@@ -15,10 +15,9 @@
 #include "PwmModulation.h"
 
 CurrentLoopController::CurrentLoopController(ControlProcessData * ControlProcessDataPtr):
-  _Kp(10.32),
+  _Kp(100.5),
   _Ki(0),
-  _Setpoint_Ia(0),
-  _Setpoint_Ib(0),
+  _Ki_dt(0),
   _Error_Ia(0),
   _Error_Ib(0),
   _Integral_Ia(0),
@@ -47,8 +46,8 @@ PwmDutyVec CurrentLoopController::Execute(PhaseCurrentVec * CurrentDemand, Phase
   // execute PI controller
   _Error_Ia = CurrentDemand->A - CurrentActual->A;
   _Error_Ib = CurrentDemand->B - CurrentActual->B;
-  _Integral_Ia += _Ki * _Error_Ia;
-  _Integral_Ib += _Ki * _Error_Ib;
+  _Integral_Ia += _Ki_dt * _Error_Ia;
+  _Integral_Ib += _Ki_dt * _Error_Ib;
   _OutputVoltage.A = _Kp * _Error_Ia + _Integral_Ia;
   _OutputVoltage.B = _Kp * _Error_Ib + _Integral_Ib;
 
@@ -115,6 +114,7 @@ void CurrentLoopController::AccessCurrentLoopGains_Ki(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
       _Ki = handle->Data.DataFloat32;
+      _Ki_dt = _Ki * CURRENT_CTRL_TIMEBASE;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:

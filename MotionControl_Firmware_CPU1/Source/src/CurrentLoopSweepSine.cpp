@@ -22,9 +22,6 @@
 #include "PwmModulation.h"
 #include "math.h"
 
-const uint16_t _CurrentControlFrequency = 32000;
-const float32_t _TimeBase = 1.f/_CurrentControlFrequency;
-
 /**
  *  Execute the current loop sweepsine process
  */
@@ -129,7 +126,7 @@ PwmDutyVec CurrentLoopSweepSine::ExecuteOpenLoopSweepSine(void){
 #pragma CODE_SECTION(".TI.ramfunc");
 float32_t CurrentLoopSweepSine::GenerateSweepSine(void){
 
-  float32_t Time = _TimeStamp * _TimeBase;
+  float32_t Time = _TimeStamp * CURRENT_CTRL_TIMEBASE;
   float32_t Angle = _StartFreq*Time + _HalfRampRate*Time*Time;
   float32_t Amplitude = _ExcitationAmplitude * sin(Angle);
 
@@ -144,7 +141,7 @@ void CurrentLoopSweepSine::CalculateSweepSineParameters(void){
   _HalfRampRate = _RampRate * 0.5;
 
   if(_StartFreq<_EndFreq){
-    _TimeMax = (uint16_t)((_EndFreq - _StartFreq)/_RampRate/_TimeBase);
+    _TimeMax = (uint16_t)((_EndFreq - _StartFreq)/_RampRate/CURRENT_CTRL_TIMEBASE);
 
     // calculate number of PDO messages required to transmit the sweep sine data
     // should be 1 plus the smallest integer larger than _TimeMax/4

@@ -25,12 +25,14 @@
 #include "ObjectDictionaryEntryBase.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 
+// controller periods
+#define CURRENT_CTRL_TIMEBASE     0.00003125f   // 32000Hz, 0.00003125s
+#define POS_CTRL_TIMEBASE         0.0001250f    // 8000Hz, 0.000125s
+
 // ADC phase current sense gain (mA/LSB)
 #define CURREN_SENSE_GAIN_PHASE     7.32421875f
-
 // ADC DC line current sense gain (mA/LSB)
 #define CURREN_SENSE_GAIN_DCLINE    7.32421875f
-
 // ADC DC line voltage sense gain (V/LSB)
 #define VOLTAGE_SENSE_GAIN_DCLINE    0.0058520361035f
 
