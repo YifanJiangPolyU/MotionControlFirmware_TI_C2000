@@ -25,13 +25,13 @@
 #include "ObjectDictionaryEntryBase.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 
-// ADC phase current sense gain
-#define CURREN_SENSE_GAIN_PHASE     0.00732421875f
+// ADC phase current sense gain (mA/LSB)
+#define CURREN_SENSE_GAIN_PHASE     7.32421875f
 
-// ADC DC line current sense gain
-#define CURREN_SENSE_GAIN_DCLINE    0.00732421875f
+// ADC DC line current sense gain (mA/LSB)
+#define CURREN_SENSE_GAIN_DCLINE    7.32421875f
 
-// ADC DC line voltage sense gain
+// ADC DC line voltage sense gain (V/LSB)
 #define VOLTAGE_SENSE_GAIN_DCLINE    0.0058520361035f
 
 class ControlProcessData: public ObjectDictionaryEntryBase{
@@ -46,10 +46,8 @@ public:
     _DcLineVoltageUpperLimit(PWR_MAX_DCLINE_VOLTAGE),
     _DcLineVoltageLowerLimit(PWR_MIN_DCLINE_VOLTAGE),
     _DcLineCurrentLimit(PWR_MAX_DCLINE_CURRENT),
-    _MotorCurrentLimitRMS(10),
-    _MotorCurrentLimitPEAK(16),
-    _MotorCurrentLimitTimeConstant(100),
-    _MotorCurrentLimitRMSSquared(1.0f),
+    _MotorCurrentLimitRMS(400),
+    _MotorCurrentLimitPEAK(400),
     _CommAngleCosine(1),
     _CommAngleSine(0),
     _ForceSetpoint(0),
@@ -62,6 +60,14 @@ public:
     _DQCurrentSetpoint.Q = 0;
     _PhaseCurrentSetpoint.A = 0;
     _PhaseCurrentSetpoint.B = 0;
+
+    _MotorCurrentLimitPEAKSquared = (float32_t)_MotorCurrentLimitPEAK;
+    _MotorCurrentLimitPEAKSquared /= 10.f;
+    _MotorCurrentLimitPEAKSquared *= _MotorCurrentLimitPEAKSquared;
+
+    _MotorCurrentLimitRMSSquared = (float32_t)_MotorCurrentLimitRMS;
+    _MotorCurrentLimitRMSSquared /= 10.0f;
+    _MotorCurrentLimitRMSSquared *= _MotorCurrentLimitRMSSquared;
 
     InitCLAGains();
   };
@@ -87,7 +93,6 @@ public:
   void AccessDcLineCurrentLimit(ObdAccessHandle * handle);
   void AccessMotorCurrentLimitRMS(ObdAccessHandle * handle);
   void AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle);
-  void AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle);
 
   void AccessCommutationAngle(ObdAccessHandle * handle);
   void AccessCommutationAngle_Cos(ObdAccessHandle * handle);
@@ -121,7 +126,8 @@ public:
   uint16_t _DcLineCurrentLimit;
   uint16_t _MotorCurrentLimitRMS;
   uint16_t _MotorCurrentLimitPEAK;
-  uint16_t _MotorCurrentLimitTimeConstant;
+
+  float32_t _MotorCurrentLimitPEAKSquared;
   float32_t _MotorCurrentLimitRMSSquared;
 
   // position

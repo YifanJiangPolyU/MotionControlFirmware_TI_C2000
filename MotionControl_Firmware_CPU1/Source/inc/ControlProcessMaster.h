@@ -57,17 +57,19 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
 
     void SetCurrentValueBuffer(float32_t * bufA, float32_t * bufB);
     void UpdateProcessData(void);
-    void CheckRmsCurrent(void);
+    void CheckCurrentOverload(void);
     void SignalErrorState(void);
     void Execute(void);
 
     void AccessMotionControlState(ObdAccessHandle * handle);
     void AccessSystemStatusReg(ObdAccessHandle * handle);
+    void AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle);
 
     // define system status and error flags
     typedef struct ControlProcessMaster_Status_typedef{
       uint16_t State :                3;
-      uint16_t ErrOverCurrent :       1;
+      uint16_t ErrOverCurrentPeak :   1;
+      uint16_t ErrOverCurrentRms :    1;
       uint16_t ErrOverTemperature :   1;
       uint16_t ErrUnderVoltage :      1;
       uint16_t ErrOverVoltage :       1;
@@ -75,7 +77,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
       uint16_t ErrSoftware :          1;
       uint16_t ErrHardware :          1;
       uint16_t ErrCommunication :     1;
-      uint16_t reserve :              6;
+      uint16_t reserve :              5;
     } ControlProcessMaster_Status;
 
     typedef union ControlProcessMasterStatusRegTypedef{
@@ -104,6 +106,10 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     CiA_PdoMessage _CiA_PdoBuffer;
 
     float32_t _CurrentSquaredFiltered;
+
+    // time window to calculate RMS current, unit: x100 ms
+    // RMS current MUST be updated at 100Hz
+    uint16_t _MotorCurrentLimitTimeConstant;
     float32_t _MovingAverageFactor1;
     float32_t _MovingAverageFactor2;
 

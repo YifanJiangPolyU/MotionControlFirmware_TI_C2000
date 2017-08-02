@@ -31,6 +31,10 @@
 0x2103    0x01    uint16    RW    ControlProcessData    _ControlProcessData    AccessMotorCurrentLimitRMS
 0x2103    0x02    uint16    RW    ControlProcessData    _ControlProcessData    AccessMotorCurrentLimitPEAK
 
+# time window for RMS current computation
+# unit: x100 ms
+0x2103    0x03    uint16    RW    ControlProcessMaster    _ControlProcessMaster    AccessMotorCurrentLimitTimeConstant
+
 # encoder resolution and actual commutation angle
 0x2104    0x01    float32    RW    ControlProcessData   _ControlProcessData   AccessCommutationAngle
 0x2104    0x02    uint32     RW    CommutationMaster    _CommutationMaster    AccessCountPerRev

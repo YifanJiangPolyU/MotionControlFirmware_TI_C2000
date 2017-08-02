@@ -35,14 +35,16 @@ ControlProcessMaster::ControlProcessMaster(CommutationMaster * CommutationMaster
   _NmtNewState(0),
   _CycleCounter(0),
   _CurrentSquaredFiltered(0.0f),
-  _MovingAverageFactor1(1.0f),
-  _MovingAverageFactor2(0.0f)
+  _MotorCurrentLimitTimeConstant(100)
   {
     ControlProcessMasterPtr = this;
     _CommutationMaster = CommutationMasterPtr;
     _CommunicationInterface = CommunicationInterfacePtr;
     _ControlProcessData = ControlProcessDataPtr;
     _ControlProcessExecuter = ControlProcessExecuterPtr;
+
+    _MovingAverageFactor1 = 1.0f / ((float32_t)_MotorCurrentLimitTimeConstant * 10.0f);
+    _MovingAverageFactor2 = 1.0f - _MovingAverageFactor1;
 
     _StatusReg.all = 0;
     _StatusReg.bit.State = STATE_NOT_READY;
@@ -83,6 +85,7 @@ void ControlProcessMaster::Execute(void){
   // execute commutation angle calculation
 
   // check for errors
+  CheckCurrentOverload();
 
   // update state machine
   UpdateMotionControlState();
@@ -111,21 +114,51 @@ void ControlProcessMaster::Execute(void){
 /**
  *  periodically check RMS current of the motor
  */
-void ControlProcessMaster::CheckRmsCurrent(void){
-  float32_t CurrentSquared = _ControlProcessData->_StatorCurrent.Alpha;
-  float32_t CurrentSquaredBeta = _ControlProcessData->_StatorCurrent.Beta;
+#pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessMaster::CheckCurrentOverload(void){
+
+  static uint16_t RmsUpdateCounter = 0;
+
+  float32_t CurrentSquared = _ControlProcessData->_StatorCurrent.Alpha * 0.001;
+  float32_t CurrentSquaredBeta = _ControlProcessData->_StatorCurrent.Beta * 0.001;
   CurrentSquared *= CurrentSquared;
   CurrentSquaredBeta *= CurrentSquaredBeta;
   CurrentSquared += CurrentSquaredBeta;
 
-  // 1st order IIR filter approximating moving average
-  _CurrentSquaredFiltered *= _MovingAverageFactor1;
-  _CurrentSquaredFiltered += _MovingAverageFactor2 * CurrentSquared;
+  // check if peak current limit is exceeded
+  if((CurrentSquared >= _ControlProcessData->_MotorCurrentLimitPEAKSquared) &&
+     (_State != STATE_FAULT)){
+    _State = STATE_FAULT;
+    PwrDisable();
+    SetErrorLed();
 
-  // check if RMS current has been exceeded
-  if(_CurrentSquaredFiltered >= _ControlProcessData->_MotorCurrentLimitRMSSquared){
-    // rise an error
+    _StatusReg.bit.State = _State;
+    _StatusReg.bit.ErrOverCurrentPeak = 1;
   }
+
+  RmsUpdateCounter += 1;
+
+  if(RmsUpdateCounter == 3199){
+
+    RmsUpdateCounter = 0;
+
+    // 1st order IIR filter approximating moving average
+    _CurrentSquaredFiltered *= _MovingAverageFactor2;
+    _CurrentSquaredFiltered += _MovingAverageFactor1 * CurrentSquared;
+
+    // check if RMS current limit has been exceeded
+    if((_CurrentSquaredFiltered >= _ControlProcessData->_MotorCurrentLimitRMSSquared) &&
+       (_State != STATE_FAULT)){
+      // rise an error
+      _State = STATE_FAULT;
+      PwrDisable();
+      SetErrorLed();
+
+      _StatusReg.bit.State = _State;
+      _StatusReg.bit.ErrOverCurrentRms = 1;
+    }
+  }
+
 }
 
 /**
@@ -204,6 +237,11 @@ void ControlProcessMaster::UpdateMotionControlState(void){
         _NmtUpdated = false;
         if(_NmtNewState==NME_RESET_FAULT){
           ClearErrorLed();
+          _State = STATE_READY;
+
+          // clear error register
+          _StatusReg.all = 0;
+          _StatusReg.bit.State = _State;
         }
       }
       break;
@@ -278,6 +316,27 @@ void ControlProcessMaster::AccessSystemStatusReg(ObdAccessHandle * handle){
       break;
     case SDO_CSS_READ:
       handle->Data.DataUint16[0] = _StatusReg.all;
+      handle->AccessResult = OBD_ACCESS_SUCCESS;
+      break;
+    default:
+      break;
+  }
+}
+
+void ControlProcessMaster::AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle){
+  switch (handle->AccessType) {
+    case SDO_CSS_WRITE:
+      if(handle->Data.DataUint16[0]<=6000){
+        _MotorCurrentLimitTimeConstant = handle->Data.DataUint16[0];
+        _MovingAverageFactor1 = 1.0f / ((float32_t)_MotorCurrentLimitTimeConstant * 10.0f);
+        _MovingAverageFactor2 = 1.0f - _MovingAverageFactor1;
+        handle->AccessResult = OBD_ACCESS_SUCCESS;
+      } else {
+        handle->AccessResult = OBD_ACCESS_ERR_DATA_RANGE;
+      }
+      break;
+    case SDO_CSS_READ:
+      handle->Data.DataUint16[0] = _MotorCurrentLimitTimeConstant;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:

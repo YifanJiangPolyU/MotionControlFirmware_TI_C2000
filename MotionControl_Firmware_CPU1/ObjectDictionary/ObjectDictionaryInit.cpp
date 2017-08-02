@@ -63,84 +63,89 @@ void ObjectDictionary::InitObd(void){
   _ObdEntryList[8]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_ControlProcessData_GetInstance());
   _ObdEntryList[8]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&ControlProcessData::AccessMotorCurrentLimitPEAK);
 
-  _ObdEntryList[9]._Idx = 2163713;
+  _ObdEntryList[9]._Idx = 2163459;
   _ObdEntryList[9]._AccessType = 1;
-  _ObdEntryList[9]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_ControlProcessData_GetInstance());
-  _ObdEntryList[9]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&ControlProcessData::AccessCommutationAngle);
+  _ObdEntryList[9]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_ControlProcessMaster_GetInstance());
+  _ObdEntryList[9]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&ControlProcessMaster::AccessMotorCurrentLimitTimeConstant);
 
-  _ObdEntryList[10]._Idx = 2163714;
+  _ObdEntryList[10]._Idx = 2163713;
   _ObdEntryList[10]._AccessType = 1;
-  _ObdEntryList[10]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CommutationMaster_GetInstance());
-  _ObdEntryList[10]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessCountPerRev);
+  _ObdEntryList[10]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_ControlProcessData_GetInstance());
+  _ObdEntryList[10]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&ControlProcessData::AccessCommutationAngle);
 
-  _ObdEntryList[11]._Idx = 2163715;
+  _ObdEntryList[11]._Idx = 2163714;
   _ObdEntryList[11]._AccessType = 1;
   _ObdEntryList[11]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CommutationMaster_GetInstance());
-  _ObdEntryList[11]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessLinearResolution);
+  _ObdEntryList[11]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessCountPerRev);
 
-  _ObdEntryList[12]._Idx = 2163716;
+  _ObdEntryList[12]._Idx = 2163715;
   _ObdEntryList[12]._AccessType = 1;
   _ObdEntryList[12]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CommutationMaster_GetInstance());
-  _ObdEntryList[12]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessNPolePair);
+  _ObdEntryList[12]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessLinearResolution);
 
-  _ObdEntryList[13]._Idx = 2163717;
+  _ObdEntryList[13]._Idx = 2163716;
   _ObdEntryList[13]._AccessType = 1;
   _ObdEntryList[13]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CommutationMaster_GetInstance());
-  _ObdEntryList[13]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessPolePitch);
+  _ObdEntryList[13]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessNPolePair);
 
-  _ObdEntryList[14]._Idx = 2163969;
-  _ObdEntryList[14]._AccessType = 0;
-  _ObdEntryList[14]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopController_GetInstance());
-  _ObdEntryList[14]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopController::AccessCurrentControlFrequency);
+  _ObdEntryList[14]._Idx = 2163717;
+  _ObdEntryList[14]._AccessType = 1;
+  _ObdEntryList[14]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CommutationMaster_GetInstance());
+  _ObdEntryList[14]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CommutationMaster::AccessPolePitch);
 
-  _ObdEntryList[15]._Idx = 2163970;
-  _ObdEntryList[15]._AccessType = 1;
+  _ObdEntryList[15]._Idx = 2163969;
+  _ObdEntryList[15]._AccessType = 0;
   _ObdEntryList[15]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopController_GetInstance());
-  _ObdEntryList[15]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopController::AccessCurrentLoopGains_Kp);
+  _ObdEntryList[15]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopController::AccessCurrentControlFrequency);
 
-  _ObdEntryList[16]._Idx = 2163971;
+  _ObdEntryList[16]._Idx = 2163970;
   _ObdEntryList[16]._AccessType = 1;
   _ObdEntryList[16]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopController_GetInstance());
-  _ObdEntryList[16]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopController::AccessCurrentLoopGains_Ki);
+  _ObdEntryList[16]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopController::AccessCurrentLoopGains_Kp);
 
-  _ObdEntryList[17]._Idx = 2164225;
+  _ObdEntryList[17]._Idx = 2163971;
   _ObdEntryList[17]._AccessType = 1;
-  _ObdEntryList[17]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[17]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessStartFrequency);
+  _ObdEntryList[17]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopController_GetInstance());
+  _ObdEntryList[17]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopController::AccessCurrentLoopGains_Ki);
 
-  _ObdEntryList[18]._Idx = 2164226;
+  _ObdEntryList[18]._Idx = 2164225;
   _ObdEntryList[18]._AccessType = 1;
   _ObdEntryList[18]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[18]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessEndFrequency);
+  _ObdEntryList[18]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessStartFrequency);
 
-  _ObdEntryList[19]._Idx = 2164227;
+  _ObdEntryList[19]._Idx = 2164226;
   _ObdEntryList[19]._AccessType = 1;
   _ObdEntryList[19]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[19]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessRampRate);
+  _ObdEntryList[19]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessEndFrequency);
 
-  _ObdEntryList[20]._Idx = 2164228;
+  _ObdEntryList[20]._Idx = 2164227;
   _ObdEntryList[20]._AccessType = 1;
   _ObdEntryList[20]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[20]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessExcitationAmplitude);
+  _ObdEntryList[20]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessRampRate);
 
-  _ObdEntryList[21]._Idx = 2164229;
+  _ObdEntryList[21]._Idx = 2164228;
   _ObdEntryList[21]._AccessType = 1;
   _ObdEntryList[21]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[21]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessActivePhase);
+  _ObdEntryList[21]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessExcitationAmplitude);
 
-  _ObdEntryList[22]._Idx = 2164230;
+  _ObdEntryList[22]._Idx = 2164229;
   _ObdEntryList[22]._AccessType = 1;
   _ObdEntryList[22]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[22]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessSweepSineMode);
+  _ObdEntryList[22]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessActivePhase);
 
-  _ObdEntryList[23]._Idx = 2164231;
+  _ObdEntryList[23]._Idx = 2164230;
   _ObdEntryList[23]._AccessType = 1;
   _ObdEntryList[23]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[23]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessExcitationVoltageAngle);
+  _ObdEntryList[23]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessSweepSineMode);
 
-  _ObdEntryList[24]._Idx = 2164232;
-  _ObdEntryList[24]._AccessType = 0;
+  _ObdEntryList[24]._Idx = 2164231;
+  _ObdEntryList[24]._AccessType = 1;
   _ObdEntryList[24]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
-  _ObdEntryList[24]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessDataLength);
+  _ObdEntryList[24]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessExcitationVoltageAngle);
+
+  _ObdEntryList[25]._Idx = 2164232;
+  _ObdEntryList[25]._AccessType = 0;
+  _ObdEntryList[25]._Instance = static_cast<ObjectDictionaryEntryBase*>(SystemWarehouse::GetInstance()->_CurrentLoopSweepSine_GetInstance());
+  _ObdEntryList[25]._AccessMethod = static_cast<void (ObjectDictionaryEntryBase::*)(ObdAccessHandle*)>(&CurrentLoopSweepSine::AccessDataLength);
 
 }

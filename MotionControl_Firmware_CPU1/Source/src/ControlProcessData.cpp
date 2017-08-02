@@ -242,25 +242,13 @@ void ControlProcessData::AccessMotorCurrentLimitPEAK(ObdAccessHandle * handle){
   switch (handle->AccessType) {
     case SDO_CSS_WRITE:
       _MotorCurrentLimitPEAK = handle->Data.DataUint16[0];
+      _MotorCurrentLimitPEAKSquared = (float32_t)_MotorCurrentLimitPEAK;
+      _MotorCurrentLimitPEAKSquared /= 10.f;
+      _MotorCurrentLimitPEAKSquared *= _MotorCurrentLimitPEAKSquared;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     case SDO_CSS_READ:
       handle->Data.DataUint16[0] = _MotorCurrentLimitPEAK;
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    default:
-      break;
-  }
-}
-
-void ControlProcessData::AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle){
-  switch (handle->AccessType) {
-    case SDO_CSS_WRITE:
-      _MotorCurrentLimitTimeConstant = handle->Data.DataUint16[0];
-      handle->AccessResult = OBD_ACCESS_SUCCESS;
-      break;
-    case SDO_CSS_READ:
-      handle->Data.DataUint16[0] = _MotorCurrentLimitTimeConstant;
       handle->AccessResult = OBD_ACCESS_SUCCESS;
       break;
     default:
