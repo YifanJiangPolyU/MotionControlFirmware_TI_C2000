@@ -42,10 +42,17 @@ void PwmTimerEnable(void){
   * enable power stage output
   */
 void PwrEnable(void){
+/*
+  // set duty to 0 before enabling
+  EPwm4Regs.CMPA.bit.CMPA = 0;
+  EPwm5Regs.CMPA.bit.CMPA = 0;
+  EPwm6Regs.CMPA.bit.CMPA = 0;
+*/
   // enable PWM output by clearing PWM trip
   EPwm4Regs.TZCLR.bit.OST = 1;
   EPwm5Regs.TZCLR.bit.OST = 1;
   EPwm6Regs.TZCLR.bit.OST = 1;
+
 
   // set DRV8301 gate enable
   SetDrv8301GateEnable();
@@ -63,9 +70,12 @@ void PwrDisable(void){
   EPwm5Regs.TZFRC.bit.OST = 1;
   EPwm6Regs.TZFRC.bit.OST = 1;
 
+/*
+  // set duty to 0
   EPwm4Regs.CMPA.bit.CMPA = 0;
   EPwm5Regs.CMPA.bit.CMPA = 0;
   EPwm6Regs.CMPA.bit.CMPA = 0;
+*/
 }
 
 /**

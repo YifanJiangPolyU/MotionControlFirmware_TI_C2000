@@ -245,7 +245,7 @@ EDIS;
   SciaRegs.SCIFFRX.bit.RXFFIL = 0x10;    // generate fifo interrupt when it's full
 
   SciaRegs.SCIFFTX.bit.TXFIFORESET = 1;
-   SciaRegs.SCIFFRX.bit.RXFIFORESET = 1;
+  SciaRegs.SCIFFRX.bit.RXFIFORESET = 1;
 
 }
 

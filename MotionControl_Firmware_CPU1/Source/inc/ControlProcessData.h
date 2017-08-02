@@ -67,25 +67,8 @@ public:
   ~ControlProcessData(){};
 
   /* Access functions for internal use */
-  #pragma CODE_SECTION(".TI.ramfunc");
-  void SetCurrentSweepSineBuffer(int16_t data){
-    // ensure correct data sequence
-    // compensate for offset caused by the fact that transmission of PDO_ID
-    // occurs after execution of sweepsine generation.
-    if(_SyncFlag==0){
-      _CurrentSweepSineBuffer[3] = data;
-    }else{
-      _CurrentSweepSineBuffer[_SyncFlag-1] = data;
-    }
-  }
-
-  #pragma CODE_SECTION(".TI.ramfunc");
-  void ClearCurrentSweepSineBuffer(void){
-    _CurrentSweepSineBuffer[0] = 0;
-    _CurrentSweepSineBuffer[1] = 0;
-    _CurrentSweepSineBuffer[2] = 0;
-    _CurrentSweepSineBuffer[3] = 0;
-  }
+  void SetCurrentSweepSineBuffer(int16_t data);
+  void ClearCurrentSweepSineBuffer(void);
 
   /* object dictionary access functions */
   void AccessParameter(ObdAccessHandle * handle);

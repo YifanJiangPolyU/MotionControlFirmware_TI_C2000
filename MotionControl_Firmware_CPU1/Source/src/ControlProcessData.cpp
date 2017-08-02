@@ -35,6 +35,27 @@ void ControlProcessData::InitCLAGains(void){
   CLA_VoltageSenseGain = VOLTAGE_SENSE_GAIN_DCLINE;
 }
 
+/* Access functions for internal use */
+#pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessData::SetCurrentSweepSineBuffer(int16_t data){
+  // ensure correct data sequence
+  // compensate for offset caused by the fact that transmission of PDO_ID
+  // occurs after execution of sweepsine generation.
+  if(_SyncFlag==0){
+    _CurrentSweepSineBuffer[3] = data;
+  }else{
+    _CurrentSweepSineBuffer[_SyncFlag-1] = data;
+  }
+}
+
+#pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessData::ClearCurrentSweepSineBuffer(void){
+  _CurrentSweepSineBuffer[0] = 0;
+  _CurrentSweepSineBuffer[1] = 0;
+  _CurrentSweepSineBuffer[2] = 0;
+  _CurrentSweepSineBuffer[3] = 0;
+}
+
 void ControlProcessData::AccessParameter(ObdAccessHandle * handle){
 
 }
