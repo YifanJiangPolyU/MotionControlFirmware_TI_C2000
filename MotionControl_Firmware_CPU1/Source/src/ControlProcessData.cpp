@@ -44,8 +44,8 @@ void ControlProcessData::InitCLAGains(void){
 void ControlProcessData::UpdateMeasurements(void){
   ABCVec PhaseCurrent;
 
-  _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+2);
-  _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+2);
+  _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+9);
+  _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+9);
 
   PhaseCurrent.A = _CurrentActualValue.A;
   PhaseCurrent.B = _CurrentActualValue.B;

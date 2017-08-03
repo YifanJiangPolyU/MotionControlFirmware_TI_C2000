@@ -178,6 +178,9 @@ void ControlProcessMaster::UpdateMotionControlState(void){
           PwrEnable();
           _ControlProcessExecuter->StartProcess(_ControlProcessData->_ControlProcess);
           _State = STATE_SWITCHED_ON;
+        } else if(_NmtNewState==NMT_TEST_CALIBRATION) {
+          _ControlProcessExecuter->StartProcess(PROCESS_CALIBRATION);
+          _State = STATE_SWITCHED_ON;
         } else if(_NmtNewState==NMT_TEST_CLSW){
           PwrEnable();
           _ControlProcessExecuter->StartProcess(PROCESS_CLSW);

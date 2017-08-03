@@ -88,20 +88,17 @@ int main(int argc, char **argv){
   msg.SubIdx = 0x05;
   msg.AccessType = SDO_CSS_READ;
   msg.AccessResult = 0;
-  msg.Data[0] = 34; //handle.Data.DataInt16[0];
-  msg.Data[1] = 43; //handle.Data.DataInt16[1];
+  msg.Data[0] = 34;
+  msg.Data[1] = 43;
   msg.Length = 10;
 
   usleep (1000000);
-  sdo_pub.publish(msg);
-
-  //OutputFile.open("/home/yifan/catkin_ws/src/mcs/mcs_interface/SweepSineData.txt",
-  //                  std::ofstream::out | std::ofstream::trunc);
+  //sdo_pub.publish(msg);
 
   mcs_interface::CiA_NmtMessage msg1;
   msg1.NodeID = 0x03;
-  msg1.State = NMT_TEST_CLSW;
-  //nmt_pub.publish(msg1);
+  msg1.State = NMT_TEST_CALIBRATION;
+  nmt_pub.publish(msg1);
 
   while(ros::ok() && (!terminate)){
 

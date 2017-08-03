@@ -47,7 +47,7 @@ void CalibrationProcess::Execute(void){
         _CurrentOffset_PhaseB -= _CurrentOffsetSumB / (float32_t)_CurrentOffsetSampleCnt;
         CLA_CurrentSenseOffset_PhaseA = _CurrentOffset_PhaseB;
         CLA_CurrentSenseOffset_PhaseB = _CurrentOffset_PhaseB;
-        _State = STATE_CAl_CURRENT_OFFSET;
+        _State = STATE_COMPLETE;
       }
       break;
     case STATE_COMPLETE:
@@ -61,8 +61,6 @@ void CalibrationProcess::Execute(void){
 
 void CalibrationProcess::Reset(void){
 
-  _CurrentOffset_PhaseA = 0;
-  _CurrentOffset_PhaseB = 0;
   _CurrentOffsetSumA = 0;
   _CurrentOffsetSumB = 0;
   _CurrentOffsetSampleCnt = 0;

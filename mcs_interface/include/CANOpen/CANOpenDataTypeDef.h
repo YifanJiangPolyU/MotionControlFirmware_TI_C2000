@@ -59,7 +59,7 @@
 #define NMT_TEST_CLSW      0x90
 #define NMT_TEST_PLSW      0x91
 #define NMT_TEST_POLARITY  0x92
-
+#define NMT_TEST_CALIBRATION  0x93
 
 typedef struct ObdAccessHandleTypedef{
   uint16_t AccessType     :  8;
