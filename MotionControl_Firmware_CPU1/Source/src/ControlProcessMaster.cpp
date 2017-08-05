@@ -85,7 +85,7 @@ void ControlProcessMaster::Execute(void){
   // execute commutation angle calculation
 
   // check for errors
-  CheckCurrentOverload();
+  //CheckCurrentOverload();
 
   // update state machine
   UpdateMotionControlState();

@@ -49,10 +49,11 @@ void PwrEnable(void){
   EPwm6Regs.CMPA.bit.CMPA = 0;
 */
   // enable PWM output by clearing PWM trip
+  EALLOW;
   EPwm4Regs.TZCLR.bit.OST = 1;
   EPwm5Regs.TZCLR.bit.OST = 1;
   EPwm6Regs.TZCLR.bit.OST = 1;
-
+  EDIS;
 
   // set DRV8301 gate enable
   SetDrv8301GateEnable();
@@ -66,10 +67,11 @@ void PwrDisable(void){
   ClearDrv8301GateEnable();
 
   // force PWM trip
+  EALLOW;
   EPwm4Regs.TZFRC.bit.OST = 1;
   EPwm5Regs.TZFRC.bit.OST = 1;
   EPwm6Regs.TZFRC.bit.OST = 1;
-
+  EDIS;
 /*
   // set duty to 0
   EPwm4Regs.CMPA.bit.CMPA = 0;
