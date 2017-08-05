@@ -54,8 +54,8 @@
     float32_t sensorSampleA;
     #pragma DATA_SECTION(sensorSampleB,"CLADataLS1")
     float32_t sensorSampleB;
-    #pragma DATA_SECTION(dcVoltageSense,"CLADataLS1")
-    float32_t dcVoltageSense;
+    #pragma DATA_SECTION(CLA_DcLinkVoltageSense,"CLADataLS1")
+    float32_t CLA_DcLinkVoltageSense;
 
     // ADC data buffer
     #pragma DATA_SECTION(CLA_SampleBufferA,"CLADataLS1")

@@ -47,6 +47,8 @@ void ControlProcessData::UpdateMeasurements(void){
   _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+9);
   _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+9);
 
+  _VoltageValueDcLine = (int32_t)CLA_DcLinkVoltageSense;
+
   PhaseCurrent.A = _CurrentActualValue.A;
   PhaseCurrent.B = _CurrentActualValue.B;
   PhaseCurrent.C = -PhaseCurrent.A-PhaseCurrent.B;

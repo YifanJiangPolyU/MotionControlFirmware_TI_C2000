@@ -53,6 +53,10 @@ void PwrEnable(void){
   EPwm4Regs.TZCLR.bit.OST = 1;
   EPwm5Regs.TZCLR.bit.OST = 1;
   EPwm6Regs.TZCLR.bit.OST = 1;
+
+  EPwm4Regs.TZOSTCLR.bit.OST1 = 1;
+  EPwm5Regs.TZOSTCLR.bit.OST1 = 1;
+  EPwm6Regs.TZOSTCLR.bit.OST1 = 1;
   EDIS;
 
   // set DRV8301 gate enable

@@ -378,9 +378,9 @@ void EPWM_GroupInit(void){
   EPwm4Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
   EPwm4Regs.TBCTL.bit.CLKDIV = TB_DIV1;
   // PWM trip
-  EPwm4Regs.TZSEL.bit.OSHT1 = 1;                      // enable on-shot triping
-  EPwm4Regs.TZCTL.bit.TZA = TZ_FORCE_LO;              // force A to low (higher gate cut-off)
-  EPwm4Regs.TZCTL.bit.TZB = TZ_FORCE_HI;              // force B to high (lower gates conducting)
+  //EPwm4Regs.TZSEL.bit.OSHT1 = 1;                      // enable on-shot triping
+  //EPwm4Regs.TZCTL.bit.TZA = TZ_FORCE_LO;              // force A to low (higher gate cut-off)
+  //EPwm4Regs.TZCTL.bit.TZB = TZ_FORCE_HI;              // force B to high (lower gates conducting)
 
   // set up EPWM4 sync source to EPWM1SYNCOUT
   // EPWM 5~6 sync signals are connected to EPWM4 internally
@@ -405,9 +405,9 @@ void EPWM_GroupInit(void){
   EPwm5Regs.DBFED.bit.DBFED = 12;
   EPwm5Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
   EPwm5Regs.TBCTL.bit.CLKDIV = TB_DIV1;
-  EPwm5Regs.TZSEL.bit.OSHT1 = 1;                      // enable on-shot triping
-  EPwm5Regs.TZCTL.bit.TZA = TZ_FORCE_LO;              // force A to low (higher gate cut-off)
-  EPwm5Regs.TZCTL.bit.TZB = TZ_FORCE_HI;              // force B to high (lower gates conducting)
+  //EPwm5Regs.TZSEL.bit.OSHT1 = 1;                      // enable on-shot triping
+  //EPwm5Regs.TZCTL.bit.TZA = TZ_FORCE_LO;              // force A to low (higher gate cut-off)
+  //EPwm5Regs.TZCTL.bit.TZB = TZ_FORCE_HI;              // force B to high (lower gates conducting)
 
   // EPWM6, up-down, 32 kHz
   EPwm6Regs.CMPA.bit.CMPA = 100;
@@ -428,9 +428,9 @@ void EPWM_GroupInit(void){
   EPwm6Regs.DBFED.bit.DBFED = 12;
   EPwm6Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;
   EPwm6Regs.TBCTL.bit.CLKDIV = TB_DIV1;
-  EPwm6Regs.TZSEL.bit.OSHT1 = 1;                      // enable on-shot triping
-  EPwm6Regs.TZCTL.bit.TZA = TZ_FORCE_LO;              // force A to low (higher gate cut-off)
-  EPwm6Regs.TZCTL.bit.TZB = TZ_FORCE_HI;              // force B to high (lower gates conducting)
+  //EPwm6Regs.TZSEL.bit.OSHT1 = 1;                      // enable on-shot triping
+  //EPwm6Regs.TZCTL.bit.TZA = TZ_FORCE_LO;              // force A to low (higher gate cut-off)
+  //EPwm6Regs.TZCTL.bit.TZB = TZ_FORCE_HI;              // force B to high (lower gates conducting)
 
 /*
   // EPWM4: trigger control process master

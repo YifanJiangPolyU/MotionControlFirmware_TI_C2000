@@ -23,18 +23,18 @@ __interrupt void Cla1Task1 ( void )
   AdccRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
   sensorSampleA = AdccResultRegs.ADCRESULT0;
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
-  dcVoltageSense = AdcaResultRegs.ADCRESULT0;
+  CLA_DcLinkVoltageSense = AdcaResultRegs.ADCRESULT0;
 
   sensorSampleA *= CLA_CurrentSenseGain_Phase;
   sensorSampleB *= CLA_CurrentSenseGain_Phase;
   sensorSampleA += CLA_CurrentSenseOffset_PhaseA;
   sensorSampleB += CLA_CurrentSenseOffset_PhaseB;
-  dcVoltageSense *= CLA_VoltageSenseGain;
+  CLA_DcLinkVoltageSense *= CLA_VoltageSenseGain;
 
   // pass samples through low-pass filter
 
   // save sample to buffer
-  CLA_VoltageBuffer[CLA_SampleCounter] = dcVoltageSense;
+  CLA_VoltageBuffer[CLA_SampleCounter] = CLA_DcLinkVoltageSense;
   CLA_SampleBufferA[CLA_SampleCounter] = sensorSampleA;
   CLA_SampleBufferB[CLA_SampleCounter++] = sensorSampleB;
 
