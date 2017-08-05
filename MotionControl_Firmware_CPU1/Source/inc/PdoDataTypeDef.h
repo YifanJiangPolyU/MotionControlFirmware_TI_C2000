@@ -32,7 +32,7 @@
  */
 typedef struct PdoCLSWTypedef{
   int16_t CurrentActual[4];
-  uint16_t Reserved;
+  uint16_t StatusReg;
 }PdoMessageCLSW;
 
 /**
@@ -43,7 +43,7 @@ typedef struct PdoPLSWTypedef{
   uint16_t Status;
   int32_t EncPos;
   int16_t CurrentDemand;
-  uint16_t Reserved;
+  uint16_t StatusReg;
 }PdoMessagePLSW;
 
 /**
@@ -54,7 +54,7 @@ typedef struct PdoPOSTypedef{
   int32_t TargetEncPos;
   int16_t TargetSpeed;
   int16_t TargetAccel;
-  uint16_t Reserved;
+  uint16_t StatusReg;
 }PdoMessagePOS;
 
 /**
@@ -63,7 +63,8 @@ typedef struct PdoPOSTypedef{
  */
 typedef struct PdoCURRENTypedef{
   int32_t TargetCurrent_Q;
-  uint16_t Reserved[3];
+  uint16_t Reserved[2];
+  uint16_t StatusReg;
 }PdoMessageCURRENT;
 
 /**
@@ -71,7 +72,8 @@ typedef struct PdoCURRENTypedef{
  *  send debug data
  */
 typedef struct PdoDEBUGTypedef{
-  uint16_t Reserved[5];
+  uint16_t Reserved[4];
+  uint16_t StatusReg;
 }PdoMessageDEBUG;
 
 typedef union PdoDataTypedef{

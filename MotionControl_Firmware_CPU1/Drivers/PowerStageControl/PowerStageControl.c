@@ -16,6 +16,8 @@
 #include "Drivers/GpioDriver/GpioDriver.h"
 #include "F2837xD_epwm.h"
 
+static bool _PowerEnabled = false;
+
 /**
  *  enable current, voltage, and temperature sampling
  */
@@ -43,11 +45,6 @@ void PwmTimerEnable(void){
   */
 void PwrEnable(void){
 /*
-  // set duty to 0 before enabling
-  EPwm4Regs.CMPA.bit.CMPA = 0;
-  EPwm5Regs.CMPA.bit.CMPA = 0;
-  EPwm6Regs.CMPA.bit.CMPA = 0;
-*/
   // enable PWM output by clearing PWM trip
   EALLOW;
   EPwm4Regs.TZCLR.bit.OST = 1;
@@ -58,9 +55,17 @@ void PwrEnable(void){
   EPwm5Regs.TZOSTCLR.bit.OST1 = 1;
   EPwm6Regs.TZOSTCLR.bit.OST1 = 1;
   EDIS;
+*/
+
+ // set duty to 0 before enabling
+ EPwm4Regs.CMPA.bit.CMPA = 500;
+ EPwm5Regs.CMPA.bit.CMPA = 500;
+ EPwm6Regs.CMPA.bit.CMPA = 500;
 
   // set DRV8301 gate enable
   SetDrv8301GateEnable();
+
+  _PowerEnabled = true;
 }
 
 /**
@@ -70,18 +75,22 @@ void PwrDisable(void){
   // Clear DRV8301 gate enable
   ClearDrv8301GateEnable();
 
+  _PowerEnabled = true;
+
+/*
   // force PWM trip
   EALLOW;
   EPwm4Regs.TZFRC.bit.OST = 1;
   EPwm5Regs.TZFRC.bit.OST = 1;
   EPwm6Regs.TZFRC.bit.OST = 1;
   EDIS;
-/*
+*/
+
   // set duty to 0
   EPwm4Regs.CMPA.bit.CMPA = 0;
   EPwm5Regs.CMPA.bit.CMPA = 0;
   EPwm6Regs.CMPA.bit.CMPA = 0;
-*/
+
 }
 
 /**
@@ -92,7 +101,14 @@ void PwrDisable(void){
 #pragma CODE_SECTION(PwrSetPwmDuty, ".TI.ramfunc");
 void PwrSetPwmDuty(PwmDutyVec * duty){
 
-  EPwm4Regs.CMPA.bit.CMPA = duty->A;
-  EPwm5Regs.CMPA.bit.CMPA = duty->B;
-  EPwm6Regs.CMPA.bit.CMPA = duty->C;
+  if(_PowerEnabled){
+    EPwm4Regs.CMPA.bit.CMPA = duty->A;
+    EPwm5Regs.CMPA.bit.CMPA = duty->B;
+    EPwm6Regs.CMPA.bit.CMPA = duty->C;
+  } else {
+    EPwm4Regs.CMPA.bit.CMPA = 0;
+    EPwm5Regs.CMPA.bit.CMPA = 0;
+    EPwm6Regs.CMPA.bit.CMPA = 0;
+  }
+
 }

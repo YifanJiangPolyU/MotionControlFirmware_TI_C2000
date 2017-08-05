@@ -106,6 +106,7 @@ public:
 
 
   uint16_t _SyncFlag;
+  uint16_t _SystemStatusReg;
   bool     _OperationEnabled;
 
   uint16_t _ControlProcess;       // control process used for operation

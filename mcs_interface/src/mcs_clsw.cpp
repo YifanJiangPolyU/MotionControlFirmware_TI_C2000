@@ -47,6 +47,7 @@ enum CLSW_STATE {
   STATE_SET_AMPLITUDE,
   STATE_ASK_CNT,
   STATE_GET_CNT,
+  STATE_CALIBRATE,
   STATE_START,
   STATE_GET_DATA,
   STATE_ANALYZE,
@@ -77,6 +78,7 @@ void SetRampRate(void);
 void SetAmplitude(void);
 void SetPhase(void);
 void RequestDataSize(void);
+void StartCalibration(void);
 void StartSweepSineTest(void);
 
 int main(int argc, char **argv){
@@ -149,6 +151,13 @@ int main(int argc, char **argv){
         break;
       case STATE_GET_CNT:
         // wait for the reception of SDO reply
+        if(ReadyFlag==true){
+          ReadyFlag = false;
+          _state = STATE_START;
+          //StartCalibration();
+        }
+        break;
+      case STATE_CALIBRATE :
         if(ReadyFlag==true){
           ReadyFlag = false;
           _state = STATE_START;
@@ -272,6 +281,13 @@ void RequestDataSize(void){
   sdo_pub.publish(SdoMsg);
 }
 
+void StartCalibration(void){
+  mcs_interface::CiA_NmtMessage msg1;
+  msg1.NodeID = 0x03;
+  msg1.State = NMT_TEST_CALIBRATION;
+  nmt_pub.publish(msg1);
+}
+
 void StartSweepSineTest(void){
   mcs_interface::CiA_NmtMessage msg1;
   msg1.NodeID = 0x03;
@@ -281,14 +297,20 @@ void StartSweepSineTest(void){
 
 void PdoCallback(const mcs_interface::CiA_PdoMessage::ConstPtr& msg){
   PdoData data;
+  SystemStatusReg status;
+
+  data.data[0] = msg->Data[0];
+  data.data[1] = msg->Data[1];
+  data.data[2] = msg->Data[2];
+  data.data[3] = msg->Data[3];
+  data.data[4] = msg->Data[4];
+
+  status.all = data.clsw.StatusReg;
+  printf("status: %d\n", status.bit.State);
+
   if(PkgCounter<NumberOfPkg){
     if(msg->PDO_ID==PDO_ID_CLSW){
       PkgCounter += 1;
-      data.data[0] = msg->Data[0];
-      data.data[1] = msg->Data[1];
-      data.data[2] = msg->Data[2];
-      data.data[3] = msg->Data[3];
-      data.data[4] = msg->Data[4];
 
       OutputFile << data.clsw.CurrentActual[0] << std::endl;
       OutputFile << data.clsw.CurrentActual[1] << std::endl;

@@ -109,6 +109,7 @@ void ControlProcessMaster::Execute(void){
 
   // update synchronization flag
   _ControlProcessData->_SyncFlag = _CycleCounter;
+  _ControlProcessData->_SystemStatusReg = _StatusReg.all;
 }
 
 /**
@@ -132,7 +133,6 @@ void ControlProcessMaster::CheckCurrentOverload(void){
     PwrDisable();
     SetErrorLed();
 
-    _StatusReg.bit.State = _State;
     _StatusReg.bit.ErrOverCurrentPeak = 1;
   }
 
@@ -154,7 +154,6 @@ void ControlProcessMaster::CheckCurrentOverload(void){
       PwrDisable();
       SetErrorLed();
 
-      _StatusReg.bit.State = _State;
       _StatusReg.bit.ErrOverCurrentRms = 1;
     }
   }
@@ -244,7 +243,6 @@ void ControlProcessMaster::UpdateMotionControlState(void){
 
           // clear error register
           _StatusReg.all = 0;
-          _StatusReg.bit.State = _State;
         }
       }
       break;
@@ -252,6 +250,8 @@ void ControlProcessMaster::UpdateMotionControlState(void){
       // should not get here
       break;
   }
+
+  _StatusReg.bit.State = _State;
 }
 
 /**

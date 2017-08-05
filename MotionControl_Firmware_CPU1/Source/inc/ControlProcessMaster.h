@@ -66,7 +66,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     void AccessMotorCurrentLimitTimeConstant(ObdAccessHandle * handle);
 
     // define system status and error flags
-    typedef struct ControlProcessMaster_Status_typedef{
+    typedef struct StatusRefBit_typedef{
       uint16_t State :                3;
       uint16_t ErrOverCurrentPeak :   1;
       uint16_t ErrOverCurrentRms :    1;
@@ -78,12 +78,12 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
       uint16_t ErrHardware :          1;
       uint16_t ErrCommunication :     1;
       uint16_t reserve :              5;
-    } ControlProcessMaster_Status;
+    } StatusRefBit;
 
-    typedef union ControlProcessMasterStatusRegTypedef{
-      ControlProcessMaster_Status bit;
+    typedef union SystemStatusRegTypedef{
+      StatusRefBit bit;
       uint16_t all;
-    }ControlProcessMaster_StatusReg;
+    }SystemStatusReg;
 
   private:
     void UpdateMotionControlState(void);
@@ -99,7 +99,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     uint16_t _CycleCounter;
     uint16_t _NmtNewState;
     bool _NmtUpdated;
-    ControlProcessMaster_StatusReg _StatusReg;
+    SystemStatusReg _StatusReg;
 
     CiA_Message _CiA_MsgBuffer;
     CiA_SdoMessage _CiA_SdoBuffer;

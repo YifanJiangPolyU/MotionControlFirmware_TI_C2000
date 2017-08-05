@@ -45,6 +45,7 @@ void PdoMaster::ComposeCLSW(CiA_Message * msg){
   data.clsw.CurrentActual[1] = _ControlProcessData->_CurrentSweepSineBuffer[1];
   data.clsw.CurrentActual[2] = _ControlProcessData->_CurrentSweepSineBuffer[2];
   data.clsw.CurrentActual[3] = _ControlProcessData->_CurrentSweepSineBuffer[3];
+  data.clsw.StatusReg = _ControlProcessData->_SystemStatusReg;
   _ControlProcessData->ClearCurrentSweepSineBuffer();
 
   CopyData(&data, msg);
@@ -58,6 +59,7 @@ void PdoMaster::ComposePLSW(CiA_Message * msg){
 
   data.plsw.EncPos = _ControlProcessData->_Position;
   data.plsw.CurrentDemand = _ControlProcessData->_DQCurrentSetpoint.Q;
+  data.plsw.StatusReg = _ControlProcessData->_SystemStatusReg;
 
   CopyData(&data, msg);
 
@@ -68,7 +70,7 @@ void PdoMaster::ComposePLSW(CiA_Message * msg){
 void PdoMaster::ComposeDEBUG(CiA_Message * msg){
 
   PdoData data;
-
+  data.debug.StatusReg = _ControlProcessData->_SystemStatusReg;
   CopyData(&data, msg);
 
   msg->Pdo.PDO_ID = PDO_ID_DEBUG;

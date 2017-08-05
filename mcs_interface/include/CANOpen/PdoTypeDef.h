@@ -26,7 +26,7 @@
  */
 typedef struct PdoCLSWTypedef{
   int16_t CurrentActual[4];
-  uint16_t Reserved;
+  uint16_t StatusReg;
 }PdoMessageCLSW;
 
 /**
@@ -37,7 +37,7 @@ typedef struct PdoPLSWTypedef{
   uint16_t Status;
   int32_t EncPos;
   int16_t CurrentDemand;
-  uint16_t Reserved;
+  uint16_t StatusReg;
 }PdoMessagePLSW;
 
 /**
@@ -48,7 +48,7 @@ typedef struct PdoPOSTypedef{
   int32_t TargetEncPos;
   int16_t TargetSpeed;
   int16_t TargetAccel;
-  uint16_t Reserved;
+  uint16_t StatusReg;
 }PdoMessagePOS;
 
 /**
@@ -57,7 +57,8 @@ typedef struct PdoPOSTypedef{
  */
 typedef struct PdoCURRENTypedef{
   int32_t TargetCurrent_Q;
-  uint16_t Reserved[3];
+  uint16_t Reserved[2];
+  uint16_t StatusReg;
 }PdoMessageCURRENT;
 
 /**
@@ -65,7 +66,8 @@ typedef struct PdoCURRENTypedef{
  *  send debug data
  */
 typedef struct PdoDEBUGTypedef{
-  uint16_t Reserved[5];
+  uint16_t Reserved[4];
+  uint16_t StatusReg;
 }PdoMessageDEBUG;
 
 typedef union PdoDataTypedef{
@@ -74,5 +76,27 @@ typedef union PdoDataTypedef{
   PdoMessageDEBUG   debug;
   uint16_t          data[5];
 }PdoData;
+
+/**
+ *  define data struct
+ */
+ typedef struct StatusRefBit_typedef{
+       uint16_t State :                3;
+       uint16_t ErrOverCurrentPeak :   1;
+       uint16_t ErrOverCurrentRms :    1;
+       uint16_t ErrOverTemperature :   1;
+       uint16_t ErrUnderVoltage :      1;
+       uint16_t ErrOverVoltage :       1;
+       uint16_t ErrPowerStage :        1;
+       uint16_t ErrSoftware :          1;
+       uint16_t ErrHardware :          1;
+       uint16_t ErrCommunication :     1;
+       uint16_t reserve :              5;
+} StatusRefBit;
+
+typedef union SystemStatusRegTypedef{
+  StatusRefBit bit;
+  uint16_t all;
+}SystemStatusReg;
 
 #endif
