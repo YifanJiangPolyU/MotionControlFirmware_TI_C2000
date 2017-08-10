@@ -58,9 +58,9 @@ void PwrEnable(void){
 */
 
  // set duty to 0 before enabling
- EPwm4Regs.CMPA.bit.CMPA = 500;
- EPwm5Regs.CMPA.bit.CMPA = 500;
- EPwm6Regs.CMPA.bit.CMPA = 500;
+ EPwm4Regs.CMPA.bit.CMPA = 550;
+ EPwm5Regs.CMPA.bit.CMPA = 550;
+ EPwm6Regs.CMPA.bit.CMPA = 400;
 
   // set DRV8301 gate enable
   SetDrv8301GateEnable();

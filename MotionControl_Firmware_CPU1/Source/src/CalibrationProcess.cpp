@@ -45,7 +45,7 @@ void CalibrationProcess::Execute(void){
       if(_CurrentOffsetCycleCnt==0){
         _CurrentOffset_PhaseA -= _CurrentOffsetSumA / (float32_t)_CurrentOffsetSampleCnt;
         _CurrentOffset_PhaseB -= _CurrentOffsetSumB / (float32_t)_CurrentOffsetSampleCnt;
-        CLA_CurrentSenseOffset_PhaseA = _CurrentOffset_PhaseB;
+        CLA_CurrentSenseOffset_PhaseA = _CurrentOffset_PhaseA;
         CLA_CurrentSenseOffset_PhaseB = _CurrentOffset_PhaseB;
         _State = STATE_COMPLETE;
       }
@@ -61,12 +61,19 @@ void CalibrationProcess::Execute(void){
 
 void CalibrationProcess::Reset(void){
 
+  PwmDutyVec Pwm;
+  Pwm.A = 0;
+  Pwm.B = 0;
+  Pwm.C = 0;
+
   _CurrentOffsetSumA = 0;
   _CurrentOffsetSumB = 0;
   _CurrentOffsetSampleCnt = 0;
   _CurrentOffsetCycleCnt = 4;
 
   _State = STATE_CAl_CURRENT_OFFSET;
+
+  PwrSetPwmDuty(&Pwm);
 }
 
 
