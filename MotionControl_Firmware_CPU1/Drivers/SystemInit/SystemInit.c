@@ -267,15 +267,31 @@ void SPI_Init(void){
 
   // Initialize SPI-B
 
+  // init buffer
+  SpibRegs.SPIFFTX.all = 0xE040;
+  SpibRegs.SPIFFRX.all = 0x2044;
+  SpibRegs.SPIFFCT.all = 0x0;
+
+
+  SpibRegs.SPIFFTX.bit.SPIFFENA = 1; // enable
+  SpibRegs.SPIFFTX.bit.TXFFIENA = 0;
+  SpibRegs.SPIFFTX.bit.TXFFIL = 0;   // disable tx interrupt
+
+  SpibRegs.SPIFFRX.bit.RXFFOVFCLR = 1;   // clear RX buffer overflow flag
+  SpibRegs.SPIFFRX.bit.RXFIFORESET = 1;  // force reset
+  SpibRegs.SPIFFRX.bit.RXFFIENA = 0;     // disable rx interrupt
+
+
+
   // Set reset low before configuration changes
   // Clock polarity (0 == data output at rising, input sampled at falling
   //                 1 == data output at falling, input sampled at rising )
   // 16-bit character
-  // Disable loop-back
+  // enable loop-back for testing
   SpibRegs.SPICCR.bit.SPISWRESET = 0;
   SpibRegs.SPICCR.bit.CLKPOLARITY = 0;
   SpibRegs.SPICCR.bit.SPICHAR = (16-1);
-  SpibRegs.SPICCR.bit.SPILBK = 0;
+  SpibRegs.SPICCR.bit.SPILBK = 1;
 
   // Enable master (0 == slave, 1 == master)
   // Enable transmission (Talk)
@@ -297,6 +313,7 @@ void SPI_Init(void){
 
   // Release the SPI from reset
   SpibRegs.SPICCR.bit.SPISWRESET = 1;
+
 }
 
 /**

@@ -27,7 +27,7 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
   }
 }
  */
- 
+
 void main(void)
 {
   // Initialize System Control:
@@ -53,7 +53,7 @@ void main(void)
   EPWM_GroupInit();
   EQEP_GroupInit();
   UART_Init();
-
+  SPI_Init();
   // configure CLA
   CLA_ConfigClaMemory();
   CLA_InitCpu1Cla1();
@@ -83,6 +83,12 @@ void main(void)
 
   // turn off red LED
   GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
+
+  // transmit some fummy data over SPI to test it
+  SpibRegs.SPITXBUF = 0x11;
+  SpibRegs.SPITXBUF = 0x22;
+  SpibRegs.SPITXBUF = 0xAA;
+  SpibRegs.SPITXBUF = 0xBB;
 
   //  start sys/bios
   BIOS_start();
