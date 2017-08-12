@@ -15,7 +15,8 @@
 #include "ControlProcessMaster.h"
 #include "Drivers/PowerStageControl/PowerStageControl.h"
 #include "Drivers/GpioDriver/GpioDriver.h"
-
+#include <ti/sysbios/BIOS.h>
+#include <ti/sysbios/knl/Task.h>
 
 /**
  *  pointer to globally unique object of ControlProcessMaster
@@ -289,6 +290,30 @@ void ControlProcessMaster::SignalErrorState(void){
 }
 
 /**
+ *  Blink LED is power is disabled.
+ *  Turn ON LED if power enabled,
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+void ControlProcessMaster::BlinkLED(void){
+  for(;;){
+    if((_State==STATE_SWITCHED_ON)||(_State==STATE_OPERATION)){
+      // turn on status LED if power enabled
+      GpioDataRegs.GPADAT.bit.GPIO31 = 0;
+    } else if(_State==STATE_FAULT){
+      // turn off status LED in fault state
+      GpioDataRegs.GPADAT.bit.GPIO31 = 1;
+    } else {
+      // blink status LED otherwise
+      GpioDataRegs.GPADAT.bit.GPIO31 = 1;
+      Task_sleep(125);
+      GpioDataRegs.GPADAT.bit.GPIO31 = 0;
+      Task_sleep(125);
+    }
+
+  }
+}
+
+/**
  *  C warper to call ControlProcessMaster from ISR
  */
 #pragma CODE_SECTION(".TI.ramfunc");
@@ -306,6 +331,13 @@ extern "C" void SignalControlProcessMasterError(void){
   ControlProcessMasterPtr->SignalErrorState();
 }
 
+/**
+ *  C warper function for SysBios tasks
+ */
+#pragma CODE_SECTION(".TI.ramfunc");
+extern "C" void OsTaskWarper_BlinkLED(UArg a0, UArg a1){
+  ControlProcessMasterPtr->BlinkLED();
+}
 
 
 void ControlProcessMaster::AccessMotionControlState(ObdAccessHandle * handle){

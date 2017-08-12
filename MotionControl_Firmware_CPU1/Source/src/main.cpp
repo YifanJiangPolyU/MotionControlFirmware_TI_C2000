@@ -15,7 +15,7 @@
 
 /*
  *  ======== taskFxn ========
- */
+
 #pragma CODE_SECTION(".TI.ramfunc");
 extern "C" Void taskFxn(UArg a0, UArg a1)
 {
@@ -26,7 +26,8 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
     Task_sleep(500);
   }
 }
-
+ */
+ 
 void main(void)
 {
   // Initialize System Control:

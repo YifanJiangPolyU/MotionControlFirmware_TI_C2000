@@ -60,6 +60,7 @@ class ControlProcessMaster: public ObjectDictionaryEntryBase{
     void CheckCurrentOverload(void);
     void SignalErrorState(void);
     void Execute(void);
+    void BlinkLED(void);
 
     void AccessMotionControlState(ObdAccessHandle * handle);
     void AccessSystemStatusReg(ObdAccessHandle * handle);
