@@ -143,6 +143,12 @@ void GPIO_GroupInit(void){
   GPIO_SetupPinMux(42, GPIO_MUX_CPU1, 15);
   GPIO_SetupPinOptions(42, GPIO_OUTPUT, GPIO_ASYNC); // Tx
 
+  // configure SPI pins
+  GPIO_SetupPinMux(63, GPIO_MUX_CPU1, 15); // SPIB SIMO
+  GPIO_SetupPinOptions(43, GPIO_OUTPUT, GPIO_PUSHPULL);
+  GPIO_SetupPinMux(64, GPIO_MUX_CPU1, 15); // SPIB SOMI
+  GPIO_SetupPinOptions(43, GPIO_INPUT, GPIO_ASYNC);
+
   // PWM output pins
   GPIO_SetupPinMux(6, GPIO_MUX_CPU1, 1);
   GPIO_SetupPinOptions(6, GPIO_OUTPUT, GPIO_ASYNC);
@@ -247,6 +253,50 @@ EDIS;
   SciaRegs.SCIFFTX.bit.TXFIFORESET = 1;
   SciaRegs.SCIFFRX.bit.RXFIFORESET = 1;
 
+}
+
+/**
+ *  initialize SPI interface here
+*/
+void SPI_Init(void){
+
+  EALLOW;
+    //enable SPI clock here
+    CpuSysRegs.PCLKCR8.bit.SPI_B = 1;
+  EDIS;
+
+  // Initialize SPI-B
+
+  // Set reset low before configuration changes
+  // Clock polarity (0 == data output at rising, input sampled at falling
+  //                 1 == data output at falling, input sampled at rising )
+  // 16-bit character
+  // Disable loop-back
+  SpibRegs.SPICCR.bit.SPISWRESET = 0;
+  SpibRegs.SPICCR.bit.CLKPOLARITY = 0;
+  SpibRegs.SPICCR.bit.SPICHAR = (16-1);
+  SpibRegs.SPICCR.bit.SPILBK = 0;
+
+  // Enable master (0 == slave, 1 == master)
+  // Enable transmission (Talk)
+  // Clock phase (0 == normal, 1 == delayed)
+  // SPI interrupts are disabled
+  SpibRegs.SPICTL.bit.MASTER_SLAVE = 1;
+  SpibRegs.SPICTL.bit.TALK = 1;
+  SpibRegs.SPICTL.bit.CLK_PHASE = 0;
+  SpibRegs.SPICTL.bit.SPIINTENA = 0;
+
+  // Set the baud rate
+  // SpiClk = LSPCLK/(SPIBRR+1)
+  // LSPCLK = 100 MHz
+  SpibRegs.SPIBRR.bit.SPI_BIT_RATE = 199; // SpiClk = 500kHz
+
+  // Set FREE bit
+  // Halting on a breakpoint will not halt the SPI
+  SpibRegs.SPIPRI.bit.FREE = 1;
+
+  // Release the SPI from reset
+  SpibRegs.SPICCR.bit.SPISWRESET = 1;
 }
 
 /**

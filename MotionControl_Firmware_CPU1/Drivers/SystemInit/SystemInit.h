@@ -38,6 +38,8 @@ extern void EQEP_GroupInit(void);
 extern void CLA_ConfigClaMemory(void);
 extern void CLA_InitCpu1Cla1(void);
 
+extern void SPI_Init(void);
+
 #ifdef __cplusplus
   }
 #endif
