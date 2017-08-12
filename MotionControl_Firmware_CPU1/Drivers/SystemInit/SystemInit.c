@@ -17,43 +17,27 @@
 
 void SystemFullInit(void){
 
-  // temporarily disable watch dog
-  DisableDog();
-
-  // initialize memory
+  // Initialize System Control:
+  InitSysCtrl();
   SystemMemoryInit();
 
-#ifdef CPU1
-  // set state of unused GPIOs
-  // only CPI1 need to do this
-  GPIO_EnableUnbondedIOPullups();
+  // UART does not work without this, don't know why
+  DELAY_US(500000);
 
-  // re-init system clock, overriding SYS/BIOS setting
-  // only CPI1 need to do this
-  InitSysPll(XTAL_OSC,IMULT_40,FMULT_0,PLLCLK_BY_2);
-#endif
-
+  // temporarily disable interrupt
+  // re-enabled inside Interrupt_init()
   DINT;
 
-  // enable CLAs
-  EALLOW;
-  DevCfgRegs.DC1.bit.CPU1_CLA1 = 1;
-  EDIS;
-
-  // initialize CLA
-  CLA_ConfigClaMemory();
-  CLA_InitCpu1Cla1();
-
-  // initialize peripherals
+  // Configure other peripherals
   GPIO_GroupInit();
   ADC_GroupInit();
   EPWM_GroupInit();
-
-  // initialize all interrupt settings here
-  Interrupt_Init();
-
-  EINT;  // Enable Global interrupt INTM
-  ERTM;  // Enable Global realtime interrupt DBGM
+  EQEP_GroupInit();
+  UART_Init();
+  SPI_Init();
+  // configure CLA
+  CLA_ConfigClaMemory();
+  CLA_InitCpu1Cla1();
 
 }
 
@@ -139,15 +123,17 @@ void GPIO_GroupInit(void){
 
   // UART Rx Tx pins
   GPIO_SetupPinMux(43, GPIO_MUX_CPU1, 15);
-  GPIO_SetupPinOptions(43, GPIO_INPUT, GPIO_PUSHPULL); // Rx
+  GPIO_SetupPinOptions(43, GPIO_INPUT, GPIO_ASYNC); // Rx
   GPIO_SetupPinMux(42, GPIO_MUX_CPU1, 15);
-  GPIO_SetupPinOptions(42, GPIO_OUTPUT, GPIO_ASYNC); // Tx
+  GPIO_SetupPinOptions(42, GPIO_OUTPUT, GPIO_PUSHPULL); // Tx
 
   // configure SPI pins
   GPIO_SetupPinMux(63, GPIO_MUX_CPU1, 15); // SPIB SIMO
-  GPIO_SetupPinOptions(43, GPIO_OUTPUT, GPIO_PUSHPULL);
+  GPIO_SetupPinOptions(63, GPIO_OUTPUT, GPIO_PUSHPULL);
   GPIO_SetupPinMux(64, GPIO_MUX_CPU1, 15); // SPIB SOMI
-  GPIO_SetupPinOptions(43, GPIO_INPUT, GPIO_ASYNC);
+  GPIO_SetupPinOptions(64, GPIO_INPUT, GPIO_ASYNC);
+  GPIO_SetupPinMux(66, GPIO_MUX_CPU1, 15); // SPIB CS (!SPISTE)
+  GPIO_SetupPinOptions(66, GPIO_INPUT, GPIO_ASYNC);
 
   // PWM output pins
   GPIO_SetupPinMux(6, GPIO_MUX_CPU1, 1);

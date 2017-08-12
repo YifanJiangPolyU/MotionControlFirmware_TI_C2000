@@ -30,33 +30,7 @@ extern "C" Void taskFxn(UArg a0, UArg a1)
 
 void main(void)
 {
-  // Initialize System Control:
-  InitSysCtrl();
-  SystemMemoryInit();
-
-  // UART does not work without this, don't know why
-  DELAY_US(500000);
-
-  // temporarily disable interrupt
-  // re-enabled inside Interrupt_init()
-  DINT;
-
-  // Map ISR functions
-  // EALLOW;
-  // PieVectTable.ADCA1_INT = &adca1_isr; //function for ADCA interrupt 1
-  // EDIS;
-  InitTempSensor(3.0);
-
-  // Configure other peripherals
-  GPIO_GroupInit();
-  ADC_GroupInit();
-  EPWM_GroupInit();
-  EQEP_GroupInit();
-  UART_Init();
-  SPI_Init();
-  // configure CLA
-  CLA_ConfigClaMemory();
-  CLA_InitCpu1Cla1();
+  SystemFullInit();
 
   // configure interrupt
   // Interrupt_Init();
