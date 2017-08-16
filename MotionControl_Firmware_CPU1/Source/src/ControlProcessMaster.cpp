@@ -60,7 +60,7 @@ char EnablePwrTestState = 0;
 void ControlProcessMaster::Execute(void){
 
   // Get data from current controller and ADC
-  UpdateProcessData();
+   UpdateProcessData();
 
   // testing PwrEnable
   // should be removed after test

@@ -323,7 +323,7 @@ void ProcessPdoMessage(CiA_Message* msg){
 void InitSerialPort(void){
 
   char _port[100];
-  strcpy(&(_port[0]), "/dev/ttyUSB0");
+  strcpy(&(_port[0]), "/dev/ttyUSB1");
   // if(argc == 2){
   //   strcpy(&(_port[0]), (const char*)(argv[1]));
   // }

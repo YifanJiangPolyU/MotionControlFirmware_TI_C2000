@@ -21,7 +21,10 @@ __interrupt void Cla1Task1 ( void )
 
   // reading ADC samples
   AdccRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
-  sensorSampleA = AdccResultRegs.ADCRESULT0;
+
+  // now sensorSampleA is phase C current, just for testing
+  // because phase C sense gain is known to be x10
+  sensorSampleA = AdcaResultRegs.ADCRESULT0;
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
   CLA_DcLinkVoltageSense = AdcaResultRegs.ADCRESULT0;
 

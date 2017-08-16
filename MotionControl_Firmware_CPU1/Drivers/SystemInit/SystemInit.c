@@ -277,7 +277,7 @@ void SPI_Init(void){
   SpibRegs.SPICCR.bit.SPISWRESET = 0;
   SpibRegs.SPICCR.bit.CLKPOLARITY = 0;
   SpibRegs.SPICCR.bit.SPICHAR = (16-1);
-  SpibRegs.SPICCR.bit.SPILBK = 1;
+  SpibRegs.SPICCR.bit.SPILBK = 0;
 
   // Enable master (0 == slave, 1 == master)
   // Enable transmission (Talk)
@@ -348,7 +348,7 @@ void ADC_GroupInit(void){
   AdcbRegs.ADCSOC0CTL.bit.TRIGSEL = 5;
 
   // DC line voltage
-  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 15;  //SOC0 will convert pin ADCIN15
+  AdcaRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin ADCIN15
   AdcaRegs.ADCSOC0CTL.bit.ACQPS = 63;
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0;
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 0;

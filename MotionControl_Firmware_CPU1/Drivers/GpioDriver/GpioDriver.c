@@ -46,12 +46,12 @@ void ClearStatusLed(void){
  *  Set Gate Enable pin for DRV8310 (@ GPIO26)
  */
 void SetDrv8301GateEnable(void){
-  GpioDataRegs.GPADAT.bit.GPIO26 = 0;
+  GpioDataRegs.GPADAT.bit.GPIO26 = 1;
 }
 
 /**
  *  clear Gate Enable pin for DRV8310 (@ GPIO26)
  */
 void ClearDrv8301GateEnable(void){
-  GpioDataRegs.GPADAT.bit.GPIO26 = 1;
+  GpioDataRegs.GPADAT.bit.GPIO26 = 0;
 }

@@ -12,21 +12,19 @@
 #include "SystemWarehouse.h"
 
 
+typedef struct DrvConfigType{
+  uint16_t Op   : 1;    // 1=read, 0=write
+  uint16_t Addr : 4;    // address
+  uint16_t Data : 11;   // data
+}DrvConfig;
 
-/*
- *  ======== taskFxn ========
+typedef union DrvAccessType{
+  DrvConfig bit;
+  uint16_t  all;
+}DrvAccess;
 
-#pragma CODE_SECTION(".TI.ramfunc");
-extern "C" Void taskFxn(UArg a0, UArg a1)
-{
-  for(;;){
-		GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    Task_sleep(500);
-		GpioDataRegs.GPADAT.bit.GPIO31 = 0;
-    Task_sleep(500);
-  }
-}
- */
+volatile uint16_t d1;
+volatile uint16_t d2;
 
 void main(void)
 {
@@ -58,11 +56,19 @@ void main(void)
   // turn off red LED
   GpioDataRegs.GPBDAT.bit.GPIO34 = 1;
 
-  // transmit some fummy data over SPI to test it
-  SpibRegs.SPITXBUF = 0x11;
-  SpibRegs.SPITXBUF = 0x22;
-  SpibRegs.SPITXBUF = 0xAA;
-  SpibRegs.SPITXBUF = 0xBB;
+  // read drv8301 status
+  DrvAccess handle;
+  handle.bit.Op = 1;
+  handle.bit.Addr = 0x02;
+  handle.bit.Data = 0;
+  SpibRegs.SPITXBUF = handle.all;
+  DELAY_US(100000);
+  SpibRegs.SPITXBUF = handle.all;
+
+  DELAY_US(500000);
+
+  //d1 = SpibRegs.SPIRXBUF;
+  //d2 = SpibRegs.SPIRXBUF;
 
   //  start sys/bios
   BIOS_start();

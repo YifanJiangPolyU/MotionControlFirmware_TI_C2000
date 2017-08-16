@@ -58,8 +58,8 @@ void PwrEnable(void){
 */
 
  // set duty to 0 before enabling
- EPwm4Regs.CMPA.bit.CMPA = 550;
- EPwm5Regs.CMPA.bit.CMPA = 550;
+ EPwm4Regs.CMPA.bit.CMPA = 800;
+ EPwm5Regs.CMPA.bit.CMPA = 800;
  EPwm6Regs.CMPA.bit.CMPA = 400;
 
   // set DRV8301 gate enable
@@ -75,7 +75,7 @@ void PwrDisable(void){
   // Clear DRV8301 gate enable
   ClearDrv8301GateEnable();
 
-  _PowerEnabled = true;
+  _PowerEnabled = false;
 
 /*
   // force PWM trip
