@@ -48,6 +48,8 @@ ros::Subscriber Pdo_sub;
 ros::Subscriber Nmt_sub;
 ros::Subscriber Sync_sub;
 
+std::string path_to_port;
+
 // global uart R/W handle
 int uart_handle;
 
@@ -55,6 +57,14 @@ int main(int argc, char **argv){
 
   ros::init(argc, argv, "mcs_interface");
   ros::NodeHandle node;
+
+  if(argc != 2){
+     printf("Usage: \n    rosrun mcs_interface mcs_interface /dev/ttyUSBx\n");
+     return 0;
+  } else {
+    path_to_port = argv[1];
+  }
+
 
   // initialize publisher
   SdoReply_pub = node.advertise<mcs_interface::CiA_SdoMessage>("SdoReply", 20);
@@ -323,7 +333,7 @@ void ProcessPdoMessage(CiA_Message* msg){
 void InitSerialPort(void){
 
   char _port[100];
-  strcpy(&(_port[0]), "/dev/ttyUSB1");
+  strcpy(&(_port[0]), path_to_port.c_str());
   // if(argc == 2){
   //   strcpy(&(_port[0]), (const char*)(argv[1]));
   // }

@@ -33,7 +33,7 @@
 
 
 const float StartFrequency = 1000; // Hz
-const float EndFrequency = 3000;
+const float EndFrequency = 5000;
 const float RampRate = 4000;
 const float Amplitude = 1000;
 const uint8_t Phase = 'C';
@@ -167,7 +167,7 @@ int main(int argc, char **argv){
         printf("    Starting current loop sweepsine.\n");
         StartSweepSineTest();
         DataRxComplete = false;
-        _state = STATE_GET_DATA;
+        _state = STATE_COMPLETE;
         printf("    Collecting data ...\n");
         break;
       case STATE_GET_DATA :
@@ -291,7 +291,7 @@ void StartCalibration(void){
 void StartSweepSineTest(void){
   mcs_interface::CiA_NmtMessage msg1;
   msg1.NodeID = 0x03;
-  msg1.State = NMT_TEST_CLSW;
+  msg1.State = NMT_TEST_CALIBRATION;//NMT_TEST_CLSW;
   nmt_pub.publish(msg1);
 }
 
