@@ -82,10 +82,10 @@ PwmDutyVec CurrentLoopSweepSine::ExecuteClosedLoopSweepSine(void){
 
   if(_ActivePhase==0){
     CurrenDemand.A = GenerateSweepSine();
-    _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.A);
+    _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenActual.A);
   } else {
     CurrenDemand.B = GenerateSweepSine();
-    _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenDemand.B);
+    _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenActual.B);
   }
 
   Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
