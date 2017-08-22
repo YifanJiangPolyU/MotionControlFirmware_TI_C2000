@@ -30,6 +30,8 @@ void main(void)
 {
   SystemFullInit();
 
+  InitTempSensor(3.0);
+
   // configure interrupt
   // Interrupt_Init();
 

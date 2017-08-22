@@ -333,7 +333,7 @@ void ADC_GroupInit(void){
 
   // phase A current
   AdccRegs.ADCSOC0CTL.bit.CHSEL = 4;     //SOC0 will convert pin C4 (phase A)
-  AdccRegs.ADCSOC0CTL.bit.ACQPS = 63;    //sample window is 64 SYSCLK cycles
+  AdccRegs.ADCSOC0CTL.bit.ACQPS = 399;    //sample window is 64 SYSCLK cycles
   AdccRegs.ADCINTSEL1N2.bit.INT1SEL = 0; //end of EOC0 will set INT1 flag
   AdccRegs.ADCINTSEL1N2.bit.INT1E = 1;   //enable INT1 flag
   AdccRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -341,7 +341,7 @@ void ADC_GroupInit(void){
 
   // phase B current
   AdcbRegs.ADCSOC0CTL.bit.CHSEL = 4;  //SOC0 will convert pin B4 (phase B)
-  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 63;
+  AdcbRegs.ADCSOC0CTL.bit.ACQPS = 399;
   AdcbRegs.ADCINTSEL1N2.bit.INT1SEL = 0;
   AdcbRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcbRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
@@ -349,7 +349,7 @@ void ADC_GroupInit(void){
 
   // DC line voltage
   AdcaRegs.ADCSOC0CTL.bit.CHSEL = 15;  //SOC0 will convert pin ADCIN15
-  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 63;
+  AdcaRegs.ADCSOC0CTL.bit.ACQPS = 399;
   AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = 0;
   AdcaRegs.ADCINTSEL1N2.bit.INT1E = 0;
   AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = 1;
