@@ -88,7 +88,11 @@ PwmDutyVec CurrentLoopSweepSine::ExecuteClosedLoopSweepSine(void){
     _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)CurrenActual.B);
   }
 
-  Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
+  //Pwm = _CurrentLoopController->Execute(&CurrenDemand, &CurrenActual);
+
+  Pwm.A = 0;
+  Pwm.B = 0;
+  Pwm.C = 0;
 
   return Pwm;
 }
@@ -114,6 +118,10 @@ PwmDutyVec CurrentLoopSweepSine::ExecuteOpenLoopSweepSine(void){
   PwmModulation(&VoltageABC, &Pwm, VoltToPwmScaleFactor);
 
   _ControlProcessData->SetCurrentSweepSineBuffer((int16_t)VoltageAlBe.Alpha);
+
+  Pwm.A = 0;
+  Pwm.B = 0;
+  Pwm.C = 0;
 
   return Pwm;
 }

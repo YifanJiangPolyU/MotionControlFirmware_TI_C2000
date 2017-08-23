@@ -298,20 +298,11 @@ void ControlProcessMaster::SignalErrorState(void){
 #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessMaster::BlinkLED(void){
   for(;;){
-    if((_State==STATE_SWITCHED_ON)||(_State==STATE_OPERATION)){
-      // turn on status LED if power enabled
-      GpioDataRegs.GPADAT.bit.GPIO31 = 0;
-    } else if(_State==STATE_FAULT){
-      // turn off status LED in fault state
-      GpioDataRegs.GPADAT.bit.GPIO31 = 1;
-    } else {
-      // blink status LED otherwise
+      // blink status LED
       GpioDataRegs.GPADAT.bit.GPIO31 = 1;
       Task_sleep(125);
       GpioDataRegs.GPADAT.bit.GPIO31 = 0;
       Task_sleep(125);
-    }
-
   }
 }
 

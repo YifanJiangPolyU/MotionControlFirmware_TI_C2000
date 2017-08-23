@@ -16,7 +16,7 @@
 
 CalibrationProcess::CalibrationProcess(ControlProcessData * ControlProcessDataPtr):
   _ControlProcessData(ControlProcessDataPtr),
-  _State(STATE_CAl_CURRENT_OFFSET),
+  _State(STATE_WAIT),
   _CurrentOffsetSumA(0),
   _CurrentOffsetSumB(0),
   _CurrentOffsetSampleCnt(0),
@@ -34,7 +34,12 @@ CalibrationProcess::CalibrationProcess(ControlProcessData * ControlProcessDataPt
 void CalibrationProcess::Execute(void){
 
   switch (_State) {
-    case STATE_CAl_CURRENT_OFFSET:
+    case STATE_WAIT:
+      _WaitCounter += 1;
+      if(_WaitCounter==3){
+        _State = STATE_CAL_CURRENT_OFFSET;
+      }
+    case STATE_CAL_CURRENT_OFFSET:
       for(uint16_t i=0; i<10; i++){
         _CurrentOffsetSumA += *(_ControlProcessData->_CurrentValueBufferPhaseA + i);
         _CurrentOffsetSumB += *(_ControlProcessData->_CurrentValueBufferPhaseB + i);
@@ -71,7 +76,9 @@ void CalibrationProcess::Reset(void){
   _CurrentOffsetSampleCnt = 0;
   _CurrentOffsetCycleCnt = 4;
 
-  _State = STATE_CAl_CURRENT_OFFSET;
+  _WaitCounter = 0;
+
+  _State = STATE_WAIT;
 
   PwrSetPwmDuty(&Pwm);
 }

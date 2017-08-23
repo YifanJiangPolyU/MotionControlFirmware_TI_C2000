@@ -31,7 +31,8 @@ class CalibrationProcess : public ControlProcessBase, public ObjectDictionaryEnt
     virtual void Reset(void);
 
     enum CalibrationProcess_State{
-      STATE_CAl_CURRENT_OFFSET,
+      STATE_WAIT,
+      STATE_CAL_CURRENT_OFFSET,
       STATE_COMPLETE
     };
 
@@ -48,6 +49,8 @@ class CalibrationProcess : public ControlProcessBase, public ObjectDictionaryEnt
     float32_t _CurrentOffsetSumB;
     int16_t   _CurrentOffsetSampleCnt;
     int16_t   _CurrentOffsetCycleCnt;
+
+    uint16_t _WaitCounter;
 
     ControlProcessData * _ControlProcessData;
 
