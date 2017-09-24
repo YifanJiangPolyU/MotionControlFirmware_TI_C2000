@@ -40,12 +40,19 @@ void ControlProcessData::InitCLAGains(void){
 /**
  *  update control process data with latest measurements
  */
+uint16_t sample_pos_debug = 9;
 #pragma CODE_SECTION(".TI.ramfunc");
 void ControlProcessData::UpdateMeasurements(void){
   ABCVec PhaseCurrent;
 
-  _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+9);
-  _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+9);
+  if(sample_pos_debug<10){
+    _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+sample_pos_debug);
+    _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+sample_pos_debug);
+  } else {
+    _CurrentActualValue.A = *(_CurrentValueBufferPhaseA+9);
+    _CurrentActualValue.B = *(_CurrentValueBufferPhaseB+9);
+  }
+
 
   _VoltageValueDcLine = (int32_t)CLA_DcLinkVoltageSense;
 

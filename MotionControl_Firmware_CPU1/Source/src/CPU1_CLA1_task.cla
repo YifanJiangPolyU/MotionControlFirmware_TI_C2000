@@ -28,10 +28,10 @@ __interrupt void Cla1Task1 ( void )
   sensorSampleB = AdcbResultRegs.ADCRESULT0;
   CLA_DcLinkVoltageSense = AdcaResultRegs.ADCRESULT0;
 
-  sensorSampleA *= CLA_CurrentSenseGain_Phase;
-  sensorSampleB *= CLA_CurrentSenseGain_Phase;
-  sensorSampleA += CLA_CurrentSenseOffset_PhaseA;
-  sensorSampleB += CLA_CurrentSenseOffset_PhaseB;
+  //sensorSampleA *= CLA_CurrentSenseGain_Phase;
+  //sensorSampleB *= CLA_CurrentSenseGain_Phase;
+  //sensorSampleA += CLA_CurrentSenseOffset_PhaseA;
+  //sensorSampleB += CLA_CurrentSenseOffset_PhaseB;
   CLA_DcLinkVoltageSense *= CLA_VoltageSenseGain;
 
   // pass samples through low-pass filter
